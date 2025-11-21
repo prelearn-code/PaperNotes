@@ -1,0 +1,234 @@
+{
+  "main": {
+    "id": "3ef7cedb0123318b",
+    "type": "split",
+    "children": [
+      {
+        "id": "72f04c923633c526",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "306210cad4d82ec2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-11-21"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5cbea38587510fe6",
+    "type": "split",
+    "children": [
+      {
+        "id": "0ffb6a03bc8fa6bf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6c2db8a8667adde9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "a2a5794289f9e38b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "[\"Read date\"]",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "3eae96e9cb9d00bc",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 266.5
+  },
+  "right": {
+    "id": "de3100618bd19354",
+    "type": "split",
+    "children": [
+      {
+        "id": "4c6f3711fe271fa9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f867d721b1591505",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 2025-11-21"
+            }
+          },
+          {
+            "id": "b0cec32e18433a1e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 2025-11-21"
+            }
+          },
+          {
+            "id": "63051c568c2e591e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "5d81f7215009c018",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f8aae3fb183e28d1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 2025-11-21"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "6c2db8a8667adde9",
+  "lastOpenFiles": [
+    "README.md",
+    "02_Projects/Audit-and-Integrity/notes/设计方案.md",
+    "01_Literature/Index/Literature-Overview.md",
+    "01_Literature/Daly-note/2025-11-21.md",
+    "01_Literature/Daly-note/2025-11-20.md",
+    "03_Technical/cryptography/对称加密.md",
+    "03_Technical/cryptography/pairing.md",
+    "01_Literature/Daly-note/2025-11-17.md",
+    "03_Technical/Advanced Algorithm Design and Analysis",
+    "03_Technical/Untitled.md",
+    "[[pairing.md",
+    "pairing.md",
+    "01_Literature/Notes/Auth-and-Integrity.md",
+    "03_Technical/cryptography",
+    "01_Literature/PDF/Enabling Verifiable Search and Integrity Auditing in Encrypted Decentralized Storage Using One Proof.pdf",
+    "00_Dashboard/Research-map.canvas",
+    "00_Dashboard/项目之间的关系.md",
+    "03_Technical/技术文档.md",
+    "04_else/PDF_md/Auth-and-Integrity.pdf",
+    "04_else/PDF_md",
+    "04_else/新建文件夹",
+    "04_else",
+    "新建文件夹",
+    "assets/Untitled.base",
+    "assets/说明.md",
+    "02_Projects/本文件夹写论文详细内容与实验.md",
+    "02_Projects/Audit-and-Integrity/codes",
+    "05_Templates/Auth-and-Integrity.md",
+    "2024-01-01.md",
+    "2025-10-10.md",
+    "05_Templates/说明.md",
+    "2025-11-17.md",
+    "Audit-and-integrity/assets/说明.md",
+    "Audit-and-integrity/05_Templates/说明.md",
+    "Audit-and-integrity/05_Templates/Auth-and-Integrity.md",
+    "Audit-and-integrity/01_Literature/Index/Literature-Overview.md",
+    "Audit-and-integrity/01_Literature/notes/001.md",
+    "Untitled.canvas",
+    "论文/方向/pic/服务器.png",
+    "论文/方向/流程图.canvas",
+    "流程图.png",
+    "论文/方向/pic/区块链服务.png",
+    "论文/方向/pic/文件.png",
+    "论文/方向/pic/加密文件.png"
+  ]
+}
