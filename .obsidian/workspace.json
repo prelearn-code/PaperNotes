@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "file": "02_Projects/Audit-and-Integrity/PPT/PPT大致流程.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-11-21"
+              "title": "PPT大致流程"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 266.5
+    "width": 252.5
   },
   "right": {
     "id": "de3100618bd19354",
@@ -186,33 +186,39 @@
   },
   "active": "6c2db8a8667adde9",
   "lastOpenFiles": [
-    "README.md",
-    "02_Projects/Audit-and-Integrity/notes/设计方案.md",
-    "01_Literature/Index/Literature-Overview.md",
+    "01_Literature/Daly-note/2025-11-26.md",
+    "02_Projects/Audit-and-Integrity/PPT/汇报ppt.pptx",
     "01_Literature/Daly-note/2025-11-21.md",
+    "01_Literature/Daly-note/2025-11-17.md",
+    "02_Projects/Audit-and-Integrity/PPT/PPT大致流程.md",
+    "01_Literature/Notes/Auth-and-Integrity.md",
+    "02_Projects/Audit-and-Integrity/notes/设计方案.md",
+    "01_Literature/PDF/Enabling Verifiable Search and Integrity Auditing in Encrypted Decentralized Storage Using One Proof.pdf",
+    "00_Dashboard/项目之间的关系.md",
+    "00_Dashboard/Research-map.canvas",
+    "assets/pics/Pasted image 20251124152617.png",
+    "assets/pics/Pasted image 20251124152602.png",
+    "01_Literature/Index/Literature-Overview.md",
+    "03_Technical/技术文档.md",
+    "assets/pics/Pasted image 20251124110340.png",
+    "assets/Untitled.base",
+    "assets/说明.md",
+    "assets/pics/Pasted image 20251124105517.png",
+    "assets/pics",
+    "02_Projects/Audit-and-Integrity/PPT",
+    "README.md",
     "01_Literature/Daly-note/2025-11-20.md",
     "03_Technical/cryptography/对称加密.md",
     "03_Technical/cryptography/pairing.md",
-    "01_Literature/Daly-note/2025-11-17.md",
     "03_Technical/Advanced Algorithm Design and Analysis",
     "03_Technical/Untitled.md",
     "[[pairing.md",
     "pairing.md",
-    "01_Literature/Notes/Auth-and-Integrity.md",
     "03_Technical/cryptography",
-    "01_Literature/PDF/Enabling Verifiable Search and Integrity Auditing in Encrypted Decentralized Storage Using One Proof.pdf",
-    "00_Dashboard/Research-map.canvas",
-    "00_Dashboard/项目之间的关系.md",
-    "03_Technical/技术文档.md",
     "04_else/PDF_md/Auth-and-Integrity.pdf",
     "04_else/PDF_md",
     "04_else/新建文件夹",
-    "04_else",
-    "新建文件夹",
-    "assets/Untitled.base",
-    "assets/说明.md",
     "02_Projects/本文件夹写论文详细内容与实验.md",
-    "02_Projects/Audit-and-Integrity/codes",
     "05_Templates/Auth-and-Integrity.md",
     "2024-01-01.md",
     "2025-10-10.md",
@@ -220,9 +226,6 @@
     "2025-11-17.md",
     "Audit-and-integrity/assets/说明.md",
     "Audit-and-integrity/05_Templates/说明.md",
-    "Audit-and-integrity/05_Templates/Auth-and-Integrity.md",
-    "Audit-and-integrity/01_Literature/Index/Literature-Overview.md",
-    "Audit-and-integrity/01_Literature/notes/001.md",
     "Untitled.canvas",
     "论文/方向/pic/服务器.png",
     "论文/方向/流程图.canvas",
