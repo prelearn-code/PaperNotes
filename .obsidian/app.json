@@ -10,5 +10,6 @@
   },
   "newFileLocation": "current",
   "attachmentFolderPath": "assets/pics",
-  "newLinkFormat": "relative"
+  "newLinkFormat": "relative",
+  "showUnsupportedFiles": true
 }

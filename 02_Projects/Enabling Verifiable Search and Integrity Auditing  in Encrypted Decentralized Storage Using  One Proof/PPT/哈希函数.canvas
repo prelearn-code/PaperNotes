@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"ba7707f2fd0fdf39","x":-180,"y":-260,"width":250,"height":60,"type":"text","text":"# 文件"},
+		{"id":"6894df09ab591f38","x":-180,"y":-80,"width":250,"height":60,"type":"text","text":"# 代码串"}
+	],
+	"edges":[
+		{"id":"9377d847a933b97a","fromNode":"ba7707f2fd0fdf39","fromSide":"bottom","toNode":"6894df09ab591f38","toSide":"top","label":"哈希函数"}
+	]
+}

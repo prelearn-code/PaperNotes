@@ -4,21 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "72f04c923633c526",
+        "id": "93208a9c55243d11",
         "type": "tabs",
         "children": [
           {
-            "id": "306210cad4d82ec2",
+            "id": "cd6e5b9857039cb2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "02_Projects/Audit-and-Integrity/PPT/PPT大致流程.md",
-                "mode": "source",
-                "source": false
+                "file": "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/client.canvas",
+                "viewState": {
+                  "x": -90,
+                  "y": -130,
+                  "zoom": 0
+                }
               },
-              "icon": "lucide-file",
-              "title": "PPT大致流程"
+              "icon": "lucide-layout-dashboard",
+              "title": "client"
             }
           }
         ]
@@ -40,7 +43,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
+                "sortOrder": "byCreatedTime",
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
@@ -53,7 +56,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"Read date\"]",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,7 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 252.5
+    "width": 365.5
   },
   "right": {
     "id": "de3100618bd19354",
@@ -94,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "file": "assets/Untitled.base",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +107,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 2025-11-21"
+              "title": "Backlinks for Untitled"
             }
           },
           {
@@ -113,12 +116,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "file": "assets/Untitled.base",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 2025-11-21"
+              "title": "Outgoing links from Untitled"
             }
           },
           {
@@ -156,13 +159,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "01_Literature/Daly-note/2025-11-21.md",
+                "file": "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/client.canvas",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 2025-11-21"
+              "title": "Outline of client"
             }
           }
         ],
@@ -184,48 +187,55 @@
       "bases:Create new base": false
     }
   },
-  "active": "6c2db8a8667adde9",
+  "active": "cd6e5b9857039cb2",
   "lastOpenFiles": [
-    "01_Literature/Daly-note/2025-11-26.md",
-    "02_Projects/Audit-and-Integrity/PPT/汇报ppt.pptx",
-    "01_Literature/Daly-note/2025-11-21.md",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptB1BC.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptA0A4.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt1BE3.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt3D5.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptDA04.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptD4B4.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptA093.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptBF2.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptAFB8.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt7379.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt6D8C.tmp",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ptr.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/client.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/keywords.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/哈希函数.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/Untitled.md",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/对称加密.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/非对称加密.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/PPT大致流程.md",
+    "01_Literature/Prompt/论文阅读提示词.md",
+    "01_Literature/Notes/Enabling Secure and Efficient Decentralized Storage Auditing With Blockchain.md",
+    "01_Literature/Notes/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof.md",
+    "01_Literature/Index/Literature-Overview.md",
+    "01_Literature/Notes/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness.md",
+    "01_Literature/Notes/Untitled.md",
+    "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/note/设计方案.md",
+    "04_else/Templates/paper-note.md",
+    "01_Literature/Daly-note/2025-10-10.md",
+    "01_Literature/Daly-note/2025-11-20.md",
     "01_Literature/Daly-note/2025-11-17.md",
-    "02_Projects/Audit-and-Integrity/PPT/PPT大致流程.md",
-    "01_Literature/Notes/Auth-and-Integrity.md",
-    "02_Projects/Audit-and-Integrity/notes/设计方案.md",
-    "01_Literature/PDF/Enabling Verifiable Search and Integrity Auditing in Encrypted Decentralized Storage Using One Proof.pdf",
-    "00_Dashboard/项目之间的关系.md",
-    "00_Dashboard/Research-map.canvas",
+    "04_else/Templates/new-paper-program/0000.md",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/notes/设计方案.md",
     "assets/pics/Pasted image 20251124152617.png",
     "assets/pics/Pasted image 20251124152602.png",
-    "01_Literature/Index/Literature-Overview.md",
-    "03_Technical/技术文档.md",
     "assets/pics/Pasted image 20251124110340.png",
-    "assets/Untitled.base",
-    "assets/说明.md",
     "assets/pics/Pasted image 20251124105517.png",
-    "assets/pics",
-    "02_Projects/Audit-and-Integrity/PPT",
+    "01_Literature/Daly-note/2025-11-26.md",
+    "assets/说明.md",
+    "01_Literature/Daly-note/2025-11-21.md",
+    "00_Dashboard/Research-map.canvas",
+    "00_Dashboard/项目之间的关系.md",
     "README.md",
-    "01_Literature/Daly-note/2025-11-20.md",
     "03_Technical/cryptography/对称加密.md",
     "03_Technical/cryptography/pairing.md",
-    "03_Technical/Advanced Algorithm Design and Analysis",
     "03_Technical/Untitled.md",
     "[[pairing.md",
     "pairing.md",
-    "03_Technical/cryptography",
-    "04_else/PDF_md/Auth-and-Integrity.pdf",
-    "04_else/PDF_md",
-    "04_else/新建文件夹",
-    "02_Projects/本文件夹写论文详细内容与实验.md",
-    "05_Templates/Auth-and-Integrity.md",
-    "2024-01-01.md",
-    "2025-10-10.md",
-    "05_Templates/说明.md",
-    "2025-11-17.md",
-    "Audit-and-integrity/assets/说明.md",
-    "Audit-and-integrity/05_Templates/说明.md",
     "Untitled.canvas",
     "论文/方向/pic/服务器.png",
     "论文/方向/流程图.canvas",

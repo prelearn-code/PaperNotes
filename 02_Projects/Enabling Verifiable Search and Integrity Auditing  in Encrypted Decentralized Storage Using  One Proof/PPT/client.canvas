@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"2c8875e4e79e1eec","x":-200,"y":-260,"width":280,"height":180,"type":"group","label":"client"},
+		{"id":"325aad834dbb719a","x":-180,"y":-240,"width":240,"height":50,"type":"text","text":"# 关键词状态数据库"},
+		{"id":"58920a808b4dda30","x":-180,"y":360,"width":250,"height":60,"type":"text","text":""},
+		{"id":"1466c644fd72a6aa","x":-180,"y":-160,"width":240,"height":50,"type":"text","text":"# 关键词搜索请求"}
+	],
+	"edges":[]
+}

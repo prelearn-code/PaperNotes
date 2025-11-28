@@ -1,16 +1,49 @@
 # 1. 背景知识（为什么）
 - 研究背景
+```mermaid
+graph LR
+	
+	need[需求]
+	Audit[完整性审计]
+	EncSearch[可加密搜索]
+	
+	need --> Audit
+	need --> EncSearch
+```
 - 现存方案缺陷
 - 数学理论知识(一句话解释/解释对应的)
 	- 双线性配对
 	- 对称加密，密钥安全就能保证密文安全
 	- 哈希算法
 	- 非对称加密，同样对称加密类似
+```mermaid
+graph TB
+subgraph SE_Enc
+	plain[明文文件]
+	ciper[密文文件]
+	keys[加密密钥]
+end
+	plain <--加密/解密-->ciper
+```
+
+```mermaid
+graph TB
+	plain[明文文件]
+	ciper[密文文件]
+	public_key[公钥]
+	private_key[私钥]
+	plain --> public_key
+	public_key --> ciper
+	
+	private_key --> plain
+	ciper --> private_key
+```
 # 2. 方案做了什么，保证了安全（实现了什么）
 1. 关键词安全。
 2. 前向安全。
 3. 加密搜索证明的集中化。
 4. 数据完整性可验证。
+5. 
 
 # 3. 方案怎么做的
 ## 3.1.  关键词安全性

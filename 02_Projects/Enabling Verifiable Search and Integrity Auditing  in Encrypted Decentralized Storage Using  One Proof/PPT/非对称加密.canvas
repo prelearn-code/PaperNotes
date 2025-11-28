@@ -1,0 +1,14 @@
+{
+	"nodes":[
+		{"id":"04be7486865074cd","x":-120,"y":-140,"width":110,"height":60,"type":"text","text":"# 私钥"},
+		{"id":"98af4e28cd55e5fc","x":-275,"y":-140,"width":125,"height":60,"type":"text","text":"# 公钥"},
+		{"id":"86fd9db6de262e3c","x":-275,"y":-20,"width":265,"height":60,"type":"text","text":"# 密文文件"},
+		{"id":"e0a1bdc1a230c11e","x":-275,"y":-260,"width":265,"height":60,"type":"text","text":"# 明文文件"}
+	],
+	"edges":[
+		{"id":"7b02c91b60ee8d5e","fromNode":"e0a1bdc1a230c11e","fromSide":"bottom","toNode":"98af4e28cd55e5fc","toSide":"top","label":"加密"},
+		{"id":"bf241b9ecb8998d8","fromNode":"98af4e28cd55e5fc","fromSide":"bottom","toNode":"86fd9db6de262e3c","toSide":"top","label":"加密"},
+		{"id":"364e5f12ad901145","fromNode":"86fd9db6de262e3c","fromSide":"top","toNode":"04be7486865074cd","toSide":"bottom","label":"解密"},
+		{"id":"1fcfd603216df869","fromNode":"04be7486865074cd","fromSide":"top","toNode":"e0a1bdc1a230c11e","toSide":"bottom","label":"解密"}
+	]
+}

@@ -1,0 +1,22 @@
+{
+	"nodes":[
+		{"id":"8bd63b0ebc28b935","x":-180,"y":-180,"width":250,"height":60,"type":"text","text":"# 文件1（$ID_{F1}$）"},
+		{"id":"f59bf555547640db","x":-180,"y":-80,"width":250,"height":60,"type":"text","text":"# 文件2($ID_{F2}$)"},
+		{"id":"2e549d58dcc0b564","x":-180,"y":-300,"width":250,"height":60,"type":"text","text":"# 关键词"},
+		{"id":"7b8ad3742416c3c8","type":"text","text":"# 文件3($ID_{F3}$)","x":-180,"y":40,"width":250,"height":65},
+		{"id":"d2ecf6f95e367474","x":160,"y":-180,"width":250,"height":60,"type":"text","text":"# 状态1($st_{d1}$)"},
+		{"id":"5527fcc64240e42e","x":160,"y":-80,"width":250,"height":60,"type":"text","text":"# 状态2($st_{d2}$)"},
+		{"id":"bcb8be370b80917e","type":"text","text":"# 状态3($st_{d3}$)","x":160,"y":40,"width":250,"height":65}
+	],
+	"edges":[
+		{"id":"0a11bb9ac92686ae","fromNode":"8bd63b0ebc28b935","fromSide":"right","toNode":"d2ecf6f95e367474","toSide":"left"},
+		{"id":"dcfcf55fac23bd5c","fromNode":"d2ecf6f95e367474","fromSide":"left","toNode":"8bd63b0ebc28b935","toSide":"right"},
+		{"id":"a0bcfd7b8c8aee14","fromNode":"f59bf555547640db","fromSide":"right","toNode":"5527fcc64240e42e","toSide":"left"},
+		{"id":"77f1abd17e286680","fromNode":"5527fcc64240e42e","fromSide":"left","toNode":"f59bf555547640db","toSide":"right"},
+		{"id":"1a81f8c97392834d","fromNode":"7b8ad3742416c3c8","fromSide":"right","toNode":"bcb8be370b80917e","toSide":"left"},
+		{"id":"995c50d4755dde33","fromNode":"bcb8be370b80917e","fromSide":"left","toNode":"7b8ad3742416c3c8","toSide":"right"},
+		{"id":"daa2ddf28d1cff50","fromNode":"2e549d58dcc0b564","fromSide":"bottom","toNode":"8bd63b0ebc28b935","toSide":"top"},
+		{"id":"a6adceb6a01bb55e","fromNode":"8bd63b0ebc28b935","fromSide":"bottom","toNode":"f59bf555547640db","toSide":"top"},
+		{"id":"1e2b0dbd626c9f7c","fromNode":"f59bf555547640db","fromSide":"bottom","toNode":"7b8ad3742416c3c8","toSide":"top"}
+	]
+}
