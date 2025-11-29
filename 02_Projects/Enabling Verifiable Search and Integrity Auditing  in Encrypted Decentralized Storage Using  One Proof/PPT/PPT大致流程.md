@@ -54,10 +54,53 @@ graph TB
 ## 3.3 加密搜索过程与证明生成的大致过程介绍
 search过程的大致介绍
 
+### 搜索证明
+#### 伪代码
+>$Res, PS, AS ← ∅,st_\alpha ← st_d$
+>while true:
+>	// step1:Get IDs and st
+>	$\overline{T}^{(\alpha)} ← H_2(T||st_a)$
+>	$(ptr^{\alpha-1},op,kt,ID_F) ← DB[T_{\alpha}]$
+>	$st_{\alpha-1}←SE.Dec(H_3(st_{\alpha}),ptr^{\alpha-1})$
+>	$AS←AS\cup ID_F$
+>	// step2:Get proof params of a file
+>	$if \   op == valid:$
+>		$\theta←RandomSeed()$
+>		$\psi_{\alpha}=\sum_{i=1}^{n}\sum_{j=1}^{s}\pi(\theta||ID_{F_\alpha,i})*c_{i,j}^{(\alpha)}$
+>		$\varphi_{\alpha}=\prod_{i=1}^n(\sigma_i^{(\alpha)})^{\pi(\theta||ID_{F_\alpha},i)}$
+>		$PS←PS\cup(ID_{F_\alpha},\psi_\alpha,\varphi_\alpha)$
+>	// Step3: End Condition
+>	$if\ st_{\alpha-1} == st_\alpha: \ break;$
+>	$else:\ st_{\alpha}=st_{\alpha-1}$
+>$PS←PS\cup\varphi = \prod_{ID_{F_\alpha}\in AS}kt_{\alpha}^{(w)}$
+>Pubish $(T,st_d,Res,PS)$ to blockchain.
+
+#### 搜索验证伪代码
+> Get $(T,st_d,Res,PS)$ from blockchain
+> Init: $\zeta_1,\zeta_2,\zeta_3,\rho$
+> 	$\zeta_1\leftarrow\prod_{ID_{F_{\alpha}}}\prod_{i=1}^n H_2(ID_{F_\alpha}||i)^{\pi(\theta||ID_{F_\alpha})}$
+> 	$\zeta_2 \leftarrow \prod_{ID_{F_{\alpha}}}H_2(ID_{F_\alpha})$
+> 	$\zeta_3 \leftarrow\prod_{ID_{F_{\alpha}}}\varphi_\alpha*\varphi$
+> 	$\rho\leftarrow\sum_{ID_{F_\alpha}}\psi_\alpha$
+> Compute pairing
+> 	$e(\zeta_3,g)?=e(\zeta_1*\zeta_2*H_2(st_d||T)*\mu^{\rho},pk)$
+> Publish the result 0/1 to blockchain.
 ## 3.4 数据完整性介绍/单个文件的完整性审计
 单个文件的审计过程与证明过程
+>Input:  $ID_F,C=\{c_i\}_{i=1}^n,TS_F=\{\sigma\}_{i=1}^n$
+>Init: $\psi,\varphi$
+>	$\psi \leftarrow \sum_{i=1}^n\sum_{j=1}^s\pi(\theta||ID_F,i)*c_{i,j}$
+>	$\varphi\leftarrow\prod_{i=1}^n\theta_i^{\pi(\theta||ID_F),i}$
+>$Proof = (\psi,\varphi)$
+>Publish $(ID_F,Proof)$ to blockchain.
 
-
+证明验证过程
+>Get $Proof(\psi,\varphi)$ 
+>Init: $\zeta$
+>	$\zeta \leftarrow\prod_{i=1}^nH_2(ID_F||i)^{\pi(\theta||ID_F,i)}$
+>Pairing Verify:
+>	$e(\varphi,g)?=e(\zeta*\mu^\psi,pk)$
+>Publish result 0/1 to blockchain.
 # 4. 本方案的性能优势
 
 ## 4.1 base line 介绍

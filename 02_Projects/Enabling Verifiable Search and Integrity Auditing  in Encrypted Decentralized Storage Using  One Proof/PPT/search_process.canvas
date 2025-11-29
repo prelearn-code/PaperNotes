@@ -1,0 +1,16 @@
+{
+	"nodes":[
+		{"id":"14602cdbe14fc393","x":-40,"y":-240,"width":250,"height":60,"type":"text","text":"# 客户端"},
+		{"id":"7ef9bbb10172b5fc","x":-140,"y":-100,"width":450,"height":60,"type":"text","text":"# 区块链(存储经转信息)"},
+		{"id":"00634c1b153efc0b","x":-140,"y":90,"width":120,"height":60,"type":"text","text":"# 服务端1"},
+		{"id":"0943e25120848f97","x":190,"y":90,"width":120,"height":60,"type":"text","text":"# 服务端2"}
+	],
+	"edges":[
+		{"id":"e247b044aecc9d38","fromNode":"14602cdbe14fc393","fromSide":"bottom","toNode":"7ef9bbb10172b5fc","toSide":"top","label":"1.提交(T,std)"},
+		{"id":"188413cbe164f224","fromNode":"7ef9bbb10172b5fc","fromSide":"bottom","toNode":"00634c1b153efc0b","toSide":"top","label":"2.获取(T,std)"},
+		{"id":"a8da83df757a2f71","fromNode":"00634c1b153efc0b","fromSide":"right","toNode":"7ef9bbb10172b5fc","toSide":"bottom","label":"3.返回搜索证明"},
+		{"id":"f68a5b5f9cc399e8","fromNode":"7ef9bbb10172b5fc","fromSide":"bottom","toNode":"0943e25120848f97","toSide":"top","label":"4.获取搜索证明"},
+		{"id":"3a40152f60ec59db","fromNode":"0943e25120848f97","fromSide":"right","toNode":"7ef9bbb10172b5fc","toSide":"right","label":"5.返回验证结果"},
+		{"id":"fadf49c53bc48dab","fromNode":"7ef9bbb10172b5fc","fromSide":"left","toNode":"14602cdbe14fc393","toSide":"left","label":"6.获取验证结果"}
+	]
+}
