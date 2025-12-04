@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"e68ebd6bceadc91a","type":"text","text":"# 区块链","x":-140,"y":-120,"width":250,"height":60},
+		{"id":"5ea9a952bc6b77f9","type":"text","text":"# 服务节点","x":-140,"y":20,"width":550,"height":60},
+		{"id":"475882062a7d4ac2","type":"text","text":"# 客户端","x":-140,"y":-260,"width":550,"height":60},
+		{"id":"172761d9ecf1b60c","x":160,"y":-120,"width":250,"height":60,"type":"text","text":"# 仲裁层"}
+	],
+	"edges":[]
+}

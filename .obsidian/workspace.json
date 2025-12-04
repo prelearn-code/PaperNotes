@@ -4,24 +4,42 @@
     "type": "split",
     "children": [
       {
-        "id": "93208a9c55243d11",
+        "id": "30bfa2d6ffb5c79c",
         "type": "tabs",
         "children": [
           {
-            "id": "cd6e5b9857039cb2",
+            "id": "505a2c1b15ce8378",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/PPT大致流程.md",
+                "file": "01_Literature/Prompt/论文阅读提示词.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "PPT大致流程"
+              "title": "论文阅读提示词"
+            }
+          },
+          {
+            "id": "a9193d41a2eb8927",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/方案相关图片/架构图.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": 0,
+                  "zoom": 0
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "架构图"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -78,8 +96,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 365.5,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "de3100618bd19354",
@@ -157,13 +174,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/client.canvas",
+                "file": "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/方案相关图片/架构图.canvas",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of client"
+              "title": "Outline of 架构图"
             }
           }
         ],
@@ -182,46 +199,53 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "periodic-notes:Open this week": false
     }
   },
-  "active": "cd6e5b9857039cb2",
+  "active": "a9193d41a2eb8927",
   "lastOpenFiles": [
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt723D.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt4918.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt32B1.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt62F6.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptFC7B.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptF872.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptD029.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt8C87.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/pptF71C.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt7D86.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ppt4DB.tmp",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/notes/设计方案.md",
+    "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/note/设计方案.md",
+    "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/方案相关图片/架构图.canvas",
+    "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/方案相关图片",
+    "01_Literature/Notes/Audit-and-Integrity/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness.md",
+    "01_Literature/Prompt/论文阅读提示词.md",
+    "01_Literature/Period-notes/Month-notes/2025-12.md",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/PPT大致流程.md",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/search.md",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/search_process.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ptr.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/哈希函数.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/~$~$汇报ppt.pptx",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/对称加密.canvas",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/非对称加密.canvas",
-    "01_Literature/Daly-note/2025-10-10.md",
-    "01_Literature/Daly-note/2025-11-17.md",
-    "01_Literature/Daly-note/2025-11-20.md",
-    "01_Literature/Daly-note/2025-11-26.md",
-    "01_Literature/Daly-note/2025-11-21.md",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/search_process.canvas",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/search.md",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/init.canvas",
+    "01_Literature/Period-notes/Weekly-notes/2025-W49.md",
+    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/notes/设计方案.md",
+    "01_Literature/Notes/Audit-and-Integrity/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof.md",
+    "01_Literature/Notes/Audit-and-Integrity/Enabling Secure and Efficient Decentralized Storage Auditing With Blockchain.md",
+    "03_Technical/cryptography/对称加密.md",
+    "03_Technical/cryptography/pairing.md",
+    "03_Technical/Advanced Algorithm Design and Analysis",
+    "01_Literature/Period-notes/Month-notes",
+    "01_Literature/Period-notes",
+    "02_Projects/Untitled",
+    "02_Projects/Audit-and-Integrity",
+    "01_Literature/Index/Literature-Overview.md",
+    "01_Literature/Notes/Audit-and-Integrity",
+    "01_Literature/PDF/Audit-and-Integrity/Enabling Verifiable Search and Integrity Auditing in Encrypted Decentralized Storage Using One Proof.pdf",
+    "01_Literature/PDF/Audit-and-Integrity/Enabling_Secure_and_Efficient_Decentralized_Storage_Auditing_With_Blockchain.pdf",
+    "01_Literature/Period-notes/Daily-notes/2025-11-30.md",
+    "01_Literature/Period-notes/Daily-notes/2025-11-26.md",
+    "01_Literature/Period-notes/Daily-notes/2025-11-21.md",
+    "01_Literature/Period-notes/Daily-notes/2025-11-17.md",
+    "01_Literature/Period-notes/Daily-notes/2025-10-10.md",
+    "01_Literature/Period-notes/Daily-notes/2025-11-20.md",
     "README.md",
     "00_Dashboard/项目之间的关系.md",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/client.canvas",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/ptr.canvas",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/keywords.canvas",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/哈希函数.canvas",
-    "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/对称加密.canvas",
-    "01_Literature/Prompt/论文阅读提示词.md",
-    "01_Literature/Notes/Enabling Secure and Efficient Decentralized Storage Auditing With Blockchain.md",
-    "01_Literature/Notes/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof.md",
-    "01_Literature/Index/Literature-Overview.md",
-    "01_Literature/Notes/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness.md",
     "01_Literature/Notes/Untitled.md",
-    "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/note/设计方案.md",
     "04_else/Templates/paper-note.md",
     "04_else/Templates/new-paper-program/0000.md",
     "assets/pics/Pasted image 20251124152617.png",
@@ -230,14 +254,7 @@
     "assets/pics/Pasted image 20251124105517.png",
     "assets/说明.md",
     "00_Dashboard/Research-map.canvas",
-    "03_Technical/cryptography/对称加密.md",
-    "03_Technical/cryptography/pairing.md",
-    "03_Technical/Untitled.md",
-    "[[pairing.md",
-    "pairing.md",
-    "Untitled.canvas",
     "论文/方向/pic/服务器.png",
-    "论文/方向/流程图.canvas",
     "流程图.png",
     "论文/方向/pic/区块链服务.png",
     "论文/方向/pic/文件.png",

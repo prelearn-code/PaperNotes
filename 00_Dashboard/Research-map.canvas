@@ -1,6 +1,6 @@
 {
 	"nodes":[
-		{"id":"e9e3f862571d8aee","x":-460,"y":-240,"width":200,"height":60,"type":"text","text":"[[../01_Literature/Notes/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof]]"},
+		{"id":"e9e3f862571d8aee","x":-460,"y":-240,"width":200,"height":60,"type":"text","text":"[[../01_Literature/Notes/Audit-and-Integrity/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof]]"},
 		{"id":"cb8a09692ce12fc8","x":0,"y":-240,"width":250,"height":60,"type":"text","text":""}
 	],
 	"edges":[

@@ -1,0 +1,16 @@
+{
+	"nodes":[
+		{"id":"7aa21197c8277199","x":-60,"y":-180,"width":300,"height":60,"type":"text","text":"# PF：$H_1,H_2,H_3,\\pi$"},
+		{"id":"fd730b97b5458c87","x":-380,"y":-180,"width":300,"height":60,"type":"text","text":"# MP: $(p,q,N,G_1,G_2,e)$"},
+		{"id":"59115a68732268b9","x":-380,"y":-80,"width":610,"height":60,"type":"text","text":"# PP = {N,g,$\\mu$}"},
+		{"id":"2f0d4641b9587afb","x":-385,"y":0,"width":620,"height":60,"type":"text","text":"# CP: (SK={ek,sk,mk},pk)"},
+		{"id":"2e4f203292639a4e","x":-205,"y":-280,"width":250,"height":60,"type":"text","text":"# 安全参数 $\\kappa$"}
+	],
+	"edges":[
+		{"id":"ec92040ab47f6d6e","fromNode":"2e4f203292639a4e","fromSide":"bottom","toNode":"fd730b97b5458c87","toSide":"top","label":"Gen"},
+		{"id":"93d761dcac37cfb5","fromNode":"2e4f203292639a4e","fromSide":"bottom","toNode":"7aa21197c8277199","toSide":"top","label":"Select"},
+		{"id":"b5104ee22f464a02","fromNode":"59115a68732268b9","fromSide":"bottom","toNode":"2f0d4641b9587afb","toSide":"top"},
+		{"id":"d942bfdcf58e87e2","fromNode":"fd730b97b5458c87","fromSide":"bottom","toNode":"59115a68732268b9","toSide":"top","label":"Gen"},
+		{"id":"9d806ce74c7a677e","fromNode":"7aa21197c8277199","fromSide":"bottom","toNode":"59115a68732268b9","toSide":"top","label":"Gen"}
+	]
+}

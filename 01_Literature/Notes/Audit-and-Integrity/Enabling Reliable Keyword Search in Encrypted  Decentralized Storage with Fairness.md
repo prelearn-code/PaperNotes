@@ -4,9 +4,9 @@ year: 2021-01-01
 venue: IEEE Trans. Dependable Secur. Comput
 field:
   - Crypto/Searchable Encryption
-pdf: "[[01_Literature/PDF/Enabling_Reliable_Keyword_Search_in_Encrypted_Decentralized_Storage_with_Fairness.pdf]]"
+pdf: "[[../../PDF/Audit-and-Integrity/Enabling_Reliable_Keyword_Search_in_Encrypted_Decentralized_Storage_with_Fairness.pdf]]"
 Read_date: 2025-11-28
-detailes: "[[../../02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/note/设计方案|设计方案]]"
+detailes: "[[../../../02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/note/设计方案|设计方案]]"
 ---
 # 0.名词解释
 1. SSE: Server-Sent Events,是一种在客户端和服务端之间实现**单向事件流**的机制，允许服务端主动向客户端发送事件数据.
@@ -265,4 +265,4 @@ detailes: "[[../../02_Projects/Enabling Reliable Keyword Search in Encrypted  De
     - 作者承认：区块链为 append-only，即使文件在系统中被删除，之前锚定的文件添加和搜索元数据仍永久保留；文中称这是“unnecessary storage overhead (when a file is deleted)”，并表示未来考虑利用链下存储（如 [33]）以减轻区块链状态膨胀。
         
     - 当前实现中，所有 ((h_0, H(d_f)))、搜索 token 与结果摘要都长久写入链上，**缺乏具体的状态压缩 / 清理机制**。
-        
+

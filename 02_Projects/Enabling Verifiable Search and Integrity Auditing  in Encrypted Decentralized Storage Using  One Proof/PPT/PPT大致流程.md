@@ -95,7 +95,7 @@ search过程的大致介绍
 >Publish $(ID_F,Proof)$ to blockchain.
 
 证明验证过程
->Get $Proof(\psi,\varphi)$ 
+>Get $Proof(\psi,\varphi)，ID_F$ 
 >Init: $\zeta$
 >	$\zeta \leftarrow\prod_{i=1}^nH_2(ID_F||i)^{\pi(\theta||ID_F,i)}$
 >Pairing Verify:

@@ -6,9 +6,9 @@ field:
   - Authentication
   - Integrity
   - Crypto/Searchable Encryption
-pdf: "[[Enabling Verifiable Search and Integrity Auditing in Encrypted Decentralized Storage Using One Proof.pdf]]"
+pdf: "[[../../PDF/Audit-and-Integrity/Enabling Verifiable Search and Integrity Auditing in Encrypted Decentralized Storage Using One Proof.pdf]]"
 Read_date: 2025-10-10
-detailes: "[[../../02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/notes/设计方案]]"
+detailes: "[[../../../02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/notes/设计方案]]"
 ---
 # 方法
 
