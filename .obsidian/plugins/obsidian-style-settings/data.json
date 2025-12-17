@@ -1,3 +1,7 @@
 {
-  "blue-topaz-theme@@color-scheme-options": "color-scheme-options-topaz-nord"
+  "blue-topaz-theme@@color-scheme-options": "color-scheme-options-topaz-nord",
+  "blue-topaz-theme@@accent-strong@@light": "#E60F0F",
+  "Blue-Topaz-Codebox-Highlight@@code-theme-selection": "code-theme-bt-default",
+  "blue-topaz-theme@@accent-strong@@dark": "#E45B0E",
+  "blue-topaz-theme@@interactive-accent@@dark": "#3B649A"
 }

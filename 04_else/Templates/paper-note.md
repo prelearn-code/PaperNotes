@@ -1,10 +1,9 @@
 ---
-title: 
-year: 
-venue: 
+title:
+year:
+venue:
 field:
-
 pdf:
-Read_date: 
-detailes: 
+Read_date:
+detailes:
 ---
