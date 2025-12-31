@@ -2,5 +2,6 @@
   "dataview",
   "obsidian-style-settings",
   "periodic-notes",
-  "obsidian-excalidraw-plugin"
+  "obsidian-excalidraw-plugin",
+  "obsidian-linter"
 ]
