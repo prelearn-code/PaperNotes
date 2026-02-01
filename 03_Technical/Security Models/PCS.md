@@ -149,7 +149,7 @@ Prover 不知道 $\alpha=5$，但他知道 $f_1$ 的系数是 [2, 1]（即 $2 + 
     注意：在这个简单的例子里商是常数 13。如果是更复杂的多项式，商会是一个关于 X 的多项式。
     
 Prover 生成 Witness（回到密文世界）：
-Prover 需要计算 $W = g^{q(\alpha)}$。
+Prover 需要计算 $W = g^{q(\alpha)}$。              
 因为 $q(X) = 13$（常数项为 13，一次项为 0），Prover 再次使用 SRS：
 $$W = (SRS_0)^{13} = (g^1)^{13} = g^{13}$$
 
@@ -161,13 +161,13 @@ Prover 发送 $W$ 给 Verifier。
 
 Verifier 收到：
 - 承诺：$C_1=g^7, C_2=g^{15}$
-- 值：$y_1=4, y_2=6$
+- 值：$y_1=4, y_2=6$ 
 - 证据：$W=g^{13}$
 - 参数：$z=2, v=4$
 - SRS中的特殊点：$g^\alpha$（即 $SRS_1$）
-
+      
 **Verifier 的工作**：
-
+ 
 1. 模拟聚合承诺 $C_{agg}$（在群上计算）：
 2. $$C_{agg} = C_1 \cdot (C_2)^v = g^7 \cdot (g^{15})^4 = g^{7 + 60} = g^{67}$$
 3. 计算聚合值 $y_{agg}$（在标量上计算）：
@@ -186,7 +186,7 @@ Verifier 收到：
     - 右边（RHS）：
         Verifier 并没有 $\alpha$，但他有 $g^\alpha$ ($SRS_1$)。他计算 $SRS_1 \cdot g^{-z} = g^\alpha \cdot g^{-2} = g^{\alpha-2}$。
         $$e(W, g^{\alpha-2}) = e(g^{13}, g^{\alpha-2})$$
-        根据配对性质，指数相乘：$13 \cdot (\alpha - 2)$。
+        根据配对性质，指数相乘：$       $。
         因为上帝视角下 $\alpha=5$，所以 $13 \cdot (5-2) = 13 \cdot 3 = 39$。
         $\rightarrow$ 结果也是 $Target^{39}$。
     

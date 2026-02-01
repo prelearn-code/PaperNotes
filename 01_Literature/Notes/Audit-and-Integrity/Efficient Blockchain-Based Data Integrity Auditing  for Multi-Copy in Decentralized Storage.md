@@ -8,111 +8,186 @@ pdf: "[[../../PDF/Audit-and-Integrity/Efficient_Blockchain-Based_Data_Integrity_
 Read_date: 2025-12-16
 detailes: "[[../../../02_Projects/Efficient_Blockchain-Based_Data_Integrity_Auditing_for_Multi-Copy_in_Decentralized_Storage/设计方案|设计方案]]"
 ---
-### **论文真问题**
+# 1.背景知识
+## PCS-PLONK
+>PCS-PLONK 就是：把一个程序的正确执行，转成“几个多项式是否满足某些关系”的问题，再用多
+>式承诺来让验证者只花很小代价就能检查这些关系是否真的成立。
 
-在去中心化存储网络中，现有基于区块链的审计方案通常将区块链视为透明数据库存储审计日志，导致**链上存储开销（On-chain Storage Overhead）随审计文件数量及请求规模呈线性增长**，造成区块链网络拥塞与资源浪费；本文首次在去中心化场景下，通过引入多项式承诺方案（PCS-MPAP），实现了针对多文件多副本的**常数级链上存储开销（Constant On-chain Storage Overhead）**批量审计机制。 
+缺陷：公共数据很大，可能是几百兆或者几个G。
+## PCS-MPAP
+>有很多个多项式，  在很多个点上，  
+>它们都应该满足某些关系，  
+>我不想一个一个证明，  
+>能不能一次性打包证明
 
----
-### **方案背景**
+## 想法
+能不能在之前那个可搜索加密与文件完整性的认证与副本同时生成。
 
-- **领域瓶颈**：
-    
-    - **传统 TPA 方案的信任失效**：现有非区块链方案（如 Li et al. ）依赖第三方审计者（TPA），存在单点故障风险，且难以保证 TPA 与云服务商（CSP）不合谋，无法适应去中心化环境（见 Section I Introduction）。
-        
-    - **现有区块链方案的扩展性缺陷**：现有区块链方案（如 Du et al. ）虽然解决了信任问题，但在批量审计时，链上存储开销随文件数量线性增加。例如，当审计文件数增加时，证明大小（Proof Size）会迅速膨胀，导致高昂的 Gas 费和存储压力（见 Section VI.A Table VIII）。
-        
-- **作者动机**：
-    
-    - 作者旨在设计一种去中心化的审计范式，利用智能合约替代 TPA 进行验证，同时解决由此带来的链上资源瓶颈。
-        
-    - 核心目标是提出一种高效的批量审计方案，使得无论审计多少文件，**链上存储开销始终保持为常数**，并显著降低存储服务提供商（SSP）的计算负担（见 Section I.A）。
-        
+将所有涉及到的关键词文件以及所有副本都进行审计，其中保证每个存储节点存储的认证信息不同，文件ID也不同。
 
----
+在可搜索加密时，对于涉及到的存储节点生成这种客户端可验证的方案，然后客户但可以进行验证。
 
-### **创新点**
+## 问题 
+1. 谁是验证节点？Q: 智能合约
 
-1. **[核心] 基于 PCS-MPAP 的高效批量审计机制 (Efficient Batch Auditing Scheme)**：
-    
-    - **突破性**：与现有使用 PCS-PLONK 或简单聚合的方案不同，本文利用 **PCS-MPAP (Polynomial Commitment Scheme for Multiple Points and Polynomials)** 技术，允许在不同挑战点对不同文件的多项式进行批量验证。通过构造插值多项式计算权重 $\beta_l$，将多个文件的评估值压缩为一个单一的聚合评估值 $E_i$，从而使提交到链上的证明大小不再随文件数量 $d$ 增加。
-        
-    - **关键证据**：
-        
-        - 聚合逻辑见 **Equation (9)** 至 **Equation (11)**，其中 SSP 计算聚合标签 $\sigma'_i$ 和聚合评估值 $E_i = \sum_{l=1}^d \beta_l \cdot S_{l,i}$。
-            
-        - 链上开销对比见 **Table VIII**，本文方案的链上存储开销恒定为 $3|\mathbb{G}_1| + |Z_p|$，而 Scheme 和 均为线性增长。
-            
-2. **[辅助] 基于同态验证标签与扇区划分的基本方案 (Basic Scheme with HVT & Sectoring)**：
-    
-    - **技术改进**：在数据预处理阶段，将每个数据块进一步划分为 $s$ 个扇区（Sector），构建多项式 $f_{m_{ij}}(X)$。结合同态验证标签（HVT），允许 SSP 将多个块的标签聚合成一个 $\sigma_i$。虽然这是针对单文件多副本的基础设计，但扇区化处理有效分摊了模幂运算的计算成本。
-        
-    - **关键证据**：
-        
-        - 标签生成公式见 **Equation (1)**：$\sigma_{ij}=(H(F_{id}||i||j)\cdot g^{f_{m_{ij}}(\alpha)})^{x}$。
-            
-        - 扇区对计算效率的影响分析见 **Figure 2**。
-            
 
----
+## 背景
+在去中心化网络存储时代的的背景中，文件信息的安全性是十分重要的。然而现在的审计方案大多基于可证明数据拥有权PDP、可检索性证明POR，然而这两种方案架构都需要一个第三方审计员，对于审计证明进行验证。在多副本的存储要求一下，云存储服务商会内部节点勾结，只存储一个文件，而不存储副本。
 
-### **方案架构**
+基于第三方审计的方案。产生以下三个问题
+（1）第三方的不可信。
+（2）第三方故障，导致审计服务停滞。
+（3）相信云存储管理器与存储服务提供商是不可靠的。
 
-- 核心流程（输入→处理→输出）：
-    
-    用户生成带扇区划分的数据副本与多项式标签 $\rightarrow$ SSP 存储副本与标签 $\rightarrow$ 智能合约发起包含随机数 nonce 的挑战 $chal$ $\rightarrow$ SSP 基于 PCS-MPAP 聚合多文件证据并生成零知识证明 $Proof_i$ $\rightarrow$ 智能合约执行双线性对验证并记录日志。
-    
-- **关键设计**：
-    
-    - 差异化副本生成与多项式绑定：
-        
-        为了防止 SSP 存储单一副本欺骗用户，用户使用 AES 加密生成内容不同的副本 $Copy_i$，并将数据块的 $s$ 个扇区作为系数构建多项式 $f_{m_{ij}}(X)$。标签 $\sigma_{ij}$ 通过 BLS 签名结构绑定了文件 ID、副本索引 $i$ 和多项式在秘密点 $\alpha$ 的承诺值（见 Section IV.B.2 Eq 1）。
-        
-    - 跨文件聚合证明生成 (ProofGen)：
-        
-        SSP 不直接发送每个文件的评估值，而是利用拉格朗日插值思想构造权重 $\beta_l = \gamma^{l-1} \cdot Z_{T \setminus S_l}(z)$。通过该权重将不同文件在不同挑战点 $r_l$ 的评估值 $S_{l,i}$ 线性组合为 $E_i$。同时生成商多项式承诺 $W_i$ 和 $W'_i$，仅需上传 $(\sigma'_i, W_i, W'_i, E_i)$ 即可证明所有文件完整性（见 Section IV.C Eq 9-11）。
-        
-    - 随机掩码隐私保护：
-        
-        为了防止证明过程泄露原始数据，SSP 引入随机数 $\epsilon_i$ 计算盲化因子 $R_i = v^{\epsilon_i}$ 和混淆后的评估值 $s_i$（或批量方案中的对应处理），确保链上数据的零知识性（见 Section IV.B.3 Eq 5）。
-        
 
----
+本方案基于智能合约，要求每个指定的存储副本的节点，都要生成自己的证明信息，然后上链，最后，智能合约自动审计，不依赖不可靠的可信第三方，并且实现多文件、多副本的同态审计方案。
 
-### **实验环境**
+# 2. Basic Scheme
+## 2.0 在什么样的环境 解决了什么样的问题
+**环境**
+> 现在借助区块链辅助的文件审计方案环境下，出现了审计请求越来越多，然后区块链开销变大。
+> 
 
-- **硬件**：
-    
-    - SSP 节点：Intel Core i5-10500 CPU @ 3.10 GHz, 12.0 GB RAM, Linux。
-        
-    - User 节点：Intel Core i5-12400F CPU @ 2.50 GHz, 8.0 GB RAM, Windows。
-        
-    - 区块链环境：使用 **Ganache** 模拟以太坊网络，部署于阿里云 ECS s6 服务器。
-        
-- **基线对比方法**：
-    
-    - **Scheme (Li et al.)**：（传统基线）基于身份密码学的高效多副本审计方案，但在去中心化场景下证明过大。
-        
-    - **Scheme (Du et al.)**：（作者认为为 SOTA）基于区块链与 PCS-PLONK 的审计方案，但在多文件审计时缺乏聚合能力。
-        
-- **评估指标**：
-    
-    - 主指标：链上存储开销（Proof Size，单位 Byte）、Gas 开销（Gas Costs）、计算时间（Time）。
-        
-    - 次指标：扇区数量（Sector number）对性能的影响。
-        
-- **关键结果**：
-    
-    - **证明大小恒定**：在批量审计 20 个文件时，Scheme 的证明大小激增至约 6000 Bytes（线性增长），而本文方案始终稳定在 **128 Bytes**（常数级）（见 Section VI.B.1 Figure 4）。
-        
-    - **Gas 开销大幅降低**：在审计 10 个文件时，本文方案的 Gas 开销约为 5 Million，远低于 Scheme 的 >250 Million（见 Section VI.B.2 Figure 7）。
-        
-    - **SSP 计算效率**：随着文件数增加，本文方案的 ProofGen 时间增长明显缓于对比方案（见 Section VI.B.1 Figure 5）。
-        
+**解决了什么问题**
+> 本方案是在区块链的存储中，提出一种高效的方案，实现多复制文本的审计。
+> 单文件多副本的审计。
 
----
+## 2.1 $Setup(1^{\lambda}) \to Para$
+$Return(G_1,G_2,g,e,H,H')$ on blockchain
 
-### **致命局限**
+>1. 输入安全参数：$\lambda$ 
+>2. 选择阶为q(**应该是素数**)的群$G_1,G_2$，满足群映射$G_1 * G_1 \to G_2$，g是$G_1$的一个生成元。
+>3. 选择两个哈希函数$H,H'$
+>	1. $H:\{0,1\}^* \to G_1$
+>	2. $H':G_1 \to Z_p$
 
-- **链上密码学原语实现的昂贵成本**：作者承认，受限于 Solidity 语言和 EVM 特性，在区块链上实现复杂的密码学原语（如双线性对运算）成本极高且困难，当前的实现高度依赖以太坊预编译合约的支持（见 Section VI.B.2）。
-    
-- **链上验证计算开销仍有优化空间**：尽管存储开销降为常数，但验证过程的计算逻辑（Verification Computation）在极端并发下仍可能成为瓶颈，作者在结论中表示未来工作旨在“进一步减轻链上验证的计算开销”（见 Section VII Conclusion）。
+
+## 2.2 Preprocessing and Storage Phase
+
+### 2.2.1 KeyGen(λ)
+_KeyGen($\lambda$) -> (pk, sk)_
+>$pk:=(v=g^x,u=g^{\alpha x},g,g^{\alpha},g^{{\alpha}^2}...g^{{\alpha}^{s-1}})$
+>$sk:=(x,\alpha)$；$x,\alpha \in Z_p^*$
+
+### 2.2.2 RepGen(F)
+ 
+生成N个副本
+
+计算副本的值
+> $Copy_i = \{m_{i,j,k}\}(1<=i<=N,1<=j<=n,1<=k<=s)$
+
+计算副本中元素的值
+>$m_{ijk}=E_K(b_{jk}||i)$
+>	$b_{jk}$表示源文件的第j块的第k个扇区。
+
+### 2.2.3 TagGen(sk, $f_{mij} (X)$, $F_{id}$) $\to$ $σ_{ij}$
+
+**计算文件块的认证标签**：
+> $$\sigma_{ij} = (H(F_{id}||i||j)*g^{f_{m_{i,j}(\alpha)}})^x$$
+
+>其中$f_{m_{i,j}}(\alpha)$是通过文件的第`i`个副本的第`j`个文件块的`s`个块的扇区组成：
+> $$f_{m_{i,j}}(X) = \sum_{k=1}^{s}m_{i,j,k}*X^{k-1}$$
+> 其中，客户端可以自己计算，服务端也可以通过密文文件进行计算，然后使得这个函数信息保密。目的就是为了不可伪造，不能公用一个认证函数。
+
+
+### 2.2.4 TagVerfication(pk, $m_{ijk}$, $F_{id}$, $σ_{ij})$ → 0/1
+>*服务节点验证客户端是否是诚实的，相当于私钥签名，公钥验证*
+
+>**验证配对函数**：$$e(\sigma_{ij}, g) = e\left( H(F_{id} \| i \| j) \cdot g^{f_{m_{ij}}(\alpha)}, v \right)$$
+>**Prove**:
+>	由$\sigma_{ij} = (H(F_{id}||i||j)*g^{f_{m_{i,j}(\alpha)}})^x$带入$e(\sigma_{ij},g)$,得$$e((H(F_{id}||i||j)*g^{f_{m_{i,j}(\alpha)}})^x,g) = e((H(F_{id}||i||j)*g^{f_{m_{i,j}(\alpha)}}),g^x) $$
+>	进而由$g^x = v$得到，$$e(\sigma_{ij}, g) = e\left( H(F_{id} \| i \| j) \cdot g^{f_{m_{ij}}(\alpha)}, v \right)$$
+
+## 2.3 Auditing Phase
+**阶段概述**：智能合约验证文件的所有副本的完整性。
+
+### 2.3.1 $ChalGen(P ara, nounce) \to chal(Q,r,\gamma)$
+>**目的**：生成随机挑战，让生成的数据尽可能的保密。
+>**随机数**：合约选择最新的block的nonce数。
+>**生成**：Generate a  c-elements set $Q = {(a_j,v_j)}$ and select $r,\gamma \in Z_p$ generate by pseudo-random functions
+>	c：需要证明的文件块的个数。     
+>	$a_j$: $a_j \in [1,...,n]$. 要证明的文件块的下标。
+>	$v_j$: $v_j\in Z_p$ . 表明这个块对应的权重系数。
+>	$r,\gamma$: 用来隐藏直接生成的相关信息。
+>**Out**: $$chal = (Q,r,\gamma)$$
+
+### 2.3.2 $ProofGen(chal, {f_{m_{ij}} (X)}, pk) \to Proof_i(\sigma_i, w_i, s_i, R_i)$
+>节点$SSP_i$接收到`chal`之后，计算自己单独的$Proof_i$
+
+>计算聚合认证标签：$$\sigma_i = \left( \prod_{j=1}^{c} \sigma_{i a_j}^{v_j} \right)^{\gamma^{i-1}}$$
+
+>基于$Q = {(a_j,v_j)}$,计算`PCS`的聚合函数函数
+>把`r`作为**评估点**，最终匹配成功与否，就是与这个评估点的计算结果正确性匹配。
+>把$v_j$作为$f_{m_{ia_j}}(X)$的权重，计算挑战的集合函数，证明$SSP_i$节点拥有这个文件副本的加密内容。
+
+>**计算挑战函数**: 这个挑战函数是拥有这个文件副本的节点，通过文件认证标签获得
+>$$f_{M_i}(X) = \sum_{j=1}^{c} v_j \cdot f_{m_{ia_j}}(X)$$
+>$$f_{m_{i,j}}(X) = \sum_{k=1}^{s}m_{i,j,k}*X^{k-1}$$
+>**计算商多项式**：用于后面的类似于`PCS`中`W`的计算，用来证明聚合多项式在秘密点$\alpha$处的值，用于后面对于评估点进行验证。这个是真不能伪造，$\alpha$整个过程，只有在生成公钥的时候采用上，然后立即消除，谁都不知道这个内容，若是没有对应的多项式与公钥组个，谁都不能计算出来这个值。
+>$$h_i(X) = \gamma^{i-1} \cdot \frac{f_{M_i}(X) - f_{M_i}(r)}{X - r}$$
+>**计算W**：$$w_i = g^{h_i(\alpha)}$$
+>
+
+
+**对于构造的信息进行隐藏**
+> $SSP_i$选择一个随机数$\varepsilon_i$，利用随机数与合约发出的$chal = (Q,r,\gamma)$的随机数$\gamma$，进行隐藏。
+
+>$$\begin{cases}
+s'_i = \gamma^{i-1} \cdot f_{M_i}(r) \\
+R_i = v^{\varepsilon_i} = (g^x)^{\varepsilon_i} \\
+s_i = s'_i + \varepsilon_i \cdot H'(R_i)
+\end{cases}$$
+
+>**Return:  $Proof_i = (\sigma_i, w_i, s_i, R_i)$**
+
+### 2.3.3 $Verify(pk, \{Proof_i\}, chal) \to result$
+
+>中间变量1：$$\eta = \prod_{i=1}^{N} R_i^{H'(R_i)}$$ $$\eta_i =  R_i^{H'(R_i)}$$
+
+> 中间变量2：$$P=\prod_{i=1}^N(\prod_{j=1}^cH(F_{id}||i||j)^{v_j})^{\gamma^{i-1}}$$ $$P_i = (\prod_{j=1}^cH(F_{id}||i||j)^{v_j})^{\gamma^{i-1}}$$
+
+>集合验证：$$e(\sigma \cdot \eta, g) \cdot e(g^{-s}, v) = e(P, v) \cdot e(w, u \cdot v^{-r})$$
+
+>单个验证：$$e(\sigma_i \cdot \eta_i, g) \cdot e(g^{-s_i}, v) = e(P_i, v) \cdot e(w_i, u \cdot v^{-r})$$
+# 3. Efficient Batch Auditing Scheme
+>前置条件：副本个数为`d`
+
+>挑战生成：$ChalGen(Para, nounce) \rightarrow chal.$
+>$$chal = (\{Q_l\}, \{r_l\}, \gamma, z)$$
+>其中,$\{Q_l\}$是随机挑战集合，$\{r_l\}$是评估点的集合，$\gamma, z \in Z_p$
+
+>`SSPi`证明生成：$ProofGen(chal, \{f_{l, m_{ij}}(X)\}, pk) \rightarrow Proof_i$
+>1. 根据挑战聚合认证标签：$$\sigma'_i = \prod_{l=1}^{d} \left( \prod_{\{a_j, v_j\} \in Q_l} \sigma_{l, i a_j}^{v_j} \right)^{\beta_l}$$
+>2. 计算参数多项式：$$\begin{cases}
+F_i(X) = & \sum_{l=1}^{d} \gamma^{l-1} \cdot Z_{T \setminus S_l}(X)
+\cdot (F_{l,M_i}(X) - F_{l,M_i}(r_l)) \\
+H_i(X) = & \frac{F_i(X)}{Z_T(X)} \\
+L_i(X) = & \sum_{l=1}^{d} \beta_l \cdot (F_{l,M_i}(X) - F_{l,M_i}(r_l))- Z_T(z) \cdot H_i(X)
+\end{cases}$$
+>	1. 挑战多项式：$F_{l,M_i}(X) = \sum_{\{a_j,v_j\}\in Q_l} v_j \cdot f_{l,m_{ia_j}}(X)$，其中$f_{l,m_{ia_j}}(X)$表示第$l$个文件的第$i$个副本$a_j$块的多项式，公式为：$f_{m_{ij}}(X) = \sum_{k=1}^{s} m_{ijk} \cdot X^{k-1}$
+>	2. 计算多项式：$Z_S := \prod_{z \in S} (X - z)$
+>	3. 中间参数：$\beta_l = \gamma^{l-1} \cdot Z_{T \setminus S_l}(z)$
+>3. 计算证明参数 :$$\begin{cases}
+W_i = g^{H_i(\alpha)} \\
+W'_i = g^{\frac{L_i(\alpha)}{\alpha-z}} \\
+E_i = \sum_{l=1}^{d} \beta_l \cdot S_{l,i}
+\end{cases}$$
+>4. Publish $Proof_i = (\sigma'_i, W_i, W'_i, E_i)$ to blockchain.
+
+
+>智能合约验证证明：$Verify(pk, \{ Proof_i \}, chal) \rightarrow result$
+>1. 计算聚合参数：$$\begin{cases}
+W = \prod_{i=1}^{N} W_i \\
+W' = \prod_{i=1}^{N} W'_i \\
+E = \sum_{i=1}^{N} E_i \\
+\sigma' = \prod_{i=1}^{N} \sigma'_i
+\end{cases}$$
+>2. 配对验证函数：$$e(\sigma', g) \cdot e(\psi, v) = e(\zeta, v) \cdot e(W', u \cdot v^{-z})$$
+>	其中$\psi = g^{-E} \cdot W^{-Z_T(z)}$,$\zeta = \prod_{i=1}^{N} \prod_{l=1}^{d} \left( \prod_{\{v_j\} \in Q_l} H(F_{id} \| i \| j)^{v_j} \right)^{\beta_l}$
+>3. 配对失败则溯源每一个$Proof_i$：$$e(\sigma'_i, g) \cdot e(\psi_i, v) = e(\zeta_i, v) \cdot e(W'_i, u \cdot v^{-z})$$
+>	参数计算：$\psi_i=g^{-E_i} \cdot W_i^{-Z_T(z)}$,$\zeta_i = \prod_{l=1}^{d} \left( \prod_{\{v_j\} \in Q_l} H(F_{id} \| i \| j)^{v_j} \right)^{\beta_l}$
+
+# 4. SECURITY ANALYSIS
+
+# 5. Experiment
+
