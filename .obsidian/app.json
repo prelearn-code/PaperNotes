@@ -11,5 +11,6 @@
   "newFileLocation": "current",
   "attachmentFolderPath": "assets/pics",
   "newLinkFormat": "relative",
-  "showUnsupportedFiles": true
+  "showUnsupportedFiles": true,
+  "useMarkdownLinks": true
 }

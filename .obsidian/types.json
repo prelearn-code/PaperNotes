@@ -5,6 +5,7 @@
     "tags": "tags",
     "title": "text",
     "Read Year": "date",
-    "year": "date"
+    "year": "date",
+    "date": "date"
   }
 }
