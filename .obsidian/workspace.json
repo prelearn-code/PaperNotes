@@ -160,14 +160,23 @@
               "icon": "links-going-out",
               "title": "论文阅读提示词 的出链列表"
             }
+          },
+          {
+            "id": "d346c6f019d69178",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 287.5,
-    "collapsed": true
+    "width": 688.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -179,10 +188,11 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "periodic-notes:Open this week": false
+      "periodic-notes:Open this week": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e887d62ff09c4fc1",
+  "active": "6c2db8a8667adde9",
   "lastOpenFiles": [
     "未命名.base",
     "assets/pics/未命名 1.base",
