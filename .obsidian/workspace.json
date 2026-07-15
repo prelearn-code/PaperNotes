@@ -4,21 +4,41 @@
     "type": "split",
     "children": [
       {
-        "id": "6c83a1330779b0ed",
+        "id": "2433cc4d99ca535f",
         "type": "tabs",
         "children": [
           {
-            "id": "8fd9ad86895f2730",
+            "id": "11b174d58a751fa1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "06_MyPaper/Iot_Audit/paper_cn.md",
+                "file": "06_MyPaper/Dup_Audit/paper_cn.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "paper_cn"
+            }
+          }
+        ]
+      },
+      {
+        "id": "31f13ceeae348ccb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "90354e54c3520e77",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "06_MyPaper/Dup_Audit/SUGGETS.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "SUGGETS"
             }
           }
         ]
@@ -94,7 +114,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "06_MyPaper/Iot_Audit/paper_cn.md",
+                "file": "06_MyPaper/Iot_Audit/核心方案2.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +124,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "paper_cn 的反向链接列表"
+              "title": "核心方案2 的反向链接列表"
             }
           },
           {
@@ -142,13 +162,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "06_MyPaper/Iot_Audit/paper_cn.md",
+                "file": "06_MyPaper/Iot_Audit/核心方案2.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "paper_cn 的大纲"
+              "title": "核心方案2 的大纲"
             }
           },
           {
@@ -157,12 +177,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "06_MyPaper/Iot_Audit/paper_cn.md",
+                "file": "06_MyPaper/Iot_Audit/核心方案2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "paper_cn 的出链列表"
+              "title": "核心方案2 的出链列表"
             }
           },
           {
@@ -180,7 +200,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 281.5
+    "width": 212.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -196,22 +216,27 @@
       "periodic-notes:Open this week": false
     }
   },
-  "active": "d346c6f019d69178",
+  "active": "11b174d58a751fa1",
   "lastOpenFiles": [
+    "06_MyPaper/Dup_Audit/SUGGETS.md",
+    "06_MyPaper/Dup_Audit/paper_cn.md",
+    "06_MyPaper/Dup_Audit/核心方案.md",
+    "03_Technical/AI Agent/Codex-deepseek-maker.md",
+    "03_Technical/AI Agent/Codex与DeepSeek MCP集成实践及Ubuntu迁移指南.md",
+    "03_Technical/AI Agent",
+    "tools/deepseek-mcp/README.md",
+    "tools/deepseek-mcp/src/deepseek_worker/__pycache__/server.cpython-312.pyc",
+    "tools/deepseek-mcp/src/deepseek_worker/__pycache__/core.cpython-312.pyc",
+    "tools/deepseek-mcp/src/deepseek_worker/__pycache__/__init__.cpython-312.pyc",
+    "tools/deepseek-mcp/src/deepseek_worker/__pycache__",
+    "tools/deepseek-mcp/tests/__pycache__/test_core.cpython-312.pyc",
+    "tools/deepseek-mcp/tests/__pycache__",
+    "tools/deepseek-mcp/config.example.toml",
+    "tools/deepseek-mcp/tests/test_core.py",
+    "tools/deepseek-mcp/tests",
     "06_MyPaper/Iot_Audit/核心方案2.md",
     "06_MyPaper/Iot_Audit/paper_cn.md",
-    "06_MyPaper/Dup_Audit/核心方案.md",
-    "06_MyPaper/Iot_Audit/reference.zip",
-    "06_MyPaper/Iot_Audit/pic/svg.zip",
-    "06_MyPaper/Iot_Audit.zip",
-    "06_MyPaper/Dup_Audit",
-    "06_MyPaper/Iot_Audit/pic/fig_exp2_combo.pdf",
     "06_MyPaper/Iot_Audit/方案框架.md",
-    "06_MyPaper/Iot_Audit/reference/978-981-95-3551-4_11.pdf",
-    "06_MyPaper/Iot_Audit/reference/Jiang 等 - 2022 - FVC-Dedup A Secure Report Deduplication Scheme in a Fog-Assisted Vehicular Crowdsensing System.pdf",
-    "06_MyPaper/Iot_Audit/reference/Zhang 等 - 2023 - Efficient Integrity Auditing Mechanism With Secure Deduplication for Blockchain Storage.pdf",
-    "06_MyPaper/Iot_Audit/reference/Liu 等 - 2025 - Blockchain-Assisted Fine-Grained Deduplication and Integrity Auditing for Outsourced Large-Scale Dat.pdf",
-    "06_MyPaper/Iot_Audit/reference/Pan 等 - 2026 - Blockchain-Enabled Efficient Deduplication and Mixed Auditing for Dynamic Cloud Data.pdf",
     "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_main_performance.svg",
     "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_verify_time_comparison.svg",
     "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_multiproof_effect.svg",
@@ -240,10 +265,6 @@
     "04_else/就业/大模型2.md",
     "04_else/就业/C++.md",
     "04_else/就业/C_C++.md",
-    "01_Literature/Notes/Audit-and-Integrity/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness.md",
-    "01_Literature/Notes/Deduplication/Blockchain-Enabled Efficient Deduplication and  Mixed Auditing for Dynamic Cloud Data.md",
-    "MyBlog/Crypto/lattice/basic.md",
-    "MyBlog/Crypto/RSA/RSA攻击理论与代码.md",
     "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/方案相关图片/架构图.canvas",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/非对称加密.canvas",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/search_process.canvas",
