@@ -6,6 +6,7 @@
       {
         "id": "2433cc4d99ca535f",
         "type": "tabs",
+        "dimension": 63.16279069767442,
         "children": [
           {
             "id": "11b174d58a751fa1",
@@ -13,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "06_MyPaper/Dup_Audit/paper_cn.md",
+                "file": "06_MyPaper/Search_Audit/paper_cn.md",
                 "mode": "source",
                 "source": false
               },
@@ -26,6 +27,7 @@
       {
         "id": "31f13ceeae348ccb",
         "type": "tabs",
+        "dimension": 36.83720930232558,
         "children": [
           {
             "id": "90354e54c3520e77",
@@ -33,7 +35,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "06_MyPaper/Dup_Audit/SUGGETS.md",
+                "file": "06_MyPaper/Search_Audit/SUGGETS.md",
                 "mode": "source",
                 "source": false
               },
@@ -200,7 +202,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 212.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -216,11 +218,11 @@
       "periodic-notes:Open this week": false
     }
   },
-  "active": "11b174d58a751fa1",
+  "active": "90354e54c3520e77",
   "lastOpenFiles": [
-    "06_MyPaper/Dup_Audit/SUGGETS.md",
-    "06_MyPaper/Dup_Audit/paper_cn.md",
-    "06_MyPaper/Dup_Audit/核心方案.md",
+    "06_MyPaper/Search_Audit/paper_cn.md",
+    "06_MyPaper/Search_Audit/SUGGETS.md",
+    "06_MyPaper/Search_Audit/核心方案.md",
     "03_Technical/AI Agent/Codex-deepseek-maker.md",
     "03_Technical/AI Agent/Codex与DeepSeek MCP集成实践及Ubuntu迁移指南.md",
     "03_Technical/AI Agent",
