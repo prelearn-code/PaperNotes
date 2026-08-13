@@ -1,1133 +1,2340 @@
-# paper\_cn
-
-## 面向相似性去重物联网对象的证书绑定公共完整性审计
+# 面向相似性去重物联网对象的依赖感知公开审计与条件性可恢复性框架
 
 **作者：** 匿名作者
 
-### 摘要
+## 摘要
 
-物联网（IoT）与工业物联网（IIoT）平台持续产生大量结构化感知记录，相似性去重能够降低冗余，但 representative 与 delta/fallback payload 之间的内部依赖使普通文件级或块级审计难以证明 payload、映射和链上状态处于同一可验证上下文中。本文提出一种证书绑定的对象级公共完整性审计方案，将每个相似类建模为 similarity-class storage object，并基于双线性映射同态认证器、长度分隔的域分离编码和统一 AuditMHT，将代表根、审计根、形成摘要和策略哈希绑定为对象根，再通过状态令牌绑定链上版本状态。FullAudit 验证被挑战 representative 持有性、delta/fallback payload 持有性、AuditMHT 映射一致性和链上状态一致性；FastAudit 仅执行链下轻量 payload 持有性、证书绑定和基础状态一致性检查；SampleCheck 只对抽样集合声明分类正确性、差分边界和重构可靠性。基于 HAI `train1.csv` 的实验表明，本文原型可在 Full 规模的 216,001 条记录和 1,190 个对象上完成对象级公共审计，链上 `VerifyFullAudit` gas 为 2,241,581，AuditMHT multiproof 在 $c=300$ 时相对 single-path opening 减少 41.3% 证明开销。本文公共审计层不公开验证隐藏明文语义，也不将未抽样记录纳入语义正确性结论。
+相似性去重把物联网记录表示为唯一 representative、依赖 representative 的 delta 和独立 fallback，在降低存储冗余的同时引入跨条带恢复依赖。普通扁平文件审计不能保证记录映射、实际被审计条带、代表依赖、文件级公开验证状态和对象版本属于同一可恢复状态。本文提出面向 representative--delta 星形对象的依赖感知公开审计与条件性可恢复性框架。方案由认证记录绑定派生 LINK/REP-LINK 挑战，使映射证明唯一决定实际接受的业务条带和 representative；以 META、当前 PageDescStore 和页面内部认证条目启动分页元数据及 ordinary stripe 的完整公开验证状态；以唯一阈值信标和无放回状态机提供固定输入的全部目标调度。对象初始形成由可信 Gateway 在链下完成并签名认证，BFT 状态机仅重算交易中可见的描述符根、版本、suite 引用和生命周期状态，并原子发布获证对象。执行所需的参数、规范编码、挑战规则和验证逻辑固化在不可变 VerifierModule 中，外部来源工件仅用于学术与工程溯源，不属于协议执行输入。在固定 CSP 状态、对象头、共识状态、PageDescStore、SuiteRegistry 和随机预言机表的同一快照下，统一 extractor 将完整码字、可解码子集或原始消息规范化为消息和完整编码表示，重建当前对象认证根并输出当前获证对象及其 SidHistoryRoot 承诺，得到条件性的公开参数固定状态可提取性。完整历史 sid 集合的一致性由独立 CSMS 状态转换定理保证，不被并入当前对象恢复。底层 RPDP 仅需满足公开验证、可判定的选择性上下文绑定和 fixed-state 提取，并声明恢复输出模式与 extractor 权限。本文给出参数化组合证明，并在原始对称 pairing 模型下给出 Shacham--Waters 的候选理论适配；该适配不被解释为现代 Type-3 部署实例。
 
-### 关键词
+## 关键词
 
-物联网数据去重，相似性去重，公共完整性审计，区块链，对象证书
+物联网数据去重，依赖感知公开审计，条件性可恢复性，认证元数据，组合安全
 
-***
+---
 
-## I. 引言
+# I. 引言
 
-物联网（Internet of Things, IoT）和工业物联网（Industrial IoT, IIoT）平台正在持续产生大规模结构化感知记录，例如温度、湿度、气体浓度、振动、电流、电压和设备状态等。与普通非结构化文件不同，这类记录通常遵循固定模式，并按照稳定的采样周期生成。同一设备在相邻时间窗口内产生的数据，或同一区域内同类型设备采集的数据，往往并非字节级完全一致，却在数值分布、字段结构和变化趋势上高度接近。已有 IIoT 相似去重研究也观察到常规工业感知数据具有固定结构和显著相似性 \[gao2024]。这一特征使 IoT 数据更适合按照“相似对象”进行管理，而不是仅按照完全重复文件或数据块进行处理。
+物联网（Internet of Things, IoT）和工业物联网（Industrial IoT, IIoT）平台正在持续产生大规模结构化感知记录，例如温度、湿度、气体浓度、振动、电流、电压和设备状态等。与普通非结构化文件不同，这类记录通常遵循固定模式，并按照稳定的采样周期生成。同一设备在相邻时间窗口内产生的数据，或同一区域内同类型设备采集的数据，往往并非字节级完全一致，却在数值分布、字段结构和变化趋势上高度接近。已有 IIoT 相似去重研究也观察到常规工业感知数据具有固定结构和显著相似性 [gao2024]。这一特征使 IoT 数据更适合按照“相似对象”进行管理，而不是仅按照完全重复文件或数据块进行处理。
 
-云存储为 IoT 数据的长期保存、集中分析和跨域共享提供了便利，但数据一旦被外包，所有者便失去对云端副本的直接控制。云服务提供商（Cloud Service Provider, CSP）可能因硬件故障、软件错误、攻击入侵或节省成本而删除、篡改或回放旧版本数据。因此，远程完整性审计成为外包存储安全中的基本机制。已有 PDP/PoR 及其公共审计扩展能够通过随机挑战验证外包文件或密文块是否仍被保存 \[ateniese2007, juels2007, shacham2008]；进一步地，区块链和智能合约被引入审计过程，用于替代或监督集中式第三方审计者，提供公开挑战、证明验证和审计结果记录 \[zhang2023, tian2022, zhu2026]。
+云存储为 IoT 数据的长期保存、集中分析和跨域共享提供了便利，但数据一旦被外包，所有者便失去对云端副本的直接控制。云服务提供商（Cloud Service Provider, CSP）可能因硬件故障、软件错误、攻击入侵或节省成本而删除、篡改或回放旧版本数据。因此，远程完整性审计成为外包存储安全中的基本机制。已有 PDP/PoR 及其公共审计扩展能够通过随机挑战验证外包文件或密文块是否仍被保存 [ateniese2007, juels2007, shacham2013]；进一步地，区块链和智能合约被引入审计过程，用于替代或监督集中式第三方审计者，提供公开挑战、证明验证和审计结果记录 [zhang2023, tian2022, zhu2026]。
 
-与此同时，数据去重被广泛用于降低云端存储冗余。传统安全去重通常依赖收敛加密或消息锁定加密，使相同明文产生可去重的密文，并通过所有权证明限制未持有数据的用户滥用源端去重接口 \[bellare2013, dupless2013, pow2011]。但其适用对象主要是完全相同的文件或数据块。对于 IoT 场景，这种精确去重并不足够：大量常规感知记录只是在时间、位置或传感环境上存在轻微差异，仍然包含明显的近似重复内容。近似重复检测、模糊提取器和相似保持标签等技术为相似数据处理提供了基础 \[manku2007, dodis2008]。Gao _et al._ 针对 IIoT 数据的结构化与周期性特点提出 IIoT-Simhash、边缘侧相似去重框架和相似性所有权证明，说明相似性去重能够同时降低存储和传输开销 \[gao2024]。FuzzyDedup 进一步利用相似保持哈希、模糊提取器、FuzzyMLE 和 FuzzyPoW 支持相似文件、分块或数据块的安全去重 \[jiang2023]。这些工作表明，相似去重是 IoT 云存储中的重要优化方向。
+与此同时，数据去重被广泛用于降低云端存储冗余。传统安全去重通常依赖收敛加密或消息锁定加密，使相同明文产生可去重的密文，并通过所有权证明限制未持有数据的用户滥用源端去重接口 [bellare2013, dupless2013, pow2011]。但其适用对象主要是完全相同的文件或数据块。对于 IoT 场景，这种精确去重并不足够：大量常规感知记录只是在时间、位置或传感环境上存在轻微差异，仍然包含明显的近似重复内容。Gao *et al.* 针对 IIoT 数据的结构化与周期性特点提出 IIoT-Simhash、边缘侧相似去重框架和相似性所有权证明 [gao2024]；FuzzyDedup 利用相似保持哈希、模糊提取器、FuzzyMLE 和 FuzzyPoW 支持相似文件、分块或数据块的安全去重 [jiang2023]。这些工作说明相似去重能够显著降低存储和传输开销，但没有把去重后形成的依赖对象作为公开可提取性审计对象。
 
-然而，相似去重也改变了完整性审计的对象形态。相似记录被归并后，云端保存的不再是每条原始记录的独立副本，而是由 representative、delta/fallback payload、对象目录、局部索引、认证器和状态令牌共同构成的相似类对象。尤其是 representative 与 delta/fallback payload 存在单向依赖：delta 只记录相对于 representative 的差异，若 representative 丢失或被替换，即使所有 delta payload 仍被保存，相似类中依赖该代表的记录也可能无法被正确恢复。由此产生的审计目标不再只是“某些密文块是否存在”，而是“representative、payload、映射和状态是否在同一对象上下文中保持一致”。现有区块链辅助去重审计方案能够支持密钥去重、认证器去重、批量审计、细粒度块去重、动态操作或隐私保护 \[miao2024, zhang2023, zhang2025, liu2025, pan2026]，但其审计对象仍主要是精确文件、精确密文块或单用户/跨用户重复块，不能直接推出相似类对象中的 $\mathsf{PayloadPoss}\land\mathsf{MapCons}\land\mathsf{StateCons}$。
+相似去重改变了完整性审计的对象形态。云端保存的不再是每条原始记录的独立副本，而是 representative、delta/fallback payload、对象目录、局部索引、认证器和状态令牌的组合。delta 只记录相对于 representative 的差异；若 representative 丢失或被替换，即使所有 delta payload 仍存在，相似类中的依赖记录也可能无法恢复。现有区块链辅助去重审计方案主要验证精确文件或块的概率持有性 [miao2024, zhang2023, zhang2025, liu2025, pan2026]，不能直接推出包含 representative 依赖、映射和版本状态的完整相似类对象可恢复。
 
-直接扩展现有审计机制并不能解决上述问题。仅审计 representative payload，无法发现 CSP 删除 delta/fallback payload 但保留代表和哈希路径的情况；仅审计 delta/fallback payload，则无法保证其依赖的 representative 仍与当前对象一致；仅将映射关系放入 Merkle 树，也不能证明被挑战 payload 本身仍然可用；仅验证块持有性，则无法排除旧版本状态重放、跨相似类证明拼接或越权边缘生成对象等问题。因此，相似去重 IoT 存储需要一个更明确的审计边界：将相似类作为独立对象进行建模，并把代表持有性、payload 持有性、映射一致性和对象状态一致性绑定到同一公开可验证上下文中。
+直接把相似类序列化后运行普通 PoR 仍然不足。该做法虽然可以恢复扁平字节串，却难以对 representative、metadata 和 ordinary payload 配置不同冗余，并会使局部记录更新触发大范围重编码。另一方面，当 mapping opening 与 stripe PoR challenge 独立生成时，恶意 CSP 可以提交记录位于 stripe $A$ 的认证路径，却使用 stripe $B$ 的有效 PoR 响应；即使多个根由同一证书绑定，只要认证 opening 没有决定实际挑战域，两套证明分别有效仍不能证明本轮验证的是同一依赖边。更强的多根基线可以让认证 mapping 派生实际挑战，因此本文不把“多个根”本身视为缺陷，而把问题进一步推进到：如何认证完整必要 stripe 集合、如何在不提前公开完整顺序的情况下逐一覆盖 ordinary 条带与 metadata pages，以及如何把逐 stripe extractor 组合为依赖图恢复。
 
-本文关注的问题是：在不重新设计相似分类算法、且不依赖零知识证明公开验证隐藏语义的前提下，如何为相似去重后的 IoT 云存储对象提供公开可审计的存储与状态完整性保证。为此，本文提出一种证书绑定的相似类对象级完整性审计方案。该方案将每个相似类建模为 similarity-class storage object，并通过链上对象根绑定 representative root、unified AuditRoot、对象版本、策略哈希、边缘授权范围和对象状态。基于该对象根，公共审计层验证代表持有性、payload 持有性、映射一致性和状态一致性；对于分类正确性、差分边界有效性和重构可靠性等涉及明文语义的性质，则由所有者/网关侧抽样复核给出边界明确的语义保证。
+为说明该缺口，考虑一个含 1 条 representative、90 条 delta 和 9 条 fallback 的对象。若 CSP 删除 representative 条带，却保留全部 delta/fallback、旧目录和真实认证材料，则普通均匀块审计可能连续多轮只命中仍然存在的条带；即使某条 delta 的本地数据证明通过，该记录仍因代表缺失而无法恢复。本文的 LINK 域验证被抽样记录所属业务条带，REP-LINK 域把任意被抽样 delta 同轮绑定到当前 representative；无放回 coverage 最终调度全部普通业务条带与必要元数据页；固定状态 CurrentDataDAR 再检查这些局部输出能否重建同一个认证对象。该例子贯穿后续对象模型、挑战生成、上下文绑定、coverage 和组合提取定理。
+
+由此形成三个相互依赖的设计挑战。第一，认证记录映射必须唯一决定本轮实际接受的业务条带和 representative 条带，否则成员证明与 PoR 证明可以分别正确却语义错绑。第二，metadata page 本身也可能由恶意 CSP 删除，提取器必须在尚未恢复页面内容前，从已最终确认的公共状态获得完整页面描述符和文件级公开验证状态。第三，META、页面、REP 和普通业务条带的局部 extractor 必须从同一逻辑对象版本和同一固定 prover 状态开始，不能把多个时刻分别成功的响应拼接成对象恢复。本文的三项主要贡献分别对应上述三项挑战。
+
+本文关注的问题是：在不重新设计相似分类算法、且不公开隐藏明文语义的前提下，如何对唯一 representative、依赖它的 delta 和独立 fallback 所构成的深度一星形依赖对象提供公开审计、无遗漏调度和条件性可恢复性，同时保留有界 stripe 更新能力。本文严格区分两类结论。真实链上 operational audit 提供单轮依赖绑定、阈值随机驱动的无放回 coverage 和调用者状态安全；它没有 `Reset`/rewind 能力，因而不直接推出完整对象可恢复。独立地，在标准固定全局状态黑盒提取模型下，若每个必要 stripe 满足其注册 RPDP profile 的固定状态提取前提，则逐 stripe extractor、RS 解码、`BlockRoot` 和当前认证根重建给出条件性的公开参数固定状态可提取性 $\mathsf{CurrentDataDAR}$。所有者进一步提供对象密钥和私有恢复材料时，才能验证 AEAD、delta 明文重构和私有形成关系，得到 $\mathsf{OwnerDAR}$；恢复表示仍由当前 ACTIVE 链状态授权并可继续提供服务时，得到 $\mathsf{CurrentDAR}$；FROZEN 状态只允许恢复最后获证版本以支持迁移或灾难恢复。
 
 本文的主要贡献如下。
 
-* 第一，本文提出面向 IoT 相似去重的可审计相似类对象模型。该模型将相似去重后的数据表示为由 representative payload、delta/fallback payload、映射关系、认证器和状态令牌组成的 similarity-class storage object，使相似类不再只是分类结果或压缩单元，而成为具有明确边界的完整性审计对象。
-* 第二，本文设计上下文绑定的对象级 FullAudit 机制。该机制通过对象根联合绑定 representative root、unified AuditRoot、对象版本、策略哈希和对象状态，使公开审计能够同时验证代表持有性、payload 持有性、映射一致性和状态一致性，从而覆盖传统精确块审计难以表达的相似类对象完整性语义。
-* 第三，本文设计面向边缘生成相似类对象的授权与可追责机制。考虑到 IoT 场景中相似分类、delta/fallback 编码和认证标签生成通常由边缘节点完成，本文通过范围绑定的边缘授权限制边缘节点只能在指定框架、周期、范围和策略下生成相似类对象，并通过对象形成摘要和边缘转录记录绑定记录标识、相似类标签、代表引用、记录承诺、payload 哈希和对象版本，为对象形成约束、审计上下文绑定以及后续抽样复核和责任定位提供依据。
+- **依赖对象安全模型。** 本文形式化唯一 representative、依赖它的 delta 和独立 fallback 构成的深度一星形对象，分别定义当前获证布局关系 `CertifiedLayoutWF_current`、历史根绑定 `HistoryRootBound`、用途相关生命周期关系 `LifecycleAllowed`、私有良构关系 `LayoutWF_priv`、当前对象恢复 `CurrentDataDAR`、所有者明文恢复 `OwnerDAR` 和当前链授权扩展 `CurrentDAR`。令 $\mathsf{Dep}(\ell)$ 为恢复记录 $\ell$ 所需的条带集合，并定义
+  $$
+  \mathsf{Impact}(g)=|\{\ell:g\in\mathsf{Dep}(\ell)\}|,
+  \qquad
+  \mathsf{RecoveryLoss}(S)=|\{\ell:\mathsf{Dep}(\ell)\cap S\neq\varnothing\}|.
+  $$
+  对 representative 条带，$\mathsf{Impact}(g_{rep})$ 等于 representative 自身及全部依赖 delta 的数量，刻画了条带规模与恢复损失之间的放大差异。历史 sid 不复用作为独立的 `HistoricalConsistencyValid` 状态性质处理，不强行纳入每次当前对象提取。
+- **认证依赖挑战与可启动枚举。** 本文构造一条从获证记录依赖到实际 RPDP 验证上下文的认证解析链：认证记录绑定唯一派生 LINK/REP-LINK 目标，当前描述符状态在页面被恢复前提供 metadata page 的启动输入，页面内部认证条目则向在线验证者提供 ordinary stripe 的完整文件级公开状态。由此，映射、被审计条带、版本和公开验证状态不能分别正确却语义错绑。
+- **固定状态组合恢复与一致更新。** 挑战者在首个提取 challenge 前保存 prover 的同一全局状态，先提取 META 根和元数据页，再提取 REP 与普通业务条带，把 `RecoverableView` 规范化为消息和完整码字，最后重建当前 DataRoot、RecordRoot、StripeDirectoryRoot、PageDescStoreRoot，并输出获证的 `SidHistoryRoot` 承诺。普通 payload 修改仅更新目标业务条带、对应清单页、对应公开验证状态页和 META 根；链上通过单一 update digest 与新证书拒绝新旧元数据混合状态。threshold-BLS 无放回调度作为 operational coverage 机制，不被表述为新的可恢复性原语。
 
-此外，本文给出链下 FastAudit 轻量变体、抽样语义复核、批量对象审计、冻结/回滚和无需重新标记的前向状态转移机制，用于明确轻量 payload 审计、完整对象级审计与语义可恢复性之间的边界，并支持相似类对象在云存储环境中的持续状态演化。
+本文其余部分组织如下。第 II 节讨论相似去重、公共 PoR、动态审计和认证元数据的相关工作；第 III 节定义导入原语及其注册合同；第 IV 节给出系统、对象、威胁和安全模型；第 V 节概述核心机制与状态不变量；第 VI 节给出具体构造；第 VII 节证明上下文绑定、多轮审计、原子状态切换和条件性对象恢复；第 VIII 节分析理论复杂度、部署边界和实验要求；第 IX 节总结全文。
 
-## II. 相关工作
+# II. 相关工作
 
-本节从相似数据去重、区块链辅助完整性审计、去重与完整性审计三个方向回顾现有研究，并进一步说明本文方案与这些工作的关系。
+## A. 相似数据去重
 
-### A. 相似数据去重
+安全去重最初主要关注完全重复数据。消息锁定加密使相同明文产生可去重密文 [bellare2013]；DupLESS 使用服务器辅助密钥生成缓解低熵数据上的离线枚举 [dupless2013]；所有权证明限制攻击者仅凭标签声明拥有完整文件 [pow2011]。BL-MLE 将消息锁定加密扩展到块级去重，并同时考虑块密钥管理、文件级/块级去重和所有权证明 [chen2015]。
 
-数据去重最初主要关注完全重复数据。收敛加密和消息锁定加密使相同明文能够产生可比较或可合并的密文，从而支持密文侧安全去重 \[bellare2013]；DupLESS 通过服务器辅助密钥生成缓解低熵数据上的暴力枚举风险 \[dupless2013]；所有权证明用于防止攻击者仅凭文件标签声明拥有完整文件 \[pow2011]。在大文件场景下，BL-MLE 将消息锁定加密扩展到块级去重，并同时考虑块密钥管理、文件级/块级去重和所有权证明 \[chen2015]。面向云端和雾辅助环境的系统研究进一步讨论了大数据去重、分布式去重和地理空间数据去重等工程场景 \[boafft2020, geobd22021]。这些工作奠定了安全去重和系统去重的基础，但其去重条件仍然主要是明文或密文块的精确相等。
+相似数据去重进一步处理近似重复内容。Generalized Deduplication 将数据表示为基准项和偏差项 [talasila2019]；FuzzyDedup 组合相似保持哈希、模糊提取器、FuzzyMLE 和 FuzzyPoW [jiang2023]；Gao *et al.* 面向 IIoT 设计 IIoT-Simhash、边缘侧相似去重和相似性所有权证明 [gao2024]。这些研究解决了相似性判定、密文去重或所有权验证，但通常没有定义恶意 CSP 上 representative、delta/fallback 和认证映射的联合可提取性。
 
-相似数据去重进一步关注近似重复数据。Manku _et al._ 研究了 Web 数据中的近似重复检测，为相似标签和相似查找提供了经典基础 \[manku2007]。Generalized Deduplication 将数据分块表示为基准项与偏差项，通过对基准项去重并保存偏差项实现无损恢复 \[talasila2019]。FuzzyDedup 将相似保持哈希、模糊提取器、FuzzyMLE 和 FuzzyPoW 结合起来，支持相似文件、分块或数据块的安全模糊去重 \[jiang2023, dodis2008]。Gao _et al._ 面向 IIoT 云管理系统设计 IIoT-Simhash、边缘侧并行相似去重和相似性所有权证明，证明结构化工业感知数据可以从相似性去重中获得显著存储和传输收益 \[gao2024]。
+## B. 公共可恢复性审计、动态 PoR 与认证元数据
 
-上述研究解决了相似性判定、密文相似去重、所有权证明或代表—偏差式存储表示问题，但通常不把去重后形成的相似类作为公开完整性审计对象。换言之，它们能够说明相似数据如何被识别和压缩，却不能直接证明云端仍然保存了 representative payload、delta/fallback payload、映射关系和状态令牌的完整组合。
+Ateniese *et al.* 提出 PDP [ateniese2007]；Juels 和 Kaliski 提出 PoR [juels2007]；Shacham 和 Waters 给出具有完整提取证明的紧凑公共 PoR [shacham2013]。其公开方案在原始对称 bilinear-group 模型和随机预言机模型中证明 Part-One soundness，并进一步给出固定 prover 的提取和纠删码恢复论证。本文不把该构造未经证明地转换为 Type-3 pairing；附录 J 只在原论文模型内给出理论接口映射。Hanser 和 Slamanig 的 robust PDP 同时考虑公开与私有验证 [hanser2013]，但其公开 ePrint 页面仍标记 `minor bug`，因此在完成版本、勘误和接口核验前不作为本文已注册实例。
 
-### B. 区块链辅助完整性审计
+动态 PoR/PDP 说明外包文件能够在认证状态下支持更新。Shi *et al.* 通过分层认证和编码实现块级动态 PoR [shi2013]；Anthoine *et al.* 分析动态 PoR 的服务端时间—空间权衡 [anthoine2021]。这些工作主要证明单文件或单编码状态的更新与提取，通常假设验证元数据和文件目录在提取前可用。本文进一步处理多个相互依赖业务条带、分页公开元数据、页面启动状态和对象级认证根的组合恢复。
 
-远程完整性审计允许数据所有者在不下载完整文件的情况下验证外包数据。Ateniese _et al._ 提出了可证明数据持有（PDP），通过随机抽样检查服务器是否保存指定数据块 \[ateniese2007]；Juels 和 Kaliski 提出了可恢复性证明（PoR），强调完整性验证与数据可恢复性的结合 \[juels2007]；Shacham 和 Waters 进一步给出了紧凑的 PoR 构造，提高了证明与验证效率 \[shacham2008]。这些方案为后续公共审计、批量审计和动态审计提供了基础。
+认证字典和元数据保存系统关注目录内容自身的完整性。IntegrityCatalog 将完整性目录作为一等对象并通过持久认证字典和保存节点支持目录恢复 [chondros2014]；Dahlberg *et al.* 给出稀疏 Merkle 树的成员、非成员证明和缓存策略 [dahlberg2016]。这些结构可以证明目录或集合状态，但不自动提供业务数据的 PoR 提取。本文因此把当前页面描述符、页面内容根、业务目录和历史 sid 集合分别建模，并明确各层的可用性与安全职责。
 
-传统公共审计通常依赖第三方审计者（Third-Party Auditor, TPA），但中心化 TPA 可能引入单点故障、合谋和审计结果可信性问题。区块链的不可篡改记录、公开可验证执行和智能合约机制为降低 TPA 依赖提供了路径。Zhang _et al._ 在区块链链下存储场景中利用智能合约实现公开完整性验证 \[zhang2023]；Zhu _et al._ 提出轻量级区块链辅助无证书云数据完整性审计方案，以区块链执行挑战和验证，避免单一 TPA 带来的性能瓶颈和单点失效 \[zhu2026]。这类工作提高了审计过程的透明性和可追溯性，但其验证对象仍通常是普通文件块或密文块，尚未覆盖相似去重对象中的 payload 持有性、映射一致性和对象状态一致性。
+## C. 去重、相似数据与区块链完整性审计
 
-### C. 去重与完整性审计
+Tian *et al.* 提出区块链安全去重与共享审计 [tian2022]；Miao *et al.* 支持共享数据完整性审计和认证器去重 [miao2024]；Liu *et al.* 通过稀疏树和承诺支持细粒度去重审计 [liu2025]；Pan *et al.* 支持动态云数据的混合审计和去重 [pan2026]。这些工作主要验证精确文件、块或共享数据关系，没有把 representative--delta 恢复依赖同当前业务条带、页面描述符和对象根联合建模。
 
-为了同时降低存储冗余并保证数据完整性，许多研究将去重与审计结合。Tian _et al._ 在去中心化存储中提出基于区块链的安全去重与共享审计方案，通过双服务器存储模型、轻量认证器生成和双向共享审计降低单点失效、重复审计和元数据冗余 \[tian2022]。Miao _et al._ 提出基于区块链的共享数据完整性审计与去重方案，支持用户侧密钥去重、CSP 侧认证器去重、去中心化审计和批量审计 \[miao2024]。Zhang _et al._ 针对区块链链下存储提出带客户端去重的完整性审计机制，利用消息锁定加密和改进认证器生成算法减少数据与认证器冗余 \[zhang2023]。
+2025 年的直接邻近工作已经研究相似数据上的可搜索完整性审计以及去中心化多副本可搜索审计 [miao2025similar,miao2025multi]。这些方案分别关注关键词结果、相似文件集合、认证器检索、多副本和区块链可信审计。本文不支持加密关键词搜索，也不声称替代这些联合搜索—审计方案；本文的差异是把相似去重后的 representative、delta/fallback、分页验证状态和恢复依赖作为一个当前对象，研究其 fixed-state 条件性组合恢复。
 
-后续工作进一步考虑隐私、细粒度去重和动态数据。Zhang _et al._ 通过随机化文件标签和审计证明保护文件所有权隐私，同时支持认证标签去重和区块链辅助审计 \[zhang2025]。Liu _et al._ 提出 BA-FGDIA，通过稀疏求和密文树、向量承诺、重构矩阵和 Bloom 过滤器实现大规模外包数据的细粒度去重与区块链辅助完整性审计 \[liu2025]。Pan _et al._ 研究动态云数据中的高效去重与混合审计，支持单用户文件级/块级去重、明密文混合审计、动态操作和所有权转移 \[pan2026]。在 IoT 和边缘场景中，FVC-Dedup 面向雾辅助车联网众感系统提供隐私保护的报告去重 \[fvcdedup2022]；Pan _et al._ 进一步讨论边缘辅助去重、可委托审计和基于区块链的激励与抽样日志验证 \[edgeauditiot]。
+## D. 本文定位
 
-这些方案与本文最为接近，因为它们同时考虑了去重和完整性审计。然而，它们主要处理完全重复文件、精确密文块、单用户或跨用户重复块，以及认证器/密钥/标签的去重问题。其审计结论通常是文件级或块级持有性，不能直接推出相似类对象中 representative payload、delta/fallback payload、映射关系、认证器和状态令牌之间的联合一致性；对于 Liu2025 和 Pan2026 等细粒度或动态审计方案，本文仅指出其原始审计语义不以相似类对象为单位，也不显式承诺本文定义的代表—差分绑定、映射一致性和链上对象状态一致性。
+本文从 Gateway 最终获证的 representative-centered 存储表示开始，不重新设计相似分类算法，也不提出新的底层 PoR。核心贡献是定义依赖对象对导入原语的密码学充分条件，并证明这些条件如何与分页元数据、当前共识状态、在线调度、动态生命周期和对象级恢复组合。核心协议使用单一对象级 RPDP suite；不同 suite 只能通过完整对象重新实例化切换。
 
-### D. 本文定位
-
-本文并不重新设计相似性检测算法，也不把目标限定为传统精确文件或块级去重审计。与相似数据去重工作相比 \[jiang2023, gao2024, talasila2019]，本文关注相似记录被归并之后形成的 representative-delta/fallback-mapping-state 对象如何被定义、绑定和审计。与区块链辅助审计工作相比 \[ateniese2007, shacham2008, zhu2026]，本文的审计目标不仅包括被挑战密文块的持有性，还包括对象内 payload 持有性、映射一致性、对象版本和链上状态一致性。与去重结合完整性审计方案相比 \[miao2024, zhang2023, zhang2025, liu2025, pan2026]，本文将每个相似类建模为对象级审计单元，并通过对象根同时绑定代表根、统一审计根、策略哈希、授权范围和对象状态。
-
-表 1 从审计语义角度概括本文与相关工作的定位差异。该表只比较公开审计目标和对象绑定范围，不评价相关方案在其原始问题设定下的完整系统性能。
-
-| Scheme family                                                 | Audit object                             | Similarity-class object | Rep-delta binding            | Payload possession | Mapping consistency | Chain-state consistency | On-chain verification |
-| ------------------------------------------------------------- | ---------------------------------------- | ----------------------- | ---------------------------- | ------------------ | ------------------- | ----------------------- | --------------------- |
-| PDP/PoR \[ateniese2007, juels2007, shacham2008]               | file/block                               | no                      | no                           | yes                | no                  | no                      | no                    |
-| Similarity dedup \[gao2024, jiang2023, talasila2019]          | similar data / ownership                 | partial                 | partial storage semantics    | no public audit    | no                  | no                      | no                    |
-| Blockchain audit with dedup \[miao2024, zhang2023, zhang2025] | file/block or duplicate block            | no                      | no                           | yes                | no                  | partial                 | yes                   |
-| Fine-grained / mixed audit \[liu2025, pan2026]                | fine-grained block or dynamic cloud data | no                      | no                           | yes                | no                  | partial dynamic state   | partial               |
-| Ours-FastAudit                                                | similarity-class payload                 | yes                     | certificate/basic state only | yes                | partial             | partial                 | no                    |
-| Ours-FullAudit                                                | similarity-class storage object          | yes                     | yes                          | yes                | yes                 | yes                     | yes                   |
-
-因此，本文方案的核心定位是为相似性去重后的 IoT 云存储提供证书绑定的对象级公共审计。公共层验证代表持有性、payload 持有性、映射一致性和状态一致性；边缘授权与转录记录约束相似类对象的生成过程；所有者/网关侧抽样复核则用于处理分类正确性、差分边界有效性和重构可靠性等无法在非零知识条件下完全公开验证的语义属性。
-
-## III. 系统模型与问题定义
-
-本节给出当前方案使用的实体边界、对象定义、敌手能力、审计目标和核心符号。本文的审计对象不是普通文件，也不是独立密文块，而是相似去重之后形成的 similarity-class storage object。该对象由 representative payload、delta/fallback payload、对象目录、局部索引、认证器、形成摘要和状态信息组成。当前方案使用统一审计根 $\rho\_\tau^{audit}$ 绑定 payload 持有性元数据与映射信息，并通过对象根和链上状态绑定对象版本与状态。
-
-### A. 系统实体与信任边界
-
-系统由 User/Gateway、Edge、CSP 和 Blockchain/Smart Contract 四类实体组成。各实体的职责和信任边界如下。
-
-| Entity                    | Role                                                                                       | Trust boundary                       |
-| ------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------ |
-| User/Gateway              | 定义框架模板、注册策略、管理签名密钥和框架密钥，向 Edge 发放范围绑定授权，并执行 `SampleCheck`                                  | 信任根；其签名密钥和抽样复核结果不被敌手伪造               |
-| Edge                      | 在授权上下文内执行相似类标签生成、representative 选择、delta/fallback 编码、认证器生成和对象证书材料生成                        | 半可信；可能错分、错误选择代表或越权尝试，但不能伪造 User 授权签名 |
-| CSP                       | 保存 representative payload、delta/fallback payload、对象目录、局部索引、认证器、AuditMHT 节点和对象证书材料，并按挑战生成证明 | 不可信；可能删除、替换、回放或拼接外包对象材料              |
-| Blockchain/Smart Contract | 保存对象根、代表根、统一审计根、策略哈希、状态令牌、对象叶数量和审计公钥，生成挑战并执行公开验证                                           | 可信公开状态机；已确认状态不可篡改，合约按部署逻辑执行          |
-
-User/Gateway 是对象形成和语义复核的信任根。其负责确定框架模板、策略边界、授权范围和抽样复核规则；分类正确性、差分边界有效性和重构可靠性等隐藏语义性质，只能由 User/Gateway 侧 `SampleCheck` 对抽样集合给出结论。
-
-Edge 在授权上下文 $(FID,EID,epoch,scope,PolicyHash)$ 内执行相似类对象形成。Edge 不被假设为完全可信：它可能因错误、被攻破或自利行为而进行恶意错分、错误代表引用、错误 delta 编码或越权生成对象。本文通过范围绑定授权、对象形成摘要和对象证书将 Edge 的输出绑定到可追责上下文中，但公共审计本身不覆盖 Edge 的全部语义错误。
-
-CSP 是主要被审计对象的持有者。审计时，CSP 根据链上挑战生成聚合证明、被挑战 audit leaves 和 indexed AuditMHT multiproof。Blockchain/Smart Contract 负责读取当前对象状态、重算挑战、验证 multiproof、执行 BN254 pairing equation，并检查对象版本、状态令牌和冻结状态。
-
-### B. 相似类存储对象
-
-相似类对象记为 $O\_\tau$：
+底层条带原语只承担三项密码学性质：
 
 $$
-O_\tau=(FT_F,C_\tau^{rep},\{C_\ell^\Delta\},\{C_\ell^{fb}\},\mathcal I_\tau,st_\tau).
+\mathsf{RPDP}^{\star}=\bigl(\mathsf{PublicVerifiable},\mathsf{ContextBound},\mathsf{FixedStateExtractable}\bigr).
 $$
 
-其中，$FT\_F$ 为框架模板，$C\_\tau^{rep}$ 为 representative payload 密文，$C\_\ell^\Delta$ 为 delta payload 密文，$C\_\ell^{fb}$ 为 fallback 完整 payload 密文，$\mathcal I\_\tau$ 为对象目录和对象内局部索引，$st\_\tau$ 为对象状态。
+页面描述符和公开状态的可获得性由外层 `ResolvePublicStateOnline/Extract` 关系保证，而不是被错误地写成底层 PoR 的密码学性质。ordinary stripe 在线验证时，完整文件级公开状态由 `AuditStateEntryOpening` 认证到页面 `AuditEntryRoot`，而非假设验证者已经持有完整 AuditStatePage。附录 J 将原始 Shacham--Waters 公共 PoR 映射为 `SW-Sym-Theory`。该映射严格保留原论文的对称 pairing 群、文件标签、安全假设和提取定理，只说明抽象接口在原模型中存在理论候选；它不是现代 Type-3 部署实例，也不提供链上字节和运行时间结论。
 
-逻辑对象证书为：
-
-$$
-OC_\tau^{logical}=(FID,\tau,ver,data\_ver_\tau,ref_\tau,\rho_\tau^F,\rho_\tau^{rep},\rho_\tau^{audit},\psi_{\tau,ver},PolicyHash,st_\tau,prevRoot_\tau).
-$$
-
-其中，$\rho\_\tau^F$ 为框架模板根，$\rho\_\tau^{rep}$ 为代表根，$\rho\_\tau^{audit}$ 为统一审计根，$\psi\_{\tau,ver}$ 为对象形成摘要。对象根定义为：
+为隔离 coverage 增量，定义完整协议基线 `StrongRandomAudit`：它采用与本文相同的对象、分页元数据、RPDP suite、证明域和更新规则，唯一差异是 coverable slot 独立有放回抽样且不维护 SwapMap。令 $m_{cov}=m_o+n_{meta\_page}$，均匀抽样 $T$ 个 slot 后
 
 $$
-object\_root_\tau=H_4(\textsf{OBJ\_ROOT}\parallel enc(\rho_\tau^F)\parallel enc(\rho_\tau^{rep})\parallel enc(\rho_\tau^{audit})\parallel enc(\psi_{\tau,ver})\parallel enc(data\_ver_\tau)\parallel enc(PolicyHash)\parallel enc(st_\tau)\parallel enc(prevRoot_\tau)).
+\Pr[\exists g\text{ omitted}]\le m_{cov}\left(1-\frac1{m_{cov}}\right)^T\le m_{cov}e^{-T/m_{cov}}.
 $$
 
-其中，$\textsf{OBJ\_ROOT}$ 是对象根的域分离标签，$enc(\cdot)$ 是带类型标记和长度分隔的无歧义编码。
+有放回完整覆盖时间的期望为 $m_{cov}H_{m_{cov}}$；本文无放回调度在恰好 $m_{cov}$ 个成功且全部通过的 slot 后形成 `CoveragePass`。该结论只比较调度，不替代底层 extractor。
 
-链上记录为：
+| 具体工作/方案 | 验证对象 | 元数据启动 | fixed-state 提取 | 依赖对象恢复 | 动态语义 |
+|---|---|---|---|---|---|
+| Shacham--Waters [shacham2013] | 单个纠删编码文件 | file tag 预先可用 | 有 | 无 | 静态文件 |
+| Shi *et al.* [shi2013] | 动态单文件 | 客户端/认证层次状态 | 有 | 无 | 块级动态 |
+| IntegrityCatalog [chondros2014] | 完整性目录和快照 | catalog preservers | 非业务数据 PoR | 无 | 目录更新 |
+| Miao *et al.* [miao2025similar] | 相似数据的搜索结果与审计集合 | 搜索索引与链状态 | 面向搜索结果正确性与完整性，不给出本文对象级 META-first extractor | 搜索集合，不是去重依赖恢复 | 可搜索/动态 |
+| Miao *et al.* [miao2025multi] | 多副本可搜索审计集合 | 搜索与副本状态 | 面向搜索结果与副本责任，不恢复 representative-centered 对象 | 多副本责任，不是 REP--DELTA 恢复 | 多副本/去中心化 |
+| Pan *et al.* [pan2026] | 动态去重云数据 | 文件/审计状态 | 证明动态去重数据的审计正确性，但不定义本文的分页启动与多组件固定快照恢复 | 不建模代表依赖 | 动态/混合审计 |
+| 本文框架 | 当前 representative-centered 对象 | META + 当前 `PageDescStore` | 每组件 fixed-state | 是 | 条带/页面/对象原子切换 |
 
-$$
-ChainRoot[\tau,ver]\leftarrow object\_root_\tau.
-$$
+| 方案族 | 公开持久状态 | 完整证明增长 | 更新放大 | 分布式状态 |
+|---|---|---|---|---|
+| Static public PoR | file tag/public key | challenge/query size | replacement retag | none |
+| Dynamic PoR | root/position/version | challenge + witness | affected blocks/hierarchy | none |
+| Authenticated catalog | catalog root/snapshots | lookup/update path | catalog update | preservers/log |
+| 本文框架 | object roots、当前 PageDesc、single suite、coverage state | logical domains + RPDP proof + record/directory/AuditEntry openings | business stripe + constant pages；REP change touches all DELTA | beacon、SwapMap、consensus state |
 
-当前完整公共审计接受语义为：
+从安全语义看，最近邻差异进一步表现为：
 
-$$
-\mathsf{AcceptFullAudit}=1
-\Rightarrow
-\mathsf{RepInt}\land\mathsf{PayloadPoss}\land\mathsf{MapCons}\land\mathsf{StateCons}.
-$$
+| 工作 | 恶意 CSP | 元数据可用性来源 | 公开状态来源 | fixed-state extractor | 动态原子性 |
+|---|---|---|---|---|---|
+| Shacham--Waters [shacham2013] | 是 | file tag 预持有 | file tag/public key | 明确 | 静态文件 |
+| Shi *et al.* [shi2013] | 是 | 客户端认证状态 | 客户端/层次状态 | 明确 | 动态结构内定义 |
+| IntegrityCatalog [chondros2014] | 目录节点恶意/失效 | catalog preservers | 目录快照 | 面向目录，不是业务 PoR | 目录级 |
+| Miao *et al.* [miao2025similar] | 是 | 搜索索引与链状态 | 方案内索引/认证器 | 面向搜索审计目标 | 方案内 |
+| 本文 | CSP/Edge--CSP 合谋 | 当前共识 PageDescStore + 恢复页面 | ObjectHeader/PageDesc/AuditEntry opening | 每组件公开 fixed-state | 对象、页面和历史根原子切换 |
 
-链下轻量审计接受语义为：
+本文的细粒度动态性来自外层 stripe/page 分割：被修改组件重新执行完整 `Preprocess`。该性质不应被误解为底层 `SW-Sym-Theory` 本身提供动态 PoR。
 
-$$
-\mathsf{AcceptFastAudit}=1
-\Rightarrow
-\mathsf{PayloadPoss}\land\mathsf{CertBind}\land\mathsf{BasicStateCons}.
-$$
+# III. 预备知识与导入接口
 
-FastAudit 不返回 AuditMHT multiproof，也不声明完整 $\mathsf{MapCons}$；完整对象级结论只由 FullAudit 给出。
+本节只给出后续组合定理实际依赖的原语和公开状态接口。相似分类、分页对象、链上生命周期和依赖挑战属于本文设计，不作为预备知识隐藏。
 
-### C. 威胁模型与敌手能力
+## A. 系统式纠删码、认证结构与历史集合
 
-敌手记为 PPT 算法 $\mathcal A$。本文主要考虑恶意或被攻破的 CSP，同时允许 $\mathcal A$ 诱导或控制半可信 Edge 产生错误对象形成材料。$\mathcal A$ 可以观察公开链上状态、历史对象根、历史审计记录和公开认证材料，也可以完全控制 CSP 的外包存储状态，包括任意删除、替换、回放或跨对象拼接 representative、delta/fallback payload、认证器、对象目录、AuditMHT 节点和证书材料。
+外层编码使用系统式 $[N,k]$ Reed--Solomon 码。对规范条带表示 $M$，编码得到 $C=\mathsf{RS.Encode}_{N,k}(M)$；任意不少于 $k$ 个一致编码块可唯一恢复 $M$。恢复后必须确定性重编码并检查完整 `BlockRoot`，防止把不一致的局部解码结果当作获证条带。
 
-对于 Edge，$\mathcal A$ 可以导致恶意错分、错误 representative 选择、错误 delta/fallback 路径选择或越权对象形成尝试；但 $\mathcal A$ 不能伪造 User/Gateway 的授权签名，不能把未授权的 $AuthCtx$ 绑定为有效对象上下文，也不能篡改已经确认的链上对象根。Edge 作恶造成的分类正确性或重构可靠性问题，不能由 CSP 侧公共审计完全阻止，只能由 User/Gateway 的 `SampleCheck` 对抽样集合进行兜底。
-
-对于 Blockchain/Smart Contract，本文假设已确认链上状态不可篡改，合约按固定部署代码执行对象状态读取、挑战生成、multiproof 验证、pairing 验证和冻结状态检查。$\mathcal A$ 不能在对象根固定前预测链上挑战集合和挑战系数，也不能绕过当前版本的 $ChainRoot\[\tau,ver]$、$state\_token\_\tau$ 或冻结状态检查。
-
-### D. 审计目标与安全边界
-
-本文公共审计只声明对象级公开完整性，不声明隐藏明文语义：
-
-$$
-\mathsf{AcceptFullAudit}=1
-\nRightarrow
-\mathsf{ClassSound}\land\mathsf{ReconSound}\land\mathsf{SemBound}.
-$$
-
-当 User/Gateway 对抽样集合 $S\_\tau^{sample}$ 执行语义复核并通过时，仅对被抽样记录有：
+目录、记录、数据和页面认证结构统一满足固定根绑定。若在同一已认证根下为两个不同叶值、不同计数或不同规范顺序生成均可接受 opening，则沿两条验证路径向上取首个输入不同但父哈希相同的节点，得到底层哈希碰撞。正文分别记其优势为
 
 $$
-\mathsf{AcceptFullAudit}=1\land\mathsf{SampleCheck}=1
-\Rightarrow
-\mathsf{SampleSem}_\tau(S_\tau^{sample}).
+\mathsf{Adv}_{Dir}^{bind},\quad
+\mathsf{Adv}_{Record}^{bind},\quad
+\mathsf{Adv}_{Data}^{bind},\quad
+\mathsf{Adv}_{Page}^{bind}.
 $$
 
-### E. 符号说明
-
-| 符号                        | 含义                                  |
-| ------------------------- | ----------------------------------- |
-| $FID$                     | 框架标识                                |
-| $PolicyHash$              | 框架策略哈希                              |
-| $AuthCtx$                 | Edge 授权上下文                          |
-| $\mathcal A$              | 敌手                                  |
-| $\tau$                    | 相似类对象标识                             |
-| $ref\_\tau$               | representative 引用                   |
-| $sid\_\tau^{rep}$         | representative payload 的局部索引        |
-| $C\_\tau^{rep}$           | representative payload 密文           |
-| $C\_\ell^\Delta$          | delta payload 密文                    |
-| $C\_\ell^{fb}$            | fallback payload 密文                 |
-| $\rho\_\tau^{rep}$        | representative root                 |
-| $\rho\_\tau^{audit}$      | unified AuditMHT root               |
-| $\psi\_{\tau,ver}$        | formation digest                    |
-| $data\_ver\_\tau$         | payload/mapping 认证版本                |
-| $object\_root\_\tau$      | 对象根                                 |
-| $ChainRoot\[\tau,ver]$    | 链上对象根记录                             |
-| $currentVer\_\tau$        | 链上当前版本号                             |
-| $state\_token\_\tau$      | 对象状态令牌                              |
-| $update\_nonce\_\tau$     | 对象更新计数器                             |
-| $\sigma\_i$               | payload 认证器                         |
-| $\mu\_j$                  | 聚合扇区响应                              |
-| $\Phi\_\tau$              | 聚合认证器                               |
-| $\mathsf{CertBind}$       | 证明携带的 compact certificate 与当前对象证书一致 |
-| $\mathsf{BasicStateCons}$ | 版本、状态令牌和对象 active 状态一致              |
-
-## IV. 方案构造
-
-### A. 方案概述
-
-本文首先把结构化 IoT 记录划分为 FRAME、CLASS 和 DELTA 三类字段；然后由 Edge 在授权范围内形成相似类对象；接着为 representative、delta 和 fallback payload 生成认证器，并将 payload 持有性元数据和映射位置统一写入 AuditMHT；最后通过对象根和链上状态支持完整 FullAudit，并通过不返回 multiproof 的 FastAudit 提供链下轻量 payload 审计。
-
-当前方案只有一个对象内统一审计根 $\rho\_\tau^{audit}$。对象目录负责定位，完整性绑定由 unified audit leaf、AuditMHT multiproof、对象根和链上状态共同完成。
-
-协议流程分为六个步骤。`Setup/Auth` 生成公共参数和边缘授权上下文；`ObjectFormation` 将结构化记录形成 representative-delta/fallback 对象；`BuildAuditMHT` 为 payload 持有性元数据和对象内映射生成统一审计根；`FastAudit` 执行链下轻量 payload 审计；`FullAudit` 执行链上对象级审计；`LifecycleUpdate` 处理冻结、回滚和前向状态转移。下面的算法框给出各步骤的输入、输出和关键检查。
-
-### B. 系统初始化与边缘授权
-
-系统输入安全参数 $1^\lambda$，生成公共参数：
+历史 sid 集合采用固定深度压缩稀疏 Merkle 集合（Compressed Sparse Merkle Set, CSMS）[dahlberg2016]。设 $sid\in\{0,1\}^{d_{sid}}$，叶位置由 sid 本身或其规范哈希唯一确定。非空叶和空叶分别为
 
 $$
-Para=(p,\mathbb G,\mathbb G_T,e,g,\{u_j\}_{j=1}^{s},H_0,H_1,H_2,H_3,H_4,H_{\mathbb G_1},H_{\mathbb Z},H_{\mathbb Z_p},\mathsf{AEAD},\mathsf{KDF},\mathsf{Sig}).
+L_{used}(sid)=H_0(\textsf{SID\_USED}\parallel sid),\qquad
+L_{empty}=H_0(\textsf{SID\_EMPTY}).
 $$
 
-User 注册框架模板：
+空子树摘要按固定递归预计算。CSMS 提供
 
 $$
-F=(FID,Schema,\Theta,\Omega,\mathcal E,Policy),
+\mathsf{HSet.Setup},\ \mathsf{ProveMem},\ \mathsf{ProveNonMem},\ \mathsf{Append},\ \mathsf{VerifyAppend}.
 $$
 
-并计算：
+`Append` 只允许把空叶变为已使用叶，不定义删除。成员、非成员和追加见证的安全性归约到哈希抗碰撞。
+
+## B. 可注册 RPDP 接口
+
+核心对象只绑定一个 RPDP suite。可注册公开审计原语的语法为
 
 $$
-PolicyHash=H_0(FID\parallel Schema\parallel\Theta\parallel\Omega\parallel\mathcal E\parallel Policy).
+\mathsf{RPDP}^{\star}=(\mathsf{KeyGen},\mathsf{BindFileID},\mathsf{Preprocess},\mathsf{Challenge},\mathsf{Prove},\mathsf{PublicVerify},\mathsf{Extract}).
 $$
 
-User 为 Edge 构造授权上下文：
+注册 profile 必须满足三项密码学条件：
+
+1. `PublicVerifiable`：诚实 `Preprocess/Challenge/Prove` 的输出由公开验证者接受；
+2. `ContextBound`：native file id、文件级公开验证状态、对象级 suite 和被审计编码表示不能跨获证上下文替换；
+3. `FixedStateExtractable`：在挑战者固定并重绕同一 prover 状态、保持同一公共状态快照和随机预言机表的游戏中，满足明确 admissibility 条件的 prover 可由期望多项式时间 extractor 输出 profile 声明的可恢复视图。
+
+为避免把不同 PoR/PDP 的 extractor 输出强行等同为完整码字，profile 必须声明
 
 $$
-AuthCtx=(FID,EID,ep,ScopeHash,PolicyHash),
+OutputMode_t\in\{\mathsf{FULL\_CODEWORD},\mathsf{DECODABLE\_SUBSET},\mathsf{MESSAGE}\},
 $$
 
-派生边缘标签密钥和审计指数：
+以及
 
 $$
-K_e^{tag}=\mathsf{KDF}(K_F,\textsf{tag}\parallel AuthCtx),
+ExtractorAccess_t\in\{\mathsf{PUBLIC},\mathsf{OWNER\_ASSISTED}\}.
+$$
+
+统一可恢复视图为
+
+$$
+RecoverableView_i\in\left\{C_i,\ \{(j,C_{i,j})\}_{j\in S_i},\ M_i\right\}.
+$$
+
+其中 `DECODABLE_SUBSET` 要求 $|S_i|\ge k_i$ 且坐标满足注册 RS profile。外层规范化算法
+
+$$
+\mathsf{NormalizeRecoveredComponent}(RecoverableView_i,OutputMode_i,CodeParam_i)
+\rightarrow(M_i,\widehat C_i)
+$$
+
+分别执行完整码字解码、子集解码或消息重编码，并总是输出规范消息 $M_i$ 与规范完整码字 $\widehat C_i=\mathsf{RS.Encode}(M_i)$。`CurrentDataDAR` 只允许使用 $ExtractorAccess_t=\mathsf{PUBLIC}$ 的 profile；owner-assisted profile 仅能进入 `OwnerDAR`。
+
+页面启动可重建性不被列为 RPDP 密码学性质。外层系统定义两个确定性关系：
+
+$$
+\mathsf{ResolvePublicStateOnline}(OH,ChainState,PageDescStore,ProofBody,componentID,type)
+\rightarrow(desc,nativeFileID,FilePublicState),
 $$
 
 $$
-x_e^{aud}=H_{\mathbb Z_p}(x_F\parallel\textsf{audit}\parallel AuthCtx),
-\qquad pk_e^{aud}=x_e^{aud}\cdot g.
+\mathsf{ResolvePublicStateExtract}(OH,ChainState,PageDescStore,recoveredPages,componentID,type)
+\rightarrow(desc,nativeFileID,FilePublicState).
 $$
 
-后续对象形成、认证器生成、对象证书构造和公共审计均绑定 $AuthCtx$。
+REP/META 的文件级公开状态由 ObjectHeader 获得；metadata page 的完整 `PageDesc` 由当前最终确认的 `PageDescStore` 获得；ordinary business stripe 在线验证时由 proof 携带的认证 `AuditStateEntry` 获得，在 fixed-state 提取时由已恢复并认证的完整 AuditStatePage 获得。关系缺失、根不匹配、版本不一致或摘要不一致时输出 $\bot$。
 
-**Algorithm 1：SystemInitAndAuthorize**
+外层 DataRoot 不参与 operational RPDP proof 验证。安全绑定通过以下链条实现：Gateway 只对正确编码向量执行 `Preprocess`；`FileContext` 包含 `BlockRoot`；`nativeFileID=BindFileID(FileContext)` 实际进入底层标签和验证；ObjectHeader、StripeDesc/PageDesc、AuditStateEntry 和证书认证 `FileContext`、文件级公开状态及对象级 suite。DataRoot 只用于 fixed-state 恢复后对规范完整码字重建和验证。
 
+## C. 唯一阈值随机信标
+
+核心框架只依赖抽象信标
+
+$$
+\mathsf{UTB}=(\mathsf{Setup},\mathsf{Share},\mathsf{VerifyShare},\mathsf{Combine},\mathsf{VerifyOutput},\mathsf{DeriveSeed}),
+$$
+
+并要求公开可验证、低于阈值时不可预测、固定输入输出唯一以及 retry 输入不变。附录 B 给出 threshold-BLS 与 DKG 的静态腐化候选实例；主组合定理不把 DKG 实现细节混入对象恢复定理。
+
+## D. 规范编码、VerifierModule、单一 RPDP suite 与状态层次
+
+所有哈希、签名、信标输入、对象头、页面描述符和 proof 均采用带长度前缀的规范编码与独立域标签。协议执行所需的全部参数、解析规则、挑战规则和确定性验证逻辑固化在不可变执行模块
+
+$$
+\begin{aligned}
+VerifierModule_t=(&SerializationRules_t,ExecutionParams_t,ChallengeRules_t,\\
+&PublicVerify_t,ExtractInterface_t,ResourceLimits_t).
+\end{aligned}
+$$
+
+模块内容地址为
+
+$$
+VerifierCodeHash_t=H_0(\textsf{VERIFIER\_MODULE}\parallel enc(VerifierModule_t)).
+$$
+
+版本化、不可覆盖的 `SuiteRegistry` 保存
+
+$$
+\begin{aligned}
+SuiteRegistry[registryID,key\_epoch]=(&profileID,key\_epoch,pk,VerifierCodeHash,\\
+&SuiteParamsDigest,SourceRecordHash,status,\\
+&activationHeight,retirementHeight).
+\end{aligned}
+$$
+
+其中 `VerifierCodeHash/SuiteParamsDigest` 唯一决定协议执行；`SourceRecordHash` 仅绑定原论文、证明说明、测试向量、实现来源和审计记录，不作为 `PublicVerify/Extract` 的执行输入。注册时必须验证 module 的规范编码、参数摘要和测试向量。`ACTIVE` suite 可用于新对象；`DEPRECATED` suite 不能用于新对象但必须继续支持旧对象审计、恢复和迁移；`REVOKED` suite 触发相关对象进入 `FROZEN -> MIGRATING`。任何仍被未退休对象引用的 module 不得从共识执行环境中裁剪。
+
+一个对象版本只绑定精简引用
+
+$$
+ObjectSuiteRef=(profileID,key\_epoch,registryID,SuiteParamsDigest,VerifierCodeHash),
+$$
+
+$$
+ObjectSuiteStateDigest=H_0(\textsf{OBJECT\_RPDP\_PROFILE}\parallel enc(ObjectSuiteRef)).
+$$
+
+验证者调用
+
+$$
+\mathsf{ResolveSuiteExecutionState}(ObjectSuiteRef)
+\rightarrow(pk,VerifierModule,ExecutionParams)
+$$
+
+并要求 registry entry、module hash、参数摘要、激活高度和状态一致。该算法不得访问 `SourceRecordHash` 指向的外部工件。每个业务条带或 metadata page 只保存文件级状态
+
+$$
+FilePublicState_g=(nativeFileID_g,PublicAuditState_g,component\_ver_g,BlockRoot_g).
+$$
+
+REP、META、所有 metadata pages 和 ordinary stripes 均使用同一 suite。切换 profile/key epoch 必须创建新对象版本并重新执行全部组件的 `Preprocess`；多 profile 混合对象不进入核心构造和主定理。旧 registry entry 和对应 VerifierModule 不可覆盖。
+
+对象级 `data_ver` 表示当前获证对象版本；业务条带使用独立 `stripe_ver`，元数据页使用独立 `page_ver`；`state_ver` 表示 provider、冻结和生命周期授权状态。对象更新使旧 challenge 失效，而未修改页面无需重新生成底层标签。对象生命周期至少包括
+
+$$
+\mathsf{NONEXISTENT},\mathsf{CREATING},\mathsf{PENDING\_PUBLICATION},\mathsf{ACTIVE},\mathsf{AUDITING},\mathsf{FROZEN},\mathsf{MIGRATING},\mathsf{RECOVERING},\mathsf{RETIRED}.
+$$
+
+只有最终确认的 `ACTIVE` 对象可开启新审计；`AUDITING` 对象只能完成、失败或中止当前 epoch；`FROZEN` 对象只能恢复最后获证版本、迁移或退休；`CREATING/PENDING_PUBLICATION` 不对外暴露为可验证对象。
+
+| 状态 | 维护者 | 公开性 | 变化条件 | 上层绑定 |
+|---|---|---|---|---|
+| `ObjectSuiteRef/SuiteRegistry/VerifierModule` | governance + BFT execution environment | public, versioned immutable | 全对象重新实例化 | ObjectHeader/all descriptors |
+| `StripeDesc/BlockRoot` | Gateway/CSP | public | 条带内容变化 | StripeDirectoryRoot/ObjectHeader |
+| `PageDesc/page_ver` | Gateway + BFT state | current consensus state | 页面内容变化 | `PageDescStoreRoot`/ObjectHeader |
+| `ActiveBindingRoot` | Gateway/BFT state | public root | 活动记录变化 | RecordRoot |
+| `SidHistoryRoot` | Gateway/BFT state | public root | sid 首次分配 | RecordRoot/ChainState |
+| `data_ver/state_ver` | BFT state | public | 对象/授权状态变化 | StateToken/ChallengeState |
+| `ChallengeState/SwapMap` | BFT state | public transient state | audit epoch | lifecycle state |
+
+`ResolvePublicStateOnline/Extract` 的公共辅助输入是最终确认的 $(OH,ChainState,PageDescStore,SuiteRegistry)$ 及可解析的 VerifierModule；该可用性是系统执行条件，不被伪装成底层 RPDP 密码性质。
+
+# IV. 系统模型与问题定义
+
+本节定义系统实体、认证对象、敌手能力和安全目标。审计对象不是无结构字节串，而是由 representative、metadata、delta 和 fallback stripe 构成的依赖图。三个稳定认证命名空间分别承诺编码块、记录索引和 stripe 目录；安全性来自同一对象证书、`BlockRoot` 和认证 binding 的联合上下文，而不是来自把所有叶合并到同一棵树。
+
+## A. 系统架构、信任边界与版本
+
+系统由 User/Gateway、Edge、CSP、Blockchain/Smart Contract 和唯一阈值随机信标委员会构成。CSP 直接向 BFT 状态机提交 proof；共识节点调用获证 `VerifierCodeHash` 唯一确定的不可变 VerifierModule，并在核对 `SuiteParamsDigest` 后执行确定性验证和状态转换。任何公共观察者均可根据当前共识状态、认证 opening、ObjectHeader、注册 RPDP suite 和信标输出重算结果，但观察者的结论不替代共识验证。
+
+| Entity | Responsibility | Security trust | Liveness role |
+|---|---|---|---|
+| User/Gateway | 复核相似类，执行保护、编码、RPDP 预处理、页面形成和对象签名 | **可信形成根**；不在本文中被审计 | 形成、更新、迁移和所有者恢复时上线 |
+| Edge | 在授权临时伪名上形成候选 representative/delta/fallback | 半可信；无最终签名和 RPDP 私钥 | 不影响已发布对象审计 |
+| CSP | 保存编码块、ProverState、页面内容和认证节点；生成证明 | 恶意 prover | 对最终确认 challenge 承担 deadline |
+| Contract/BFT state machine | 保存对象状态、完整 active `PageDescStore`、coverage 交换表、challenge 和不可裁剪的 active/legacy VerifierModule；由共识节点执行确定性验证 | 条件于共识安全、module 完整性和确定执行 | 链停机只影响活性 |
+| Threshold beacon committee | 为固定输入产生唯一 seed | 静态腐化至多 $f_B<t_B$ | 至少 $t_B$ 个 qualified 成员在线 |
+
+信标安全与活性要求
+
+$$
+0\le f_B<t_B\le n_B-f_B.
+$$
+
+DKG 输出为
+
+$$
+(PK_B,\mathcal Q_B,\{VK_i\}_{i\in\mathcal Q_B},TranscriptDigest_B),
+$$
+
+并由
+
+$$
+beacon\_key\_epoch=H_0(\textsf{BEACON\_KEY\_EPOCH}\parallel enc(PK_B,\mathcal Q_B,\{VK_i\},TranscriptDigest_B))
+$$
+
+固定。只有 qualified set 中不同成员的规范份额可计数；成员集合、验证键或公钥变化必须创建新 key epoch，不能作为相同请求的 retry。
+
+对象使用三个单调版本：`data_ver` 在获证存储表示变化时递增；`state_ver` 在冻结、解冻、provider 或生命周期授权变化时递增；局部 `stripe_ver/page_ver` 仅在对应组件内容变化时递增。`StateToken` 绑定 `data_ver/state_ver/provider/status/epoch/slot/ObjectSuiteRef/ChallengeStateHash`。 对象初始创建依次经过 `CREATING` 和 `PENDING_PUBLICATION`；只有原子批量交易最终确认后才进入 `ACTIVE`。`AUDITING` 期间 `data_ver` 固定，任何数据更新必须先 `AbortEpoch`。对象级 RPDP suite 由 `ObjectSuiteRef` 指向不可变 `SuiteRegistry` 条目；ObjectHeader 只签名引用和 `SuiteParamsDigest`。切换 suite 必须全量重处理对象并创建新 `data_ver`，旧 registry 条目不得覆盖。
+
+链状态假设固定为
+
+$$
+ChainAssumption=(FinalityDepth,DeadlineUnit,ConcurrentRule,CurrentStateAvailability).
+$$
+
+challenge 只有达到 `FinalityDepth` 后才开始计时；deadline 使用区块高度；同一对象的审计、更新和 provider 变更由 `state_ver` 串行化。`CurrentStateAvailability` 要求当前最终确认的 ObjectHeader、ChainState、全部 active `PageDescStore` entry、被当前或未退休对象引用的 SuiteRegistry entry 与 VerifierModule 可被验证者读取且不被裁剪。已退休 descriptor 的长期历史可用性不属于 `CurrentDataDAR`。
+
+Gateway 公钥由不可覆盖的版本化注册表
+
+$$
+GatewayKeyRegistry[gatewayID,key\_epoch]=(pk_G,status,activationHeight,retirementHeight)
+$$
+
+管理。新对象和新更新使用当前 ACTIVE key epoch；已有证书始终由其签名时的旧公钥验证，旧 key entry 在相关对象退休前不得裁剪。Gateway 密钥泄漏恢复和恶意 Gateway 不属于本文对抗目标，但 key 轮换和旧证书解析属于协议可执行性要求。
+
+Gateway 为 Edge 生成一次性任务伪名；只有 Gateway 接受候选类后才生成高熵公共对象标识 $\tau$。Edge 不获得对象伪名密钥、记录密钥、RPDP 处理密钥或对象签名权。
+
+## B. Representative-Centered 对象与公开/私有存储视图
+
+### 1) 原始记录、秘密伪名与稳定 key
+
+输入记录为
+
+$$
+r_\ell=(RID_\ell,t_\ell,dev_\ell,X_\ell,b_\ell,creation\_nonce_\ell).
+$$
+
+形成任务首先使用一次性批次密钥生成 $(RID_\ell^{tmp},sid_\ell^{tmp})$，仅用于 candidate 分组和 tie-break。Gateway 复核类成员后采样唯一高熵 `object_nonce`，并生成
+
+$$
+\tau=\mathsf{HMAC}_{K_F}(\textsf{OBJECT\_ID}\parallel enc(FID,policy\_epoch,object\_nonce)).
+$$
+
+随后派生对象级 $K_\tau^{id},K_\tau^{com},K_\tau^{form}$，并计算
+
+$$
+RID_\ell^\star=\mathsf{HMAC}_{K_\tau^{id}}(\textsf{RID}\parallel enc(RID_\ell)),
+$$
+
+$$
+sid_\ell=\mathsf{HMAC}_{K_\tau^{id}}(\textsf{SID}\parallel enc(RID_\ell,creation\_nonce_\ell)),
+$$
+
+$$
+rc_\ell=\mathsf{HMAC}_{K_\tau^{com}}(\textsf{RECORD}\parallel enc(r_\ell)).
+$$
+
+对象发布后 sid 不因插入、删除、迁移或 compaction 改变；重复 sid、tombstone sid 复用和 key 冲突必须拒绝。
+
+### 2) 逻辑依赖对象
+
+相似前端输出一个唯一 representative、若干 delta 和 fallback。逻辑关系
+
+$$
+DG_\tau=(V_\tau,E_\tau,type,parent)
+$$
+
+是以唯一 representative 为根、深度为一的星形依赖对象：每个 delta 恰有一条指向 representative 的边，fallback 无依赖。本文不声称支持任意 DAG、多层 delta 或多个 representative，也不证明相似分类或 representative 选择在业务语义上最优。
+
+### 3) 公开与私有存储视图
+
+公开存储视图定义为
+
+$$
+SV_\tau^{pub}=(\mathcal G_\tau,\mathcal R_\tau,MetaRootIndex_\tau^{pub},\mathcal M_\tau^{auth}),
+$$
+
+包括所有编码 ciphertext blocks、RPDP 状态的公共上下文、RecordBinding、公开 LocalIndex、StripeDesc、三个认证根、META 公开索引、对象头和证书。私有恢复视图为
+
+$$
+SV_\tau^{priv}=(K_\tau^{obj},\{K_\ell^{enc}\},K_{meta}^{enc},\mathcal P_\tau,MetaPayload_\tau^{plain},Transcript_\tau^{form}),
+$$
+
+包括对象/记录密钥、representative/delta/fallback 明文、私有 META 和形成转录。
+
+stripe 分为唯一 REP、唯一 META、DELTA 集合和 FALLBACK 集合。初始形成按 $(storage\_type,sid)$ 升序执行类型隔离 next-fit；更新不重新排序旧记录。stripe id 为
+
+$$
+g=H_0(\textsf{STRIPE\_ID}\parallel enc(FID,\tau,type_g,creation\_seq_g)),
+$$
+
+其中 `creation_seq` 单调且不复用。
+
+### 4) 记录级 Payload、依赖上下文与 RecordBinding
+
+对象密钥为
+
+$$
+K_\tau^{obj}=\mathsf{KDF}(K_F,\textsf{OBJECT\_KEY}\parallel enc(FID,\tau,key\_epoch_\tau)).
+$$
+
+每条业务记录使用独立密钥
+
+$$
+K_\ell^{enc}=\mathsf{KDF}(K_\tau^{obj},\textsf{RECORD\_KEY}\parallel enc(sid_\ell)).
+$$
+
+`payload_ver` 在明文 payload 改变时递增；`binding_ver` 在位置、状态、类型或依赖上下文改变时递增。nonce 由记录密钥和单调 `payload_ver` 确定性派生并禁止回退：
+
+$$
+nonce_\ell=\mathsf{Trunc}_{96}\left(
+\mathsf{KDF}(K_\ell^{enc},\textsf{NONCE}\parallel enc(payload\_ver_\ell))
+\right).
+$$
+
+Gateway 先保护 representative。对任意业务记录，类型相关公开引用和承诺为
+
+$$
+dep\_ref_\ell=
+\begin{cases}
+repRID_\tau^\star,&storage\_type_\ell=\Delta,\\
+RID_\ell^\star,&storage\_type_\ell=REP,\\
+\bot,&storage\_type_\ell=FALLBACK,
+\end{cases}
+$$
+
+$$
+dep\_commit_\ell=
+\begin{cases}
+rep\_commit_\tau,&storage\_type_\ell\in\{REP,\Delta\},\\
+\bot,&storage\_type_\ell=FALLBACK.
+\end{cases}
+$$
+
+其中 representative 必须首先加密并计算 $payload\_commit_{rep}$ 和
+
+$$
+rep\_commit_\tau=H_3(\textsf{REP\_COMMIT}\parallel enc(FID,\tau,repRID_\tau^\star,payload\_commit_{rep})).
+$$
+
+类型相关依赖上下文为
+
+$$
+dep\_ctx_\ell=
+\begin{cases}
+(repRID_\tau^\star,rep\_commit_\tau),&storage\_type_\ell=\Delta,\\
+(RID_\ell^\star,\bot),&storage\_type_\ell=REP,\\
+(\bot,\bot),&storage\_type_\ell=FALLBACK.
+\end{cases}
+$$
+
+记录 associated data 不包含位置、stripe 版本或对象级 `data_ver`：
+
+$$
+AD_\ell=enc(FID,\tau,key\_epoch_\tau,sid_\ell,payload\_ver_\ell,storage\_type_\ell,dep\_ctx_\ell).
+$$
+
+$$
+C_\ell^{pay}=\mathsf{AEAD.Enc}_{K_\ell^{enc}}(nonce_\ell,payload_\ell;AD_\ell),
+$$
+
+$$
+payload\_commit_\ell=H_0(\textsf{PAYLOAD}\parallel enc(storage\_type_\ell,nonce_\ell,C_\ell^{pay})).
+$$
+
+公开 RecordBinding 为
+
+$$
+\begin{aligned}
+RecordBinding_\ell=(&RID_\ell^\star,sid_\ell,rc_\ell,record\_status_\ell,
+ storage\_type_\ell,payload\_ver_\ell,binding\_ver_\ell,\\
+&payload\_commit_\ell,g_\ell,off_\ell,len_\ell,cap_\ell,dep\_ref_\ell,dep\_commit_\ell).
+\end{aligned}
+$$
+
+RecordRoot 只管理 REP、DELTA 和 FALLBACK 业务记录；META 不生成 synthetic RecordBinding，也不参与 record ordinal sampling。representative 的身份或 payload 任一变化都改变所有 delta 的 $dep\_ctx$，属于 dependency-root update，必须重新生成全部 DELTA；fallback 保持不变。
+
+### 5) META 根、当前 PageDescStore、分页公开元数据与历史集合
+
+公开元数据采用分页结构。META 根条带为
+
+$$
+MetaRootStripe_\tau=(MetaRootIndex_\tau^{pub},MetaPayload_\tau^{enc}).
+$$
+
+ObjectHeader 随证书公开唯一 REP 和 META 根条带的完整描述符以及受限启动状态：
+
+$$
+CriticalDescriptorSet_\tau=(StripeDesc_{rep},StripeDesc_{meta}),
+$$
+
+$$
+CriticalAuditBootstrap_\tau=(FilePublicState_{rep},FilePublicState_{meta}),
+$$
+
+并要求关键文件级公开状态总大小不超过 $B_{critical}^{max}$。关键状态不得只保存摘要，也不得依赖 CSP 或未认证仓库临时提供。
+
+公开元数据分为三类按规范编码字节分页的页面：
+
+$$
+ManifestPage_j=\{BootEntry_g\}_{g\in\mathcal G_j},
+$$
+
+$$
+AuditStateEntry_g=(g,nativeFileID_g,FilePublicState_g,PublicAuditStateDigest_g,stripe\_ver_g),
+$$
+
+$$
+AuditEntryLeaf_g=H_0(\textsf{AUDIT\_ENTRY}\parallel enc(AuditStateEntry_g)),
+$$
+
+$$
+AuditStatePage_j=(PageHeader_j,\{AuditStateEntry_g\}_{g\in\mathcal G_j},AuditEntryRoot_j),
+$$
+
+$$
+TombstonePage_j=\{TombstoneBinding_\ell\}_{sid_\ell\in\mathcal T_j}.
+$$
+
+`AuditEntryRoot_j` 是页面内部条目认证根。它允许在线验证者在不恢复完整 AuditStatePage 的情况下，验证 proof 携带的单个或多个 `AuditStateEntry`；fixed-state extractor 在恢复完整页面后重算同一根。
+
+注册策略给出条目上限和字节上限 $(B_M,B_A,B_T,B_M^{byte},B_A^{byte},B_T^{byte})$；分页器以字节上限为硬约束并采用规范 next-fit。每个页面维护独立 `page_ver_p`。页面 gid 和 native file id 为
+
+$$
+g_p=H_0(\textsf{META\_PAGE}\parallel enc(FID,\tau,page\_type,page\_index,creation\_seq_p)),
+$$
+
+$$
+nativeFileID_p=\mathsf{BindFileID}(H_0(\textsf{PAGE\_CONTEXT}\parallel enc(FID,\tau,g_p,page\_type,page\_index,page\_ver_p,BlockRoot_p,ObjectSuiteStateDigest))).
+$$
+
+全局 `data_ver` 不进入页面 native file id；页面内容、编码参数或对象级 suite 变化时递增 `page_ver_p`。
+
+对象级共享参数与页面级文件状态分离。页面文件状态为
+
+$$
+PageFileState_p=(nativeFileID_p,PublicAuditState_p,page\_ver_p,BlockRoot_p).
+$$
+
+页面描述符为
+
+$$
+\begin{aligned}
+PageDesc_p=(&pageID_p,g_p,page\_type,page\_index,creation\_seq_p,status_p,\\
+&CodeParamHash_p,PageFileState_p,PublicAuditStateDigest_p,AuditEntryRoot_p,ObjectSuiteStateDigest).
+\end{aligned}
+$$
+
+其中 `AuditEntryRoot_p` 对 audit-state 页面取页面内部条目根，对其他页面取域分离的规范空根。完整 ordinary `FilePublicState_g` 不复制进入 PageDescStore。
+
+所有当前 active `PageDesc_p` 完整保存在共识状态
+
+$$
+PageDescStore_\tau=\{pageID_p\mapsto PageDesc_p\},
+$$
+
+并满足
+
+$$
+PageDescStoreRoot_\tau=\mathsf{SparseMerkleMapRoot}(PageDescStore_\tau).
+$$
+
+规范 key 为
+
+$$
+pageKey_p=H_0(\textsf{PAGE\_KEY}\parallel enc(FID,\tau,page\_type,page\_index)),
+$$
+
+叶为
+
+$$
+H_0(\textsf{PAGE\_DESC}\parallel pageKey_p\parallel enc(PageDesc_p)).
+$$
+
+核心协议不依赖历史事件日志启动当前页面。验证者调用
+
+$$
+\mathsf{GetPageDesc}(FID,\tau,pageID)
+\rightarrow(PageDesc_p,\pi_p,FinalizedStateRef)
+$$
+
+并在 ObjectHeader 认证的 `PageDescStoreRoot` 下验证当前 entry。当前 active entry 不得被裁剪；退休 entry 的永久历史保存不属于 `CurrentDataDAR`。
+
+对 ordinary 条带 $g$，清单项为
+
+$$
+\begin{aligned}
+BootEntry_g=(&g,type_g,CodeParam_g,CodeHash_g,BlockRoot_g,FileContextHash_g,NativeFileIDHash_g,\\
+&PublicAuditStateDigest_g,AuditPageID_g,AuditOffset_g,stripe\_ver_g,status_g,creation\_seq_g,\\
+&ObjectSuiteStateDigest).
+\end{aligned}
+$$
+
+META 根公开索引保存分页内容根、计数和策略；`PageDescStoreRoot` 由 ObjectHeader 直接认证，并在原子发布/更新时与 META 同版本切换：
+
+$$
+\begin{aligned}
+MetaRootIndex_\tau^{pub}=(&meta\_schema\_ver,serialization\_ver,n_\tau^{active},n_\tau^{recent\_tomb},n_\tau^{ordinary},\\
+&g_{rep},g_{meta},ManifestPageRoot,AuditStatePageRoot,TombstonePageRoot,\\
+&SidHistoryRoot,manifest\_page\_count,audit\_page\_count,tombstone\_page\_count,\\
+&PagePolicyHash,LayoutManifestHash,PolicyHash,CodeSuiteHash,ObjectSuiteStateDigest).
+\end{aligned}
+$$
+
+将 `PageDescStoreRoot` 从 META 内容中移出，避免同一目录根在 META 和 ObjectHeader 中双重承诺；原子状态机同时验证 `PageDescStoreRoot`、META BlockRoot 和 ObjectHeader，因而不能把一组页面描述符与另一 META 页面集合混合。
+
+令 $n_{meta\_page}$ 为当前 active manifest、audit-state 和 tombstone pages 数量，并令
+
+$$
+m_{cov}=m_o+n_{meta\_page}.
+$$
+
+metadata page 不计入 ordinary 业务条带数，但进入 coverable 集合和 StripeDirectoryRoot。
+
+所有曾分配 sid 的历史集合由 CSMS 承诺：
+
+$$
+SidHistoryRoot_\tau=\mathsf{CSMS.Root}(S_{used}).
+$$
+
+初始形成把所有 sid 设为已使用叶。插入必须提供旧根下的非成员证明和从空叶到已使用叶的追加见证；删除不执行移除。`CurrentDataDAR` 只恢复 active records、近期 tombstone pages 和 `SidHistoryRoot` commitment；sid 永不复用由 `HistoricalConsistencyValid` 状态转换性质保证。
+
+对象初始发布不逐项调用 `PublishPageDesc`。Gateway 在链下生成全部业务条带、metadata pages 和 PageDesc，计算候选 `PageDescStoreRoot`，再生成 META、顶层根、ObjectHeader 和证书；随后一次调用 `PublishObjectWithPageDescBatch`，由 BFT 状态机重算 PageDescStoreRoot，检查 MetaDescriptor、ObjectHeader、FormationDigest、证书、suite 引用和生命周期字段，并原子写入 `PageDescStore` 和对象状态；页面内容和数据根正确性由可信 Gateway 证书认证。`CREATING/PENDING_PUBLICATION` 状态不得开启审计。普通业务内容变化只修改目标业务条带、包含其 entry 的 manifest/audit-state 页面、对应 PageDesc、META 根条带和相关认证路径；未修改页面保持原 `page_ver/nativeFileID/PublicAuditState`。
+
+### 6) 规范 stripe、外层 RS、单一 RPDP suite 与 StripeDesc
+
+业务条带规范表示为
+
+$$
+M_g=enc(StripeHeader_g,LocalIndex_g,PayloadArea_g).
+$$
+
+LocalIndex 按 sid 升序保存完整 active RecordBinding；记录使用稳定 extent，删除立即移除 active binding 并规范零填充原 extent。对象恢复层使用唯一外层系统式编码：
+
+$$
+C_g\leftarrow\mathsf{RS.Encode}_{N_g,k_g}(M_g).
+$$
+
+注册 RPDP profile 必须把 $C_g$ 直接视为 outsourced encoded file；若候选原语强制执行不可关闭的第二层纠删编码，则不得直接注册，除非重新定义对象恢复输出并给出组合证明。块承诺为
+
+$$
+BLeaf_{g,b}=H_0(\textsf{BLOCK}\parallel enc(g,b,CodeHash_g,C_{g,b})),
+$$
+
+$$
+BlockRoot_g=\mathsf{MerkleRoot}_{canon}(BLeaf_{g,1},\ldots,BLeaf_{g,N_g}).
+$$
+
+对象绑定单一 `ObjectSuiteRef`。共享 suite 参数只保存一次；每个组件只产生文件级状态
+
+$$
+FilePublicState_g=(nativeFileID_g,PublicAuditState_g,component\_ver_g,BlockRoot_g).
+$$
+
+外层文件上下文为
+
+$$
+FileContext_g=H_0(\textsf{RPDP\_CONTEXT}\parallel enc(FID,\tau,g,type_g,component\_ver_g,CodeHash_g,BlockRoot_g,ObjectSuiteStateDigest)).
+$$
+
+注册 suite 必须给出规范
+
+$$
+nativeFileID_g=\mathsf{BindFileID}(FileContext_g)
+$$
+
+并证明该标识或其不可替换派生值实际进入底层标签和公开验证。对 `SW-Sym-Theory`，使用独立随机预言机域
+
+$$
+name_g=H_{name}(\textsf{SW\_NAME}\parallel FileContext_g)
+$$
+
+作为原方案随机文件名；在 ROM 中，对首次出现且不同的 FileContext，该值均匀且独立，跨上下文相同 name 的事件归约到随机预言机碰撞。
+
+Gateway 调用
+
+$$
+(PublicAuditState_g,ProverState_g,RecoverableAuditState_g)
+\leftarrow\mathsf{RPDP.Preprocess}(sk_{profile},nativeFileID_g,C_g).
+$$
+
+摘要为
+
+$$
+NativeFileIDHash_g=H_0(\textsf{NATIVE\_FILE\_ID}\parallel enc(nativeFileID_g)),
+$$
+
+$$
+PublicAuditStateDigest_g=H_0(\textsf{PUBLIC\_AUDIT\_STATE}\parallel enc(PublicAuditState_g)).
+$$
+
+在线和提取阶段使用不同的确定性解析算法：
+
+$$
+\mathsf{ResolvePublicStateOnline}(componentID,type,OH,ChainState,PageDescStore,ProofBody),
+$$
+
+$$
+\mathsf{ResolvePublicStateExtract}(componentID,type,OH,ChainState,PageDescStore,recoveredPages).
+$$
+
+两者均输出
+
+$$
+(nativeFileID,PublicAuditState,ObjectSuiteRef,component\_ver,BlockRoot)
+$$
+
+或 $\bot$。REP/META 来自 ObjectHeader；metadata page 来自当前 `PageDescStore`；ordinary stripe 在线时由 `AuditStateEntryOpening` 验证到对应 PageDesc 的 `AuditEntryRoot`，提取时由恢复后的 AuditStatePage 重算条目根并读取。解析器同时检查 $g$、native file id、stripe/page version、BlockRoot、public-state digest、suite digest 和当前授权版本。
+
+operational proof 不提交 DataRoot leaf opening。Gateway 的可信形成检查、`FileContext` 中的 BlockRoot、native file id 的底层密码绑定、公开状态摘要和对象签名共同固定被审计编码向量。DataRoot 仅在 `CurrentDataDAR` 中由完整恢复编码向量重建。
+
+条带描述符为
+
+$$
+\begin{aligned}
+StripeDesc_g=(&g,type_g,CodeParam_g,CodeHash_g,BlockRoot_g,FileContextHash_g,NativeFileIDHash_g,\\
+&PublicAuditStateDigest_g,ObjectSuiteStateDigest,component\_ver_g,status_g,creation\_seq_g).
+\end{aligned}
+$$
+
+其中业务条带的 `component_ver` 为 `stripe_ver`，metadata page 的 `component_ver` 为 `page_ver`。
+
+### 7) 三个稳定认证命名空间
+
+**DataRoot.** 稳定 key 和叶为
+
+$$
+k_{g,b}^{data}=H_2(\textsf{DATA\_KEY}\parallel enc(FID,\tau,g,b)),
+$$
+
+$$
+L_{g,b}^{data}=H_3(\textsf{DATA\_LEAF}\parallel enc(FID,\tau,g,type_g,stripe\_ver_g,b,CodeHash_g,BlockRoot_g,BLeaf_{g,b})).
+$$
+
+其根为 $DataRoot_\tau$。DataRoot 不进入每轮 RPDP proof；它在对象发布时认证完整编码表示，并在 fixed-state 恢复后验证重建结果。
+
+**RecordRoot.** active 业务记录以 sid 为 key 进入 `ActiveBindingRoot`；近期删除证明进入 `TombstonePageRoot`；所有曾分配 sid 由 CSMS 的 `SidHistoryRoot` 承诺：
+
+$$
+RecordRoot_\tau=H_3(\textsf{RECORD\_ROOT}\parallel enc(ActiveBindingRoot_\tau,TombstonePageRoot_\tau,SidHistoryRoot_\tau,n_\tau^{active},n_\tau^{recent\_tomb})).
+$$
+
+record ordinal sampling 只解析 `ActiveBindingRoot`。新 sid 分配必须验证 CSMS 非成员证明和追加见证；删除不从历史集合移除 sid。
+
+**StripeDirectoryRoot.** 目录叶为
+
+$$
+(h_g,o_g,w_g,m_g)=\left(
+H_3(\textsf{DIR\_LEAF}\parallel enc(StripeDesc_g)),
+\mathbf 1[active\land type_g\in\{\Delta,FALLBACK,MANIFEST\_PAGE,AUDIT\_PAGE,TOMBSTONE\_PAGE\}],
+\mathbf 1[active]N_g,1\right),
+$$
+
+根为
+
+$$
+StripeDirectoryRoot_\tau=(h_{dir},m_{cov},N_\tau^{active},n_\tau^{stripe}).
+$$
+
+五层元数据认证结构的职责严格区分：`PageDescStore` 在提取前提供页面描述符和公开状态；页面内容根验证恢复页面字节；StripeDirectoryRoot 提供 operational ordinal 和条带状态；META 根绑定页面根、数量和策略；ObjectHeader 绑定对象版本和所有顶层根。删除任一层均存在不同攻击，不把这些根笼统称为“重复认证”。
+
+### 8) 当前布局、历史根、生命周期与私有良构关系
+
+`CertifiedLayoutWF_current` 只描述某一当前获证对象版本，不验证完整历史叶。关系
+
+$$
+\mathsf{CertifiedLayoutWF}_{current}(SV_\tau^{pub},OH,ChainState)=1
+$$
+
+当且仅当：
+
+1. 目录中恰有一个当前 REP 和一个当前 META，所有当前组件属于同一 `data_ver`；
+2. ObjectHeader 中的关键描述符、关键文件级公开状态、`PageDescStoreRoot`、当前根和 `ObjectSuiteRef` 与最终确认状态一致；
+3. gid、active sid、$(g,b)$、page id 和 ordinal 唯一，类型、版本与状态一致；
+4. 每个 active 业务 binding 与 LocalIndex 完全一致，并指向类型相容的当前条带；
+5. 每个 active ordinary 条带在唯一 ManifestPage 中出现一个 BootEntry，并在唯一 AuditStatePage 中出现一个 AuditStateEntry；该条目的 $g$、native file id、stripe version、BlockRoot 和 public-state digest 由页面 `AuditEntryRoot` 认证；
+6. 当前 `PageDescStore` 中每个 active metadata page 恰有一个完整 PageDesc，认证根等于 ObjectHeader 中的 `PageDescStoreRoot`；
+7. META 中的当前页面内容根、页面数量和策略与 PageDescStore 中 active 页面集合逐项一致；
+8. active sid 只出现在 ActiveBindingRoot；近期删除 sid 可在当前 TombstonePage 中打开，但不要求恢复全部历史 sid 叶；
+9. coverable ordinal 和 weighted block ordinal 无重复、无遗漏，全部 count 正确；
+10. 每个 BlockRoot 等于当前恢复编码块的规范根，offset、len、cap、extent、零填充和序列化一致；
+11. 全部组件使用同一 `ObjectSuiteRef`，且 `ResolveSuiteExecutionState` 能从不可变 SuiteRegistry 和 VerifierModule 得到一致执行参数；
+12. 全部当前编码块、active binding、当前分页元数据、PageDescStore 和目录重建 DataRoot、RecordRoot、StripeDirectoryRoot 及 ObjectHeader。
+
+`HistoryRootBound` 只检查当前获证状态中的 `SidHistoryRoot` 承诺一致：
+
+$$
+\mathsf{HistoryRootBound}(OH,META,RecordState,ChainState)=1
+$$
+
+当且仅当 ObjectHeader、META、记录历史状态字段和当前 ChainState 绑定同一 `SidHistoryRoot`。该关系不枚举或验证全部历史叶。
+
+用途相关生命周期关系为
+
+$$
+\mathsf{LifecycleAllowed}(status,purpose).
+$$
+
+其中
+
+$$
+\begin{aligned}
+\mathsf{LifecycleAllowed}(status,\mathsf{AUDIT})&\iff status=\mathsf{ACTIVE},\\
+\mathsf{LifecycleAllowed}(status,\mathsf{RECOVERY})&\iff status\in\{\mathsf{ACTIVE},\mathsf{AUDITING},\mathsf{FROZEN}\}.
+\end{aligned}
+$$
+
+`HistoricalConsistencyValid` 是独立状态性质：CSMS 从规范初始根开始，每次新 sid 分配验证旧根下非成员并执行空叶到 used 叶的合法追加，删除不移除历史叶，最终根等于当前 `SidHistoryRoot`。它由独立 History Consistency 游戏保证，不由当前对象 extractor 重建。
+
+`LayoutWF_priv` 在 `CertifiedLayoutWF_current` 基础上进一步要求：全部业务和 META ciphertext 的 AEAD tag 有效；公开 storage type 与解密类型一致；delta 依赖当前 representative；fallback 无代表依赖；delta 恢复原记录；私有形成承诺与形成转录一致。
+
+ObjectHeader 为
+
+$$
+\begin{aligned}
+ObjectHeader_\tau=(&FID,\tau,data\_ver_\tau,object\_key\_epoch,g_{rep},g_{meta},lifecycle\_status,\\
+&StripeDesc_{rep},StripeDesc_{meta},CriticalAuditBootstrap_\tau,CriticalDescDigest_\tau,\\
+&DataRoot_\tau,RecordRoot_\tau,StripeDirectoryRoot_\tau,PageDescStoreRoot_\tau,\\
+&SidHistoryRoot_\tau,rep\_commit_\tau,ObjectSuiteRef,\psi_{\tau,data\_ver},PolicyHash,AuthCtxHash).
+\end{aligned}
+$$
+
+`CertifiedPublicObject` 表示证书真实、`CertifiedLayoutWF_current=1`、`HistoryRootBound=1` 且当前生命周期被相应用途允许；`CertifiedOwnerObject` 再要求 `LayoutWF_priv=1`。初始对象的 PageDescStore、META、ObjectHeader 和证书只能通过原子批量发布同时成为可见状态。
+
+## C. 威胁模型
+
+- $\mathcal A_{CSP}$ 控制存储状态和证明算法，可删除块、只保留标签、回放旧版本、拼接 opening，或在 operational 轮次间自适应更新状态。
+- $\mathcal A_{EC}$ 控制 Edge 并与 CSP 合谋，可形成错误 candidate，但不能伪造 Gateway 证书、秘密伪名、形成承诺或 RPDP 状态。
+- $\mathcal A_{AUD}$ 控制 scheduler、relayer 或公开调用者，尝试覆盖预算、重放状态、制造并发 challenge 或利用交易异常错误冻结。
+- 信标敌手可静态腐化至多 $f_B$ 个成员并选择 withholding；达到重构阈值的合谋不再满足前视不可预测性假设。
+
+Operational audit 允许 CSP 在轮次间进行多项式状态更新，不提供 `Reset`。条件性 retrievability 使用独立 fixed-state 黑盒接口：挑战者在首个提取 challenge 前保存 prover 的完整机器状态 $st^\star$，每次查询均从同一状态重绕。冻结后允许的外部 I/O 仅包括只读公共参数、当前最终确认链状态和随机预言机；不允许访问私有恢复服务、另一个 CSP 的数据接口或在挑战之间变化的外部数据 oracle。因此定理证明从固定逻辑状态可提取，而不证明物理位置。
+
+| 安全目标 | CSP | Edge+CSP | 恶意 caller | 信标腐化集 | 公共观察者 |
+|---|---:|---:|---:|---:|---:|
+| 对象/页面上下文绑定 | attack | attack | replay | — | verify |
+| LINK/REP-LINK 单轮一致性 | attack | attack | reorder | — | verify |
+| Scheduling/CoveragePass | withhold proof | collude | retry/replay | predict/withhold | verify |
+| CurrentDataDAR | fixed-state prover | collude | — | — | conditional extract |
+| HistoricalConsistencyValid | stale state | malformed candidate | replay update | — | verify roots |
+| 机密性泄漏边界 | observe | collude | observe | observe | observe |
+
+## D. 安全定义
+
+### 1) Operational opening 与上下文语义
+
+`OpenRecord`、`OpenStripe` 和 `OpenPageDesc` 分别验证记录、条带目录和当前 PageDescStore opening。单轮 proof 不公开完整编码块，也不提交 DataRoot leaf opening。`CertAuthentic` 验证 ObjectHeader 和 Gateway 签名；`CertCurrentlyAuthorized` 进一步验证当前 provider、ACTIVE/AUDITING 状态和 `data_ver/state_ver`。BFT 状态机直接调用 `VerifierCodeHash` 对应的确定性模块；公共观察者只能重算。
+
+对 sampled record $\ell$，$\mathsf{RoundDepBind}(\ell)=1$ 要求认证 RecordBinding 指向的 gid 与认证 StripeDesc 一致；LINK 域绑定 $(sid_\ell,binding\_ver_\ell,g_\ell,BlockRoot_{g_\ell})$；若为 delta，REP-LINK 还绑定当前 $(repRID^\star,rep\_commit,g_{rep},BlockRoot_{rep})$。
+
+定义语义坏事件 $\mathsf{SemanticRoundBad}(tr)=1$：被接受转录出现对象版本错配、LINK/REP-LINK 指向错误、proof 使用不同 native file id/文件级公开状态、challenge 不是由当前 seed 和 domain id 派生、proof 来自旧 provider/旧 StateToken 或对象并非 `AUDITING`。定义
+
+$$
+\mathsf{RoundContextSoundness}:\Longleftrightarrow
+\Pr[\mathsf{VerifyAudit}=1\land\mathsf{SemanticRoundBad}=1]\le\mathsf{negl}(\lambda).
+$$
+
+### 2) SchedulingComplete 与 CoveragePass
+
+一个 coverage epoch 对每个 coverable ordinal 维护 `UNSEEN/SCHEDULED/PASSED/FAILED` 状态。$\mathsf{SchedulingComplete}=1$ 只表示每个 ordinal 恰被无放回选择一次；$\mathsf{CoveragePass}=1$ 还要求全部 slot 在 deadline 内通过、不存在 FAILED 且 epoch 为 `COVERAGE_PASSED`。proof timeout 或确定性 BAD 使对象进入 `FROZEN` 并终止当前 epoch。`AUDITING` 期间禁止改变 `data_ver`；紧急更新必须先执行 `AbortEpoch`。
+
+### 3) RPDP 密码性质、恢复输出与外层状态解析
+
+框架只接受满足以下密码性质的 profile：
+
+- $\mathsf{PV\text{-}Correct}$：诚实 proof 公开验证正确；
+- $\mathsf{CTX\text{-}Bind}$：在选择性两上下文游戏中，敌手只获得源上下文的 prover state 和目标上下文的公开状态，仍不能回答目标上下文的新 challenge；
+- $\mathsf{FS\text{-}Extract}$：挑战者保存并重绕同一 prover 状态；若接受概率满足 $\epsilon\in\mathcal E_t$，则期望时间 $T_t(\epsilon)$ 的 extractor 以失败概率 $\delta_t(\epsilon)$ 输出 profile 声明的 `RecoverableView`。
+
+每个 profile 必须声明 $OutputMode_t$ 与 $ExtractorAccess_t$。`CurrentDataDAR` 仅接受 $ExtractorAccess_t=\mathsf{PUBLIC}$ 的 profile；owner-assisted 输出只能用于 `OwnerDAR`。外层 `ResolvePublicStateOnline/Extract`、`ResolveSuiteExecutionState` 和 `NormalizeRecoveredComponent` 是对象系统关系，不是底层 RPDP 密码性质。治理可检查 module hash、参数摘要、格式、registry 引用、测试向量和资源上限，但不能由合约自动验证密码学证明。
+
+### 4) StateFresh 与用途相关生命周期
+
+定义规范状态令牌
+
+$$
+\begin{aligned}
+StateToken=H_0(&\textsf{STATE\_TOKEN}\parallel objectID\parallel data\_ver\parallel state\_ver\\
+&\parallel epochID\parallel slotID\parallel provider\parallel status\\
+&\parallel ObjectSuiteRef\parallel ChallengeStateHash).
+\end{aligned}
+$$
+
+`StateFresh` 覆盖旧 `data_ver/state_ver/provider/suite`、已 ABORTED epoch、已 FAILED slot、过期 ChallengeState、未最终确认状态、RETIRED 对象和错误 StateToken 的重放。本文采用条件理想状态机模型：在 BFT safety、确定性执行、finality 和正确部署 VerifierModule 的条件下，
+
+$$
+\mathsf{Adv}_{StateFresh}=0.
+$$
+
+链一致性破坏、finality 失败和 verifier 实现缺陷属于外部系统假设，不被冒充为本文密码学归约。
+
+### 5) 获证版本有效性、CurrentDataDAR 与历史一致性
+
+完整目标快照为
+
+$$
+\Sigma_\tau^\star=(st_{CSP}^\star,OH^\star,ChainState^\star,PageDescStore^\star,SuiteRegistry^\star,RO^\star).
+$$
+
+`AuthorizedVersionValid` 定义为
+
+$$
+\begin{aligned}
+\mathsf{AuthorizedVersionValid}={}&\mathsf{CertAuthentic}\land
+\mathsf{LastCertifiedNonRetired}\land\mathsf{CertifiedLayoutWF}_{current}\\
+&\land\mathsf{HistoryRootBound}\land
+\mathsf{LifecycleAllowed}(status,\mathsf{RECOVERY})\\
+&\land\mathsf{SuiteExecutionResolvable}.
+\end{aligned}
+$$
+
+其中 `SuiteExecutionResolvable` 要求从当前或历史不可变 registry entry 和 VerifierModule 得到完整执行参数。`CurrentActiveValid` 在此基础上额外要求 $status=\mathsf{ACTIVE}$，只有该谓词允许开启新审计 epoch。
+
+方案满足 `CurrentDataDAR`，若对任意 PPT prover，挑战者锁定同一 $\Sigma_\tau^\star$，且 META、由当前 PageDescStore 枚举的全部 metadata pages、REP 和所有当前 ordinary 条带均满足各自公开 profile 的 fixed-state 提取前提，则存在统一期望多项式时间 extractor 输出当前获证对象、全部当前根和 `SidHistoryRoot` 承诺，并使 `AuthorizedVersionValid=1`。该性质是“公开参数固定状态可提取性”：它依赖公开状态、不可变 VerifierModule、随机预言机和 prover 黑盒重绕，不等于一次普通下载。
+
+`HistoricalConsistencyValid` 独立保证 CSMS 追加历史的正确性。`CurrentDataDAR` 不恢复或验证完整历史 sid 集合，只验证恢复对象绑定的 `SidHistoryRoot` 与获证状态一致。组合推论为：若 `CurrentDataDAR=1` 且 `HistoricalConsistencyValid=1`，则当前对象可恢复，且其历史根来自合法追加状态；这仍不推出历史数据内容长期可下载。
+
+### 6) OwnerDAR、CurrentDAR 与范围边界
+
+owner/Gateway 使用私有视图验证 AEAD、delta 明文重构和私有形成关系，得到 `OwnerDAR`。owner-assisted profile 的恢复输出也只在该层使用。恢复表示仍由当前最终确认 ACTIVE ChainState 授权并可继续提供服务时，得到 `CurrentDAR`。FROZEN 对象可恢复最后一个获证版本以支持迁移或灾难恢复，但不能开启新审计 epoch。因此
+
+$$
+\mathsf{OperationalAccept}\not\Rightarrow\mathsf{CurrentDataDAR},\qquad
+\mathsf{SchedulingComplete}\not\Rightarrow\mathsf{CurrentDataDAR},\qquad
+\mathsf{CoveragePass}\not\Rightarrow\mathsf{CurrentDataDAR}.
+$$
+
+### 7) 机密性边界
+
+公开泄漏包括对象/条带/页面数量、类型、长度、版本、挑战域、认证根、native file id、文件级公开状态、proof size、更新时序和 coverage 状态。内部相似标签不公开；秘密键控的记录标识不提供直接低熵相等性测试。框架不隐藏流量模式，也不证明分类语义、delta 最优性或公开审计状态不可链接。
+
+## E. 主要符号
+
+| Symbol | Meaning |
+|---|---|
+| $SV^{pub},SV^{priv}$ | 公开认证存储视图与所有者私有恢复视图 |
+| $ManifestPage,AuditStatePage,TombstonePage$ | 提取清单页、带内部条目认证根的公开审计状态页和近期 tombstone 页 |
+| $AuditStateEntry,AuditEntryRoot$ | ordinary 文件级公开状态条目及页面内部认证根 |
+| $PageDescStore,PageDescStoreRoot$ | 当前共识状态中的完整页面描述符映射及其稀疏 Merkle 根 |
+| $VerifierModule,SuiteRegistry$ | 不可变协议执行模块与版本化 suite 注册表 |
+| $RecoverableView,OutputMode,ExtractorAccess$ | 底层恢复输出、输出类型和 extractor 权限 |
+| $FileContext,nativeFileID$ | 外层获证上下文和实际进入底层密码计算的文件标识 |
+| $DataRoot,RecordRoot,StripeDirectoryRoot$ | 当前编码块、记录和条带目录的认证根 |
+| $\mathsf{CertifiedLayoutWF}_{current}$ | 当前获证对象布局关系，不包含完整历史叶 |
+| $\mathsf{HistoryRootBound},\mathsf{HistoricalConsistencyValid}$ | 当前历史根承诺绑定与独立 CSMS 追加一致性 |
+| $\mathsf{LifecycleAllowed},StateToken$ | 用途相关生命周期关系与防重放状态令牌 |
+| $\Sigma_\tau^\star$ | 固定 CSP 状态、对象头、链状态、PageDescStore、SuiteRegistry/VerifierModule 和随机预言机表的目标快照 |
+| $\mathsf{RPDP}^{\star}$ | 满足公开验证、选择性上下文绑定和 fixed-state 提取的公开 RPDP profile |
+| $ObjectSuiteRef$ | 对象级 suite 引用 |
+| $\mathsf{SchedulingComplete},\mathsf{CoveragePass}$ | 所有目标已被调度和所有目标均已通过 |
+| $\mathsf{CurrentDataDAR}$ | 最后获证未退休版本的公开参数 fixed-state 当前对象提取性质 |
+| $SidHistoryRoot$ | 基于 CSMS 的已使用 sid 历史根承诺 |
+| $n_B,t_B,f_B$ | 信标委员会规模、阈值和静态腐化上限 |
+
+# V. 总体设计
+
+本方案只保留四个核心机制：依赖派生挑战、认证公开状态与分页启动、固定输入无放回调度和同一快照下的组合提取。CSMS、唯一阈值信标、SuiteRegistry/VerifierModule 和 BFT 状态机是支撑组件，不被列为新的底层密码创新。
+
+### 系统架构与信任边界
+
+```mermaid
+flowchart LR
+    G[Trusted Gateway
+offline formation + certificate] -->|FormationDigest + compact batch| BFT[BFT State + Native Verifier]
+    G -->|encoded stripes/pages| C[Malicious CSP]
+    C -->|proofs + auth openings| BFT
+    Q[Threshold Beacon] -->|unique seed| BFT
+    BFT -->|challenge| C
+    REG[Immutable SuiteRegistry + VerifierModule
+reference, code hash, execution params] --> BFT
+    O[Public Observer] -. recompute only .-> BFT
+    X[Fixed-State Extractor] -. security game .-> C
 ```
-Input: security parameter 1^lambda, framework F, user key material, edge identity EID
-Output: public parameters Para, policy hash PolicyHash, authorization context AuthCtx, audit public key pk_e^aud
-1. Generate Para = (p, G, G_T, e, g, {u_j}, H_0, ..., H_4, H_G1, H_Z, H_Zp, AEAD, KDF, Sig).
-2. Register F = (FID, Schema, Theta, Omega, CalE, Policy).
-3. Compute PolicyHash = H_0(FID || Schema || Theta || Omega || CalE || Policy).
-4. Set AuthCtx = (FID, EID, ep, ScopeHash, PolicyHash).
-5. Derive K_e^tag = KDF(K_F, "tag" || AuthCtx).
-6. Derive x_e^aud = H_Zp(x_F || "audit" || AuthCtx) and pk_e^aud = x_e^aud * g.
-7. Bind AuthCtx to later object formation, authenticator generation and audit proofs.
+
+Gateway 负责离线形成语义并签名 `FormationDigest`；BFT 共识节点只验证紧凑发布批次中可见的根、版本、registry 引用和生命周期切换。公共观察者不充当可信验证中介，CSP 是恶意 prover，fixed-state extractor 只存在于安全游戏或维护恢复阶段。
+
+### 原子对象形成和状态依赖
+
+```mermaid
+flowchart TD
+    BS[Business stripes] --> MP[Manifest/Tombstone/AuditState pages]
+    MP --> AR[AuditEntry roots]
+    AR --> PD[PageDesc batch]
+    PD --> PR[Candidate PageDescStoreRoot]
+    PR --> META[META root stripe]
+    META --> FD[FormationDigest]
+    REG[SuiteRegistry and immutable VerifierModule] --> FD
+    FD --> CERT[Gateway certificate]
+    CERT --> PUB[Compact PublishObjectWithPageDescBatch]
+    PD --> PUB
+    PUB --> ACT[Finalized ACTIVE state]
 ```
 
-### C. 相似类对象形成
-
-一条结构化记录表示为：
+中间 `CREATING/PENDING_PUBLICATION` 状态不可审计。Gateway 按
 
 $$
-r_\ell=(RID_\ell,t_\ell,g_\ell,X_\ell,b_\ell,nonce_\ell).
+\text{business stripes}
+\rightarrow\text{authenticated metadata pages}
+\rightarrow PageDescStoreRoot
+\rightarrow META
+\rightarrow FormationDigest/Cert
 $$
 
-记录承诺为：
+形成对象；BFT 不重新读取业务条带或页面内容，只从紧凑批次重算 `PageDescStoreRoot`，检查 ObjectHeader、证书、suite 引用、版本、provider 和资源上限，并原子写入最终状态。
 
-$$
-RC_\ell=H_0(RID_\ell\parallel t_\ell\parallel g_\ell\parallel X_\ell\parallel b_\ell\parallel nonce_\ell).
-$$
+### 在线公开状态认证与审计时序
 
-结构化字段划分为：
-
-$$
-X_\ell=X_\ell^F\cup X_\ell^C\cup X_\ell^D.
-$$
-
-其中，FRAME 字段形成框架模板 $FT\_F$，CLASS 字段用于生成相似类标签，DELTA 字段用于无损 delta 或 fallback 恢复。Edge 在授权上下文内调用：
-
-$$
-\tau=\mathsf{SimTag}_F(r_\ell;K_e^{tag}).
-$$
-
-本文不限定相似分类算法，可由 IIoT-Simhash、FuzzyDedup-style tag、量化分桶或其他相似分类方法实例化。
-
-对相似类 $O\_\tau$，representative 选择为：
-
-$$
-rep_\tau=\arg\min_{r\in O_\tau}\sum_{r_\ell\in O_\tau}\mathsf{DeltaSize}(r_\ell,r).
-$$
-
-对于非 representative 记录，若 $\Delta\_\ell=\mathsf{Diff}(r\_\ell,rep\_\tau)$ 满足策略边界并具有存储收益，则进入 delta 路径；否则进入 fallback 路径。Fallback 保证无损恢复能力。
-
-**Algorithm 2：BuildSimilarityObject**
-
-```
-Input: structured records {r_l}, framework F, authorization context AuthCtx
-Output: similarity-class object O_tau and formation digest psi_{tau,ver}
-1. For each record r_l, compute record commitment RC_l.
-2. Split X_l into FRAME, CLASS and DELTA fields.
-3. Compute tau = SimTag_F(r_l; K_e^tag) under AuthCtx.
-4. Group records by tau and choose rep_tau by the minimum total DeltaSize rule.
-5. For each non-representative record, compute Delta_l = Diff(r_l, rep_tau).
-6. If Delta_l satisfies the policy boundary and saves storage, store delta payload; otherwise store fallback payload.
-7. Build object directory, local index and formation digest psi_{tau,ver}.
+```mermaid
+sequenceDiagram
+    participant Caller
+    participant BFT as BFT State/Verifier
+    participant Beacon
+    participant CSP
+    Caller->>BFT: OpenAudit(current ACTIVE object)
+    BFT->>Beacon: fixed request input
+    Beacon-->>BFT: unique output
+    BFT->>CSP: certified challenge domains
+    CSP-->>BFT: RPDP proofs + Record/Stripe/PageDesc/AuditEntry openings
+    BFT->>BFT: verify AuditEntry -> AuditEntryRoot -> PageDescStoreRoot
+    BFT->>BFT: ResolvePublicStateOnline + RPDP verify
+    alt all domains valid
+        BFT->>BFT: slot PASSED
+    else BAD/timeout
+        BFT->>BFT: slot FAILED; object FROZEN
+    end
 ```
 
-### D. 压缩结构索引
+ordinary stripe 的完整 `FilePublicState` 不被假设为验证者预持有，而是由 proof 中的 `AuditStateEntryOpening` 认证获得。
 
-对象索引定义为：
+### 固定状态组合提取时序
 
-$$
-\mathcal I_\tau=(ObjectDirectory_\tau,LocalIndex_\tau).
-$$
-
-对象目录只负责定位：
-
-$$
-ObjectDirectory_\tau=(object\_id_\tau,ref_\tau,base\_offset,size_\tau).
-$$
-
-对象内局部索引为：
-
-$$
-LocalIndex_\tau=\{(sid_\ell,storage\_type_\ell,off_\ell,len_\ell)\}_{r_\ell\in O_\tau},
-$$
-
-其中 $storage\_type\_\ell\in{\textsf{rep},\textsf{delta},\textsf{fallback\}}$。代表 payload 的局部索引记为 $sid\_{\tau}^{rep}$，并满足 $storage\_type\_{sid\_\tau^{rep\}}=\textsf{rep}$；对象目录中的 $ref\_\tau$ 与 $sid\_\tau^{rep}$ 共同固定 representative 在相似类对象中的恢复依赖位置。逻辑映射关系由对象目录、局部索引和对象证书共同确定：
-
-$$
-RID_\ell\mapsto(\tau,ref_\tau,storage\_type_\ell,off_\ell,len_\ell).
-$$
-
-索引主要负责定位；完整性绑定并入统一审计叶 $L\_i^{audit}$。对象版本与状态由 $object\_root\_\tau$ 和链上 $ChainRoot\[\tau,ver]$ 绑定。Representative 是 delta/fallback 重构的依赖中心，但本轮协议仍保持随机挑战集合，不把 representative 强制加入每轮挑战。
-
-### E. 统一审计叶与对象根
-
-每个 representative、delta 或 fallback payload 被视为一个可审计单元。设可审计 payload 被划分为 $s$ 个扇区：
-
-$$
-C_i=(c_{i,1},\ldots,c_{i,s}).
-$$
-
-认证器所在曲线群采用加法记号，标量乘法记为 $a\cdot P$。本文将 payload/mapping 认证版本记为 $data\_ver\_\tau$；只有 payload 内容或映射位置发生变化时，$data\_ver\_\tau$ 才递增，普通状态更新不改变该值。第 $i$ 个 payload 的认证标签定义为：
-
-$$
-T_i=\textsf{TAG\_BL}\parallel enc(FID)\parallel enc(\tau)\parallel enc(data\_ver_\tau)\parallel enc(sid_i)\parallel enc(storage\_type_i)\parallel enc(off_i)\parallel enc(len_i)\parallel enc(PolicyHash).
-$$
-
-其中，$FID$ 防止跨框架复用，$\tau$ 防止跨对象复用，$data\_ver\_\tau$ 防止跨 payload/mapping 版本重放，$sid\_i$、$storage\_type\_i$、$off\_i$ 和 $len\_i$ 防止跨位置拼接，$PolicyHash$ 防止跨策略复用。认证器为：
-
-$$
-\sigma_i=x_e^{aud}\cdot\left(H_{\mathbb G_1}(T_i)+\sum_{j=1}^{s}c_{i,j}u_j\right).
-$$
-
-统一审计叶定义为：
-
-$$
-L_i^{audit}=H_3(\textsf{AUDIT\_LEAF}\parallel enc(FID)\parallel enc(\tau)\parallel enc(sid_i)\parallel enc(storage\_type_i)\parallel enc(off_i)\parallel enc(len_i)\parallel enc(H_0(C_i))\parallel enc_{\mathbb G_1}(\sigma_i)).
-$$
-
-其中，$enc(\cdot)$ 表示带类型标记和长度分隔的无歧义编码，$enc\_{\mathbb G\_1}(\cdot)$ 表示曲线点的规范编码。$\textsf{AUDIT\_LEAF}$ 与对象根、状态令牌、挑战种子等哈希域分离，防止不同类型材料在同一哈希输入空间中被混淆。
-
-统一审计根为：
-
-$$
-\rho_\tau^{audit}=\mathsf{MHTRoot}(\{L_i^{audit}\}_{i\in O_\tau}).
-$$
-
-该根同时绑定 payload 持有性元数据、记录级认证器、记录到对象的映射以及记录到 payload 位置的映射。Representative payload、delta payload 和 fallback payload 均属于同一个 AuditMHT 挑战域；同时，representative 还通过 $\rho\_\tau^{rep}$ 和 $object\_root\_\tau$ 被对象根固定，以反映 representative 缺失会影响 delta/fallback 重构的内部依赖。FullAudit 只需要返回一组 AuditMHT multiproof。
-
-**BuildAuditMHT 子过程**
-
-```
-Input: payloads {C_i}, local index entries, audit secret x_e^aud
-Output: authenticators {sigma_i}, audit leaves {L_i^audit}, audit root rho_tau^audit
-1. Split each auditable payload C_i into s sectors.
-2. Construct T_i = TAG_BL || enc(FID) || enc(tau) || enc(data_ver_tau) || enc(sid_i) || enc(storage_type_i) || enc(off_i) || enc(len_i) || enc(PolicyHash).
-3. Generate sigma_i for each representative, delta or fallback payload using T_i.
-4. Encode each audit leaf as AUDIT_LEAF || enc(FID) || enc(tau) || enc(sid_i) || enc(storage_type_i) || enc(off_i) || enc(len_i) || enc(H_0(C_i)) || enc_G1(sigma_i).
-5. Build AuditMHT over all L_i^audit.
-6. Output rho_tau^audit and retain the indexed tree information for FullAudit multiproof generation.
+```mermaid
+flowchart TD
+    S[Freeze complete Sigma*] --> M[Extract META RecoverableView]
+    M --> NM[Normalize META]
+    NM --> PDS[Read finalized PageDescStore and SuiteRegistry]
+    PDS --> P[Extract metadata-page RecoverableViews]
+    P --> NP[Normalize pages and verify AuditEntryRoots]
+    NP --> E[Enumerate required business stripes]
+    E --> R[Extract REP/ordinary RecoverableViews from same CSP state]
+    R --> N[Decode subset/message and deterministic re-encode]
+    N --> ROOT[Rebuild Block/Data/Record/Directory roots]
+    ROOT --> V[CertifiedLayoutWF_current + HistoryRootBound + LifecycleAllowed]
 ```
 
-逻辑对象证书和对象根为：
+### 生命周期状态机
 
-$$
-OC_\tau^{logical}=(FID,\tau,ver,data\_ver_\tau,ref_\tau,\rho_\tau^F,\rho_\tau^{rep},\rho_\tau^{audit},\psi_{\tau,ver},PolicyHash,st_\tau,prevRoot_\tau),
-$$
-
-$$
-object\_root_\tau=H_4(\textsf{OBJ\_ROOT}\parallel enc(\rho_\tau^F)\parallel enc(\rho_\tau^{rep})\parallel enc(\rho_\tau^{audit})\parallel enc(\psi_{\tau,ver})\parallel enc(data\_ver_\tau)\parallel enc(PolicyHash)\parallel enc(st_\tau)\parallel enc(prevRoot_\tau)).
-$$
-
-链上发布对象状态时，合约保存 $object\_root\_\tau$、$\rho\_\tau^{rep}$、$\rho\_\tau^{audit}$、$PolicyHash$、$data\_ver\_\tau$、$st\_\tau$、$state\_token\_{\tau,ver}$、$update\_nonce\_\tau$、对象叶数量和审计公钥 $pk\_e^{aud}$。
-
-### F. 链下 FastAudit
-
-FastAudit 是本文实现中的链下轻量审计变体，用于低通信开销的 payload possession 检查和实验四中的性能对照。FastAudit 复用同态认证器、聚合响应和 compact certificate，但不返回 AuditMHT multiproof，也不在验证阶段重建 $\rho\_\tau^{audit}$。因此，FastAudit 不能替代完整对象级 FullAudit。
-
-给定挑战集合 $Q\_\tau={(idx\_i,\nu\_i)}\_{i=1}^{c}$，CSP 仍然生成：
-
-$$
-\Phi_\tau=\sum_{i=1}^{c}\nu_i\sigma_{idx_i},
-\qquad
-\mu_j=\sum_{i=1}^{c}\nu_i c_{idx_i,j}\pmod p.
-$$
-
-FastAudit 证明为：
-
-$$
-Proof_\tau^{fast}=(\tau,ver,round,\Phi_\tau,\{\mu_j\}_{j=1}^{s},\mathsf{ChallengedAuth},\mathsf{ChallengedPayloadHash},CompactCert_\tau,state\_token_\tau).
-$$
-
-验证者执行聚合持有性验证，并检查 $CompactCert\_\tau$、版本号和状态令牌是否与当前对象元数据一致。若全部通过，则：
-
-$$
-\mathsf{AcceptFastAudit}=1.
-$$
-
-其语义为：
-
-$$
-\mathsf{AcceptFastAudit}=1
-\Rightarrow
-\mathsf{PayloadPoss}\land\mathsf{CertBind}\land\mathsf{BasicStateCons}.
-$$
-
-由于 FastAudit 不验证 $\mathsf{AuditMHT}$ membership，不检查 indexed multiproof，也不重建对象根，因此它不声明完整 $\mathsf{MapCons}$，也不作为链上验证路径。本文实验中的 `Ours-FastAudit` 仅表示该轻量链下变体。
-
-**Algorithm 3：FastAudit.Prove/Verify**
-
-```
-Input: object tau, version ver, challenge Q_tau, compact certificate and state token
-Output: AcceptFastAudit or Reject
-1. CSP computes Phi_tau and {mu_j} over challenged payloads.
-2. CSP returns Proof_tau^fast with challenged payload hashes, challenged authenticator data, CompactCert_tau and state_token_tau.
-3. The verifier checks the aggregate authenticator equation.
-4. The verifier checks that CompactCert_tau, ver and state_token_tau match the current object metadata.
-5. If all checks pass, output AcceptFastAudit; otherwise output Reject.
+```mermaid
+stateDiagram-v2
+    [*] --> NONEXISTENT
+    NONEXISTENT --> CREATING
+    CREATING --> PENDING_PUBLICATION
+    PENDING_PUBLICATION --> ACTIVE: atomic batch finalized
+    ACTIVE --> AUDITING: OpenAudit
+    AUDITING --> COVERAGE_PASSED: every slot PASSED
+    COVERAGE_PASSED --> ACTIVE: finalize epoch
+    AUDITING --> ABORTED: AbortEpoch before update
+    ABORTED --> ACTIVE
+    AUDITING --> FAILED: BAD proof or timeout
+    FAILED --> FROZEN
+    FROZEN --> RECOVERING: recover last certified version
+    FROZEN --> MIGRATING
+    MIGRATING --> ACTIVE_NEW_VERSION
+    RECOVERING --> ACTIVE_NEW_VERSION
+    ACTIVE_NEW_VERSION --> ACTIVE
+    FROZEN --> RETIRED
 ```
 
-### G. 链上 FullAudit
+### 核心不变量
 
-合约读取链上对象状态：
+| 不变量 | 含义 |
+|---|---|
+| I1 | 每个对象版本恰有一个 `ObjectSuiteRef`，且其 SuiteRegistry 条目和 VerifierModule 不可覆盖 |
+| I2 | 每个 active page id 恰有一个 current PageDesc |
+| I3 | 每个 ordinary stripe 恰有一个 manifest entry 和一个经 `AuditEntryRoot` 认证的 AuditStateEntry |
+| I4 | ordinary 在线验证输入必须经 `AuditStateEntryOpening` 获得，不能仅使用摘要 |
+| I5 | `AUDITING` 期间 `data_ver` 不可改变；更新前必须 `AbortEpoch` |
+| I6 | `FAILED` epoch 永远不能进入 `CoveragePass` |
+| I7 | 新对象版本不继承旧 SwapMap、slot status 或 challenge |
+| I8 | `PageDescStoreRoot`、META、对象三根和 ObjectHeader 只通过原子状态转换切换 |
+| I9 | FROZEN 版本满足 RECOVERY 生命周期但不可开启新审计；RETIRED 版本不再属于 CurrentDataDAR |
 
-$$
-\mathsf{ObjState}[\tau,currentVer_\tau]=(object\_root_\tau,\rho_\tau^{rep},\rho_\tau^{audit},PolicyHash,st_\tau,state\_token_{\tau,currentVer_\tau},update\_nonce_\tau,n_\tau,pk_e^{aud}).
-$$
+## A. 攻击—机制—定理映射
 
-合约生成审计种子。$R\_{round}$ 表示该审计轮使用的公开随机源；生产部署中可由延迟区块随机性、commit-reveal 或 VRF 提供，当前 Ganache 原型中由合约测试环境模拟。安全要求是：在 $object\_root\_\tau$ 固定之后、CSP 生成 proof 之前，CSP 不能预测 $R\_{round}$ 及其派生出的挑战索引和系数。审计种子采用域分离编码：
+| 攻击/失败面 | 机制 | 首要认证量 | 安全结果 | 主要成本 |
+|---|---|---|---|---|
+| representative 被删除 | REP-LINK + critical REP domain | RecordBinding/StripeDesc | Round Soundness | 额外独立域 proof |
+| ordinary public state 被替换 | AuditStateEntry opening | AuditEntryRoot/PageDescStoreRoot | CCB/Round Soundness | entry multiproof |
+| 页面验证状态丢失 | current PageDescStore + state parsing | PageDescStoreRoot/FilePublicState | CurrentDataDAR | 共识状态存储 |
+| 目录遗漏 ordinary stripe | manifest pages + page roots | active stripe set | CertifiedLayoutWF_current/CurrentDataDAR | 分页与页面提取 |
+| 信标重抽样/遗漏 | UTB + SwapMap | fixed input/StateToken | Scheduling/Coverage | $O(m_{cov})$ state |
+| 恢复过程中更换状态 | complete $\Sigma^\star$ | CSP + chain + registry + RO | CurrentDataDAR | 多轮理论提取 |
+| sid 被复用 | CSMS append-only state | SidHistoryRoot | HistoricalConsistencyValid | 最坏 $d_{sid}|H|$ witness |
 
-$$
-\eta_{\tau,round}=H_0(\textsf{CHAL\_SEED}\parallel enc(R_{round})\parallel enc(object\_root_\tau)\parallel enc(\tau)\parallel enc(ver)\parallel enc(round)\parallel enc(c)).
-$$
+## B. Metadata 认证职责
 
-第 $i$ 个挑战位置和系数为：
-
-$$
-idx_i=H_{\mathbb Z}(\eta_{\tau,round}\parallel\textsf{idx}\parallel i)\bmod n_\tau,
-$$
-
-$$
-\nu_i=H_{\mathbb Z_p}(\eta_{\tau,round}\parallel\textsf{coef}\parallel i).
-$$
-
-CSP 不上传原始 payload sector，而是上传聚合认证器和聚合响应：
-
-$$
-\Phi_\tau=\sum_{i=1}^{c}\nu_i\sigma_{idx_i},
-\qquad
-\mu_j=\sum_{i=1}^{c}\nu_i c_{idx_i,j}\pmod p.
-$$
-
-链上证明包含：
+`SidHistoryRoot` 只认证“某 sid 是否曾经使用”，不承诺对应历史 payload 或 tombstone 内容长期可下载，因此
 
 $$
-Proof_\tau^{on}=(\tau,ver,round,\Phi_\tau,\{\mu_j\}_{j=1}^{s},\mathsf{ChallengeLeaves},\mathsf{UniqueAuditLeaves},\mathsf{AuditMultiProof}_{on},CompactCert_\tau,\rho_\tau^{audit},state\_token_\tau).
+\mathsf{HistoricalConsistencyValid}\not\Rightarrow\mathsf{HistoricalDataAvailability}.
 $$
 
-合约执行以下检查：
+| 结构 | 唯一职责 |
+|---|---|
+| `AuditEntryRoot` | 在线认证 ordinary stripe 的完整文件级公开状态 |
+| `PageDescStore` | 页面提取前获得页面级 public state、BlockRoot 和 AuditEntryRoot |
+| 页面内容根/BlockRoot | 恢复后验证页面规范字节和完整码字 |
+| `StripeDirectoryRoot` | operational ordinal、条带状态和 stripe descriptor |
+| META | 页面内容根、计数、清单和分页策略 |
+| ObjectHeader/Certificate | 绑定对象版本、suite 引用、顶层根和生命周期授权 |
 
-1. proof round 与最新链上 challenge round 一致；
-2. challenged indexes 等于链上派生结果；
-3. indexed AuditMHT multiproof 重建根等于 $\rho\_\tau^{audit}$；
-4. object state、version 和 state token 与 $ChainRoot\[\tau,ver]$ 的当前状态一致；
-5. $CompactCert\_\tau$ 中的对象标识、版本、策略哈希和授权上下文摘要与链上对象状态一致；
-6. randomized aggregate pairing equation 成立。
+## C. 端到端阶段
 
-具体地，合约从 proof calldata 中解析 $\Phi\_\tau$、${\mu\_j}_{j=1}^{s}$、被挑战 audit leaves、去重后的 unique leaves、indexed multiproof、$CompactCert_\tau$ 和 $state\_token\_\tau$。根据当前对象根重算挑战后，合约重建聚合认证基：
+1. Gateway 验证候选依赖对象并形成业务条带；
+2. 生成 Manifest、Tombstone 和带 AuditEntryRoot 的 AuditState pages；
+3. 生成 PageDescStoreRoot、META、顶层根和 ObjectHeader；
+4. 原子批量发布对象；
+5. 在线 proof 通过 AuditState entry opening 获得 ordinary public state；
+6. 失败时冻结对象；
+7. fixed-state extractor 对每个 RecoverableView 规范化、重编码并重建对象根。
 
-$$
-B_\tau=\sum_{i=1}^{c}\nu_iH_{\mathbb G_1}(T_{idx_i})+\sum_{j=1}^{s}\mu_ju_j.
-$$
+# VI. 方案构造
 
-随后调用 EVM 地址 `0x08` 的 BN254/alt\_bn128 pairing precompile 检查。由于该预编译验证的是 pairing product，合约中的检查等价写为：
+## A. 算法接口
 
-$$
-e(\Phi_\tau,g)=e(B_\tau,pk_e^{aud}).
-$$
+| Algorithm | Executor | Purpose |
+|---|---|---|
+| `Setup/RegisterRPDPProfile/RegisterPolicy` | Gateway + governance | 注册 RPDP 三项密码性质、OutputMode、ExtractorAccess、single-suite 参数、分页、RS 和资源上限 |
+| `RegisterSuiteVersion/ResolveSuiteExecutionState` | governance + BFT state | 建立不可变 SuiteRegistry/VerifierModule 并解析对象级执行输入 |
+| `RegisterGatewayKey/RotateGatewayKey` | governance + Gateway | 注册版本化 Gateway 验证键并保持旧证书可解析 |
+| `BSetup/ShareEval/ShareVerify/Combine` | beacon committee | 建立固定 key epoch 和唯一 round seed |
+| `PreparePseudonyms/AuthorizeEdge` | Gateway | 生成临时伪名并签发形成授权 |
+| `FormDependencyObject` | Edge | 输出 representative、delta/fallback 和候选布局 |
+| `ProtectAndCommit` | Gateway | 复核、业务条带、带 AuditEntryRoot 的 metadata pages、CSMS 和候选对象状态 |
+| `PublishObjectWithPageDescBatch` | relayer + BFT state | 重算 PageDescStoreRoot，验证紧凑获证状态并原子建立 ACTIVE 状态 |
+| `UpdatePageDescBatch/GetPageDesc/RetirePageDescBatch` | Gateway + BFT state | 管理当前 PageDescStore |
+| `OpenAuditStateEntry/VerifyAuditStateEntry` | CSP + BFT verifier | 为 ordinary stripe 提供完整文件级公开状态和页面内认证 opening |
+| `ResolvePublicStateOnline` | BFT verifier | 从 ObjectHeader、PageDescStore 或 AuditStateEntry opening 解析在线验证输入 |
+| `ResolvePublicStateExtract` | conditional extractor | 从固定公共快照和恢复页面解析提取输入 |
+| `OpenAudit/FulfillRoundSeed` | caller + beacon + BFT | 固定输入并无放回选择 coverable 目标 |
+| `SubmitAuditProof` | CSP | 直接向 BFT verifier module 提交独立域证明和认证 opening |
+| `AbortEpoch` | Gateway/BFT state | 在改变 data_ver 前终止当前 audit epoch |
+| `FreezeTargetSnapshot/ResetCSPState` | conditional extractor | 固定完整 $\Sigma^\star$ 并重绕 CSP 状态 |
+| `NormalizeRecoveredComponent` | conditional extractor | 将完整码字、可解码子集或消息统一为规范消息和完整码字 |
+| `ExtractCurrentObject` | conditional extractor | META-first 当前对象组合提取 |
+| `AuthorizedUpdate` | Gateway + BFT state | 原子更新条带、AuditEntryRoot、页面、PageDescStore、CSMS、META 和证书 |
 
-即：
+## B. Setup、单一 RPDP suite、唯一阈值信标与 Edge 授权
 
-$$
-e(\Phi_\tau,g)\cdot e(-B_\tau,pk_e^{aud})=1.
-$$
-
-该等式只验证被挑战 payload 的聚合持有性，且 pairing precompile 调用次数为常数级；映射一致性由 AuditMHT multiproof 与 $\rho\_\tau^{audit}$ 负责，状态一致性由 $ChainRoot\[\tau,ver]$、$state\_token\_\tau$ 和对象证书上下文负责。
-
-若全部通过，则：
-
-$$
-\mathsf{AcceptFullAudit}_{on}=1.
-$$
-
-其语义为：
-
-$$
-\mathsf{AcceptFullAudit}_{on}=1
-\Rightarrow
-\mathsf{ChallengeCons}\land\mathsf{AuditMemMulti}\land\mathsf{RepInt}\land\mathsf{PayloadPoss}\land\mathsf{MapCons}\land\mathsf{StateCons}.
-$$
-
-**Algorithm 4：FullAudit.Prove/Verify**
-
-```
-Input: object tau, version ver, round, challenge size c, chain object state
-Output: AcceptFullAudit_on or Reject
-1. The contract derives eta_{tau,round}, challenged indexes and coefficients from the current object root.
-2. CSP computes Phi_tau and {mu_j} over the challenged payloads.
-3. CSP returns challenged audit leaves, unique audit leaves, indexed AuditMHT multiproof, CompactCert_tau and state_token_tau.
-4. The verifier reads the current ChainRoot[tau,ver], state token and frozen flag; if the object is frozen, reject.
-5. The verifier checks round consistency and recomputes challenged indexes and coefficients.
-6. The verifier rebuilds rho_tau^audit from the indexed multiproof.
-7. The verifier checks CompactCert_tau, object state, version and state_token_tau against ChainRoot[tau,ver].
-8. The verifier reconstructs B_tau and calls the 0x08 BN254/alt_bn128 pairing precompile to check e(Phi_tau, g) * e(-B_tau, pk_e^aud) = 1.
-9. If all checks pass, output AcceptFullAudit_on; otherwise output Reject.
-```
-
-### H. 生命周期辅助操作
-
-公共审计不证明隐藏明文语义。因此，分类正确性、差分边界有效性和重构可靠性由 User/Gateway 侧抽样复核给出样本级结论。
-
-对象生命周期使用四类状态。`active` 表示对象可接受 FullAudit、FastAudit 和前向状态更新；`frozen` 表示对象已因公共审计或抽样复核失败而暂停审计接受；`updated` 表示对象进入新版本并重新锚定对象根；`rolled-back` 表示对象状态回退到历史有效根。冻结对象不能绕过状态检查生成有效 FullAudit，回滚对象只能指向链上已有的历史有效版本。
-
-链上状态维护当前版本号 $currentVer\_\tau$ 和严格单调递增的更新计数器 $update\_nonce\_\tau$。状态令牌定义为：
+`RegisterRPDPProfile` 要求精确来源、VerifierModule 规范、native file id 绑定、挑战分布、状态格式、fixed-state extractor 陈述和资源边界。公开合同为
 
 $$
-state\_token_{\tau,ver}=H_0(\textsf{STATE}\parallel enc(\tau)\parallel enc(ver)\parallel enc(st_\tau)\parallel enc(object\_root_\tau)\parallel enc(prevRoot_\tau)\parallel enc(data\_ver_\tau)\parallel enc(update\_nonce_\tau)).
+\begin{aligned}
+RPDPProfile_t=(&SourceRecord_t,VerifierModuleSpec_t,FileIDBinding_t,ChallengeSuite_t,StateFormat_t,\\
+&OutputMode_t,ExtractorAccess_t,ExtractableRegion_t,ExtractionStatement_t,ResourceBounds_t).
+\end{aligned}
 $$
 
-其中，$update\_nonce\_\tau$ 用于把同一对象的多次状态转移串接为哈希链式上下文，防止旧版本 proof、前向回滚或交易排序造成的跨状态拼接。
+适配器接口为：
 
-若公共审计或抽样复核失败，系统可将对象冻结：
-
-$$
-st_\tau\leftarrow frozen.
-$$
-
-若存在历史有效版本 $ver'$，则允许回滚，但回滚不是把历史根直接恢复为当前根，而是创建一个新版本。新版本的 payload/audit roots 可取自历史有效版本，$prevRoot\_\tau$ 必须等于更新前的当前根，且新版本重新计算 $state\_token\_{\tau,currentVer\_\tau+1}$ 和 $object\_root\_{\tau,currentVer\_\tau+1}$：
-
-$$
-ChainRoot[\tau,currentVer_\tau+1]\leftarrow object\_root_{\tau,currentVer_\tau+1}.
-$$
-
-状态转移不改变 representative payload；若 payload 和映射位置不变，统一审计根也保持不变：
-
-$$
-\rho_\tau^{rep,new}=\rho_\tau^{rep},\qquad \rho_\tau^{audit,new}=\rho_\tau^{audit}.
-$$
-
-此时只递增 $update\_nonce\_\tau$，并重新计算状态令牌和对象根；$data\_ver\_\tau$ 保持不变。若 payload 内容或映射位置发生变化，则先递增 $data\_ver\_\tau$，重新构造对应统一审计叶并更新 $\rho\_\tau^{audit,new}$。具体而言，Edge 或授权更新过程先重新计算受影响 payload 的认证器和 $L\_i^{audit,new}$，再从这些叶节点沿 AuditMHT 路径向上逐层重算父节点，直到得到新的 $\rho\_\tau^{audit,new}$；未受影响的兄弟子树可直接复用其旧根。合约侧不重建完整树，只校验提交更新时引用的旧根等于 $ChainRoot\[\tau,currentVer\_\tau]$ 或 rollback 目标属于历史有效版本，并将新的对象根锚定到 $ChainRoot\[\tau,currentVer\_\tau+1]$。
-
-**Algorithm 5：LifecycleUpdate**
-
-```
-Input: object tau, current version currentVer_tau, operation op in {freeze, rollback, update}
-Output: updated chain state or Reject
-1. Reject the operation if prevRoot_tau != ChainRoot[tau,currentVer_tau].
-2. If op = freeze, set st_tau = frozen, increment update_nonce_tau, recompute state_token_tau,currentVer_tau+1 and object_root_tau,currentVer_tau+1, then publish ChainRoot[tau,currentVer_tau+1].
-3. If op = rollback, check that target version ver' is historical valid; create a new version currentVer_tau+1 whose payload/audit roots point to that historical valid root context, increment update_nonce_tau, recompute state_token_tau,currentVer_tau+1 and object_root_tau,currentVer_tau+1, then publish ChainRoot[tau,currentVer_tau+1].
-4. If op = update and payload/mapping are unchanged, keep data_ver_tau, rho_tau^rep and rho_tau^audit, then increment update_nonce_tau and recompute state token and object root.
-5. If op = update and payload or mapping changes, increment data_ver_tau and update_nonce_tau, recompute affected authenticators and audit leaves, bubble updated hashes to a new rho_tau^audit, and publish the new object root.
-6. Reject any audit proof whose version, state token, prevRoot, update nonce or frozen status is inconsistent with the current chain state, and reject FullAudit when the current state is frozen.
+```text
+RPDP.KeyGen(1^lambda, profile) -> public key, immutable VerifierModule and secret state
+RPDP.BindFileID(FileContext, profile) -> native_file_id
+RPDP.Preprocess(sk, native_file_id, C_g) ->
+    (PublicAuditState_g, ProverState_g, RecoverableAuditState_g)
+RPDP.Challenge(seed, native_file_id, profile, domain_id) -> chal_g
+RPDP.Prove(pk, C_g, ProverState_g, chal_g) -> pi_g
+RPDP.PublicVerify(pk, native_file_id, PublicAuditState_g, chal_g, pi_g) -> {0,1}
+RPDP.Extract(P*, fixed_snapshot, profile) -> RecoverableView_g
+NormalizeRecoveredComponent(RecoverableView_g, OutputMode_g, CodeParam_g) -> (M_g, C_hat_g)
 ```
 
-## V. 正确性与安全性分析
+`RegisterSuiteVersion` 写入不可覆盖的 `SuiteRegistry`，并把 `SerializationRules/ExecutionParams/ChallengeRules/PublicVerify/ExtractInterface/ResourceLimits` 固化到 `VerifierCodeHash` 唯一确定的不可变 VerifierModule。`SourceRecordHash` 只绑定论文、证明、测试向量和实现来源，不进入协议执行。ObjectHeader 仅保存 `ObjectSuiteRef` 和摘要。所有对象组件使用一个 suite；profile 轮换属于 `FullObjectReinstantiation`。附录 J 的 `SW-Sym-Theory` 声明 `OutputMode=DECODABLE_SUBSET`、`ExtractorAccess=PUBLIC`，且仅在原始对称 pairing 模型中给出候选理论映射，不是核心部署 profile。
 
-### A. 安全性假设与证明范围
+`RegisterGatewayKey` 将 Gateway 公钥、key epoch、生效高度和状态写入不可覆盖的 `GatewayKeyRegistry`。`RotateGatewayKey` 只改变后续签名 epoch，不重签旧对象；旧证书验证始终解析其原始 key epoch。
 
-本文依赖以下标准假设。
+## C. Candidate Formation 与 PreStoreCheck
 
-**Assumption 1（签名不可伪造）。** User 和 Edge 使用的签名方案满足存在性不可伪造性。
+Edge 在临时伪名记录上选择 representative，验证每条 delta 的精确 `Recover`，按类型 next-fit 生成 candidate。Gateway 重新执行代表选择、delta/fallback、最终 sid/gid 和 packing，并构造 $SV_\tau^{pub},SV_\tau^{priv}$。
 
-**Assumption 2（哈希绑定安全）。** 哈希函数满足抗碰撞性，且本文所有根、叶节点和状态材料均采用域分离编码，编码结果无歧义。
+`PreStoreCheck` 验证公开布局、AEAD、delta 明文重构和外层 RS 参数；只有通过检查且能够由 `ResolveSuiteExecutionState` 解析完整 VerifierModule 的业务条带和页面才执行 single-suite RPDP `Preprocess`。Gateway 是可信形成根，该假设不由 CSP 安全定理替代。
 
-**Assumption 3（Merkle membership 绑定安全）。** AuditMHT 的 Merkle membership 绑定安全，即攻击者不能为同一根构造两个语义不同但均可接受的叶成员关系。
+## D. ProtectAndCommit 与原子初始发布
 
-**Assumption 4（同态认证器不可伪造）。** 攻击者在不知道被挑战 payload 扇区值或有效认证器的情况下，不能以非可忽略概率构造通过聚合验证的认证证明。
+对象形成严格按依赖顺序执行：
 
-**Assumption 5（链上状态不可篡改）。** 已确认链上状态不可篡改，智能合约按固定逻辑读取对象根、版本号、状态令牌和冻结状态。
+```text
+ProtectAndCommit(candidate, records, object_suite, page_policy):
+    1. verify candidate and recompute REP/DELTA/FALLBACK
+    2. protect records; build business stripe plaintexts
+    3. RS-encode and RPDP-preprocess business stripes
+    4. construct Manifest/Tombstone pages and authenticated AuditState pages
+       (including AuditEntryRoot for every audit-state page)
+    5. RS-encode and RPDP-preprocess metadata pages
+    6. construct full PageDesc batch and candidate PageDescStoreRoot
+    7. append all newly allocated sid values to CSMS
+    8. construct and RPDP-preprocess META
+    9. construct DataRoot, RecordRoot and StripeDirectoryRoot
+   10. construct FormationDigest, ObjectHeader and Gateway certificate
+   11. output compact PublicationBatch; do not expose an ACTIVE object yet
+```
 
-**Assumption 6（挑战不可预测）。** 在对象根固定之后，链上挑战集合和挑战系数对 CSP 不可预测。
-
-本节证明范围限于公共对象级完整性。FullAudit 目标是验证被挑战范围内的 representative 持有性 $\mathsf{RepInt}$、delta/fallback payload 持有性 $\mathsf{PayloadPoss}$、映射一致性 $\mathsf{MapCons}$ 和链上状态一致性 $\mathsf{StateCons}$。本文不在公共审计层证明隐藏明文语义、相似分类算法正确性、未抽样记录的重构可靠性，也不证明附录 S-PoW 访问控制接口的完整所有权安全性。分类正确性、差分边界有效性和重构可靠性只由 User/Gateway 侧抽样复核对样本集合给出结论。
-
-### B. FullAudit 攻击游戏
-
-本文以恶意 CSP 作为主要敌手 $\mathcal A$，并与第 III-C 节的威胁模型保持一致。敌手可以观察公开链上状态、历史对象根、历史审计记录和公开认证材料，也可以删除、替换、回放或拼接其保存的外包对象材料；若敌手控制或诱导 Edge 产生错误对象形成材料，则其仍不能伪造 User/Gateway 授权签名、篡改已确认的链上状态，或在对象根固定前预测链上挑战。
-
-FullAudit 攻击游戏由挑战者 $\mathcal C$ 与敌手 $\mathcal A$ 交互完成。
-
-**Setup.** $\mathcal C$ 生成系统参数、审计公私钥、对象证书、对象根和链上状态。对于对象 $O\_\tau$，链上记录包括 $object\_root\_\tau$、$\rho\_\tau^{rep}$、$\rho\_\tau^{audit}$、$data\_ver\_\tau$、当前版本号、状态令牌、更新计数器、对象叶数量和审计公钥。
-
-**Query.** $\mathcal A$ 可以观察公开链上状态、历史版本、历史 proof 和公开认证材料，也可以查询非目标对象材料。对于目标对象，$\mathcal A$ 可以持有其历史版本和公开认证材料，但不能通过查询获得目标挑战中缺失 payload 的扇区值作为伪造辅助。该阶段刻画 CSP 可能长期保存历史对象、历史根和历史审计材料的现实场景。
-
-**Challenge.** 在目标对象根固定后，链上生成挑战集合与挑战系数，得到被挑战 payload 索引集合和系数 ${\nu\_i}$。挑战生成晚于对象根提交，因此 CSP 不能根据挑战预先选择性保留对象材料。
-
-**Forge.** $\mathcal A$ 输出 FullAudit proof，包括聚合认证器 $\Phi\_\tau$、聚合响应 ${\mu\_j}$、被挑战 audit leaves、indexed AuditMHT multiproof、对象证书材料、状态令牌和链上验证所需的上下文。
-
-**Verify.** 若智能合约或公共验证者输出 $\mathsf{AcceptFullAudit}=1$，且以下任一目标性质失败，则 $\mathcal A$ 赢得游戏。
-
-第一类是 payload possession forgery。一个或多个被挑战 representative、delta 或 fallback payload 未被 CSP 保存，但 proof 仍通过聚合认证器验证。该攻击对应 $\mathsf{RepInt}$ 或 $\mathsf{PayloadPoss}$ 失败但 FullAudit 接受。
-
-第二类是 mapping substitution forgery。被挑战 leaf 中的 $FID$、$\tau$、$sid$、$storage\_type$、$off$、$len$、payload hash 或认证器摘要与链上绑定的 $\rho\_\tau^{audit}$ 所承诺的对象映射不一致，但被挑战 audit leaves 和 indexed multiproof 仍被接受。该攻击对应 $\mathsf{MapCons}$ 失败但 FullAudit 接受。
-
-第三类是 state rollback / cross-object splicing forgery。proof 使用旧版本、其他对象、其他策略或其他授权上下文中的材料，却仍通过当前对象根、状态令牌和链上 $ChainRoot\[\tau,ver]$ 检查。该攻击对应 $\mathsf{StateCons}$ 或证书上下文绑定失败但 FullAudit 接受。
-
-FullAudit 安全目标是：在第 A 节假设下，任意 PPT 敌手赢得上述攻击游戏的概率均为可忽略。
-
-**序列游戏与优势分解。** 为了将不同内部原语的安全作用分离，本文定义从真实攻击实验到受限攻击实验的一组序列游戏。令 $\mathsf{Adv}\_i$ 表示敌手 $\mathcal A$ 在 $\mathbf{Game}\_i$ 中获胜的概率，并将真实 FullAudit 攻击优势简写为 `Adv_A^FullAudit(lambda)`。
-
-**`Game_0`（真实实验）。** 该游戏即上述真实 FullAudit 攻击实验。因此：
+Gateway 签名的形成摘要为
 
 $$
-\mathsf{Adv}_0=\Pr[\mathcal A\ wins\ \mathbf{Game}_0]=\mathsf{Adv}_{\mathcal A}^{FullAudit}(\lambda).
+\begin{aligned}
+FormationDigest=H_0(&\textsf{FORMATION}\parallel objectID\parallel data\_ver\parallel state\_ver\\
+&\parallel RecordRoot\parallel DataRoot\parallel StripeDirectoryRoot\\
+&\parallel PageDescStoreRoot\parallel METABlockRoot\parallel SidHistoryRoot\\
+&\parallel ObjectSuiteRef\parallel PolicyDigest\parallel ProtocolVersion).
+\end{aligned}
 $$
 
-**`Game_1`（哈希碰撞剥离）。** 该游戏与 $\mathbf{Game}_0$ 相同，但挑战者记录对象根、状态令牌、统一审计叶、AuditMHT 内部节点和 $H_{\mathbb G\_1}(T\_i)$ 的所有哈希输入。若敌手使两个语义不同的输入映射到同一哈希值，并借此让对象根、状态令牌、audit leaf 或 AuditMHT root 通过验证，则挑战者终止并输出失败。由 Assumption 2 可得：
+`FormationDigest` 认证 Gateway 已经在链下检查 `CertifiedLayoutWF_current`、`HistoryRootBound`、页面内容与 `AuditEntryRoot`、编码块与 `BlockRoot`、业务目录和当前顶层根。它不意味着 BFT 重算上述离线数据关系。
+
+紧凑发布批次为
 
 $$
-|\mathsf{Adv}_1-\mathsf{Adv}_0|\le Adv_H^{coll}(\lambda).
+\begin{aligned}
+Batch_{create}=(&PageDescBatch,MetaDescriptor,ObjectHeader,Cert,\\
+&InitialProvider,PolicyWitness,ProtocolVersion).
+\end{aligned}
 $$
 
-**`Game_2`（签名伪造剥离）。** 该游戏与 $\mathbf{Game}\_1$ 相同，但若敌手在没有 User/Gateway 授权密钥的情况下输出可验证的边缘授权、对象证书或 $AuthCtx$ 签名，则挑战者终止并输出失败。由 Assumption 1 可得：
+其中 `MetaDescriptor` 只包含 BFT 发布检查需要的 META 文件标识、版本、BlockRoot、public-state 摘要和页面计数/根摘要，不包含完整 META 或业务页面内容。 `PolicyWitness=(PolicyEntry,PolicyOpening,PolicyRegistryRoot)` 绑定 page/stripe 数量上限、页面字节上限、RS 参数摘要、challenge 域数量、proof-body 上限、信标参数、允许的更新规模、允许的 suite 状态和协议版本；BFT 验证 opening 和 `PolicyDigest`。仍被未退休对象引用的旧 PolicyEntry 不得裁剪。
+
+```text
+PublishObjectWithPageDescBatch(batch):
+    require object state = NONEXISTENT or CREATING
+    set transient state PENDING_PUBLICATION
+    parse all fields by canonical encoding
+    resolve immutable ObjectSuiteRef and VerifierModule from SuiteRegistry
+    require registry status = ACTIVE and module/code/parameter digests match
+    verify page ids are unique and descriptor versions/types are legal
+    recompute PageDescStoreRoot from canonical PageDescBatch
+    require ObjectHeader binds that root, MetaDescriptor, FormationDigest,
+            InitialProvider, PolicyDigest and all object versions
+    verify Gateway certificate over ObjectHeader/FormationDigest
+    verify object uniqueness, lifecycle transition and resource bounds
+    atomically write PageDescStore, ObjectHeader, provider and ACTIVE state
+    on any failure rollback every transient write
+```
+
+BFT **不**重算业务条带、metadata page 内容、`AuditEntryRoot`、页面 `BlockRoot`、`RecordRoot` 或 `DataRoot`；这些离线形成关系由可信 Gateway 的 `FormationDigest/Cert` 认证。部分描述符写入、未获证对象头或未完成批量交易均不能开启审计。
+
+## E. PageDescStore、AuditState 条目认证与公开状态解析
+
+核心 `PageDescStore` 使用固定深度 sparse Merkle map。`UpdatePageDescBatch` 只接受相同 page id 上严格递增的 `page_ver`，并与新 META/ObjectHeader 同批提交。`GetPageDesc` 返回 current finalized entry、成员 opening 和 state reference；active entry 不得被裁剪。
+
+对 audit-state 页面，PageDesc 的 `AuditEntryRoot` 认证页面内部 ordinary 文件状态。CSP 可执行：
+
+```text
+OpenAuditStateEntry(g, AuditStatePage_p):
+    locate the unique AuditStateEntry_g at AuditOffset_g
+    return (AuditStateEntry_g, pageID_p, entryIndex_g, auditEntryOpening_g)
+```
+
+BFT verifier 执行：
+
+```text
+VerifyAuditStateEntry(g, opening, PageDesc_p, BootEntry_g):
+    verify PageDesc_p under current PageDescStoreRoot
+    verify opening to PageDesc_p.AuditEntryRoot
+    require entry.g = g
+    require entry.stripe_ver = BootEntry_g.stripe_ver
+    require H(entry.FilePublicState) = BootEntry_g.PublicAuditStateDigest
+    require native file id, BlockRoot and suite reference agree with StripeDesc/BootEntry
+```
+
+在线解析：
+
+```text
+ResolvePublicStateOnline(componentID, type, OH, ChainState, PageDescStore, ProofBody):
+    if type in {REP, META}:
+        read FilePublicState from OH.CriticalAuditBootstrap
+    elif type is METADATA_PAGE:
+        read PageDesc from finalized PageDescStore and verify its root under OH
+    else:
+        verify AuditStateEntryOpening carried in ProofBody
+        read FilePublicState from the authenticated AuditStateEntry
+    resolve ObjectSuiteRef and immutable VerifierModule from SuiteRegistry
+    verify component version, BlockRoot, suite digest and state digest
+    return complete file-level verification input or bottom
+```
+
+提取解析：
+
+```text
+ResolvePublicStateExtract(componentID, type, OH, ChainState, PageDescStore, recoveredPages):
+    use OH for REP/META and PageDescStore for metadata pages
+    for an ordinary stripe, read the entry from the recovered AuditStatePage
+    recompute AuditEntryRoot and require equality with PageDesc
+    resolve the same immutable SuiteRegistry entry and VerifierModule
+    return the same verification tuple or bottom
+```
+
+两个解析器输出相同语义的 $(nativeFileID,PublicAuditState,ObjectSuiteRef,component\_ver,BlockRoot)$，但输入来源不同。该过程是外层认证关系，不是底层 RPDP 算法。
+
+## F. 固定输入信标、无放回 Scheduling 与 CoveragePass
+
+EpochState 保存对象双版本、`next_pos`、SwapMap digest、`scheduled_count`、`passed_count` 和 epoch status。只有 `ACTIVE` 对象能创建 epoch；创建后对象进入 `AUDITING`。每个 slot 计算规范 `StateToken`，round 输入绑定对象根、single suite、provider、epoch/slot、位置、SwapMap、ChallengeStateHash 和该 token。相同输入 retry 不得改变任何字段。
+
+challenge 建立时 slot 进入 `SCHEDULED`；proof 接受后进入 `PASSED`；BAD/timeout 进入 `FAILED`、冻结对象并终止 epoch。当全部 ordinal 被选择时 `SchedulingComplete=1`；只有全部 slot 均为 PASSED 时 `CoveragePass=1`。
+
+`AUDITING` 期间任何改变 `data_ver` 的更新均被拒绝。紧急更新必须先调用：
+
+```text
+AbortEpoch(epoch):
+    require lifecycle = AUDITING and no FAILED attribution pending
+    invalidate all pending challenges
+    archive epoch as ABORTED
+    clear transient SwapMap/slot state
+    set lifecycle = ACTIVE
+```
+
+## G. Challenge Domains 与独立公开验证
+
+record、LINK、REP-LINK、critical REP/META、coverage 和可选 risk 域均使用规范 domain id。对域 $d$，BFT verifier 先解析目标组件的获证文件级状态，再计算
 
 $$
-|\mathsf{Adv}_2-\mathsf{Adv}_1|\le Adv_{\mathsf{Sig}}^{euf}(\lambda).
+chal_d=\mathsf{RPDP.Challenge}(R_{round},nativeFileID_{g(d)},ObjectSuiteRef,domain\_id_d).
 $$
 
-**`Game_3`（链上状态回放剥离）。** 该游戏与 $\mathbf{Game}_2$ 相同，但验证算法显式读取当前链上状态。若 proof 中的 $ver$、$state\_token_\tau$、$update\_nonce\_\tau$、$prevRoot\_\tau$ 或冻结状态与 $ChainRoot\[\tau,currentVer\_\tau]$ 不一致，则验证算法确定性拒绝。该步骤只显化合约已有的当前状态读取和确定性检查，不引入新的密码学损失，因此：
+CSP 对每个域生成独立 proof。对于涉及 ordinary stripe 的域，CSP 同时提交该条带的 `AuditStateEntryOpening`；多个条目位于同一 AuditStatePage 时使用页面内 multiproof。规范证明体不含逐挑战 DataRoot opening：
 
 $$
-\mathsf{Adv}_3=\mathsf{Adv}_2.
+\begin{aligned}
+ProofBody=(&ChallengeId,ObjectHeader,\{d,g(d),chal_d,\pi_d\}_{d\in\mathcal D},\\
+&RecordOpenings,StripeOpenings,PageDescOpenings,AuditStateOpenings,\\
+&RecordMultiProof,DirectoryMultiProof,PageDescMultiProof,AuditEntryMultiProof,StateToken).
+\end{aligned}
 $$
 
-经过上述游戏转换，在 $\mathbf{Game}\_3$ 中仍能获胜的敌手只可能通过三类剩余路径成功：伪造被挑战 payload 的持有性证明、替换 AuditMHT 映射关系，或拼接旧版本、跨对象、跨策略、跨授权上下文的状态材料。下面三个引理分别处理这三类事件。
+BFT 验证顺序为：
 
-### C. 正确性
+1. 检查最终确认的 `AUDITING` 状态、双版本、provider、deadline，并重算规范 `StateToken`；
+2. 验证 ObjectHeader、证书、`ObjectSuiteRef`、SuiteRegistry 条目和顶层根；
+3. 重算全部逻辑域；
+4. 验证 record、stripe 和 current PageDescStore openings；
+5. 对每个 ordinary 目标验证 `AuditStateEntryOpening` 到对应 PageDesc 的 `AuditEntryRoot`，并核对完整 public state digest、native file id、BlockRoot、stripe version 和 suite digest；
+6. 派生 LINK/REP-LINK；
+7. 调用 `ResolvePublicStateOnline`；
+8. 逐域执行 `RPDP.PublicVerify`；
+9. 全部接受时把 slot 标为 PASSED；BAD/timeout 时标为 FAILED 并冻结对象。
 
-首先，认证器正确性保证诚实 CSP 能通过聚合验证。对每个被挑战 payload，诚实 CSP 使用正确认证器和正确扇区值生成 $\Phi\_\tau$ 与 ${\mu\_j}$。由于认证器满足：
+公共观察者可以重算以上结果，但不向共识提供受信任的验证判定。确定性拒绝码至少区分 malformed encoding、stale version、state conflict、bad certificate、bad page descriptor、bad audit entry、bad record binding、RPDP reject、timeout 和 resource overflow。
 
-$$
-\sigma_i=x_e^{aud}\cdot \left(H_{\mathbb G_1}(T_i)+\sum_{j=1}^{s}c_{i,j}u_j\right),
-$$
+## H. Fixed-State 条件性恢复
 
-按链上挑战系数聚合后，有：
+完整目标快照为 $\Sigma^\star$。目标版本满足 `AuthorizedVersionValid`，因此可以处于 ACTIVE、AUDITING 或 FROZEN，但不能已退休。Extractor 先解析不可变 VerifierModule 并提取 META；验证 $OH^\star$、SuiteRegistry/VerifierModule 和当前 `PageDescStore^\star`；提取 metadata pages；重算每个 AuditStatePage 的 `AuditEntryRoot`；从 manifest 枚举 ordinary stripes；从同一 $st_{CSP}^\star$ 分别提取 REP 和 ordinary stripes；最后对每个 `RecoverableView` 执行 `NormalizeRecoveredComponent`、根重建和对象有效性检查。
 
-$$
-\Phi_\tau=x_e^{aud}\cdot\left(\sum_{i=1}^{c}\nu_iH_{\mathbb G_1}(T_{idx_i})+\sum_{j=1}^{s}\mu_ju_j\right).
-$$
-
-因此，令 $B\_\tau=\sum\_{i=1}^{c}\nu\_iH\_{\mathbb G\_1}(T\_{idx\_i})+\sum\_{j=1}^{s}\mu\_ju\_j$，有 $e(\Phi\_\tau,g)=e(B\_\tau,pk\_e^{aud})$，BN254 pairing equation 能够通过。
-
-其次，AuditMHT 正确性保证诚实 CSP 返回的 audit leaves 与 indexed multiproof 能重建到 $\rho\_\tau^{audit}$。由于统一审计叶由 $FID$、$\tau$、$sid$、$storage\_type$、$off$、$len$、payload hash 和认证器摘要确定，诚实 proof 中的叶节点与链上绑定的统一审计根一致。
-
-最后，状态正确性保证诚实 proof 中的对象根、状态令牌、版本号和链上 $ChainRoot\[\tau,ver]$ 一致。诚实生成的 FullAudit proof 同时通过聚合认证器验证、AuditMHT multiproof 验证和链上状态检查，因此必然被接受。诚实生成的 FastAudit proof 只执行轻量 payload 审计和基础证书/状态绑定检查，其接受语义仍限于 $\mathsf{PayloadPoss}\land\mathsf{CertBind}\land\mathsf{BasicStateCons}$。
-
-### D. 关键安全引理
-
-**引理 1（认证器与 payload 持有性）。** 若存在 PPT 敌手在未保存一个或多个被挑战 representative、delta 或 fallback payload 的情况下，仍以非可忽略概率输出可通过聚合认证器验证的 $\Phi\_\tau$ 和 ${\mu\_j}$，则可以构造算法破坏 Assumption 4 或 Assumption 6。
-
-证明思路如下。反设存在敌手 $\mathcal A$ 以非可忽略概率完成 payload possession forgery。在 $\mathbf{Game}\_3$ 中，哈希碰撞、签名伪造和链上状态回放已经被排除，因此敌手若仍能通过聚合认证器验证，只剩两类失败事件。
-
-第一类事件记为 $E\_{auth}$。敌手缺失一个或多个被挑战 representative、delta 或 fallback payload，或缺失对应有效认证器组合，却仍输出可接受的聚合认证器 $\Phi\_\tau$。由于认证标签
+每个组件 extractor 调用前只重置 CSP 状态：
 
 $$
-T_i=\textsf{TAG\_BL}\parallel enc(FID)\parallel enc(\tau)\parallel enc(data\_ver_\tau)\parallel enc(sid_i)\parallel enc(storage\_type_i)\parallel enc(off_i)\parallel enc(len_i)\parallel enc(PolicyHash)
+P_i^\star\leftarrow\mathsf{Reset}(st_{CSP}^\star),
 $$
 
-显式绑定框架、对象、payload/mapping 认证版本、对象内位置和策略上下文，旧版本、其他对象、其他位置或其他策略下的认证器不能作为当前挑战认证器重放。若 $E\_{auth}$ 仍发生，则可构造算法在不知道有效 payload 扇区或有效认证器组合的情况下生成通过聚合验证的认证证明，从而破坏 Assumption 4。
+而 $OH^\star,ChainState^\star,PageDescStore^\star,SuiteRegistry^\star$ 及其 VerifierModule、$RO^\star$ 保持只读不变。一个组件 extractor 的修改状态不得传递给下一个组件。`CurrentDataDAR` 仅调用 `ExtractorAccess=PUBLIC` 的 profile；owner-assisted profile 的输出留给 `OwnerDAR`。
 
-第二类事件记为 $E\_{resp}$。敌手不伪造认证器，而是试图在不知道缺失 payload 扇区值的情况下构造聚合响应 ${\mu\_j}$，使 pairing equation 仍然成立。链上挑战系数在对象根固定后生成，敌手不能根据挑战选择性保留 payload，也不能预先计算缺失扇区在随机线性组合中的贡献。因此，$E\_{resp}$ 等价于猜中未知扇区值参与的随机线性组合，与 Assumption 6 矛盾。
+## I. 动态更新、失败与生命周期
 
-由事件并集界，聚合认证器验证接受但被挑战 payload 未被保存的概率可界为：
+普通业务条带更新按以下顺序执行：锁定旧 ACTIVE 状态；重建目标业务条带；重建唯一 manifest entry 和 AuditStateEntry；重算对应 `AuditEntryRoot`；重建 manifest/audit-state 页面；递增对应 page version；计算新 PageDesc batch/root；重建 META 和顶层根；签发新 ObjectHeader；通过一次 `AuthorizedUpdate` 原子切换。未修改页面保持原 file state，未修改 suite registry 条目保持不变。
 
-$$
-\Pr[\mathsf{Forge}_{pos}]\le Adv_{\mathsf{Auth}}^{uf}(\lambda)+\epsilon_{\mathsf{chal}}(\lambda),
-$$
+插入额外验证 CSMS 非成员和追加见证；删除不从历史集合移除 sid。representative 更新重建 REP、全部 DELTA 和相关页面。profile 迁移是 `FullObjectReinstantiation`，不是普通动态操作；新的 suite version 必须先进入 SuiteRegistry。 若 suite 状态从 ACTIVE/DEPRECATED 变为 REVOKED，所有引用该 suite 的未退休对象由治理状态转换进入 FROZEN，并只能执行恢复、迁移或退休；不得继续开启审计。
 
-其中 $Adv\_{\mathsf{Auth\}}^{uf}$ 表示同态认证器不可伪造优势，$\epsilon\_{\mathsf{chal\}}$ 表示在未知缺失扇区值时猜中随机挑战线性组合的概率；二者在本文假设下均为可忽略。因此，FullAudit 的聚合认证器验证推出被挑战范围内的 representative 和 delta/fallback payload 持有性。
+生命周期为：
 
-**引理 2（AuditMHT 映射绑定）。** 若存在 PPT 敌手在替换记录到对象、对象到 payload 或 payload 到位置的映射后，仍以非可忽略概率使被挑战 audit leaves 和 indexed AuditMHT multiproof 重建到链上绑定的 $\rho\_\tau^{audit}$，则可以构造算法破坏 Assumption 2 或 Assumption 3。
+```text
+NONEXISTENT -> CREATING -> PENDING_PUBLICATION -> ACTIVE
+ACTIVE -> AUDITING -> COVERAGE_PASSED -> ACTIVE
+AUDITING -> ABORTED -> ACTIVE
+AUDITING -> FAILED -> FROZEN
+FROZEN -> MIGRATING/RECOVERING -> ACTIVE_NEW_VERSION -> ACTIVE
+FROZEN -> RETIRED
+```
 
-证明思路如下。反设存在敌手 $\mathcal A$ 以非可忽略概率完成 mapping substitution forgery。本文将统一审计叶中的 $FID$、$\tau$、$sid$、$storage\_type$、$off$、$len$、payload hash 和 authenticator encoding 作为 $\mathsf{MapCons}$ 的判定字段集合。任何对对象编号、记录标识、payload 类型、偏移、长度、payload hash 或认证器编码的替换，都会改变对应叶节点编码。
+FAILED epoch 的 SwapMap 保留到归责完成，随后清理；新版本 coverage 从零开始，旧 slot 不继承。FROZEN 状态允许对最后获证版本运行 `CurrentDataDAR`，但不能开启新 audit epoch。`FreezeAndAssess` 可作为维护过程在固定快照下估计各组件 $\epsilon_i$ 是否进入注册的 $\mathcal E_i$；该过程不属于在线审计协议，也不自动给出恢复结论。
 
-若敌手提交伪造叶 $L\_i^{audit\*}\neq L\_i^{audit}$ 和 `indexed multiproof*`，但验证者仍重建出链上绑定的 $\rho\_\tau^{audit}$，则可以执行自顶向下分歧回溯。挑战者保存诚实 AuditMHT 树 $\mathcal T$ 及其根 $\rho\_\tau^{audit}$，并根据敌手 proof 重建伪造路径 $\mathcal T^_$。由于底部叶节点不同而根相同，沿根到叶比较 $\mathcal T$ 与 $\mathcal T^_$ 时，必然存在第一个父节点哈希相同但子节点输入不同的位置。也就是说，存在一层内部节点满足：
+BFT 拒绝码和状态动作固定如下：
 
-$$
-H_3(left\_child\parallel right\_child)=H_3(left\_child^*\parallel right\_child^*),
-$$
+| 拒绝码 | 触发条件 | 状态动作 |
+|---|---|---|
+| `ERR_MALFORMED_ENCODING` | 非规范编码、重复字段或无效长度 | reject；不改变对象状态 |
+| `ERR_STALE_VERSION` | 旧 data/state/component version | reject；不冻结 |
+| `ERR_STATE_CONFLICT` | 并发更新或 provider/StateToken 冲突 | reject 或基于新状态重试；不冻结 |
+| `ERR_BAD_CERTIFICATE` | ObjectHeader/FormationDigest 证书无效 | reject；不冻结现有对象 |
+| `ERR_BAD_PAGE_DESC` | PageDesc opening、root 或版本错误 | 当前 slot FAILED；归责 CSP 时 FROZEN |
+| `ERR_BAD_AUDIT_ENTRY` | AuditState entry/opening 与 descriptor 不一致 | 当前 slot FAILED；对象 FROZEN |
+| `ERR_BAD_RECORD_BINDING` | Record/Stripe/依赖 opening 不一致 | 当前 slot FAILED；对象 FROZEN |
+| `ERR_RPDP_REJECT` | 底层公开验证失败 | 当前 slot FAILED；对象 FROZEN |
+| `ERR_TIMEOUT` | 最终确认 deadline 前无有效 proof | 当前 slot FAILED；对象 FROZEN |
+| `ERR_RESOURCE_LIMIT` | caller 请求或 CSP 响应超过治理上限 | caller 超限仅 reject；CSP 超限按恶意响应处理 |
+| `ERR_SUITE_MODULE_MISSING` | registry 引用存在但不可解析 VerifierModule | 系统配置错误；reject，不归责 CSP |
+| `ERR_SUITE_PARAMS_MISMATCH` | module hash、参数摘要或 registry entry 不一致 | reject；治理/部署错误 |
+| `ERR_SUITE_DEPRECATED_FOR_NEW_OBJECT` | 新对象引用 DEPRECATED suite | reject；旧对象仍可审计、恢复或迁移 |
+| `ERR_SUITE_REVOKED` | 当前对象引用 REVOKED suite | 对象进入 FROZEN 并要求迁移 |
+| `ERR_POLICY_UNAVAILABLE` | 当前或旧对象所需 PolicyEntry/opening 不可解析 | 系统状态错误；reject，不归责 CSP |
 
-且：
 
-$$
-(left\_child\parallel right\_child)\neq(left\_child^*\parallel right\_child^*).
-$$
+# VII. 正确性与安全性分析
 
-算法输出这两个不同输入串，即得到 $H\_3$ 的碰撞。若敌手不是通过内部节点碰撞成功，则其必须为不属于该 AuditMHT 的叶伪造成员关系，破坏 Merkle membership 绑定安全。因此，AuditMHT 验证接受推出被挑战范围内的映射一致性。该类伪造成功概率可界为：
+## A. 假设、游戏与统一事件记号
 
-$$
-\Pr[\mathsf{Forge}_{map}]\le Adv_{H}^{coll}(\lambda)+Adv_{\mathsf{MHT}}^{mem}(\lambda),
-$$
+本文使用 Gateway 筿名 EUF-CMA、规范哈希抗碰撞、Sparse-Merkle PageDescStore/StripeDirectory/AuditEntryMap/RecordRoot 固定根绑定、suite/context 规范绑定、CSMS 成员—非成员—追加绑定、系统式 RS 唯一解码、抽象 UTB 安全和区块链最终一致性。正文中的各认证结构 binding 优势已经封装其规范哈希碰撞事件，主优势界不再重复加入同一哈希碰撞项。底层条带原语满足公开验证、上下文绑定和 fixed-state 提取三项密码性质。令 $q_{obj},q_{upd},q_{open},q_H$ 分别表示对象创建、更新、认证 opening 和随机预言机查询数；所有安全游戏均在多项式查询范围内运行。
 
-其中 $Adv\_H^{coll}$ 为哈希碰撞优势，$Adv\_{\mathsf{MHT\}}^{mem}$ 为 Merkle membership 伪造优势。
+### Game PV：公开验证正确性
 
-**引理 3（对象根、证书上下文与链上状态绑定）。** 若存在 PPT 敌手使用旧版本、其他对象、其他策略或其他授权上下文中的材料，仍以非可忽略概率通过当前 FullAudit 验证，则可以构造算法破坏 Assumption 1、Assumption 2 或 Assumption 5。
+挑战者运行 profile 的 `KeyGen/Preprocess`，按注册挑战分布生成 challenge，并由诚实 prover 生成 proof。若 `PublicVerify` 拒绝则输出 1。正确性优势记为 $\mathsf{Adv}_{PV}^{corr}$。
 
-证明思路如下。反设存在敌手 $\mathcal A$ 以非可忽略概率完成 state rollback / cross-object splicing forgery。对象根绑定 $\rho\_\tau^F$、$\rho\_\tau^{rep}$、$\rho\_\tau^{audit}$、$\psi\_{\tau,ver}$、$data\_ver\_\tau$、$PolicyHash$、$st\_\tau$ 和 $prevRoot\_\tau$，对象证书进一步绑定对象标识、版本、策略和授权上下文。链上 $ChainRoot\[\tau,currentVer\_\tau]$、$state\_token\_{\tau,currentVer\_\tau}$ 和 $update\_nonce\_\tau$ 共同固定当前对象版本、状态令牌、冻结状态和审计公钥。
+### Game CCB：Certified Context Binding
 
-若敌手回放旧版本 proof，则 proof 中携带的版本、对象根或状态令牌会在 $currentVer\_\tau$、$ChainRoot\[\tau,currentVer\_\tau]$ 或 $state\_token\_{\tau,currentVer\_\tau}$ 检查处失败。若敌手尝试前向回滚或利用交易排序进行跨状态拼接，则其提交的 $prevRoot\_\tau$ 不能等于更新前的当前链上根，或 $update\_nonce\_\tau$ 不满足单调递增。若敌手跨对象拼接 proof，则对象标识、对象叶数量、$\rho\_\tau^{audit}$ 或 $object\_root\_\tau$ 至少有一项与当前对象状态不一致。若敌手跨策略拼接 proof，则 $PolicyHash$ 检查失败。若敌手跨授权上下文拼接 proof，则对象证书签名或 $AuthCtx$ 检查失败。若验证仍接受，则意味着敌手找到了对象根或证书上下文的哈希绑定碰撞，伪造了有效签名，或篡改了已确认链上状态。这与 Assumption 1、Assumption 2 或 Assumption 5 矛盾。因此，FullAudit 接受推出当前对象上下文和链上状态一致。该类伪造成功概率可界为：
-
-$$
-\Pr[\mathsf{Forge}_{state}]\le Adv_{\mathsf{Sig}}^{euf}(\lambda)+Adv_H^{coll}(\lambda)+Adv_{\mathsf{Chain}}^{tamper}(\lambda).
-$$
-
-### E. FullAudit 可靠性
-
-**定理 1（对象级 FullAudit 可靠性）。** 在第 A 节假设下，若：
-
-$$
-\mathsf{AcceptFullAudit}=1,
-$$
-
-则该轮挑战范围内满足：
-
-$$
-\mathsf{RepInt}\land\mathsf{PayloadPoss}\land\mathsf{MapCons}\land\mathsf{StateCons}.
-$$
-
-证明如下。首先，由 $\mathbf{Game}\_1$ 排除对象根、状态令牌、统一审计叶、AuditMHT 内部节点和认证标签哈希中的碰撞型上下文混淆；由 $\mathbf{Game}\_2$ 排除 User/Gateway 授权、对象证书和 $AuthCtx$ 的签名伪造；由 $\mathbf{Game}\_3$ 排除旧状态、冻结状态和链上版本回放。此后，若 FullAudit 接受但 $\mathsf{RepInt}$ 或 $\mathsf{PayloadPoss}$ 失败，则敌手完成 payload possession forgery，与引理 1 矛盾。若 FullAudit 接受但 $\mathsf{MapCons}$ 失败，则敌手完成 mapping substitution forgery，与引理 2 矛盾。若 FullAudit 接受但 $\mathsf{StateCons}$ 失败，或 proof 来自旧版本、其他对象、其他策略或其他授权上下文，则敌手完成 state rollback / cross-object splicing forgery，与引理 3 矛盾。因此，在上述假设下，FullAudit 接受推出该轮挑战范围内的 representative 持有性、payload 持有性、映射一致性和链上状态一致性。
-
-综合序列游戏差距和三类剩余伪造事件，可得总优势界；等价地，`Adv_A^FullAudit(lambda)` 至多为：
+统一上下文为
 
 $$
-\mathsf{Adv}_{\mathcal A}^{FullAudit}(\lambda)
+ctx=(FileContextHash,nativeFileID,PublicAuditStateDigest),
+$$
+
+其中 `FileContextHash` 是规范 `FileContext` 的域分离摘要。挑战者维护最终确认的 ObjectHeader、SuiteRegistry/VerifierModule、RecordRoot、StripeDirectory、PageDescStore、AuditEntryRoot 和生命周期状态。提供创建、合法更新、Record/Stripe/Page/AuditEntry opening、Header 和 suite 查询。敌手自适应选择两个已记录、不同且均合法的 $ctx_0\ne ctx_1$。若其使同一外层认证材料在两个上下文下同时接受，或把只属于 $ctx_0$ 的 descriptor、AuditStateEntry、公开状态、native file id 或证书在 $ctx_1$ 下接受，则获胜。挑战者只依据记录状态和确定性验证算法判断。
+
+### Game RCS：选择性 RPDP Context Soundness
+
+对每个注册 profile $t$ 定义可判定的两阶段游戏 $\mathsf{Game}^{ctx}_{RPDP,t}$：
+
+1. 敌手先提交 $(ctx_0,M_0,ctx_1,M_1)$，且 $ctx_0\ne ctx_1$；
+2. 挑战者分别执行 `Preprocess`，得到 $(PSt_0,PubSt_0)$ 与 $(PSt_1,PubSt_1)$；
+3. 敌手获得 $PSt_0,PubSt_0,PubSt_1$ 和公开 VerifierModule，但不获得 $PSt_1$；
+4. 敌手可查询 $ctx_0$ 的 challenge/proof、非目标上下文和随机预言机，不能查询 $ctx_1$ 目标 challenge 的诚实 proof；
+5. 挑战者生成 $chal^\star\leftarrow\mathsf{Challenge}(ctx_1)$，敌手输出 $\pi^\star$；
+6. 若
+
+$$
+\mathsf{PublicVerify}(pk,nativeFileID_1,PublicAuditState_1,chal^\star,\pi^\star)=1,
+$$
+
+则敌手获胜。
+
+该获胜事件不使用“证明能力来源”等不可判定条件。若 profile 只证明选择性 CTX 安全，正文主定理也只声明选择性上下文安全；自适应目标扩展必须单独给出选择性到自适应归约。另定义 `CrossContextReplay` 子游戏，禁止同一 proof 在两个不同上下文下同时接受，但该子游戏不替代完整 CTX 游戏。
+
+### Game FS：固定状态可提取
+
+敌手输出目标 prover 程序和状态。挑战者固定
+
+$$
+\Sigma^\star=(st_{CSP}^\star,OH^\star,ChainState^\star,PageDescStore^\star,SuiteRegistry^\star,RO^\star),
+$$
+
+并要求 `SuiteRegistry^\star` 可解析完整不可变 VerifierModule。每次 extractor 查询前恢复 $st_{CSP}^\star$；其余公共状态、执行模块和随机预言机表保持不变。若接受概率 $\epsilon\in\mathcal E_t$，而 extractor 未在期望时间 $T_t(\epsilon)$ 内输出满足注册 `OutputMode` 恢复关系的 `RecoverableView`，则敌手获胜；失败函数为 $\delta_t(\epsilon)$。`CurrentDataDAR` 只调用 $ExtractorAccess_t=\mathsf{PUBLIC}$ 的 profile。
+
+### 外层状态解析关系
+
+$$
+\mathsf{ResolvePublicStateOnline}(OH,ChainState,PageDescStore,ProofBody,componentID,type),
+$$
+
+$$
+\mathsf{ResolvePublicStateExtract}(OH,ChainState,PageDescStore,recoveredPages,componentID,type).
+$$
+
+二者是确定性系统关系，不是密码学游戏。前者对 ordinary stripe 验证 `AuditStateEntryOpening`；后者从恢复后的 AuditStatePage 重算 `AuditEntryRoot`。二者必须输出相同语义的文件级验证元组。
+
+### Game StateFresh：链状态与 challenge 新鲜性
+
+挑战者维护 object/data/state version、provider、suite、lifecycle、epoch、slot、ChallengeState、finality height 和 abort/failure history。敌手若使状态机接受引用旧版本、旧 provider、旧 suite、ABORTED epoch、FAILED slot、过期 ChallengeState、未最终确认状态、RETIRED 对象或错误 StateToken 的 proof/状态转换，则获胜。本文条件于 BFT safety、确定性执行、finality 和正确部署 VerifierModule，故在主定理中令
+
+$$
+\mathsf{Adv}_{StateFresh}^{multi}=0.
+$$
+
+### Game O：自适应多轮 Operational Soundness
+
+挑战者维护多个 audit epoch、每个 epoch 的 slot、固定信标输入、StateToken、challenge transcript、PASSED/FAILED 状态和生命周期。敌手可以根据过去 transcript 自适应响应、延迟、拒绝服务或请求合法更新；`AUDITING` 期间的数据更新必须先 `AbortEpoch`。若某一最终确认 slot 接受了与当前获证对象上下文不一致的 proof，且此前没有触发合法版本切换、FAILED 或 FROZEN，则敌手获胜。retry 必须保持相同固定输入，不能产生新的目标选择机会。
+
+### Game B：信标、Scheduling 与 CoveragePass
+
+挑战者固定对象版本、provider、目录根、position、SwapMap、policy、key epoch 和 StateToken。若 adversary 在获得阈值输出前预测 seed，或通过 retry 改变输入重抽样，或使重复/遗漏 ordinal 被记为 `SchedulingComplete/CoveragePass`，则获胜。
+
+### Game D：CurrentDataDAR
+
+挑战者锁定同一 $\Sigma^\star$ 和最后一个获证未退休版本。若 META、current PageDescStore 枚举的全部 metadata pages、REP 和当前 ordinary stripes 均满足各自公开 profile 的 FS-Extract 前提，而统一 extractor 不能输出当前获证对象、全部当前根和 `SidHistoryRoot` 承诺，使 `AuthorizedVersionValid=1`，则敌手获胜。完整历史 sid 叶不属于该游戏输出。
+
+### Game H：CSMS History Consistency
+
+若攻击者使同一 sid 被重新分配、非法追加被接受，或新 SidHistoryRoot 未与 RecordRoot/ObjectHeader/ChainState 原子一致，则获胜。该游戏只证明追加历史和根转换，不保证历史数据内容可用。
+
+## B. 正确性
+
+**引理 1（诚实形成正确性）。** 若可信 Gateway 按规范生成业务条带、认证 metadata pages、PageDesc batch、CSMS、META 和三个顶层根，则其签名的 `FormationDigest` 对应一个满足 $\mathsf{CertifiedLayoutWF}_{current}=1$ 且 $\mathsf{HistoryRootBound}=1$ 的离线对象状态。
+
+**证明。** 该结论直接来自 Gateway 可信形成假设与确定性 `PreStoreCheck/ProtectAndCommit`：页面内容先确定 `AuditEntryRoot/BlockRoot`，完整 PageDesc batch 再确定 `PageDescStoreRoot`，随后形成 META、当前根、`FormationDigest` 和证书。它不是对恶意 Gateway 的密码学保证。$\square$
+
+**引理 2（诚实原子状态发布正确性）。** 若 BFT 收到由诚实 Gateway 形成的紧凑 `PublicationBatch`，则 `PublishObjectWithPageDescBatch` 要么回滚全部状态，要么原子写入与 ObjectHeader 一致的 `PageDescStoreRoot`、provider、suite 引用、版本和 `ACTIVE` 生命周期。
+
+**证明。** BFT 只对批次中可见字段执行规范解码、descriptor 唯一性、registry、签名、根和状态转换检查；`PageDescStoreRoot` 由 batch 直接重算。原子状态机保证任一检查失败时不存在部分可见对象。$\square$
+
+**引理 3（诚实审计正确性）。** 对任一合法 AUDITING ChallengeState，诚实 CSP 生成的独立域 proof、Record/Stripe/PageDesc openings 和 ordinary 条带 `AuditStateEntryOpening` 均被 BFT verifier 接受，相应 slot 进入 PASSED。
+
+**引理 4（诚实更新正确性）。** `AuthorizedUpdate` 生成的新业务条带、AuditStateEntry、AuditEntryRoot、页面版本、PageDescStoreRoot、CSMS root、META、顶层根和证书能够原子替换旧状态；未修改页面和 registry 条目保持原文件状态。
+
+## C. 外层获证上下文与在线轮次绑定
+
+### 1) Certified Context Binding
+
+**定理 1（Certified Context Binding）。** 对任意 PPT 敌手，
+
+$$
+\begin{aligned}
+\mathsf{Adv}_{CCB}^{\mathcal A}\le{}&
+\mathsf{Adv}_{Sig}^{euf}
++\mathsf{Adv}_{StripeDir}^{bind}
++\mathsf{Adv}_{PageDesc}^{bind}\\
+&+\mathsf{Adv}_{AuditEntry}^{bind}
++\mathsf{Adv}_{Record}^{bind}
++\mathsf{Adv}_{SuiteCtx}^{bind}.
+\end{aligned}
+$$
+
+**证明。** 归约者维护对象表、版本表、ObjectHeader、PageDescStore、AuditEntry map、Record/Stripe roots 和 suite registry。`CreateObject/UpdateObject` 查询通过真实 Gateway 签名 oracle 回答，opening 查询由诚实认证映射生成；目标锁定后拒绝改变目标对象版本的更新，但继续回答其他对象和其他版本查询。
+
+- $G_0$ 为真实 CCB 游戏。
+- $G_1$ 在目标对象头未由签名 oracle 返回时拒绝。若 $G_0$ 与 $G_1$ 可区分，归约者输出该未查询的有效对象头和证书，构成 EUF-CMA 伪造。自适应目标无需预猜，因为签名 oracle 记录全部已签发消息。
+- $G_2$ 固定 Record、StripeDirectory 和 PageDescStore 的规范叶。若相同固定根认证两个不同叶，归约者比较两条路径并取自叶向根第一个不同但父摘要相同的节点，输出哈希碰撞。opening 查询数只影响认证映射归约的运行时间，不引入目标猜测损失。
+- $G_3$ 固定 ordinary stripe 的 `AuditStateEntry`。若相同 `AuditEntryRoot` 接受不同 $g/nativeFileID/stripe\_ver/FilePublicState$，同样从首个分歧节点得到条目树碰撞；若完整状态与 BootEntry 摘要不同但摘要相同，则得到规范哈希碰撞。
+- $G_4$ 固定 `ObjectSuiteRef`、registry entry、BlockRoot 和 PublicAuditStateDigest。若相同 registry id/key epoch 解析为不同条目，则违反 registry 不可覆盖状态机；若不同规范字段产生同一摘要，则得到哈希碰撞。
+
+在 $G_4$ 中，所有通过验证的外层字段唯一确定 $(FileContextHash,nativeFileID,PublicAuditStateDigest)$。同一材料若在 $ctx_0\ne ctx_1$ 下接受，必然触发上述某一首次坏事件。按首次坏事件分割概率空间并使用并合界得到结论。其中 $\mathsf{Adv}_{SuiteCtx}^{bind}$ 封装 registry/module 不可变性以及 FileContext/public-state 摘要的规范哈希绑定。主文保留抽象 binding 优势；附录若将其展开到哈希碰撞，则不再额外重复加入同一碰撞事件。$\square$
+
+### 2) SW 理论适配的上下文引理
+
+**引理 5（SW-Name Binding）。** 在独立随机预言机域中令
+
+$$
+name=H_{name}(\textsf{SW\_NAME}\parallel enc(FileContext)).
+$$
+
+不同 FileContext 产生相同 name 仅在随机预言机/哈希碰撞事件中发生。
+
+**引理 6（SW-Tag/Block Context Binding）。** 若 file tag 签名固定 $(name,n,\text{注册文件参数})$，且认证器使用 $H(name\parallel i)$，则把一个已签名文件状态迁移到不同 name、块数或索引上下文，必须伪造 file-tag 签名、制造随机预言机碰撞，或破坏 SW Part-One soundness。
+
+**定理 2（`SW-Sym-Theory` 选择性 Context Adaptation）。** 在原始对称 pairing 模型、附录 F 的选择性两上下文游戏和附录 J 的限制下，
+
+$$
+\mathsf{Adv}_{SW}^{ctx}
 \le
-Adv_H^{coll}(\lambda)+Adv_{\mathsf{Sig}}^{euf}(\lambda)+Adv_{\mathsf{Auth}}^{uf}(\lambda)+Adv_{\mathsf{MHT}}^{mem}(\lambda)+Adv_{\mathsf{Chain}}^{tamper}(\lambda)+\epsilon_{\mathsf{chal}}(\lambda).
+\mathsf{Adv}_{H_{name}}^{coll}
++\mathsf{Adv}_{FileTagSig}^{euf}
++\mathsf{Adv}_{SW}^{sound}.
 $$
 
-其中，$Adv\_H^{coll}$ 覆盖对象根、状态令牌、统一审计叶、AuditMHT 节点和认证标签哈希的碰撞风险；$Adv\_{\mathsf{Sig\}}^{euf}$ 覆盖授权和证书签名伪造；$Adv\_{\mathsf{Auth\}}^{uf}$ 覆盖同态认证器伪造；$Adv\_{\mathsf{MHT\}}^{mem}$ 覆盖 Merkle membership 伪造；$Adv\_{\mathsf{Chain\}}^{tamper}$ 覆盖已确认链上状态篡改；$\epsilon\_{\mathsf{chal\}}$ 覆盖挑战不可预测性下猜中缺失 payload 随机线性组合的概率。根据 Assumption 1--6，上述各项均为可忽略，因此定理成立。
+该定理只给出选择性两上下文理论映射，不自动推出自适应目标安全、现代 Type-3 安全或具体部署效率。
 
-该结论只对当前链上版本和当前挑战集合覆盖的 payload 与 audit leaves 成立。若一个对象中有 $d$ 个损坏块，总可审计块数为 $n$，一次挑战 $c$ 个块，则至少命中一个损坏块的概率为：
+### 3) RPDP Context Soundness
 
-$$
-P_{detect}=1-\frac{\binom{n-d}{c}}{\binom{n}{c}}.
-$$
-
-该概率描述默认随机挑战对物理损坏叶的覆盖能力；未被挑战叶和隐藏语义属性不属于该轮公共审计结论。
-
-Representative 在相似类对象中具有更强语义中心性。若部署方需要 deterministic representative coverage，可将 $idx\_\tau^{rep}$ 固定加入每轮挑战集合；此时 representative 缺失会被每轮 FullAudit 覆盖。然而，该代表优先挑战扩展会改变挑战分布、proof size、gas 和检测概率模型，本文当前协议和实验不采用该扩展，因此它不属于定理 1 的默认结论。
-
-### F. FastAudit 边界
-
-FastAudit 复用聚合认证器验证，因此能够检查被挑战 payload 的持有性，并通过 compact certificate、版本号和状态令牌提供基础对象绑定：
+**定理 3（选择性 RPDP Context Soundness）。** 条件于 CCB 固定的外层上下文和注册 profile 的选择性 CTX 安全，
 
 $$
-\mathsf{AcceptFastAudit}=1
-\Rightarrow
-\mathsf{PayloadPoss}\land\mathsf{CertBind}\land\mathsf{BasicStateCons}.
+\mathsf{Adv}_{RCS}^{\mathcal A}\le\mathsf{Adv}_{RPDP,t}^{ctx}.
 $$
 
-然而，FastAudit 不返回 $\mathsf{AuditMHT}$ multiproof，不重建 $\rho\_\tau^{audit}$，也不检查完整 $object\_root\_\tau$。因此，FastAudit 不能推出完整 $\mathsf{MapCons}$，不能排除完整的跨对象映射拼接，也不能作为链上 FullAudit 的替代。本文将 FastAudit 仅作为链下轻量审计变体和性能对照组件，不把它作为主安全定理。
+**证明。** 归约者直接参加注册 profile 的 $\mathsf{Game}^{ctx}_{RPDP,t}$，把底层 $ctx_1$ 的 native file id、public state 和 challenge 嵌入外层目标，并用真实 Gateway/认证映射密钥回答所有外层查询。敌手在游戏开始前提交 $ctx_0,ctx_1$；归约者将 $ctx_1$ 嵌入目标 native file id/public state，把 $ctx_0$ prover state 和辅助查询转发到底层游戏。敌手从未获得 $ctx_1$ prover state 或目标 challenge 的诚实 proof。若其生成在 $ctx_1$ 下接受的 proof，归约者原样输出。CCB 已固定签名、目录、PageDesc 和 AuditEntry，因此这些事件不在本归约中重复计算。$\square$
 
-### G. 边缘授权与语义边界
+### 4) 单轮与多轮 Operational Soundness
 
-**命题 1（边缘授权上下文绑定）。** 若对象通过 PreStoreCheck 并被链上锚定，则其形成摘要、代表引用、策略哈希和授权上下文被绑定到该对象上下文中。
-
-证明如下。PreStoreCheck 检查边缘授权范围、对象形成摘要、代表引用和策略哈希是否与对象证书一致；链上状态与对象根共同绑定 $\rho\_\tau^F$、策略哈希、版本号和状态令牌。因此，通过 PreStoreCheck 并被链上锚定的对象，必须在指定框架、周期、范围和策略下形成。该性质限制 Edge 越权形成对象，并为后续抽样复核和责任定位提供依据。
-
-该命题不推出分类正确性、差分边界有效性或重构可靠性。公共审计不公开证明隐藏明文语义；只有当 User/Gateway 执行抽样复核且通过时，本文才对抽样集合声明语义正确性。未抽样记录的语义错误检测置信度由抽样策略决定，不由 FullAudit 定理保证。
-
-### H. 状态一致性与生命周期
-
-冻结、回滚和前向状态转移通过链上对象根、状态令牌和更新计数器维护生命周期一致性。当前版本由 $currentVer\_\tau$、$ChainRoot\[\tau,currentVer\_\tau]$、$state\_token\_{\tau,currentVer\_\tau}$、$update\_nonce\_\tau$ 和对象根共同固定；历史对象根可用于追溯，但不能替代当前版本根参与 FullAudit。冻结状态由链上状态记录约束，攻击者不能绕过冻结检查生成有效 FullAudit proof。
-
-若 payload 与映射不变，状态转移无需重新生成 payload 认证器或 AuditMHT，只递增 $update\_nonce\_\tau$ 并重新计算状态令牌和对象根；若 payload 或映射改变，则必须递增 $data\_ver\_\tau$，更新认证标签、统一审计叶和 $\rho\_\tau^{audit}$。因此，生命周期操作不会削弱 FullAudit 对当前版本 payload 持有性、映射一致性和链上状态一致性的绑定。
-
-## VI. 性能评估
-
-### A. 理论开销
-
-令 $c$ 为挑战 payload 数，$s$ 为每个 payload 的扇区数，$h$ 为 AuditMHT 高度。FastAudit 的 CSP 证明生成主要包括 $c$ 个认证器聚合和 $c\cdot s$ 个扇区线性组合；FullAudit 在此基础上额外生成一组 indexed multiproof。链下 FullAudit 验证主要包括 AuditMHT multiproof 重建、聚合认证基重建和一次聚合配对检查。链上 FullAudit 使用 BN254 precompile 验证 pairing equation，并用 indexed multiproof 验证 $\rho\_\tau^{audit}$。
-
-| Mode                  |   CSP proof generation |                      Verification | Main guarantee                                             |
-| --------------------- | ---------------------: | --------------------------------: | ---------------------------------------------------------- |
-| FastAudit             |          $O(c\cdot s)$ |          $O(c+s)$ plus 2 pairings | payload possession, certificate/basic state binding        |
-| FullAudit single-path | $O(c\cdot s+c\cdot h)$ | $O(c\cdot h+c+s)$ plus 2 pairings | payload possession, mapping consistency, state consistency |
-| FullAudit multiproof  |        $O(c\cdot s+u)$ |        $O(u+c+s)$ plus 2 pairings | same as FullAudit with shared Merkle proof nodes           |
-
-其中 $u$ 表示 indexed AuditMHT multiproof 中需要返回的去重 proof nodes 数量。single-path 模式主要用于实验对照；本文主路径采用 FullAudit multiproof。
-
-#### 通信开销
-
-FastAudit 证明包含 $\Phi\_\tau$、$s$ 个 $\mu\_j$、被挑战 payload hash、认证器摘要、compact certificate 和状态令牌，因此通信开销接近只验证 payload possession 的归一化审计核心对照。FullAudit 证明额外包含被挑战 audit leaves、去重后的 unique leaves 和 indexed multiproof。相比重复 single-path opening，multiproof 共享内部节点，挑战规模越大，重复路径减少越明显。相比只验证 payload possession 的 FastAudit 或归一化审计核心对照，Ours-FullAudit 需要额外上传映射绑定元数据和 multiproof，但换取 mapping consistency 和 chain-state consistency。
-
-实验结果同时报告两种证明体积口径：`proof_size_bytes` 表示当前原型使用 canonical serialization 后的完整序列化证明字节数；`compact_binary_estimated_bytes` 表示按协议字段宽度估算的二进制编码体积，排除 JSON 字段名、十六进制字符串和调试字段带来的膨胀。论文主实验仍以真实原型序列化体积为保守口径，compact binary 指标用于说明工程编码优化后的可达到通信边界。
-
-FullAudit proof 的主要组成如下。该表用于解释 proof size 的语义来源，不引入新的实验字段或额外协议组件。
-
-| Proof component                           | FastAudit | FullAudit | Security role                                 | Main cost source     |
-| ----------------------------------------- | --------- | --------- | --------------------------------------------- | -------------------- |
-| $\Phi\_\tau$                              | yes       | yes       | 聚合认证器，用于 payload possession                   | 一个曲线点                |
-| ${\mu\_j}$                                | yes       | yes       | 聚合扇区响应，用于 pairing equation                    | $s$ 个标量              |
-| challenged payload/authenticator metadata | yes       | yes       | 绑定被挑战 payload hash 和认证器摘要                     | 挑战规模 $c$             |
-| challenged audit leaves                   | no        | yes       | 承载 $FID,\tau,sid,storage\_type,off,len$ 等映射字段 | 挑战规模 $c$             |
-| unique leaves and indexed multiproof      | no        | yes       | 重建 $\rho\_\tau^{audit}$，证明 membership         | 去重 proof nodes 数 $u$ |
-| compact certificate and state token       | yes       | yes       | 绑定版本、策略、授权上下文和当前状态                            | 对象级常数项               |
-
-#### 存储开销
-
-CSP 额外保存对象内 AuditMHT 内部节点和认证器。若对象 $O\_\tau$ 中有 $n\_\tau$ 个 audit leaves，则 AuditMHT 内部节点数量为 $n\_\tau-1$，哈希元数据开销为：
+**定理 4（单轮 Operational Context Soundness）。** 对任意 PPT 敌手，条件于有效当前 StateToken，
 
 $$
-MHTStore_\tau=(n_\tau-1)|H|.
+\mathsf{Adv}_{Round}^{\mathcal A}
+\le
+\mathsf{Adv}_{CCB}^{\mathcal A}
++\sum_{d\in\mathcal D}\mathsf{Adv}_{RPDP,d}^{ctx}
++\mathsf{Adv}_{StateFresh}.
 $$
 
-链上不保存完整对象或完整 AuditMHT，只保存对象根、代表根、统一审计根、状态令牌、对象叶数量和审计公钥等对象级状态。
-
-### B. 实验设置
-
-本节围绕五个问题评估本文方案。RQ1：相似类对象形成是否带来存储收益，并产生可审计对象边界？RQ2：FullAudit 相比只验证 payload possession 的审计核心，额外开销主要来自哪些字段？RQ3：AuditMHT multiproof 是否有效降低 FullAudit 通信开销？RQ4：对象级审计能否扩展到 Full 数据规模的批量对象集合？RQ5：链上 `VerifyFullAudit` 路径在当前 Solidity/Ganache 原型中是否可运行？
-
-本文实验报告遵循以下边界。第一，存储与去重效果在 HAI `train1.csv` 的 1k、5k、10k 和 Full 四个规模上报告；该设置用于验证当前原型在一个真实 IIoT/ICS 数据集上的可运行性，不声称覆盖所有 IoT 数据分布。第二，公共审计性能分为链下证明生成/验证、通信开销和链上合约 gas 成本；链下原型使用 `py_ecc` BN128 后端，定位为 Python reference prototype，链上原型使用 Ganache/Solidity、BN254 pairing precompile 和 indexed AuditMHT multiproof。第三，归一化 audit-core 对照用于比较审计核心开销和能力覆盖，不表示相关方案原论文的完整系统性能公平比较。第四，Full 规模下的 metadata 构建时间是当前原型离线构建开销，不解释为在线审计延迟。第五，链上 gas 只报告当前实现的 $c=8$ 默认挑战规模，dynamic root update 只报告合约 `updateRoot` 成本，不表示完整动态更新成本。
-
-本节根据当前实现和最新实验四结果评估本文方案。实验目标不是声明本文方案在所有单项性能指标上超过现有方案，而是验证本文能够在真实 IIoT/ICS 结构化数据上，以可接受的链下计算、通信和链上 gas 开销，提供普通块级审计和现有去重审计难以同时覆盖的对象级完整性能力。
-
-本文实验四同时报告链下 FastAudit 轻量变体和完整 FullAudit。FastAudit 的接受语义为：
+**推论 1（自适应多轮 Operational Soundness）。** 若 CCB 与 StateFresh 游戏原生支持完整多查询 transcript，系统最多执行 $q_{epoch}$ 个 epoch、每个 epoch 最多 $q_{slot}$ 个最终确认 slot、每个 slot 最多 $d_{max}$ 个独立 RPDP 域，则
 
 $$
-\mathsf{AcceptFastAudit}=1
-\Rightarrow
-\mathsf{PayloadPoss}\land\mathsf{CertBind}\land\mathsf{BasicStateCons}.
+\begin{aligned}
+\mathsf{Adv}_{Op}^{multi}\le{}&
+\mathsf{Adv}_{CCB}^{multi}
++q_{epoch}q_{slot}d_{max}\mathsf{Adv}_{RPDP}^{ctx}
++\mathsf{Adv}_{StateFresh}^{multi}.
+\end{aligned}
 $$
 
-完整对象级 FullAudit 的核心接受语义为：
+在本文条件理想状态机模型下 $\mathsf{Adv}_{StateFresh}^{multi}=0$。证明定位首次非法接受 slot；此前 transcript 作为辅助输入保留。全局 CCB 和 StateFresh 事件不对每个 slot 重复放大，只有底层独立 RPDP 域在单会话安全下按位置联合界；若具体 profile 提供并发多会话安全，则直接替换为其并发优势。
+
+**命题 1（依赖损失放大）。** 对星形依赖对象，若损坏集合包含 representative 条带，则 $\mathsf{RecoveryLoss}(S)\ge1+n_\Delta$。该命题是风险计量，不被列为新的密码学贡献。
+
+## D. 信标、调度和生命周期
+
+**推论 2（由注册 UTB 得到 seed 安全）。** 若注册信标满足阈值前不可预测、规范唯一输出和公开份额验证，则
 
 $$
-\mathsf{AcceptFullAudit}=1
-\Rightarrow
-\mathsf{RepInt}
-\land
-\mathsf{PayloadPoss}
-\land
-\mathsf{MapCons}
-\land
-\mathsf{StateCons}.
+\mathsf{Adv}_{SeedPred}\le\mathsf{Adv}_{UTB}^{forge}+2^{-\kappa}.
 $$
 
-其中，$\mathsf{RepInt}$ 表示 representative payload 持有性，$\mathsf{PayloadPoss}$ 表示 delta 或 fallback payload 持有性，$\mathsf{MapCons}$ 表示记录到对象及对象内 payload 位置的映射一致性，$\mathsf{StateCons}$ 表示对象版本、状态令牌和链上对象根一致性。分类正确性、差分边界有效性和重构可靠性不作为公共审计的直接结论。
+该结论是对外部 UTB 安全合同的条件调用，不是本文对 DKG 或 threshold-BLS 的独立归约。
 
-本文使用 HAI 工业控制数据集 `train1.csv`。实验沿用 Exp.2 和 Exp.3 产生的对象形成结果与可验证元数据，并在 Exp.4 中执行对象级公共审计。
+**命题 2（同输入抗重抽样）。** retry 保持输入、key epoch、对象双版本、position、SwapMap 和 StateToken 不变。
 
-| Scale | Records | Objects | Audit leaves | Audit roots |
-| ----- | ------: | ------: | -----------: | ----------: |
-| 1k    |   1,000 |       4 |        1,000 |           4 |
-| 5k    |   5,000 |      17 |        5,000 |          17 |
-| 10k   |  10,000 |      34 |       10,000 |          34 |
-| Full  | 216,001 |   1,190 |      216,001 |       1,190 |
+**定理 5（Scheduling 与 CoveragePass）。** 条件于有效固定 seed 和目录 ordinal binding，惰性 Fisher--Yates 在 $m_{cov}$ 个有效 slot 后得到 coverable 集合的排列。只有每个 slot 均由有效 proof 转为 PASSED 时 `CoveragePass=1`；任一 FAILED 使对象 FROZEN。`AbortEpoch` 只能产生 ABORTED 状态，不能产生 CoveragePass。
 
-`Full` 是本文实验四的主规模，`1k`、`5k` 和 `10k` 用于展示趋势和调试可复现性。Full 规模下 metadata 构建时间约为 $8.68\times 10^6$ ms，包含认证器生成、AuditMHT 构造、对象证书相关摘要和运行时缓存生成。其中认证器生成是主要开销，AuditMHT、证书摘要和对象根生成只占较小比例。该数值报告当前原型的离线构建成本，不作为在线审计延迟或链上验证成本解释。
+## E. CurrentDataDAR 组合定理
 
-实验实现包括 Python 链下审计模块、Solidity 智能合约和 Ganache 本地区块链。链下聚合审计核心使用 `py_ecc` BN128 后端，作为便于复现实验流程和检查协议字段的 reference prototype；因此，链下延迟结果应理解为当前 Python 原型的保守实现结果，而不是底层配对运算的工业级优化上限。链上 FullAudit 使用 BN254 pairing precompile、链上挑战、indexed AuditMHT multiproof 和聚合响应 `mu_vector`。
-
-| Item            | Setting                            |
-| --------------- | ---------------------------------- |
-| Dataset         | HAI `train1.csv`                   |
-| Scales          | 1k, 5k, 10k, Full                  |
-| Challenge sizes | 8, 16, 32, 64, 128, 300            |
-| Trial count     | 3                                  |
-| Pairing backend | `py_ecc` BN128 reference prototype |
-| Smart contract  | Solidity                           |
-| Blockchain      | Ganache local Ethereum             |
-| Hashing         | SHA-256 / Keccak-256               |
-| Sector count    | 10                                 |
-
-### C. 对象形成与存储开销
-
-为回答 RQ1，Exp.2 给出实验流水线的前置对象形成结果。该阶段首先完成 FRAME、CLASS/DELTA 字段划分，然后根据相似标签生成 representative-delta/fallback 对象，并为后续公共审计建立 payload audit index。图中展示了对象数量、分组结果和不同存储类型的分布，用于说明本文方案并不是直接在原始记录上审计，而是在相似类对象边界上执行审计。
-
-![Exp2 object formation summary](../../.gitbook/assets/fig_exp2_combo.svg)
-
-Exp.3 在 Exp.2 的对象形成结果之上统计主体存储与可验证元数据开销。为了避免只看总体数值而忽略开销来源，下面几张图分别从有效节省率、本文方案内部组成和不同方案总存储对比三个角度展示结果。整体趋势表明，相似类对象能够带来存储压缩收益，而对象级证书、认证器和 AuditMHT 等可验证元数据构成了为公共审计额外付出的成本。
-
-![Exp3 effective saving](../../.gitbook/assets/fig_exp3_effective_saving.svg)
-
-![Exp3 ours breakdown](../../.gitbook/assets/fig_exp3_ours_breakdown.svg)
-
-![Exp3 total storage comparison](../../.gitbook/assets/fig_exp3_total_storage.svg)
-
-### D. 归一化审计核心对照口径
-
-为回答 RQ2，本文采用归一化审计核心对照口径。`Record-Level-PDP` 是直接实现的记录级 possession 审计核心；`Miao2024 audit-core adaptation` 和 `Liu2025 audit-core adaptation` 是在统一 payload 接口上的审计核心适配，并加入与原方案审计阶段相关的 auxiliary metadata 开销建模。这些结果用于比较审计核心开销和能力覆盖，不用于声称与原论文完整系统性能公平比较，也不声称覆盖原论文中的 IBBE、RCE、PBFT、Fabric、Bloom filter、PoW 或所有权转移等外围协议。
-
-| Scheme                         | Reproduction level            | Compared scope                                                 |
-| ------------------------------ | ----------------------------- | -------------------------------------------------------------- |
-| Record-Level-PDP               | direct audit core             | record payload possession                                      |
-| Miao2024 audit-core adaptation | audit-core adaptation         | aggregate shared-audit core                                    |
-| Liu2025 audit-core adaptation  | audit-core adaptation         | fine-grained audit core                                        |
-| Ours-FastAudit                 | full implementation component | lightweight payload audit with certificate/basic state binding |
-| Ours-FullAudit                 | full implementation           | payload, mapping and chain-state audit                         |
-
-归一化审计核心分解如下：
-
-| Scheme                         | Implemented in Exp4                                  | Modeled auxiliary overhead                                                                                                                        | Excluded native components                                                                                             |
-| ------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Record-Level-PDP               | record-level payload possession                      | none                                                                                                                                              | none                                                                                                                   |
-| Miao2024 audit-core adaptation | shared audit core with authenticator dedup semantics | shared audit digest, dedup authenticator reference, batch audit log digest, group/public-key reference                                            | IBBE, RCE, PBFT, Fabric deployment, full key-management workflow                                                       |
-| Liu2025 audit-core adaptation  | fine-grained dedup-aware payload audit core          | fine-grained block index digest, dedup block reference, Bloom/matrix commitment digest, dynamic-audit auxiliary digest, ownership-state reference | Bloom filter construction workflow, RCE workflow, PoW, ownership transfer protocol, full fine-grained dedup deployment |
-
-这些辅助字段进入 proof size 和 compact binary estimate，用于避免把不同归一化对照简化为完全相同的 payload proof；被排除组件属于访问控制、共识部署、所有权或完整系统流程，不属于本文实验四的对象级 FullAudit 阶段。
-
-功能能力边界如下：
-
-| Scheme                         | Payload possession | Mapping consistency                     | Chain-state consistency     | On-chain FullAudit path  |
-| ------------------------------ | ------------------ | --------------------------------------- | --------------------------- | ------------------------ |
-| Record-Level-PDP               | yes                | no                                      | no                          | no                       |
-| Miao2024 audit-core adaptation | yes                | no                                      | no                          | no                       |
-| Liu2025 audit-core adaptation  | yes                | no                                      | no                          | normalized EVM path only |
-| Ours-FastAudit                 | yes                | partial certificate/basic state binding | partial basic state binding | no                       |
-| Ours-FullAudit                 | yes                | yes                                     | yes                         | yes                      |
-
-因此，ProofSize 和 VerifyTime 表中的对照行只用于归一化审计核心开销分析，不能解释为与 Ours-FullAudit 在对象级安全语义上的等价竞争。
-
-链上对照进一步区分原生实现和归一化 EVM 路径。`Ours-FullAudit` 是本文方案的原生链上验证；`Ours normalized-EVM path for Liu2025 audit core` 和 `Ours normalized-EVM path for Pan2026 audit core` 仅表示在本文合约接口下的 normalized EVM-path 测量，不能解释为 Liu2025 或 Pan2026 的原生 gas。
-
-### E. 在线审计性能
-
-在线审计实验继续回答 RQ2，评估对象级证明生成、验证和通信开销。论文主图使用 Full scale，并在相同对象和相同挑战规模下比较归一化 audit-core 对照与本文正常模式 `Ours-FullAudit-multiproof`，挑战规模为 $c\in{8,16,32,64,128,300}$。`Ours-FastAudit` 只作为轻量链下变体，在单独的 audit-mode trade-off 图中报告。
-
-Full 规模下，`Ours-FullAudit` 因额外返回 AuditMHT multiproof 和映射绑定元数据，证明大小高于仅验证 payload possession 的归一化 audit-core 对照，但能够验证对照方案不覆盖的对象级映射一致性和链上状态一致性。以 $c=300$ 为例，`Ours-FullAudit-multiproof` 的证明生成时间为 1,074.57 ms，验证时间为 1,338.91 ms，证明大小为 428,843 bytes；归一化 audit-core 对照的证明生成时间为 1,031.94--1,105.34 ms，验证时间为 1,315.42--1,400.04 ms，证明大小为 388,181--388,722 bytes。该额外通信开销对应 $\mathsf{MapCons}$ 和 $\mathsf{StateCons}$ 的能力增量，而不是在相同安全语义下的全面性能竞争。
-
-按协议字段宽度进行的证明体积分解统计进一步区分聚合认证器、挑战元数据、Merkle proof、证书/状态和根绑定等部分。该分析用于定位 FullAudit 额外通信主要来自映射绑定元数据与 AuditMHT proof，而不是来自 pairing 聚合证明本身。以 Full 规模 $c=300$ 为例，compact binary 估算下 `Ours-FullAudit-multiproof` 为 35,712 bytes，而归一化 audit-core 对照为 32,048--32,208 bytes，说明协议字段编码后的对象级绑定额外开销约为 3.5--3.7 KB。
-
-`Ours-FastAudit` 不作为主安全方案参与同语义对照，而是作为轻量链下变体单独报告。Full 规模 $c=300$ 下，`Ours-FastAudit` 的证明大小为 387,868 bytes，compact binary 估算为 32,048 bytes，验证时间为 1,340.31 ms。该结果说明，在不返回 AuditMHT multiproof 的情况下，轻量 payload audit 的通信开销接近归一化 audit-core 对照；完整对象级结论仍由 FullAudit 给出。
-
-所有 Full 规模 online audit 行均通过验证，即 `verified=True`，说明当前实现能够在最大对象规模下生成并验证完整对象级审计证明。
-
-下面的在线审计图从时间和通信两个维度展开。验证时间图用于观察 FullAudit 与各归一化 audit-core 对照在相同挑战规模下的计算差异；序列化证明大小图反映当前原型输出的保守通信成本；compact proof size 图则展示去除 JSON、十六进制字符串和调试字段后的协议字段规模；audit mode trade-off 图用于单独说明 FastAudit 与 FullAudit 的安全语义和通信开销差异。
-
-![Exp4 verify time comparison](../../.gitbook/assets/fig_exp4_verify_time_comparison.svg)
-
-![Exp4 serialized proof size comparison](../../.gitbook/assets/fig_exp4_proof_size_comparison.svg)
-
-![Exp4 compact proof size comparison](../../.gitbook/assets/fig_exp4_compact_proof_size_comparison.svg)
-
-![Exp4 audit mode tradeoff](../../.gitbook/assets/fig_exp4_audit_mode_tradeoff.svg)
-
-### F. Merkle Multiproof 优化
-
-为回答 RQ3，本实验比较 FullAudit single-path opening 与 AuditMHT multiproof。结果表明，multiproof 随挑战规模增大而提供更明显的证明压缩：
-
-| Challenge size | Proof reduction |
-| -------------: | --------------: |
-|              8 |           22.5% |
-|             64 |           34.2% |
-|            300 |           41.3% |
-
-当 $c=300$ 时，被挑战叶覆盖最大对象的全部 300 个 audit leaves，multiproof 不再需要额外 proof nodes，但仍显著减少重复路径传输。因此，AuditMHT multiproof 是降低 FullAudit 通信开销的主要优化。
-
-该图属于本文方案内部优化实验，不与归一化 audit-core 对照直接比较；审计核心对照主要体现在 Full-scale verify time、serialized proof size、compact proof size 和 batch scalability 图中。FastAudit 与 FullAudit 的差异由单独的 audit-mode trade-off 图报告。
-
-下图进一步展示 multiproof 相对 single-path opening 的压缩效果。随着挑战规模增大，多条 Merkle 路径之间的共享节点增多，重复路径传输被消除，因此证明大小下降更加明显。
-
-![Exp4 multiproof effect](../../.gitbook/assets/fig_exp4_multiproof_effect.svg)
-
-### G. 批量审计扩展性
-
-为回答 RQ4，批量审计实验在不同 batch object count 下测量对象批量审计时间和单位记录通信开销。Full 规模下最大 batch 覆盖 1,190 个对象。主图比较 `Ours-FullAudit` 与归一化 audit-core 对照，结果显示 `Ours-FullAudit` 的单位记录通信开销更高，但 batch audit 可以在 Full 数据集上完成，证明对象级审计流程能够覆盖完整对象集合。
-
-在最大 batch 下，`Ours-FullAudit` 的 batch audit time 为 458,604.76 ms，batch proof size 为 17,549,024 bytes，单位记录通信开销为 2,059.68 bytes/record。归一化 audit-core 对照的 batch audit time 为 458,187.85--472,228.92 ms，batch proof size 为 13,470,029--14,113,819 bytes，单位记录通信开销为 1,590.24--1,664.33 bytes/record。`Ours-FastAudit` 作为轻量变体的 batch proof size 为 13,076,139 bytes，单位记录通信开销为 1,544.91 bytes/record。
-
-该实验不用于声称 `Ours-FullAudit` 在 batch 性能上超过归一化 audit-core 对照，而是用于展示在增加对象级映射和状态绑定后，系统仍保持可运行的批量审计能力。
-
-批量审计图将对象数量扩展到 Full 数据集的 1,190 个对象，用于展示对象级审计在完整数据规模上的可运行性。图中的通信开销差异主要来自 FullAudit 额外携带映射绑定和状态绑定材料，而不是来自聚合认证器本身。
-
-![Exp4 batch scalability](../../.gitbook/assets/fig_exp4_batch_scalability.svg)
-
-### H. 链上 FullAudit 开销
-
-为回答 RQ5，链上实验在 Ganache 本地区块链上测量合约操作 gas。链上 `VerifyFullAudit` 使用默认挑战规模 $c=8$，并执行以下检查：
-
-1. proof round 与链上最新 challenge round 一致；
-2. challenged indexes 与链上随机挑战派生结果一致；
-3. indexed AuditMHT multiproof 重建根等于 $\rho\_\tau^{audit}$；
-4. compact certificate、对象版本、状态令牌和更新计数器与当前链上状态一致；
-5. 合约通过地址 `0x08` 的 BN254/alt\_bn128 pairing precompile 验证 `sigma_agg`、`mu_vector` 和聚合认证基。
-
-Full 规模下，`Ours-FullAudit` 的 `VerifyFullAudit` gas 为 2,241,581，链上 calldata 为 5,764 bytes，proof input 为 5,184 bytes，multiproof 相对 single-path 的 calldata saving 为 52.8%。同一对象状态下，`PublishObject` gas 为 60,325，`RequestAudit` gas 为 99,768，`UpdateRoot` gas 为 32,207。所有链上验证行均满足 `success=True` 和 `accepted=True`。
-
-链上对照图仅展示 `VerifyFullAudit`。在相同合约接口和 EVM 输入规范下，`Ours normalized-EVM path for Liu2025 audit core` 的 `VerifyFullAudit` gas 为 1,959,483，`Ours normalized-EVM path for Pan2026 audit core` 的 `VerifyFullAudit` gas 为 2,100,194。这两行用于衡量归一化审计核心路径，不表示相关方案原论文的原生链上 gas。
-
-需要强调的是，链上 gas 结果只报告当前实际实现的 $c=8$ 默认挑战设置；本文不声称已经测量链上 gas 随 $c=8,16,32,64,128,300$ 的完整变化曲线。理论上，`VerifyFullAudit` gas 随挑战规模增长主要来自 challenged leaves 解码、indexed multiproof 节点哈希、$B\_\tau$ 聚合基重建和固定次数的 pairing precompile 调用，其中 pairing precompile 调用次数为常数级，不随 $c$ 线性增加。
-
-链上开销图只聚焦 `VerifyFullAudit` 路径，用于说明本文合约在真实 EVM 执行环境中的验证成本。对象发布、挑战请求和 root update 等操作已在正文数值中报告，不再作为重复图展示。
-
-![Exp4 on-chain VerifyFullAudit gas](../../.gitbook/assets/fig_exp4_onchain_verify_gas.svg)
-
-### I. 动态 Root 更新开销
-
-动态更新实验补充报告链上 root update transaction cost，用于说明生命周期状态写入的合约成本。对于 insert、modify 和 delete 触发的对象状态更新，合约执行 `updateRoot` 并记录新版本根、状态令牌和更新计数器。Full 规模下各类 dynamic update 的 gas 为 37,807--37,819，所有动态更新交易均满足 `success=True`。
-
-该结果表示链上 root update 交易成本，不是完整动态更新成本。本文不将该实验解释为本地 AuditMHT 重构、对象根重算和链上提交的全流程动态更新性能。
-
-### J. 讨论
-
-能力边界如下。本文方案能够在 Full 规模 HAI 数据上完成对象级公共审计，且 FastAudit、FullAudit 和归一化 audit-core 对照均能生成可验证证明。Ours-FastAudit 是轻量 payload audit 组件；Ours-FullAudit 相比记录级或归一化 audit-core 对照引入额外 proof size，但该开销换取了对象级 mapping consistency 和 chain-state consistency。AuditMHT multiproof 显著降低 FullAudit 证明大小，是本文方案在通信开销上的关键优化。Representative 在相似类中具有更强语义中心性，因此本文通过 $\rho\_\tau^{rep}$、统一 AuditMHT、认证标签上下文和对象根将其与 delta/fallback 上下文绑定；但当前协议不把每轮 FullAudit 强制命中 representative 作为默认语义，也不引入加权挑战分布。若部署方需要 deterministic representative coverage，可将 $idx\_\tau^{rep}$ 固定加入挑战集合；该代表优先挑战扩展会改变 proof size、gas 和检测概率，需要单独评估，本文实验不将其作为默认配置。
-
-实验边界如下。当前实验只使用 HAI `train1.csv`，因此结果说明本文原型在该 IIoT/ICS 数据集上的可运行性，不覆盖所有 IoT 数据分布。归一化 audit-core 对照只比较审计核心路径，不能解释为相关方案完整系统性能公平比较。Metadata 构建时间反映当前 Python reference prototype 的离线构建开销，不代表在线审计延迟。链上 gas 只报告当前实现的 $c=8$ 默认挑战规模，尚未测量链上 gas 随更大挑战规模变化的曲线。Dynamic root update 只报告合约 `updateRoot` 交易成本，不代表本地 AuditMHT 重构、对象根重算和链上提交的完整动态更新成本。
-
-部署边界如下。本文公共审计层验证对象级存储和状态完整性，不公开验证隐藏明文语义；分类正确性、差分边界有效性和重构可靠性仍需 User/Gateway 抽样复核。链上 FullAudit 已在 Ganache/Solidity 环境下完成真实验证，但链上对照行应理解为 normalized EVM path，而非相关方案原论文的原生 gas。损坏发现能力由安全性分析和随机挑战概率给出。对于 $n$ 个可审计块中存在 $d$ 个损坏块、一次挑战 $c$ 个块的情形，理论命中概率为
+统一 extractor 使用完整快照
 
 $$
-P_{detect}=1-\frac{\binom{n-d}{c}}{\binom{n}{c}}
+\Sigma^\star=(st_{CSP}^\star,OH^\star,ChainState^\star,PageDescStore^\star,SuiteRegistry^\star,RO^\star),
 $$
 
-该概率仅描述随机挑战命中损坏块的覆盖能力；未被挑战叶和隐藏语义属性不属于该轮公共审计覆盖范围。
+其中 `SuiteRegistry^\star` 必须解析全部当前组件所需的不可变 VerifierModule。
 
-## VII. 结论
+```text
+ExtCurrentObject(P*, target):
+    Sigma* <- FreezeTargetSnapshot(P*, target)
+    require last certified, non-retired version
+    resolve all immutable VerifierModules
+    extract and normalize META from ResetCSPState(Sigma*)
+    verify META and current PageDescStore*
+    extract, normalize and verify every current metadata page
+    parse current manifest and authenticated ordinary public states
+    extract and normalize REP and every current ordinary stripe
+    rebuild current page roots, AuditEntry roots, DataRoot, RecordRoot,
+            StripeDirectoryRoot and PageDescStoreRoot
+    require CertifiedLayoutWF_current = 1
+    require HistoryRootBound = 1
+    require LifecycleAllowed(status, RECOVERY) = 1
+    output current object and SidHistoryRoot commitment
+```
 
-本文提出了一种面向相似性 IoT 数据去重的证书绑定对象级公共审计方案，将相似类建模为 representative-delta/fallback-mapping-state 对象，并通过对象根绑定代表根、统一审计根、策略哈希、形成摘要和对象状态。本文的核心贡献是对象级上下文绑定和公共审计语义：认证标签显式绑定对象、payload/mapping 认证版本、位置和策略上下文，状态令牌通过版本、前序根和更新计数器形成链上状态哈希链，链上 FullAudit 通过 AuditMHT multiproof 和 EVM BN254 pairing precompile 验证被挑战 representative 持有性、delta/fallback payload 持有性、映射一致性和链上状态一致性；FastAudit 仅作为链下轻量 payload 审计变体；SampleCheck 只对被抽样记录声明语义正确性。
+令 $\mathcal I_{current}=\{meta,rep\}\cup\mathcal P_{current}\cup\mathcal G_{ordinary,current}$。
 
-实验结果表明，本文原型能够在 HAI Full 规模上完成对象级公共审计，并在链下证明生成、验证、批量审计和链上 `VerifyFullAudit` 路径上保持可运行性。Ours-FullAudit 相比只验证 payload possession 的归一化审计核心对照引入额外通信开销，但该开销对应 mapping consistency 和 chain-state consistency 的能力增量。本文不声称公开验证隐藏明文语义，也不将附录中的 S-PoW 接口作为完整访问控制系统或对象审计核心定理的一部分。
+**引理 7（Current bootstrap completeness）。** 在 ObjectHeader、PageDescStoreRoot 和 META BlockRoot 均固定时，成功规范恢复 META 后，当前 PageDescStore 中的 active descriptors 唯一确定全部必要 metadata pages。
 
-## 附录 A：可选 S-PoW 访问控制接口
+**引理 8（Current enumeration completeness）。** 成功恢复并认证所有当前 Manifest/AuditState/Tombstone pages 后，规范 manifest 唯一确定当前 ordinary stripe 集，AuditState entries 唯一确定其 native file id、版本和文件级公开状态。
 
-S-PoW 接口是一个可选访问控制模块，用于后续数据分析者或用户需要访问相似类对象的场景。它不是本文主贡献，不参与对象审计定理，也不参与实验评估；禁用该接口不影响代表持有性、payload 持有性、映射一致性或链上状态一致性。其完整所有权可靠性依赖所选 $\mathsf{SimTag}$、$\mathsf{FE}$ 与 S-PoW primitive 的安全模型。令 $\mathsf{SimTag}$ 表示所选相似标签函数，$\mathsf{FE}$ 表示对应模糊提取器。给定记录标签
+**引理 9（Component normalization）。** 若 $\mathsf{ValidRecoverableView}_i(view,ctx_i)=1$，则 `NormalizeRecoveredComponent` 输出唯一规范消息 $M_i$ 和码字 $\widehat C_i$。对于 `DECODABLE_SUBSET`，互异且一致的至少 $k_i$ 个坐标由系统式 RS 唯一解码。
+
+**引理 10（Current root reconstruction）。** 若所有当前组件均规范恢复，则可唯一重建当前页面根、AuditEntry roots、DataRoot、RecordRoot、StripeDirectoryRoot 和 PageDescStoreRoot，并验证 `CertifiedLayoutWF_current=1`。
+
+**引理 11（History commitment preservation）。** 恢复输出中的 `SidHistoryRoot` 与 ObjectHeader、META、记录状态和 ChainState 中的承诺相同，即 `HistoryRootBound=1`；该引理不枚举或验证完整历史叶。
+
+**引理 12（Snapshot consistency）。** 每个组件 extractor 都从同一 $st_{CSP}^\star$ 重置，ObjectHeader、ChainState、PageDescStore、SuiteRegistry/VerifierModule 和随机预言机表只读不变，因此不能拼接不同版本或不同 prover 状态的局部结果。
+
+**定理 6（Paged-Metadata-Bootstrapped CurrentDataDAR）。** 若目标是最后一个获证且未退休版本，$\mathsf{LifecycleAllowed}(status,\mathsf{RECOVERY})=1$；所有当前必要组件使用 `ExtractorAccess=PUBLIC` 的 profile 并满足各自 fixed-state 提取前提；$|\mathcal I_{current}|$ 为多项式；公共快照与 VerifierModule 可读取且固定，则
 
 $$
-t_{\ell}=\mathsf{SimTag}(r_{\ell}).
+\begin{aligned}
+\Pr[\mathsf{ExtCurrentObjectFail}]\le{}&
+\sum_{i\in\mathcal I_{current}}\delta_i(\epsilon_i)
++\mathsf{Adv}_{Sig}^{euf}\\
+&+\mathsf{Adv}_{CurrentRoot}^{bind}
++\mathsf{Adv}_{PageDesc}^{bind}
++\mathsf{Adv}_{AuditEntry}^{bind}.
+\end{aligned}
 $$
 
-接口生成
+其总期望时间为
 
 $$
-(\kappa_{\tau},P_{\tau})=\mathsf{FE.Gen}(t_{\ell}),
+\mathbb E[T_{obj}]
+=\sum_{i\in\mathcal I_{current}}\mathbb E[T_i(\epsilon_i)]
++T_{normalize}+T_{parse}+T_{decode}+T_{rebuild}.
 $$
 
-并发布访问验证所需的公共材料：
+**证明。** 引理 7 和 8 完成当前页面与业务条带枚举；引理 9 将每个底层恢复输出规范化；引理 10 重建当前对象根；引理 11 只验证历史根承诺；引理 12 排除跨快照拼接。若最终 `AuthorizedVersionValid` 失败，取证书、当前根、PageDesc 或 AuditEntry 的首次失败层；若外层均未失败，则至少一个底层 extractor 未输出有效 view，计入对应 $\delta_i(\epsilon_i)$。完整历史叶不属于失败事件，故不加入 `HistoricalConsistencyValid` 优势。$\square$
+
+**推论 3（当前恢复与历史一致性的组合）。** 若 `CurrentDataDAR=1` 且 `HistoricalConsistencyValid=1`，则当前对象可恢复，且输出的 `SidHistoryRoot` 来自合法 append-only CSMS 状态；该结论不保证历史数据内容长期可下载。
+
+该定理不验证 AEAD 明文，不证明物理本地存储，也不由 online CoveragePass 自动触发。`FreezeAndAssess` 只能估计 $\epsilon_i\in\mathcal E_i$，不等同于恢复成功。
+
+## F. 原子发布、更新与历史一致性
+
+定义原子状态转换
 
 $$
-pk_{\tau}^{own}=g^{\kappa_{\tau}},\qquad
-h_{\tau}=H_2(\tau\parallel pk_{\tau}^{own}).
+State_v\xrightarrow{Request,Witness_v,Cert_{v+1}}State_{v+1}.
 $$
 
-请求者持有相似记录 $r\_{\ell'}$ 时，使用辅助数据 $P\_\tau$ 重构候选密钥：
+**定理 7（Atomic State Publication）。** 在签名不可伪造、PageDescStore 固定根绑定和 BFT 原子执行下，攻击者不能使不完整 PageDesc batch、错误候选 `PageDescStoreRoot`、错误 suite 引用、错误版本或部分状态写入成为 ACTIVE。
+
+**证明。** 状态机只验证紧凑批次中可见字段：规范 descriptor 集、candidate root、ObjectHeader、FormationDigest、证书、registry 引用、provider、版本和资源上限。若接受状态与 batch 中首个可见字段不一致，则产生 PageDescStore 绑定破坏、签名伪造、registry 不可变性破坏或状态版本冲突；若只写入部分字段，则违反原子状态转换语义。$\square$
+
+**定理 8（Gateway-Certified Formation Soundness）。** 条件于 Gateway 可信形成假设，有效 Gateway 证书认证的 `FormationDigest` 对应满足 $\mathsf{CertifiedLayoutWF}_{current}=1$ 且 $\mathsf{HistoryRootBound}=1$ 的离线对象状态。该定理不抵抗恶意 Gateway，不声称 BFT 重算页面内容、`AuditEntryRoot`、`BlockRoot`、`RecordRoot` 或 `DataRoot`。
+
+**命题 3（Post-Publication Acceptance Soundness）。** 在定理 8 的形成前提下，若被替换的业务条带、页面、公开状态或目录关系参与后续认证 opening、RPDP challenge 或 fixed-state reconstruction，则攻击者不能在保持相关上下文接受的同时隐藏该替换，除非破坏相应底层或认证结构假设。该命题不声称未被抽样或未被提取的数据会被即时检测。
+
+**定理 9（Manifest-Consistent Atomic Update）。** 攻击者不能使新业务条带配旧 Manifest/AuditState entry、新页面配旧 PageDesc、新 PageDescStore 配旧 META、新 CSMS root 配非法追加或新 ObjectHeader 配旧 ChainState 的混合状态成为 ACTIVE。
+
+**证明中的代表性 case：新 AuditStateEntry＋旧 AuditEntryRoot。** 新 `FilePublicState_g` 或 `stripe_ver_g` 改变规范 entry leaf。若状态机仍接受旧 `AuditEntryRoot` 下的新 opening，则从新旧认证路径的首个分歧节点得到哈希碰撞；若攻击者同时替换 PageDesc 以携带新 root，则 candidate `PageDescStoreRoot` 改变，必须同步进入新 ObjectHeader 和证书；若仍沿用旧对象头，则发生签名/根绑定失败；若提交新对象头但旧 ChainState，则违反版本 freshness。其他业务条带、页面、CSMS、META 和 provider case 按同一“首个不一致层”原则归约。由于更新一次提交全部新状态，不能把不同交易的局部结果拼接为 ACTIVE。$\square$
+
+**定理 10（History Consistency）。** 若初始 sid 全部设为 CSMS 已使用叶，每次新 sid 分配验证旧根下非成员并执行合法空叶到已使用叶转换，删除不执行移除，则任何已分配 sid 不能重新分配，除非哈希碰撞、Gateway 签名伪造或链状态一致性被破坏。
+
+**命题 4（Caller/Lifecycle Safety）。** 旧版本 proof、无效信标、未建立 ChallengeState 的 timeout、ABORTED 或 FAILED epoch 不能被当作 CoveragePass；迁移/恢复后必须创建新版本和新 coverage epoch。FROZEN 版本可用于恢复，但不能开启新审计。
+
+## G. 主张边界
+
+OperationalAccept、SchedulingComplete 和 CoveragePass 均不推出 CurrentDataDAR；fixed-state extraction 证明固定逻辑快照上的可提取访问，不证明物理位置；CurrentDataDAR 条件于当前共识状态、SuiteRegistry 和不可变 VerifierModule 可用，不验证明文语义；HistoricalConsistencyValid 不保证无限历史内容持续可下载；UTB 只覆盖声明的静态腐化模型。`SW-Sym-Theory` 只在原始对称 pairing 模型中提供理论映射，不支撑现代 Type-3 或具体链上效率主张。
+
+# VIII. 性能分析与评估设计
+
+## A. 参与方—阶段成本矩阵
+
+| 阶段 | Gateway/Owner | CSP | Beacon | BFT verifier/state | Public observer/extractor | 通信/持久状态 |
+|---|---|---|---|---|---|---|
+| Suite 注册 | 提交 profile/version、VerifierModule 与来源 hash | 无 | 无 | 保存不可变 registry entry/module 并执行测试向量 | 可读取 module 与来源记录 | 公钥、摘要、module 和来源 hash 一次存储 |
+| 初始形成 | 完整离线形成、FormationDigest 与签名 | 接收并保存状态 | 无 | 重算 PageDescStoreRoot，验证 header/cert/registry/版本并原子写状态 | 可重算可见字段 | 紧凑 PublicationBatch + PageDescStore |
+| OpenAudit | 可选 caller | 无 | 产生唯一输出 | 固定双版本、SwapMap、challenge | 可观察 | ChallengeState/slot state |
+| Prove/Verify | 无 | 每域 Prove + AuditEntry opening | 无 | 逐域确定性验证并写 PASSED/FAILED | 可重算 | proofs + four classes of multiproof |
+| 普通更新 | 业务条带、Manifest/AuditEntry、页面、META、证书 | 替换受影响状态 | 无 | 原子更新 roots/descriptors | 可观察 | changed pages + state writes |
+| 失败/迁移 | 授权恢复或迁移 | 停止旧证明 | 无 | FROZEN/cleanup/new version | 可观察 | attribution + new publication |
+| CurrentDataDAR | owner 可后续解密 | fixed-state oracle | 无 | 提供只读 snapshot、registry 和 VerifierModule | 运行公开参数 extractor | 多轮理论查询、suite 解析、子集解码和矩阵状态 |
+
+## B. Proof size 与验证代价
+
+令 $\mathcal D_{ord}\subseteq\mathcal D$ 为目标为 ordinary stripe 的逻辑域集合，$U_{audit}$ 为这些目标涉及的不同 AuditStatePage 数。完整 proof body 上界为
 
 $$
-\kappa'_{\tau}=\mathsf{FE.Rep}(\mathsf{SimTag}(r_{\ell'}),P_{\tau}).
+\begin{aligned}
+|ProofBody|\le{}&
+\sum_{d\in\mathcal D}B_{\pi,profile}
++|RecordOpenings|+|StripeOpenings|+|PageDescOpenings|\\
+&+\sum_{g\in targets(\mathcal D_{ord})}|AuditStateEntry_g|
++|AuditEntryMultiProof|\\
+&+|RecordMultiProof|+|DirectoryMultiProof|+|PageDescMultiProof|\\
+&+|Header|+|Cert|+|ChallengeContext|+|Serialization|.
+\end{aligned}
 $$
 
-验证者据此执行所选 S-PoW 实例的挑战响应检查。具体挑战格式、误接受率、误拒绝率、辅助数据泄露和所有权可靠性由所选 $\mathsf{SimTag}$、$\mathsf{FE}$ 与 S-PoW primitive 的安全模型决定。
+若同一 ordinary stripe 被多个逻辑域引用，其 `AuditStateEntry` 只发送一次；同一 AuditStatePage 中多个 entry 使用一个 multiproof。若页面内认证树含 $B_A$ 个条目，单项 opening 为 $O(\log B_A)$ 个摘要；multiproof 必须按实际共享路径字节报告。
 
-因此，本节仅给出与对象审计正交的访问控制接口。S-PoW 的完整所有权可靠性证明遵循所选底层 primitive，不出现在本文对象审计定理中。
+对象级 suite 参数不在 PageDesc、AuditStateEntry 和每个域中重复；ProofBody 只携带 `ObjectSuiteRef`，BFT 从不可变 SuiteRegistry 解析 VerifierModule 和完整执行参数。代数 proof 可以由固定数量群元素/标量组成，但完整公开输入随逻辑域数、ordinary 目标数和认证 multiproof 增长。验证成本分别为
 
-## 参考文献
+$$
+T_{verify}=T_{cert}+T_{registry}+T_{record}+T_{directory}+T_{page}+T_{auditEntry}+\sum_{d\in\mathcal D}T_{RPDP,d}+T_{stateWrite}.
+$$
 
-\[gao2024] Y. Gao, L. Chen, J. Han, S. Yu, and H. Fang, “Similarity-Based Secure Deduplication for IIoT Cloud Management System,” _IEEE Transactions on Dependable and Secure Computing_, vol. 21, no. 4, pp. 2242–2255, 2024.
+同一 stripe 的多个语义域当前仍提交独立 RPDP proof。实验只测量重复 REP-LINK 比例和潜在合并收益，核心方案不引入批量 RPDP 聚合。
 
-\[miao2024] Y. Miao, K. Gai, L. Zhu, K.-K. R. Choo, and J. Vaidya, “Blockchain-Based Shared Data Integrity Auditing and Deduplication,” _IEEE Transactions on Dependable and Secure Computing_, vol. 21, no. 4, pp. 3688–3703, 2024.
+## C. SuiteRegistry/VerifierModule、PageDescStore、分页元数据、CSMS 与 Coverage
 
-\[jiang2023] T. Jiang, X. Yuan, Y. Chen, K. Cheng, L. Wang, X. Chen, and J. Ma, “FuzzyDedup: Secure Fuzzy Deduplication for Cloud Storage,” _IEEE Transactions on Dependable and Secure Computing_, vol. 20, no. 3, pp. 2466–2481, 2023.
+metadata page 数满足
 
-\[talasila2019] P. Talasila and D. E. Lucani, “Generalized Deduplication: Lossless Compression by Clustering Similar Data,” in _Proceedings of the IEEE_, 2019.
+$$
+P_{meta}=O\!\left(\frac{|Manifest|}{B_M^{byte}}+\frac{|AuditStateTable|}{B_A^{byte}}+\frac{|RecentTombstones|}{B_T^{byte}}\right).
+$$
 
-\[liu2025] B. Liu, X. Zhang, X. Yang, Y. Zhang, J. Xue, and R. Zhou, “Blockchain-Assisted Fine-Grained Deduplication and Integrity Auditing for Outsourced Large-Scale Data in Cloud Storage,” _IEEE Internet of Things Journal_, vol. 12, no. 12, pp. 21662–21678, 2025.
+对象当前共识状态成本拆为
 
-\[zhang2023] Q. Zhang, D. Sui, J. Cui, C. Gu, and H. Zhong, “Efficient Integrity Auditing Mechanism With Secure Deduplication for Blockchain Storage,” _IEEE Transactions on Computers_, vol. 72, no. 8, pp. 2365–2376, 2023.
+$$
+Storage_{current}=|ObjectSuiteRef|+\sum_{p=1}^{P_{meta}}|PageDesc_p|+|ChainState|+|SwapMap|,
+$$
 
-\[zhang2025] Q. Zhang, S. Qian, J. Cui, H. Zhong, F. Wang, and D. He, “Blockchain-Based Privacy-Preserving Deduplication and Integrity Auditing in Cloud Storage,” _IEEE Transactions on Computers_, vol. 74, no. 5, pp. 1717–1728, 2025.
+registry 与执行模块的全局摊销成本为
 
-\[fvcdedup2022] S. Jiang, J. Liu, Y. Zhou, and Y. Fang, “FVC-Dedup: A Secure Report Deduplication Scheme in a Fog-Assisted Vehicular Crowdsensing System,” _IEEE Transactions on Dependable and Secure Computing_, vol. 19, no. 4, pp. 2727–2741, 2022.
+$$
+\begin{aligned}
+Storage_{suite}=\sum_{v\in registered\ suites}(&|pk_v|+|SuiteParamsDigest_v|+|VerifierCodeHash_v|\\
+&+|SourceRecordHash_v|+|status_v|+|height_v|)+\sum_v|VerifierModule_v|.
+\end{aligned}
+$$
 
-\[geobd22021] R. K. Barik, S. S. Patra, R. Patro, S. N. Mohanty, and A. A. Hamad, “GeoBD2: Geospatial Big Data Deduplication Scheme in Fog Assisted Cloud Computing Environment,” in _Proceedings of INDIACom_, 2021.
+`SourceRecordHash` 不进入执行路径；共识执行环境必须缓存所有 ACTIVE、DEPRECATED 且仍被未退休对象引用的 VerifierModule。实验应报告 module 大小、节点缓存、版本切换和旧 module 保留成本。
 
-\[boafft2020] S. Luo, G. Zhang, C. Wu, S. U. Khan, and K. Li, “Boafft: Distributed Deduplication for Big Data Storage in the Cloud,” _IEEE Transactions on Cloud Computing_, vol. 8, no. 4, pp. 1199–1211, 2020.
+AuditStatePage 内的完整 ordinary public states 存在 CSP 页面数据中；PageDescStore 只保存页面级 public state 和 `AuditEntryRoot`，避免把 ordinary states 复制到共识状态。PageDescStore 使用固定深度 sparse Merkle map；单项成员/更新证明最坏随 map 深度线性增长，批量更新应报告 multiproof 后真实成本。
 
-\[ateniese2007] G. Ateniese, R. Burns, R. Curtmola, J. Herring, L. Kissner, Z. Peterson, and D. Song, “Provable Data Possession at Untrusted Stores,” in _Proceedings of ACM CCS_, 2007.
+CSMS 最坏成员/非成员/追加见证为
 
-\[juels2007] A. Juels and B. S. Kaliski Jr., “PORs: Proofs of Retrievability for Large Files,” in _Proceedings of ACM CCS_, 2007.
+$$
+B_{CSMS}^{worst}=d_{sid}|H|+O(1).
+$$
 
-\[shacham2008] H. Shacham and B. Waters, “Compact Proofs of Retrievability,” in _Proceedings of ASIACRYPT_, 2008.
+若 $d_{sid}=256$ 且 $|H|=32$ bytes，仅兄弟摘要上界约为 8 KiB；实际压缩证明不能替代理论最坏值。
 
-\[bellare2013] M. Bellare, S. Keelveedhi, and T. Ristenpart, “Message-Locked Encryption and Secure Deduplication,” in _Proceedings of EUROCRYPT_, 2013.
+SwapMap 最坏保存 $O(m_{cov})$ live entries。StrongRandomAudit 的期望完整覆盖为 $m_{cov}H_{m_{cov}}$；本文在 $m_{cov}$ 个全部成功 slot 后 CoveragePass。总成本必须比较
 
-\[dupless2013] S. Keelveedhi, M. Bellare, and T. Ristenpart, “DupLESS: Server-Aided Encryption for Deduplicated Storage,” in _Proceedings of USENIX Security_, 2013.
+$$
+Cost_{proof}+Cost_{AuditEntry}+Cost_{SwapMap}+Cost_{PageDescStore}+Cost_{updates}+Cost_{failure}
+$$
 
-\[pow2011] S. Halevi, D. Harnik, B. Pinkas, and A. Shulman-Peleg, “Proofs of Ownership in Remote Storage Systems,” in _Proceedings of ACM CCS_, 2011.
+与有放回重复 proof 成本。
 
-\[manku2007] G. S. Manku, A. Jain, and A. Das Sarma, “Detecting Near-Duplicates for Web Crawling,” in _Proceedings of WWW_, 2007.
+## D. 动态更新、原子发布与恢复成本
 
-\[dodis2008] Y. Dodis, R. Ostrovsky, L. Reyzin, and A. Smith, “Fuzzy Extractors: How to Generate Strong Keys from Biometrics and Other Noisy Data,” _SIAM Journal on Computing_, vol. 38, no. 1, pp. 97–139, 2008.
+紧凑初始发布批次的通信上界为
 
-\[chen2015] R. Chen, Y. Mu, G. Yang, and F. Guo, “BL-MLE: Block-Level Message-Locked Encryption for Secure Large File Deduplication,” _IEEE Transactions on Information Forensics and Security_, vol. 10, no. 12, pp. 2643–2652, 2015.
+$$
+\begin{aligned}
+|Batch_{create}|={}&
+\sum_{p=1}^{P_{meta}}|PageDesc_p|
++|MetaDescriptor|+|ObjectHeader|+|Cert|\\
+&+|InitialProvider|+|PolicyWitness|+|ProtocolVersion|+|Serialization|.
+\end{aligned}
+$$
 
-\[tian2022] G. Tian _et al._, “Blockchain-Based Secure Deduplication and Shared Auditing in Decentralized Storage,” _IEEE Transactions on Dependable and Secure Computing_, vol. 19, no. 6, pp. 3941–3954, 2022.
+BFT 初始发布不处理业务块和页面字节，其计算成本为
 
-\[pan2026] C. Pan _et al._, “Blockchain-Enabled Efficient Deduplication and Mixed Auditing for Dynamic Cloud Data,” _IEEE Transactions on Dependable and Secure Computing_, vol. 23, no. 2, pp. 3554–3568, 2026.
+$$
+T_{publish}^{BFT}=O(P_{meta})\cdot T_H+T_{sig}+T_{registry}+T_{policy}+T_{stateWrite},
+$$
 
-\[zhu2026] C. Zhu, Y. Lu, N. Xia, J. Li, and Y. Sun, “A Lightweight Blockchain-Assisted Certificateless Cloud Data Integrity Auditing Scheme Without Third-Party Auditor,” _IEEE Transactions on Information Forensics and Security_, vol. 21, pp. 976–989, 2026.
+而 Gateway 离线形成成本单独包括全部 RS、RPDP `Preprocess`、页面认证树、三个对象根和证书生成。实验必须分别报告二者，不能把 Gateway 离线形成成本解释为链上发布成本。
 
-\[edgeauditiot] C. Pan, L. Zhou, L. Huang, J. Chen, K. Zhang, and A. Fu, “A Privacy-Preserving Delegable Auditing Scheme with Edge-Assisted Deduplication in IoT,” in _Proceedings of CSS 2025_, LNCS 16195, pp. 152–167, 2026.
+| Operation | 主要成本 |
+|---|---|
+| initial publication | Gateway 离线形成全部对象；链上只提交 PageDesc batch、MetaDescriptor、ObjectHeader、FormationDigest/Cert、provider 和 policy witness，一次原子状态写入 |
+| ordinary modification | 目标业务条带、一个 manifest entry、一个 AuditStateEntry、对应页面和 AuditEntryRoot、PageDesc、META 和顶层根 |
+| insertion | ordinary update + CSMS non-membership/append witness |
+| deletion | 业务条带、相关页面和近期 tombstone page；CSMS 不删除 |
+| representative update | REP、全部 DELTA、相关 AuditState entries/pages、META 和顶层根 |
+| profile migration | `FullObjectReinstantiation`：新 suite registry reference 下全部组件重新 Preprocess |
+| AbortEpoch | challenge cleanup、SwapMap/slot 清理和状态写入 |
+| failure/migration | attribution、FROZEN 状态、公开恢复/替代 provider 和新对象版本发布 |
+| CurrentDataDAR | 对每个组件运行 profile extractor；子集解码、规范重编码和全部根重建 |
+
+普通修改的渐进成本为
+
+$$
+O\!\left(|C_g|+B_M^{byte}+B_A^{byte}+|C_{meta}|+\log B_A+\log P_{meta}+\log N_{record}+\log N_{stripe}\right).
+$$
+
+其中 $\log B_A$ 对应 AuditEntryRoot 更新。该上界不等于常数时间：目标业务条带、AuditStatePage 和 META 条带仍需重新编码/标签，BFT 节点还会重复执行状态验证。
+
+### 规范字段字节核算表
+
+在选择具体 adapter 后，必须逐字段给出以下结构的规范字节数，不得仅报告渐进复杂度：
+
+| 结构 | 必须核算的字段 |
+|---|---|
+| `AuditStateEntry` | stripe id、native file id、完整文件级公开状态、版本、BlockRoot、suite reference |
+| `PageDesc` | page key/type/index/version、BlockRoot、页面文件状态摘要、AuditEntryRoot、状态标志 |
+| `ObjectSuiteRef` | profile id、key epoch、registry id、参数摘要、verifier code hash |
+| `ObjectHeader` | 对象双版本、三个顶层根、PageDescStoreRoot、META/REP 启动状态、FormationDigest、policy/provider 引用 |
+| `ChallengeContext/StateToken` | 对象、版本、epoch/slot、provider、suite、信标输入摘要、ChallengeStateHash 和 deadline |
+| `PolicyWitness` | PolicyEntry、PolicyOpening、PolicyRegistryRoot、版本和规范 proof 编码 |
+| `VerifierModule` | 规范编码、执行参数、挑战规则、验证/提取接口和资源限制 |
+| `RecordBinding/StripeDesc` | 记录/条带 id、类型、位置、版本、BlockRoot 和公开状态摘要 |
+| Merkle proof | 节点摘要、方向/索引编码、multiproof 去重元数据 |
+
+BFT 系统级验证成本还需报告
+
+$$
+Cost_{consensus}=n_{consensus}\cdot T_{verify}+Cost_{stateWrite}+Cost_{finality},
+$$
+
+并分别记录失败交易、超限响应和 verifier upgrade 的成本。
+
+## E. `O-32` 外层约束与 `SW-Sym-Theory` 参数映射
+
+`O-32` 仅固定外层约束：$m_o\le32$、$P_{meta}\le16$、$m_{cov}\le48$、$c_R=2$、$c_{cov}=2$、$c_{risk}=0$、信标 $(7,4,3)$、页面字节上限和 proof-body 目标 cap。新增 AuditState entry 与 multiproof 后，必须重新计算 cap；未选择现代具体 adapter 前，不声称满足字节 cap 或链上时限。
+
+`SW-Sym-Theory` 声明
+
+$$
+OutputMode_{SW}=\mathsf{DECODABLE\_SUBSET},\qquad ExtractorAccess_{SW}=\mathsf{PUBLIC}.
+$$
+
+其理论参数为：编码文件有 $n$ 个块、每块 $s$ 个 $\mathbb Z_p$ sector；challenge 从 $n$ 个块中无放回选 $l$ 个索引，系数取自集合 $B\subseteq\mathbb Z_p$。对 well-behaved、$\epsilon$-admissible prover，令外层 RS 码率为 $\rho$，
+
+$$
+\omega_{SW}=\frac{1}{|B|}+\frac{(\rho n)^l}{(n-l+1)^l},
+$$
+
+$$
+\mathcal E_{SW}=\{\epsilon:\epsilon-\omega_{SW}>1/\operatorname{poly}(\lambda)\},
+$$
+
+$$
+Q_{SW}(\epsilon)=O\!\left(\frac{n}{\epsilon-\omega_{SW}}\right),
+$$
+
+$$
+T_{SW}(\epsilon)=O\!\left(n^2s+\frac{(1+\epsilon n^2)n}{\epsilon-\omega_{SW}}\right).
+$$
+
+Theorem 4.3 输出至少 $\rho n$ 个一致编码块构成的 `DECODABLE_SUBSET`，外层 `NormalizeRecoveredComponent` 使用同一 rate-$\rho$ RS profile 解码并规范重编码。$\delta_{SW}(\epsilon)$ 只在原论文假设下声明为可忽略，不用于现代参数选择，也不与 `O-32` 组成可部署 profile。
+
+## F. 部署边界和实验要求
+
+主部署模型为应用专用 BFT 或联盟链中的原生确定性 verifier module。必须明确：suite/profile 生效高度、registry 条目与 VerifierModule 不可变规则、旧 proof 的执行模块、REVOKED/DEPRECATED 语义、恶意 profile 注册治理、全体共识节点重复执行成本、最大交易/区块输入和失败交易费用。公链或 optimistic fraud-proof 模型不进入当前核心方案。
+
+实验至少报告：Gateway 离线形成与紧凑 PublicationBatch/PolicyWitness 的分离成本；VerifierModule 大小、缓存和旧版本保留；ordinary proof 中 AuditStateEntry/opening/multiproof 分项；普通/REP/profile 更新；SuiteRegistry、PageDescStore 和 CSMS 状态；BFT 节点验证时间；coverage/StrongRandomAudit 总成本；BAD/timeout/AbortEpoch/迁移清理；`RecoverableView` 子集规模和 CurrentDataDAR 模拟 extractor 查询规模。任何“高效”“轻量”结论必须相对于明确基线和变量。
+
+## G. 局限性
+
+本文框架条件于可信 Gateway、当前链状态、SuiteRegistry 与不可变 VerifierModule 可用、抽象 UTB 和满足三项性质的公开 RPDP profile。Gateway 证书认证离线形成正确性，BFT 只保证紧凑获证状态的原子一致切换；Gateway 恶意或密钥泄漏不在本文对抗范围。`SW-Sym-Theory` 只提供原始对称 pairing 模型中的候选理论映射；在选择性 CTX 适配和现代 Type-3 adapter 未完成时，论文不能声称形成端到端部署实例。AuditStateEntry opening 修复在线公开状态输入，但增加 proof 通信和页面更新成本；PageDescStore 把启动可用性转化为共识状态成本；CSMS 证明最坏可达数 KiB；representative 更新和 profile 迁移仍是全依赖重构；CurrentDataDAR 证明固定逻辑快照上的可提取访问，不证明物理位置或持续服务。
+
+# IX. 结论
+
+本文研究相似性去重后 representative、delta 和 fallback 构成的依赖对象，指出普通扁平文件审计无法同时证明记录映射、代表依赖、ordinary 文件级公开状态和被审计编码表示属于同一获证版本。方案以 LINK/REP-LINK 绑定依赖边，以当前 PageDescStore 启动 metadata pages，并通过认证 AuditState entry 向在线验证者提供 ordinary stripe 的完整公开验证状态；唯一阈值信标和无放回状态机提供固定输入的在线全部目标调度与通过语义。
+
+系统采用明确的信任和执行分层。可信 Gateway 在链下完成当前对象形成、检查 `CertifiedLayoutWF_current/HistoryRootBound` 并对 `FormationDigest` 签名；BFT 状态机只重算紧凑批次中可见的 PageDescStore 根，验证对象头、证书、suite、policy、版本、provider 和生命周期，并原子切换获证状态。协议执行所需的序列化、参数、挑战规则、验证和提取接口固化在不可变 VerifierModule 中，`SourceRecordHash` 只用于来源与工件溯源。发布后，恶意 CSP 不能在相关 opening、RPDP challenge 或 fixed-state reconstruction 被触发时保持错误组件继续接受。
+
+底层 RPDP 只承担公开验证、可判定的选择性上下文绑定和 fixed-state 提取，并显式声明 `OutputMode`、`ExtractorAccess` 和 `ValidRecoverableView`。在完整固定快照下，统一 extractor 规范化各类恢复视图，重建当前对象认证根，验证 `CertifiedLayoutWF_current`、`HistoryRootBound` 和 RECOVERY 生命周期，并输出当前获证对象及其 `SidHistoryRoot` 承诺，得到条件性的公开参数固定状态可提取性。FROZEN 对象可以恢复最后获证版本，但不能开启新审计。完整历史 sid 集合不由 `CurrentDataDAR` 恢复；其 append-only 一致性由独立 `HistoricalConsistencyValid` 定理保证，历史数据内容长期可用性不在本文范围。
+
+原始 Shacham--Waters 映射仅在对称 pairing 模型下给出候选理论 profile、上下文适配、admissibility 和提取复杂度边界，不被表述为现代 Type-3 或链上部署实例。因此，本文的核心结果仍是一个参数化组合框架及其对象级安全边界。完整 TDSC 系统实例还需导入具有已发表现代安全证明的具体 RPDP adapter，并通过端到端实验验证 VerifierModule、紧凑发布、AuditState openings、proof body、共识状态、多轮审计、动态更新和恢复成本。
+
+# 附录 A. 认证树、PageDescStore、CSMS 与无偏抽样
+
+所有认证结构固定 key width、空叶、内部节点编码、整数宽度和域标签。若在同一根下为不同叶、不同计数或不同规范顺序生成均可接受 opening，则沿路径取首个输入不同但父摘要相同的节点，得到哈希碰撞。
+
+`PageDescStore` 是当前共识状态中的认证映射。其完整 active entries 必须可读，根等于 ObjectHeader 中的 `PageDescStoreRoot`；META 只绑定页面内容根、页面数量和分页策略。该结构只保证当前描述符可用；退休 entry 的永久历史保存不属于 CurrentDataDAR。
+
+CSMS 深度为 $d_{sid}$。空叶摘要递归预计算；成员和非成员 proof 都是从目标叶到根的兄弟摘要路径。`VerifyAppend(root,root',sid,w)` 同时验证旧叶为空、新叶等于 $H(\textsf{SID\_USED}\parallel sid)$，并使用同一路径重算新 root。若同一旧根接受矛盾状态或非法追加，则存在哈希碰撞。
+
+`HashToRange` 使用拒绝采样消除模偏差；partial Fisher--Yates 在位置 $j$ 从剩余区间均匀选择并交换。调度序列是排列；proof 通过状态由独立 slot 状态机维护。
+
+# 附录 B. 唯一阈值信标的 Threshold-BLS/DKG 候选实例
+
+正文只依赖抽象 UTB。候选实例采用 Boldyreva 型 threshold-BLS [boldyreva2003] 和 Gennaro *et al.* DKG [gennaro1999]。DKG 输出
+
+$$
+(PK_B,\mathcal Q_B,\{VK_i\},TranscriptDigest_B).
+$$
+
+非 qualified 成员、重复索引、非规范编码、非子群点和旧 key epoch 份额均拒绝。安全性条件化于 DKG correctness、qualified-set agreement 和静态腐化。
+
+在 tEUF 游戏中，敌手静态获得不超过 $f_B<t_B$ 个秘密份额，可查询其他输入完整签名和目标输入上的腐化份额，但不能查询目标完整签名。若预测者未查询正确输出哈希，只能以 $2^{-\kappa}$ 猜测 seed；若查询，reduction 扫描查询表并用公开验证提取目标阈值签名。因此
+
+$$
+\mathsf{Adv}_{SeedPred}\le\mathsf{Adv}_{TBLS}^{tEUF,<t_B}+2^{-\kappa}.
+$$
+
+合法状态转换为：
+
+```text
+NONE -> PENDING(I)
+PENDING(I) -> FULFILLED(I,R)
+PENDING(I) -> RETRYABLE(I) -> PENDING(I)
+```
+
+retry 保持 input、key epoch、qualified-set digest、coverage position、SwapMap、对象双版本和 StateToken 不变。
+
+# 附录 C. StrongRandomAudit 完整基线
+
+StrongRandomAudit 复用本文的对象、single RPDP suite、PageDescStore、Record/LINK/REP-LINK/Critical 域、公开验证、生命周期和动态更新。它删除 `next_pos/SwapMap`，只把 coverage 选择替换为固定信标 seed 下的独立有放回抽样。slot 同样维护 SCHEDULED/PASSED/FAILED，故它与本文的安全差异只在遗漏概率和重复 proof 成本，不在 failure semantics。
+
+# 附录 D. PageDescStore、AuditEntryRoot、CSMS 与原子更新
+
+## D.1 Sparse-Merkle PageDescStore、AuditEntryRoot 与原子初始发布
+
+```text
+BuildAuditStatePage(entries):
+    require canonical unique stripe ids and offsets
+    for each entry:
+        leaf <- H(AUDIT_ENTRY || enc(entry))
+    root <- MerkleRoot(leaf list)
+    return page bytes and root
+
+BuildPageDescStoreRoot(PageDescBatch):
+    require canonical unique page keys
+    for each descriptor:
+        require ACTIVE status, ObjectSuiteRef digest and resource bounds
+        leaf <- H(PAGE_DESC || pageKey || enc(PageDesc))
+    return SparseMerkleMapRoot(leaves)
+
+PublishObjectWithPageDescBatch(batch):
+    require object not ACTIVE and no prior finalized version
+    enter transient PENDING_PUBLICATION
+    canonical-decode PageDescBatch, MetaDescriptor, ObjectHeader and witnesses
+    resolve immutable ObjectSuiteRef and VerifierModule from SuiteRegistry
+    require registry status/module/code/parameter digests are valid
+    root <- BuildPageDescStoreRoot(batch.PageDescBatch)
+    require root = batch.ObjectHeader.PageDescStoreRoot
+    require ObjectHeader binds MetaDescriptor, FormationDigest,
+            provider, policy digest and all versions
+    verify PolicyEntry opening under PolicyRegistryRoot
+    verify Gateway certificate over ObjectHeader/FormationDigest
+    verify descriptor uniqueness, lifecycle transition and resource limits
+    atomically store PageDescStore, ObjectHeader, provider and ACTIVE state
+    on any failure rollback all transient writes
+
+UpdatePageDescBatch(oldState, newDescriptors, newMETA, newHeader, cert):
+    require current object ACTIVE and no AUDITING epoch
+    require every changed page_ver increases by exactly one
+    require unchanged pages and registry reference are byte-identical
+    recompute new PageDescStoreRoot
+    verify new header/FormationDigest/certificate and authorized state transition
+    atomically replace all affected state
+
+OpenAuditStateEntry(g, page):
+    return entry, page id, entry index and Merkle opening
+
+GetPageDesc(objectID, pageID):
+    return finalized descriptor, sparse-Merkle opening and state reference
+```
+
+BFT 不读取完整业务条带、metadata pages 或编码块，因此不重算 `AuditEntryRoot/BlockRoot/RecordRoot/DataRoot`。这些关系由 Gateway 的 `FormationDigest/Cert` 认证，并在后续 opening、RPDP 验证和 fixed-state 重建中受到约束。初始对象不使用单项 `PublishPageDesc`；`CREATING/PENDING_PUBLICATION` 状态不可被 `OpenAudit` 读取。
+
+## D.2 固定深度压缩稀疏 Merkle 集合
+
+设 sid 域为 $\{0,1\}^{d_{sid}}$。叶和空子树使用独立域标签：
+
+$$
+Leaf_{used}(sid)=H(\textsf{SID\_USED}\parallel sid),\qquad
+Empty_0=H(\textsf{SID\_EMPTY}),
+$$
+
+$$
+Empty_{h+1}=H(\textsf{SID\_NODE}\parallel h\parallel Empty_h\parallel Empty_h).
+$$
+
+接口为 `Setup/ProveMem/VerifyMem/ProveNonMem/VerifyNonMem/Append/VerifyAppend`。`Append` 只允许把默认空叶替换为 used 叶，不提供删除。压缩格式可省略默认兄弟节点，但最坏通信仍按 $d_{sid}|H|$ 报告。
+
+## D.3 并发、更新和生命周期
+
+插入请求绑定
+
+$$
+(oldSidHistoryRoot,state\_ver,update\_nonce,sid).
+$$
+
+两个请求基于同一旧根并发时，状态机只接受先完成最终确认的一项；其余请求必须基于新根重新生成见证。
+
+规范更新摘要为
+
+$$
+\begin{aligned}
+UpdateDigest=H_0(&\textsf{OBJECT\_UPDATE}\parallel objectID\parallel old/new\ data\_ver\\
+&\parallel old/new\ state\_ver\parallel changedStripeDigest\\
+&\parallel changedManifestDigest\parallel changedAuditEntryDigest\\
+&\parallel old/new\ AuditEntryRootDigest\parallel changedPageDescDigest\\
+&\parallel old/new\ RecordRoot\parallel old/new\ DataRoot\\
+&\parallel old/new\ StripeDirectoryRoot\parallel old/new\ PageDescStoreRoot\\
+&\parallel old/new\ SidHistoryRoot\parallel old/new\ METADigest\\
+&\parallel ObjectSuiteRef\parallel provider\parallel updateNonce).
+\end{aligned}
+$$
+
+状态机先验证旧状态，再验证局部转换，最后一次写入全部新状态。`AUDITING` 状态不能直接执行数据更新，必须先 `AbortEpoch`。AuditEntry multiproof 按 page id、entry index、树层和方向规范排序；重复 entry 和 sibling 只编码一次，跨页 proof 分组后按 page key 排序。
+
+# 附录 E. 全局 Fixed-State 当前对象提取接口
+
+```text
+FreezeTargetSnapshot(P*, target) ->
+    Sigma*=(st_CSP*, OH*, ChainState*, PageDescStore*, SuiteRegistry*, RO*)
+ResetCSPState(st_CSP*)
+ReadFinalizedPublicSnapshot(Sigma*)
+ResolveSuiteExecutionState(ObjectSuiteRef) -> (pk, VerifierModule, ExecutionParams)
+RespondRPDP(nativeFileID, challenge)
+NormalizeRecoveredComponent(view, output_mode, code_param)
+```
+
+目标必须是最后一个获证且未退休的版本，且 `LifecycleAllowed(status,RECOVERY)=1`。每次底层 extractor 查询前只恢复同一完整 CSP 状态。ObjectHeader、当前链状态、PageDescStore、SuiteRegistry、被引用的 VerifierModule 和随机预言机表保持相同且只读；每次挑战使用新的 extractor randomness。禁止私有数据恢复服务、另一个 CSP 数据接口和可在挑战之间变化的外部 data oracle。`CurrentDataDAR` 只使用 `ExtractorAccess=PUBLIC` 的 profile；owner-assisted 访问留给 OwnerDAR。该模型证明公开参数下固定逻辑快照的可提取访问，不证明物理本地持有。
+
+# 附录 F. 可注册 RPDP Profile 合同
+
+具体 adapter 必须提交：精确来源、版本和勘误；`KeyGen/BindFileID/Preprocess/Challenge/Prove/PublicVerify/Extract` 的算法和定理映射；native file id 的底层密码绑定；共享参数和文件级公开状态的规范格式；不可变 VerifierModule；`OutputMode`、`ExtractorAccess`、admissibility 集合 $\mathcal E_t$、`ValidRecoverableView` relation、期望时间 $T_t(\epsilon)$ 和失败函数 $\delta_t(\epsilon)$；外层 RS 兼容性；测试向量、module/code/source hash 和资源上限。
+
+## F.1 选择性 ContextBound 注册游戏
+
+```text
+Phase 1 — target commitment:
+    adversary submits legal (ctx0,M0,ctx1,M1), ctx0 != ctx1
+
+Setup:
+    (pk,sk) <- KeyGen
+    (PSt0,PubSt0) <- Preprocess(ctx0,M0)
+    (PSt1,PubSt1) <- Preprocess(ctx1,M1)
+    give adversary PSt0, PubSt0, PubSt1 and public VerifierModule
+    never reveal PSt1
+
+Auxiliary queries:
+    allow challenge/proof queries for ctx0
+    allow non-target context and random-oracle queries
+    never return an honest proof for the final ctx1 target challenge
+
+Target:
+    chal* <- Challenge(ctx1)
+    adversary returns pi*
+
+Win:
+    PublicVerify(pk,nativeFileID1,PubSt1,chal*,pi*) = 1
+```
+
+上下文统一为
+
+$$
+ctx=(FileContextHash,nativeFileID,PublicAuditStateDigest).
+$$
+
+合法更新必须产生新的 context；旧 context 只验证旧版本。profile 必须明确该安全是选择性还是具有单独证明的自适应版本，并说明是否支持多会话并发。`CrossContextReplay` 可作为额外子游戏，但不能代替上述目标上下文伪造游戏。
+
+## F.2 RecoverableView、extractor 权限与执行模块
+
+`OutputMode=DECODABLE_SUBSET` 时，合同必须给出最小坐标数、索引互异性、坐标一致性和解码 profile；同一索引的冲突值、不同 context 或不同 fixed snapshot 的坐标不得合并。`ExtractorAccess=PUBLIC` 时，必须说明 extractor 不需要 owner/Gateway secret，只使用公开状态、不可变 VerifierModule、随机预言机和 prover 黑盒交互。
+
+Suite 以不可变 registry entry 和 VerifierModule 发布；完整执行参数不得只存在于 `SourceRecordHash` 指向的外部工件。`SourceRecordHash` 仅用于来源、证明、测试向量和实现审计。BFT 能检查规范格式、module/code hash、参数摘要、registry 引用、测试向量结果和资源上限，但不能自动验证密码学定理。未满足三项密码性质、未声明恢复输出/权限或执行模块不可解析的候选不可注册。
+
+# 附录 G. Certified Context Binding 与 RPDP Context Soundness
+
+## G.1 CCB 状态和 Oracle
+
+挑战者维护对象表、版本表、已签发 ObjectHeader、最小 SuiteRegistry entry、Record/Stripe roots、PageDescStore 和 AuditEntry maps。Oracle 为：
+
+- `CreateObject`: 运行诚实形成和紧凑原子发布；
+- `UpdateObject`: 目标锁定前允许合法更新，锁定后只允许不改变目标对象/版本的更新；
+- `OpenRecord/OpenStripe/GetPageDesc/OpenAuditStateEntry`: 返回当前获证 opening；
+- `ReadHeader/ResolveSuiteExecutionState`: 返回最终确认公共状态、registry entry 和不可变 VerifierModule。
+
+敌手可自适应选择 $ctx_0\ne ctx_1$。目标锁定时记录全部 target roots、版本和 registry entry；之后目标对象的 `data_ver/component_ver` 不得改变。
+
+## G.2 完整 Game hops
+
+- $G_0$：真实 CCB。
+- $G_1$：拒绝未由签名 oracle 返回的目标 ObjectHeader。归约者记录所有签名查询；敌手首次输出新有效签名即构成 EUF-CMA 伪造。
+- $G_2$：固定 Record、StripeDirectory 和 PageDescStore 叶。对于同根不同叶的两条 opening，比较路径并输出首个父摘要相同而子输入不同的哈希碰撞。
+- $G_3$：固定 AuditStateEntry。若同一 `AuditEntryRoot` 接受不同 entry，则按相同方法输出碰撞；若完整状态与 BootEntry 摘要不同但摘要相同，则输出规范哈希碰撞。
+- $G_4$：固定 ObjectSuiteRef、registry entry、BlockRoot 和 public-state digest。registry id/key epoch 不可覆盖；不同字段同摘要给出哈希碰撞。
+
+每个 game 的 oracle 回答与真实分布一致，目标为自适应选择，无需预猜对象。首次坏事件划分避免重复计算优势。
+
+## G.3 RCS Reduction
+
+归约者参加附录 F 的选择性 ContextBound 游戏。敌手在开始时提交 $ctx_0,ctx_1$；归约者把 $ctx_1$ 的 public state/target challenge 嵌入外层上下文，只向敌手提供 $ctx_0$ prover state，并真实生成 Gateway 签名、Record/Directory/PageDesc/AuditEntry 结构。若敌手产生在 $ctx_1$ 下接受的 proof，归约者原样输出。CCB 已固定外层结构，因此 reduction 只损失底层 profile 的上下文优势。
+
+## G.4 多轮组合
+
+挑战者维护 $(epoch,slot,domain)$ transcript。定位首次非法接受 slot 后，将其嵌入单轮定理；此前 transcript 作为辅助输入保留。retry 不改变固定输入，FAILED/FROZEN 结束当前 ACTIVE epoch。全局 CCB 与 StateFresh 游戏直接处理多查询 transcript；若底层 profile 仅给出单会话安全，则只对 $q_{epoch}q_{slot}d_{max}$ 个 RPDP 域位置使用联合界；若 profile 给出并发多会话安全，则直接调用其并发优势。
+
+# 附录 H. Paged-Metadata-Bootstrapped CurrentDataDAR
+
+```text
+ExtCurrentObject(P*, target):
+    Sigma* <- FreezeTargetSnapshot(P*, target)
+    require last certified, non-retired version
+    require LifecycleAllowed(status, RECOVERY)
+    modules <- ResolveSuiteExecutionState(ObjectSuiteRef)
+    metaView <- ExtComponent(ResetCSPState(Sigma*), META, modules)
+    require ValidRecoverableView(metaView, ctx_meta)
+    normalize and verify META
+    descriptors <- PageDescStore*
+    require SparseMerkleMapRoot(descriptors)=OH*.PageDescStoreRoot
+    for each active metadata page descriptor p:
+        view[p] <- ExtComponent(ResetCSPState(Sigma*), p, modules)
+        require ValidRecoverableView(view[p], ctx_p)
+        normalize and verify page p
+    recompute current AuditEntry roots and parse current manifest
+    extract and normalize REP from ResetCSPState(Sigma*)
+    for each current manifest-listed ordinary stripe g:
+        extract, validate and normalize view[g] from ResetCSPState(Sigma*)
+    rebuild current object roots
+    require CertifiedLayoutWF_current
+    require HistoryRootBound
+    output current object and SidHistoryRoot commitment
+```
+
+证明分为六层：
+
+1. **Current bootstrap completeness**：META 和 current PageDescStore 唯一确定当前 metadata page 集；
+2. **Current enumeration completeness**：当前 Manifest/AuditState pages 唯一确定当前 ordinary stripe 集和文件级公开状态；
+3. **View validity/normalization**：每个 recoverable view 只包含同一 context 和同一快照的一致坐标，并唯一规范化；
+4. **Current root reconstruction**：全部当前组件恢复后唯一重建当前对象根；
+5. **History commitment preservation**：输出的 `SidHistoryRoot` 与获证状态一致，但不枚举完整历史叶；
+6. **Snapshot consistency**：全部组件来自同一 CSP 状态、公共状态、VerifierModule 和随机预言机表。
+
+各底层 extractor 的失败保持为真实函数 $\delta_i(\epsilon_i)$。组合失败只计入当前组件和当前根的首次坏事件；完整历史一致性不属于该 extractor 的失败目标。总期望时间为各组件期望提取时间加 suite 解析、状态解析、view 校验、子集解码和当前根重建时间。
+
+# 附录 I. `O-32` 外层对象配置
+
+`O-32` 固定 $m_o\le32$、$P_{meta}\le16$、$m_{cov}\le48$、$c_R=2$、$c_{cov}=2$、$c_{risk}=0$、信标 $(7,4,3)$、每类页面 16 KiB 字节上限、关键公开状态总上限 4 KiB，以及 proof-body 目标 cap 256 KiB。所有组件使用单一 RPDP suite。该配置只约束外层资源；在选择现代具体 adapter 并计算全部字段前，不声称满足 cap 或可部署。
+
+# 附录 J. `SW-Sym-Theory` 原始 Shacham--Waters 公共 PoR 理论适配
+
+## J.1 导入边界
+
+本适配器严格映射 Shacham and Waters, “Compact Proofs of Retrievability,” 公共方案及 Theorems 4.2、4.3、4.8 [shacham2013]。保留原论文的对称 bilinear group、文件标签签名、随机预言机和 bilinear-group CDH 假设。本文不把其公式改写为 Type-3 pairing，不指定 BLS12-381/RFC 9380 编码，也不据此声称现代部署安全。
+
+该理论 profile 声明
+
+$$
+OutputMode_{SW}=\mathsf{DECODABLE\_SUBSET},\qquad
+ExtractorAccess_{SW}=\mathsf{PUBLIC}.
+$$
+
+“PUBLIC”表示理论 extractor 只使用公开 file tag、公开验证参数、随机预言机和与 prover 的交互，不需要 Gateway 的 file-tag 签名私钥；若具体实现需要额外秘密，则不得以该访问级别注册。
+
+## J.2 算法映射
+
+| 框架接口 | 原论文映射 |
+|---|---|
+| `KeyGen` | `Pub.Kg`：生成公开验证参数、sector bases 和文件标签签名密钥 |
+| `BindFileID` | $name=H_{name}(\textsf{SW\_NAME}\parallel enc(FileContext))$，进入 file tag 和 $H(name\parallel i)$ |
+| `Preprocess` | `Pub.St`：把外层 RS 编码向量视为已纠删编码文件块，生成认证器和 file tag |
+| `Challenge` | 原方案 $l$ 个不同索引及来自 $B\subseteq\mathbb Z_p$ 的系数 |
+| `Prove` | `Pub.P`：输出聚合认证器和 $s$ 个 sector 线性响应 |
+| `PublicVerify` | `Pub.V` 原始对称 pairing 验证式 |
+| `Extract` | Theorem 4.3 输出至少 $\rho n$ 个一致编码块坐标，形成 `DECODABLE_SUBSET` |
+| `Normalize` | 使用同一 rate-$\rho$ RS profile 解码原消息并规范重编码 |
+
+外层 RS 是原方案所需的 erasure encoding，adapter 不执行第二层编码。独立随机预言机 $H_{name}$ 对不同、首次查询的规范 FileContext 输出均匀独立 name；name 碰撞作为随机预言机/哈希碰撞事件处理。
+
+## J.3 上下文适配和三项密码性质
+
+- `PublicVerifiable`：由 Pub.St/Pub.P/Pub.V 正确性；
+- `SW-Name`：不同 FileContext 得到相同 name 归约到 $H_{name}$ 碰撞；
+- `SW-Tag`：file tag 签名固定 name、块数和原方案要求的文件参数；跨 name/块数迁移产生签名伪造；
+- `SW-BlockContext`：认证器使用 $H(name\parallel i)$，将响应绑定到文件名和块索引；
+- `ContextBound`：在附录 F 的选择性游戏中，敌手只获得源上下文认证状态和目标公开状态；由 SW-Name、SW-Tag、SW-BlockContext 和 Theorem 4.2 的 Part-One soundness 组合。该映射不自动给出自适应目标安全；
+- `FixedStateExtractable`：Theorem 4.2 先得到 well-behaved prover；Theorem 4.3 对 $\epsilon$-admissible prover提取 $\rho n$ 个编码块；外层 Normalize 使用 rate-$\rho$ RS 恢复消息。
+
+上下文优势满足
+
+$$
+\mathsf{Adv}_{SW}^{ctx}
+\le
+\mathsf{Adv}_{H_{name}}^{coll}
++\mathsf{Adv}_{FileTagSig}^{euf}
++\mathsf{Adv}_{SW}^{sound}.
+$$
+
+页面/ordinary 文件状态如何被在线认证获得由外层 `ResolvePublicStateOnline/Extract` 保证，不被列为 SW 密码性质。
+
+## J.4 Admissibility、knowledge error 与提取复杂度
+
+设编码文件有 $n$ 个块，每块 $s$ 个 sector，challenge 选择 $l$ 个不同索引，系数集合为 $B$，外层 RS 码率为 $\rho$。原 Theorem 4.3 定义
+
+$$
+\omega_{SW}=\frac1{|B|}+\frac{(\rho n)^l}{(n-l+1)^l}.
+$$
+
+当
+
+$$
+\epsilon-\omega_{SW}>0
+$$
+
+且该差值非可忽略时，可恢复至少 $\rho n$ 个编码块。本文据此定义
+
+$$
+\mathcal E_{SW}=\{\epsilon:\epsilon-\omega_{SW}>1/\operatorname{poly}(\lambda)\}.
+$$
+
+交互复杂度为
+
+$$
+Q_{SW}(\epsilon)=O\!\left(\frac{n}{\epsilon-\omega_{SW}}\right),
+$$
+
+总体时间为
+
+$$
+T_{SW}(\epsilon)=O\!\left(n^2s+\frac{(1+\epsilon n^2)n}{\epsilon-\omega_{SW}}\right).
+$$
+
+原论文在相应密码假设下把 Part-One 失败和最终恢复失败界定为可忽略，但没有给出现代具体参数下统一的数值 $\delta_{SW}$。因此本文只写
+
+$$
+\delta_{SW}(\epsilon)=\mathsf{negl}(\lambda)
+$$
+
+并保留其条件和来源，不把它人为分配为任意目标失败预算。
+
+## J.5 解析成本与限制
+
+若文件块有 $s$ 个 sector，则代数响应由一个 $G$ 元素和 $s$ 个 $\mathbb Z_p$ 标量组成：
+
+$$
+B_\pi=|G|+s|\mathbb Z_p|.
+$$
+
+query 含 $l$ 个索引—系数对；提取还需要保存足够的独立响应、恢复至少 $\rho n$ 个编码块并执行 RS 解码。由于本适配器不指定现代对称 pairing 实现、规范字节编码和 BFT verifier，它只提供理论参数映射；任何 Type-3/现代链部署都需要新的已发表构造或完整独立证明。
+
+# 参考文献
+
+[miao2025similar] Y. Miao, K. Gai, Y.-A. Tan, L. Zhu, and W. Meng, “Blockchain-Assisted Searchable Integrity Auditing for Large-Scale Similarity Data With Arbitration,” *IEEE Transactions on Dependable and Secure Computing*, vol. 22, no. 6, pp. 6012–6027, 2025, doi: 10.1109/TDSC.2025.3579124.
+
+[miao2025multi] Y. Miao, K. Gai, J. Yu, L. Zhu, and D. Niyato, “Collaborative and Searchable Integrity Auditing for Multi-Copy Data in Decentralized Storage,” *IEEE Transactions on Dependable and Secure Computing*, vol. 22, no. 6, pp. 7585–7599, 2025.
+
+[dahlberg2016] R. Dahlberg, T. Pulls, and R. Peeters, “Efficient Sparse Merkle Trees: Caching Strategies and Secure (Non-)Membership Proofs,” in *Secure IT Systems—NordSec 2016*, LNCS, pp. 199–215, 2016; full version: Cryptology ePrint Archive, Report 2016/683.
+
+
+[gao2024] Y. Gao, L. Chen, J. Han, S. Yu, and H. Fang, “Similarity-Based Secure Deduplication for IIoT Cloud Management System,” *IEEE Transactions on Dependable and Secure Computing*, vol. 21, no. 4, pp. 2242–2255, 2024.
+
+[miao2024] Y. Miao, K. Gai, L. Zhu, K.-K. R. Choo, and J. Vaidya, “Blockchain-Based Shared Data Integrity Auditing and Deduplication,” *IEEE Transactions on Dependable and Secure Computing*, vol. 21, no. 4, pp. 3688–3703, 2024.
+
+[jiang2023] T. Jiang, X. Yuan, Y. Chen, K. Cheng, L. Wang, X. Chen, and J. Ma, “FuzzyDedup: Secure Fuzzy Deduplication for Cloud Storage,” *IEEE Transactions on Dependable and Secure Computing*, vol. 20, no. 3, pp. 2466–2481, 2023.
+
+[talasila2019] S. R. K. P. Talasila and D. E. Lucani, “Generalized Deduplication: Lossless Compression by Clustering Similar Data,” in *Proceedings of the 2019 IEEE 8th International Conference on Cloud Networking (CloudNet)*, pp. 1–4, 2019, doi: 10.1109/CloudNet47604.2019.9064140.
+
+[liu2025] B. Liu, X. Zhang, X. Yang, Y. Zhang, J. Xue, and R. Zhou, “Blockchain-Assisted Fine-Grained Deduplication and Integrity Auditing for Outsourced Large-Scale Data in Cloud Storage,” *IEEE Internet of Things Journal*, vol. 12, no. 12, pp. 21662–21678, 2025.
+
+[zhang2023] Q. Zhang, D. Sui, J. Cui, C. Gu, and H. Zhong, “Efficient Integrity Auditing Mechanism With Secure Deduplication for Blockchain Storage,” *IEEE Transactions on Computers*, vol. 72, no. 8, pp. 2365–2376, 2023.
+
+[zhang2025] Q. Zhang, S. Qian, J. Cui, H. Zhong, F. Wang, and D. He, “Blockchain-Based Privacy-Preserving Deduplication and Integrity Auditing in Cloud Storage,” *IEEE Transactions on Computers*, vol. 74, no. 5, pp. 1717–1728, 2025.
+
+
+[ateniese2007] G. Ateniese, R. Burns, R. Curtmola, J. Herring, L. Kissner, Z. Peterson, and D. Song, “Provable Data Possession at Untrusted Stores,” in *Proceedings of ACM CCS*, 2007.
+
+[juels2007] A. Juels and B. S. Kaliski Jr., “PORs: Proofs of Retrievability for Large Files,” in *Proceedings of ACM CCS*, 2007.
+
+
+[shacham2013] H. Shacham and B. Waters, “Compact Proofs of Retrievability,” *Journal of Cryptology*, vol. 26, pp. 442–483, 2013, doi: 10.1007/s00145-012-9129-2.
+
+[hanser2013] C. Hanser and D. Slamanig, “Efficient Simultaneous Privately and Publicly Verifiable Robust Provable Data Possession from Elliptic Curves,” in *Proceedings of the 10th International Conference on Security and Cryptography (SECRYPT)*, pp. 15–26, 2013, doi: 10.5220/0004496300150026; full version: Cryptology ePrint Archive, Report 2013/392, last revision July 25, 2013 (IACR page notes a minor bug).
+
+[boldyreva2003] A. Boldyreva, “Threshold Signatures, Multisignatures and Blind Signatures Based on the Gap-Diffie-Hellman-Group Signature Scheme,” in *Public Key Cryptography—PKC 2003*, LNCS 2567, pp. 31–46, 2003, doi: 10.1007/3-540-36288-6_3.
+
+[gennaro1999] R. Gennaro, S. Jarecki, H. Krawczyk, and T. Rabin, “Secure Distributed Key Generation for Discrete-Log Based Cryptosystems,” in *Advances in Cryptology—EUROCRYPT ’99*, LNCS 1592, pp. 295–310, 1999, doi: 10.1007/3-540-48910-X_21.
+
+
+[bellare2013] M. Bellare, S. Keelveedhi, and T. Ristenpart, “Message-Locked Encryption and Secure Deduplication,” in *Proceedings of EUROCRYPT*, 2013.
+
+[dupless2013] S. Keelveedhi, M. Bellare, and T. Ristenpart, “DupLESS: Server-Aided Encryption for Deduplicated Storage,” in *Proceedings of USENIX Security*, 2013.
+
+[pow2011] S. Halevi, D. Harnik, B. Pinkas, and A. Shulman-Peleg, “Proofs of Ownership in Remote Storage Systems,” in *Proceedings of ACM CCS*, 2011.
+
+
+[chen2015] R. Chen, Y. Mu, G. Yang, and F. Guo, “BL-MLE: Block-Level Message-Locked Encryption for Secure Large File Deduplication,” *IEEE Transactions on Information Forensics and Security*, vol. 10, no. 12, pp. 2643–2652, 2015.
+
+[tian2022] G. Tian *et al.*, “Blockchain-Based Secure Deduplication and Shared Auditing in Decentralized Storage,” *IEEE Transactions on Dependable and Secure Computing*, vol. 19, no. 6, pp. 3941–3954, 2022.
+
+[pan2026] C. Pan *et al.*, “Blockchain-Enabled Efficient Deduplication and Mixed Auditing for Dynamic Cloud Data,” *IEEE Transactions on Dependable and Secure Computing*, vol. 23, no. 2, pp. 3554–3568, 2026.
+
+[zhu2026] C. Zhu, Y. Lu, N. Xia, J. Li, and Y. Sun, “A Lightweight Blockchain-Assisted Certificateless Cloud Data Integrity Auditing Scheme Without Third-Party Auditor,” *IEEE Transactions on Information Forensics and Security*, vol. 21, pp. 976–989, 2026.
+
+
+[shi2013] E. Shi, E. Stefanov, and C. Papamanthou, “Practical Dynamic Proofs of Retrievability,” in *Proceedings of the 2013 ACM SIGSAC Conference on Computer & Communications Security (CCS)*, pp. 325–336, 2013, doi: 10.1145/2508859.2516669.
+
+[anthoine2021] G. Anthoine, J.-G. Dumas, M. de Jonghe, A. Maignan, C. Pernet, M. Hanling, and D. S. Roche, “Dynamic Proofs of Retrievability With Low Server Storage,” in *30th USENIX Security Symposium (USENIX Security 21)*, pp. 537–554, 2021.
+
+[chondros2014] N. Chondros and M. Roussopoulos, “A Distributed Integrity Catalog for Digital Repositories,” *CoRR*, abs/1403.1180, 2014.
