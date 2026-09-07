@@ -1,0 +1,34 @@
+[
+  {
+    "scenario": "one complete file lost out of 1000; uniform file sampling",
+    "hit_probability_per_sample": 0.001,
+    "samples": 459,
+    "detection_probability": 0.36822985974230704,
+    "log10_miss_probability": -0.19944090427412028,
+    "interpretation": "analytic with-replacement fixed-loss model; not measured"
+  },
+  {
+    "scenario": "999 one-block files lost; one million-block file retained; uniform block sampling",
+    "hit_probability_per_sample": 0.000998002995007987,
+    "samples": 459,
+    "detection_probability": 0.36764991813697967,
+    "log10_miss_probability": -0.199042420882616,
+    "interpretation": "analytic with-replacement fixed-loss model; not measured"
+  },
+  {
+    "scenario": "same losses; uniform file then block sampling",
+    "hit_probability_per_sample": 0.999,
+    "samples": 459,
+    "detection_probability": 1.0,
+    "log10_miss_probability": -1376.9999999999995,
+    "interpretation": "analytic with-replacement fixed-loss model; not measured"
+  },
+  {
+    "scenario": "5 percent files each lose 10 percent blocks; lower bound",
+    "hit_probability_per_sample": 0.005000000000000001,
+    "samples": 919,
+    "detection_probability": 0.9900135483123547,
+    "log10_miss_probability": -2.000588794678307,
+    "interpretation": "analytic with-replacement fixed-loss model; not measured"
+  }
+]

@@ -1,0 +1,19 @@
+test_all_methods_same_samples (__main__.MechanismTests.test_all_methods_same_samples) ... ok
+test_delete_and_insert_preserve_domain (__main__.MechanismTests.test_delete_and_insert_preserve_domain) ... ok
+test_dense_dominates_batch_public_counts (__main__.MechanismTests.test_dense_dominates_batch_public_counts) ... ok
+test_duplicates_do_not_shorten (__main__.MechanismTests.test_duplicates_do_not_shorten) ... ok
+test_empty_same_schedule (__main__.MechanismTests.test_empty_same_schedule) ... ok
+test_keyword_domains_are_independent (__main__.MechanismTests.test_keyword_domains_are_independent) ... ok
+test_modify_version (__main__.MechanismTests.test_modify_version) ... ok
+test_query_does_not_use_owner_membership (__main__.MechanismTests.test_query_does_not_use_owner_membership) ... ok
+test_random_updates_exhaustive_rank_mapping (__main__.MechanismTests.test_random_updates_exhaustive_rank_mapping) ... ok
+test_remove_last_and_single (__main__.MechanismTests.test_remove_last_and_single) ... ok
+test_ciphertext_tamper_failstop (__main__.ORAMTests.test_ciphertext_tamper_failstop) ... ok
+test_missing_proof (__main__.ORAMTests.test_missing_proof) ... ok
+test_random_reads_writes_and_root (__main__.ORAMTests.test_random_reads_writes_and_root) ... ok
+test_replay_bucket (__main__.ORAMTests.test_replay_bucket) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.873s
+
+OK

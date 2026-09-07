@@ -1,0 +1,23 @@
+test_changed_ciphertext_rejected (__main__.KernelTests.test_changed_ciphertext_rejected) ... ok
+test_content_update_only_one_tag_and_no_index_change (__main__.KernelTests.test_content_update_only_one_tag_and_no_index_change) ... ok
+test_delete_reinsert_generation_and_keyword_no_retag (__main__.KernelTests.test_delete_reinsert_generation_and_keyword_no_retag) ... ok
+test_empty_is_search_certificate_not_possession (__main__.KernelTests.test_empty_is_search_certificate_not_possession) ... ok
+test_honest_and_exact_result (__main__.KernelTests.test_honest_and_exact_result) ... ok
+test_incorrect_delta_transactional_rejection (__main__.KernelTests.test_incorrect_delta_transactional_rejection) ... ok
+test_metadata_proof_tamper (__main__.KernelTests.test_metadata_proof_tamper) ... ok
+test_missing_block_cannot_respond (__main__.KernelTests.test_missing_block_cannot_respond) ... ok
+test_no_server_claimed_result_or_owner_index_used (__main__.KernelTests.test_no_server_claimed_result_or_owner_index_used) ... ok
+test_noncanonical_aggregate_rejected (__main__.KernelTests.test_noncanonical_aggregate_rejected) ... ok
+test_old_data_and_tag_under_new_version_rejected (__main__.KernelTests.test_old_data_and_tag_under_new_version_rejected) ... ok
+test_omission_of_one_of_two_changed_pages (__main__.KernelTests.test_omission_of_one_of_two_changed_pages) ... ok
+test_omitted_delta_transactional_rejection (__main__.KernelTests.test_omitted_delta_transactional_rejection) ... ok
+test_random_updates_match_full_recomputation (__main__.KernelTests.test_random_updates_match_full_recomputation) ... ok
+test_replay_even_with_fresh_nonce_rejected (__main__.KernelTests.test_replay_even_with_fresh_nonce_rejected) ... ok
+test_rollback_rejected (__main__.KernelTests.test_rollback_rejected) ... ok
+test_substitution_rejected (__main__.KernelTests.test_substitution_rejected) ... ok
+test_zero_sample_audit_rejected (__main__.KernelTests.test_zero_sample_audit_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.665s
+
+OK

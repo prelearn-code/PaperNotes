@@ -1,0 +1,12 @@
+{
+  "kernel.py": "f0c7aa4ed4e77e78fe70d2afde43b2a377b22df1c2a0654573461a7b012183b9",
+  "test_kernel.py": "b513234d0aa52f6f4d9aca6142f3968de4574a3249641a959644ab28490e07d3",
+  "benchmark.py": "4b28b1f7d236cb35cdf12a1ee8ab94690c5eddfa1e46c001269e72fff55799ea",
+  "make_report.py": "fb9c0cbabf6cecf1ebebdc050d8686fdaa0918a9e9a9e6af2cbb2ab87f7ab243",
+  "results\\raw.csv": "cd08917ab03475e02ffddcb2c94bd591adb5a96ac2344f3830fcc7a60c24f467",
+  "results\\setup.csv": "e280d1009d0e3c2e7990feae3d1c0e87090a87d8197cdf86073475a34f041000",
+  "results\\summary.csv": "42d224cc644fc595e5e53eb42e423640c6eeeed7f178eb6ac9ad83f8f5efaff3",
+  "results\\updates.csv": "ee3ea09aad6c35b3afa2d0ef2b718c07707516b623fc8204f247b88f359d5947",
+  "results\\environment.json": "ea7605037c8c3e6cba55906f08b86e14fe4d406901a90fe6cbb67d6377f5c94d",
+  "results\\tests.txt": "d50c70be9e0e3ceaebf7b148e403a074f661ad5a78a8a18c74055a77ecd63a53"
+}

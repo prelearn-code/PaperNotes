@@ -1,0 +1,16 @@
+{
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+  "cryptography": "50.0.1",
+  "repetitions": 5,
+  "warmup": 1,
+  "clock": "perf_counter_ns",
+  "protocol_randomness": "secrets; keys/nonces/challenges differ per run",
+  "workload_seed": 42,
+  "sectors": 18,
+  "plaintext_block_bytes": 512,
+  "blocks_per_file": 4,
+  "measurement": "in-process; no network, disk or hidden lookup; payload accounting only",
+  "baseline": "cached_composition IS the candidate with the same natural optimization"
+}

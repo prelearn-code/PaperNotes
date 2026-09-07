@@ -1,0 +1,13 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+  "cpu_count": 24,
+  "cryptography": "50.0.1",
+  "clock": "perf_counter_ns",
+  "timing_repetitions": 9,
+  "workload_seed": 20260905,
+  "network": "none; in-process",
+  "crypto_randomness": "OS CSPRNG; keys and nonces are not seeded",
+  "byte_count": "canonical application message model; excludes transport headers and requests"
+}

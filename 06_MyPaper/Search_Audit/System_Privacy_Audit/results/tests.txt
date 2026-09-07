@@ -1,0 +1,21 @@
+test_all_row_omission_patterns_keyword_independence (__main__.ProtocolTests.test_all_row_omission_patterns_keyword_independence) ... ok
+test_all_sample_counts (__main__.ProtocolTests.test_all_sample_counts) ... ok
+test_challenge_does_not_use_true_target (__main__.ProtocolTests.test_challenge_does_not_use_true_target) ... ok
+test_cross_row_and_position_substitution (__main__.ProtocolTests.test_cross_row_and_position_substitution) ... ok
+test_deletion_rebuild_changes_authenticated_result (__main__.ProtocolTests.test_deletion_rebuild_changes_authenticated_result) ... ok
+test_epoch_commit_pin_and_expiry (__main__.ProtocolTests.test_epoch_commit_pin_and_expiry) ... ok
+test_exhaustive_merkle_subsets (__main__.ProtocolTests.test_exhaustive_merkle_subsets) ... ok
+test_honest_and_exact_local_results (__main__.ProtocolTests.test_honest_and_exact_local_results) ... ok
+test_invalid_sample_parameters (__main__.ProtocolTests.test_invalid_sample_parameters) ... ok
+test_malformed_response_rejected (__main__.ProtocolTests.test_malformed_response_rejected) ... ok
+test_manifest_tampering (__main__.ProtocolTests.test_manifest_tampering) ... ok
+test_missing_dummy_rejected (__main__.ProtocolTests.test_missing_dummy_rejected) ... ok
+test_old_epoch_cannot_be_relabelled_current (__main__.ProtocolTests.test_old_epoch_cannot_be_relabelled_current) ... ok
+test_proof_tampering_and_extras (__main__.ProtocolTests.test_proof_tampering_and_extras) ... ok
+test_replay_distinct_challenge (__main__.ProtocolTests.test_replay_distinct_challenge) ... ok
+test_sample_tampering (__main__.ProtocolTests.test_sample_tampering) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.013s
+
+OK

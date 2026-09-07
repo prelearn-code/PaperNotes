@@ -1,0 +1,15 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+  "cpu_count": 24,
+  "cryptography": "50.0.1",
+  "repeats": 5,
+  "record_bytes": 128,
+  "bucket_slots": 4,
+  "position_map": "nonrecursive; linear client storage",
+  "transport": "in-process; encrypted payload and Merkle hash counts; no network timing",
+  "randomness": "OS CSPRNG for ORAM/encryption; seeded workload only",
+  "initialization": "trusted bulk placement, not online oblivious rebuild",
+  "update_measurement": "one operation per action/configuration; descriptive only"
+}
