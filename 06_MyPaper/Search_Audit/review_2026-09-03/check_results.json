@@ -1,0 +1,89 @@
+{
+  "scope": "arithmetic/state illustrations only; no pairing implementation or benchmark",
+  "hla_game_counterexample": {
+    "toy_prime": 101,
+    "original_messages": [
+      10,
+      20
+    ],
+    "unqueried_alternate_messages": [
+      13,
+      18
+    ],
+    "coefficients": [
+      2,
+      3
+    ],
+    "original_mu": 80,
+    "alternate_mu": 80,
+    "same_aggregate_exponents": true
+  },
+  "mixed_snapshot": {
+    "chain_states": [
+      [
+        10,
+        "S0",
+        "R0"
+      ],
+      [
+        11,
+        "S1",
+        "R0"
+      ],
+      [
+        12,
+        "S1",
+        "R1"
+      ]
+    ],
+    "assembled_pair": [
+      "S0",
+      "R1"
+    ],
+    "pair_ever_current": false
+  },
+  "migration_without_retention": {
+    "frozen_provider": "A",
+    "new_provider": "B",
+    "old_query_still_has_data_at_responsible_provider": false
+  },
+  "sorted_array_merkle_front_insert": [
+    {
+      "old_leaves": 8,
+      "changed_or_new_internal_nodes": 11
+    },
+    {
+      "old_leaves": 64,
+      "changed_or_new_internal_nodes": 70
+    },
+    {
+      "old_leaves": 1024,
+      "changed_or_new_internal_nodes": 1034
+    }
+  ],
+  "sampling_examples": [
+    {
+      "unavailable_fraction": 0.1,
+      "samples_for_99pct_detection_large_n": 44
+    },
+    {
+      "unavailable_fraction": 0.01,
+      "samples_for_99pct_detection_large_n": 459
+    },
+    {
+      "unavailable_fraction": 0.001,
+      "samples_for_99pct_detection_large_n": 4603
+    }
+  ],
+  "encoding_estimates": {
+    "assumed_payload_bytes_per_scalar": 31,
+    "assumed_serialized_scalar_bytes": 32,
+    "assumed_compressed_G1_tag_bytes": 48,
+    "tag_bytes_per_input_byte": 1.5483870967741935,
+    "data_plus_tags_bytes_per_input_byte_per_replica": 2.5806451612903225,
+    "three_replica_bytes_per_input_byte": 7.741935483870968,
+    "sectors_for_4096_input_bytes": 133,
+    "single_scalar_local_proof_bytes_excluding_framing": 176,
+    "sectorized_local_proof_bytes_excluding_framing": 4400
+  }
+}

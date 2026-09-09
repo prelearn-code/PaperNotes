@@ -1,0 +1,38 @@
+{
+  "scope": "Structural counts only; no timings, consensus, signatures, SSE, HLA, or network. Hash-byte figures exclude identifiers, counts, and encoding overhead.",
+  "small_example": {
+    "four_to_five_leaf0_path_unchanged": true,
+    "four_to_five_old_path_verifies_under_new_peak_list": true,
+    "four_to_five_bagged_commitment_changed": true,
+    "seven_to_eight_old_leaf0_path_fails_under_new_peak_list": true
+  },
+  "rows": [
+    {
+      "n": 4096,
+      "k": 2,
+      "existing_witness_changes_per_append_summed": 24576,
+      "max_path_hashes": 12,
+      "max_path_hash_bytes_sha256": 384,
+      "max_peak_hash_bytes_over_prefixes": 384,
+      "final_peak_hash_bytes": 32
+    },
+    {
+      "n": 4096,
+      "k": 4,
+      "existing_witness_changes_per_append_summed": 18432,
+      "max_path_hashes": 18,
+      "max_path_hash_bytes_sha256": 576,
+      "max_peak_hash_bytes_over_prefixes": 576,
+      "final_peak_hash_bytes": 32
+    },
+    {
+      "n": 4096,
+      "k": 16,
+      "existing_witness_changes_per_append_summed": 11520,
+      "max_path_hashes": 45,
+      "max_path_hash_bytes_sha256": 1440,
+      "max_peak_hash_bytes_over_prefixes": 1440,
+      "final_peak_hash_bytes": 32
+    }
+  ]
+}

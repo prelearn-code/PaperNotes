@@ -11,14 +11,12 @@
             "id": "b13f9c6489f70a04",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "06_MyPaper/Search_Audit/SUGGETS.md",
-                "mode": "source",
-                "source": false
+                "file": "01_Literature/PDF/Audit-and-Integrity/978-3-032-01878-6 [189-221].pdf"
               },
-              "icon": "lucide-file",
-              "title": "SUGGETS"
+              "icon": "lucide-file-text",
+              "title": "978-3-032-01878-6 [189-221]"
             }
           }
         ]
@@ -80,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 219.5
+    "width": 530.2999877929688
   },
   "right": {
     "id": "de3100618bd19354",
@@ -144,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "06_MyPaper/Iot_Audit/核心方案2.md",
+                "file": "01_Literature/PDF/Audit-and-Integrity/978-3-032-01878-6 [189-221].pdf",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "核心方案2 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -178,11 +176,11 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 332.699951171875
+    "width": 365.2999267578125
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -198,55 +196,55 @@
       "periodic-notes:Open this week": false
     }
   },
-  "active": "b13f9c6489f70a04",
+  "active": "6c2db8a8667adde9",
   "lastOpenFiles": [
-    "06_MyPaper/Search_Audit/paper_cn.md",
-    "06_MyPaper/Search_Audit/核心方案.md",
+    "06_MyPaper/Iot_Audit/最小完整研究平台_论文核读与实施决策.md",
+    "06_MyPaper/Iot_Audit/数据集评估/train2.csv",
+    "06_MyPaper/Iot_Audit/数据集评估/train1.csv",
+    "01_Literature/PDF/Audit-and-Integrity/Ateniese 等 - 2007 - Provable Data Possession at Untrusted Stores.pdf",
+    "01_Literature/PDF/Audit-and-Integrity/Efficient_Blockchain-Based_Data_Integrity_Auditing_for_Multi-Copy_in_Decentralized_Storage.pdf",
+    "01_Literature/PDF/Audit-and-Integrity/Blockchain-Based Shared Data Integrity Auditing and Deduplication.pdf",
+    "01_Literature/PDF/Audit-and-Integrity/978-3-032-01878-6 [189-221].pdf",
+    "01_Literature/BackGround/BlockChain-Based Audit.md",
+    "01_Literature/BackGround/README.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/审稿自检与待补工作.md",
+    "06_MyPaper/Iot_Audit/创新性与完整性审查_2026-09-07.md",
+    "tmp/iot_review_sources/ZWSN94QW.txt",
+    "tmp/iot_review_sources/BV59MXAT.txt",
+    "tmp/iot_review_sources/99KVTL89.txt",
+    "tmp/iot_review_sources/VXSM3BGM.txt",
     "06_MyPaper/Search_Audit/创新性评估与修改建议_2026-09-05.md",
+    "06_MyPaper/Search_Audit/paper_cn.md",
+    "06_MyPaper/Search_Audit/完整性审计候选选题与技术路线_2026-09-05.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/论文中文初稿.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/核心创新重构_TDSC_TIFS_v2.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/文献库复核与创新点调整_2026-09-06.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/stage4/核心机制与可行性评估.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/stage4/性能与验证报告.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/stage3/机制实现与强基线比较报告.md",
+    "06_MyPaper/Search_Audit/System_Privacy_Audit/README.md",
     "06_MyPaper/paper_temp/创新点.md",
-    "03_Technical/cryptography/test.md",
-    "03_Technical/cryptography/专业知识点.md",
-    "03_Technical/cryptography/README.md",
-    "03_Technical/MATH/pairing.md",
-    "03_Technical/MATH/README.md",
-    "03_Technical/MATH/连分数.md",
-    "03_Technical/MATH/拉格朗日插值法.md",
+    "06_MyPaper/Search_Audit/review_2026-09-03/MMR论文借鉴与融合方案.md",
+    "tmp/pdfs/mmr_review/p30.png",
+    "tmp/pdfs/mmr_review/p29.png",
+    "tmp/pdfs/mmr_review/p28.png",
+    "tmp/pdfs/mmr_review/p9.png",
+    "06_MyPaper/Search_Audit/review_2026-09-03/论文重合性_可实现性与创新性审查.md",
+    "tmp/pdfs/search_audit_review/zhang2023_p4.png",
+    "tmp/pdfs/search_audit_review/song2025_p5.png",
+    "01_Literature/PDF/Audit-and-Integrity/未命名.md",
+    "01_Literature/Index/Paper-Index.md",
+    "01_Literature/Index/README.md",
     "03_Technical/cryptography/对称加密算法/对称加密.md",
-    "03_Technical/cryptography/非对称加密算法/RSA.md",
-    "03_Technical/cryptography/非对称加密算法",
-    "03_Technical/cryptography/对称加密算法",
-    "03_Technical/cryptography/SM系列/SM2算法.md",
-    "03_Technical/cryptography/专业知识点综合复习大纲_完善版.md",
-    "03_Technical/未命名",
-    "03_Technical/cryptography/SM系列",
-    "未命名.base",
-    "06_MyPaper/Iot_Audit/paper_cn.md",
-    "06_MyPaper/Iot_Audit/核心方案2.md",
-    "06_MyPaper/Search_Audit/SUGGETS.md",
-    "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/方案相关图片/架构图.canvas",
     "03_Technical/AI Agent/Codex-deepseek-maker.md",
-    "04_else/PDF_md/Auth-and-Integrity.pdf",
-    "06_MyPaper/paper_temp",
-    "06_MyPaper/dup_audit/README.md",
-    "SUMMARY.md",
-    "README.md",
-    "assets/README.md",
-    "06_MyPaper/Iot_Audit/README.md",
-    "06_MyPaper/dup_audit",
-    "06_MyPaper/README.md",
-    "05_BackGround/wan-zheng-xing-shen-ji/README.md",
-    "05_BackGround/wan-zheng-xing-shen-ji",
-    "05_BackGround/ke-sou-suo-jia-mi",
+    "03_Technical/cryptography/基础知识综合复习大纲.md",
+    "03_Technical/cryptography/专业知识点综合复习大纲.md",
+    "03_Technical/cryptography/test.md",
+    "02_Projects/Enabling Reliable Keyword Search in Encrypted  Decentralized Storage with Fairness/方案相关图片/架构图.canvas",
     "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_main_performance.svg",
     "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_verify_time_comparison.svg",
     "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_multiproof_effect.svg",
     "06_MyPaper/Iot_Audit/pic/svg/fig_exp2_combo.svg",
-    "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_audit_mode_tradeoff.svg",
-    "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_proof_size_comparison.svg",
-    "06_MyPaper/Iot_Audit/pic/svg/fig_exp3_total_storage.svg",
-    "06_MyPaper/Iot_Audit/pic/svg/fig_exp3_ours_breakdown.svg",
-    "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_onchain_cost.svg",
-    "06_MyPaper/Iot_Audit/pic/svg/fig_exp4_compact_proof_size_comparison.svg",
     "00_Dashboard/Research-map.canvas",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/非对称加密.canvas",
     "02_Projects/Enabling Verifiable Search and Integrity Auditing  in Encrypted Decentralized Storage Using  One Proof/PPT/search_process.canvas",
