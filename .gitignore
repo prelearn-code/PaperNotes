@@ -1,3 +1,10 @@
 # 超过 GitHub 100MB 单文件限制，不入库（本地保留）
 06_MyPaper/Iot_Audit/数据集评估/train1.csv
 06_MyPaper/Iot_Audit/数据集评估/train2.csv
+
+# 文献中间材料与复现工作区：本地保留，不入库
+tmp/
+
+# Python 缓存
+__pycache__/
+*.pyc
