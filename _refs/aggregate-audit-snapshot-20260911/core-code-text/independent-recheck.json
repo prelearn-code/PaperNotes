@@ -1,0 +1,46 @@
+{
+  "agreement": {
+    "song_audit": true,
+    "song_prover_fields": true,
+    "song_search": true,
+    "zhang": true,
+    "zhang_prover_fields": true
+  },
+  "method": "equations re-derived from the paper text, protocol modules not imported",
+  "song": {
+    "case": "song2025",
+    "independent_audit_accepted": 1000,
+    "independent_audit_total": 1000,
+    "independent_search_accepted": 1000,
+    "independent_search_total": 1000,
+    "instances_checked": 10,
+    "prover_field_mismatches": 0,
+    "recorded_projection_search_accepted": 1000,
+    "recorded_projection_unsearched_audit_accepted": 1000,
+    "run_dir": "results/song2025/l2-strict-20260911"
+  },
+  "zhang": {
+    "case": "zhang2025",
+    "independent_counts": {
+      "cached_per_block": 1000,
+      "cached_per_sector": 1000,
+      "cached_sector_bound": 0,
+      "single": 1000
+    },
+    "independent_totals": {
+      "cached_per_block": 1000,
+      "cached_per_sector": 1000,
+      "cached_sector_bound": 1000,
+      "single": 1000
+    },
+    "instances_checked": 10,
+    "prover_field_mismatches": 0,
+    "recorded_counts": {
+      "cached_per_block": 1000,
+      "cached_per_sector": 1000,
+      "cached_sector_bound": 0,
+      "single": 1000
+    },
+    "run_dir": "results/zhang2025/l2-final-20260911"
+  }
+}

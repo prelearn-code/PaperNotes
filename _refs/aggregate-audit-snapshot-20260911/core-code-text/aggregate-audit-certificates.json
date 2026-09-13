@@ -1,0 +1,300 @@
+{
+  "certificates": [
+    {
+      "case": "song2025",
+      "does_not_show": [
+        "that the client cannot detect the loss by downloading the file",
+        "that the whole retained state is information-theoretically unable to recover the file",
+        "author PBC parameter or prototype performance reproduction"
+      ],
+      "extractability": {
+        "basis": "evidence/song2025/extractability-argument.md",
+        "unproven_parts": [
+          "no preimage attempt against the ID_F constraint",
+          "no upper bound on the candidate set under the hash constraint"
+        ],
+        "verdict": "not-recovered from block sums alone; hash ID_F carries additional information"
+      },
+      "generated_at": "2026-09-11T12:40:46+00:00",
+      "mechanism": "fixed projection (block sector sum)",
+      "model_status": "in-model",
+      "model_verdict": "Definition 5 covers a malicious storage node, so the projection strategy is an in-model failure instance at the reduced-parameter L2 level.",
+      "original_claim": {
+        "location": "Definition 5, PDF page 4 (parsed text line 119)",
+        "summary": "no adversary can pass Verify.Audit except by computing the proof using the correct file"
+      },
+      "paper": "Song 2025, IEEE TC, DOI 10.1109/TC.2025.3569182",
+      "protocol_map": "evidence/song2025/protocol-map.md",
+      "recorded_state_fields_checked": 0,
+      "reproduction_level": "L2-real-composite-order-pairing-reimplementation-reduced-parameters",
+      "rerun_command": "D:\\evm\\python3.12.8\\python.exe scripts/run_song_l2_experiments.py --instances 10 --challenges 100 --run-id l2-strict-20260911",
+      "role": "attack-instance",
+      "run_dir": "results/song2025/l2-strict-20260911",
+      "schema": "aggregate-audit-analysis-certificate-v1",
+      "storage_note": "measured at realistic field sizes, the cached state replaces n*s sector values with n block sums while both sides keep the n tags: content 8x at s=8 (100x at s=100), total 3.33x (34x at s=100). The earlier 'attacker state is larger' reading was a small-field JSON framing artifact",
+      "sufficiency": {
+        "accepted": 1000,
+        "counter_names": {
+          "accepted": "projection_search_accepted",
+          "total": "total_periods"
+        },
+        "machine_checked": true,
+        "total": 1000
+      }
+    },
+    {
+      "case": "otgpdp2025",
+      "does_not_show": [
+        "a failure of an unambiguously specified published configuration (the initial value is unstated)",
+        "that tag state saves storage (it is far larger than the raw blocks)",
+        "computational non-extractability for high-entropy domains"
+      ],
+      "extractability": {
+        "basis": "results/otgpdp2025/strict-20260911/analysis.md",
+        "unproven_parts": [
+          "no argument for high-entropy cost under a discrete-log assumption",
+          "update semantics only repaired for MOD/append/tail-delete and explicit renumbering"
+        ],
+        "verdict": "low-entropy blocks recovered by exhaustive search; high-entropy case undecided"
+      },
+      "generated_at": "2026-09-11T12:40:46+00:00",
+      "mechanism": "public tags suffice for the response",
+      "model_status": "explicit-variant",
+      "model_verdict": "the paper fixes the CBF threshold (greater than 1) but never the counter initial value: with the conventional initial 0 a fresh tag has count 1 and honest MetaVer always fails, while with initial 1 the literal flow is executable and admits the tag-only strategy. The failure is therefore a specification gap plus a verification gap, and the fully repaired variant is the configuration under which the strongest attack was measured",
+      "original_claim": {
+        "location": "Verify / MetaVer, PDF pages 7-8 (venue pages 2725-2726)",
+        "summary": "the verification equation binds the response to the stored data"
+      },
+      "paper": "OTGPDP 2025, CMC, DOI 10.32604/cmc.2025.059949",
+      "protocol_map": "evidence/otgpdp2025/protocol-map.md",
+      "recorded_state_fields_checked": null,
+      "reproduction_level": "L2-reimplementation-with-documented-signature-choice",
+      "rerun_command": "D:\\evm\\python3.12.8\\python.exe scripts/run_experiments.py --instances 10 --challenges 100 --run-id strict-20260911",
+      "role": "attack-instance",
+      "run_dir": "results/otgpdp2025/strict-20260911",
+      "schema": "aggregate-audit-analysis-certificate-v1",
+      "storage_note": "tag state is far larger than the raw blocks",
+      "sufficiency": {
+        "accepted": 1000,
+        "counter_names": {
+          "accepted": "attack_accepted",
+          "total": "total_challenges"
+        },
+        "machine_checked": true,
+        "total": 1000
+      }
+    },
+    {
+      "case": "lihang2026",
+      "does_not_show": [
+        "an attack inside the published threat model",
+        "information-theoretic non-extractability for an arbitrary lattice hash",
+        "JPBC prototype or on-chain performance reproduction"
+      ],
+      "extractability": {
+        "basis": "results/lihang2026/l2-final-20260911/analysis.md",
+        "unproven_parts": [
+          "no preimage-resistance reduction for the concrete hash construction",
+          "the q bit length is not specified by the paper, so the compression factor is parameter dependent"
+        ],
+        "verdict": "digest state is smaller than the ciphertext; recovery requires preimages of the block hash"
+      },
+      "generated_at": "2026-09-11T12:40:46+00:00",
+      "mechanism": "cached per-block digests",
+      "model_status": "model-mismatch",
+      "model_verdict": "the paper assumes the cloud server honestly executes challenge-response during the audit, so the cached-digest strategy is a security-model mismatch and must not be counted as an in-model attack",
+      "original_claim": {
+        "location": "Section III.B entity definition, PDF page 2 (parsed text line 91)",
+        "summary": "the cloud server will honestly execute the challenge-response protocol during the audit"
+      },
+      "paper": "Li Hang 2026, ICAIDE (no DOI in the local PDF)",
+      "protocol_map": "evidence/lihang2026/protocol-map.md",
+      "recorded_state_fields_checked": 0,
+      "reproduction_level": "L2-real-prime-order-type1-pairing-reimplementation-reduced-parameters",
+      "rerun_command": "D:\\evm\\python3.12.8\\python.exe scripts/run_lihang2026_experiments.py --instances 10 --challenges 100 --blocks 32 --block-bytes 4096 --challenge-size 8 --single-digest-trials 10 --run-id l2-final-20260911",
+      "role": "attack-instance",
+      "run_dir": "results/lihang2026/l2-final-20260911",
+      "schema": "aggregate-audit-analysis-certificate-v1",
+      "storage_note": "digest state is genuinely smaller than the ciphertext",
+      "sufficiency": {
+        "accepted": 1000,
+        "counter_names": {
+          "accepted": "cached_literal_accepted",
+          "total": "distinct_challenge_index_sets_summed_over_instances"
+        },
+        "machine_checked": true,
+        "total": 1000
+      }
+    },
+    {
+      "case": "zhang2025",
+      "does_not_show": [
+        "that the client cannot detect the loss by downloading and re-hashing the file",
+        "any attack on the blockchain, IBBE or deduplication components, which are not modelled",
+        "author prototype, gas cost or storage-network reproduction"
+      ],
+      "extractability": {
+        "basis": "results/zhang2025/l2-final-20260911/analysis.md",
+        "unproven_parts": [
+          "no argument that the stored block itself cannot be extracted from the cached hash and sum",
+          "the state-size saving is established at paper scale, not by the reduced-parameter run"
+        ],
+        "verdict": "deleting the ciphertext is undetected; the minimal cheating state is one block's hash, sector sum and tag, i.e. O(1)"
+      },
+      "generated_at": "2026-09-11T12:40:46+00:00",
+      "mechanism": "fixed block-sum projection, plus a verification equation that does not bind the challenge",
+      "model_status": "in-model",
+      "model_verdict": "the threat model explicitly includes a CSP that forges audit proofs after losing the data (PDF page 4) and the paper hands that CSP the audit key, so both the cached-state strategy and the single-block strategy are in-model failure instances at the reduced-parameter L2 level",
+      "original_claim": {
+        "location": "threat model PDF page 4; Eq. (7), Eq. (8) and Algorithm 1 PDF page 7; security argument Eq. (9) PDF page 8",
+        "summary": "a CSP that lost the data cannot generate an audit proof that deceives the smart contract"
+      },
+      "paper": "Zhang et al. 2025, IEEE TC, DOI 10.1109/TC.2025.3540670",
+      "protocol_map": "evidence/zhang2025/protocol-map.md",
+      "recorded_state_fields_checked": null,
+      "reproduction_level": "L2-real-prime-order-type1-pairing-reimplementation-reduced-parameters",
+      "rerun_command": "D:\\evm\\python3.12.8\\python.exe scripts/run_zhang2025_experiments.py --instances 10 --challenges 100 --challenge-size 6 --run-id l2-final-20260911",
+      "role": "attack-instance",
+      "run_dir": "results/zhang2025/l2-final-20260911",
+      "schema": "aggregate-audit-analysis-certificate-v1",
+      "storage_note": "measured at realistic field sizes the per-block state drops from s field elements to a hash plus a sum; counting the tags both sides keep, the total is 2.0x (uncompressed hash) or 3.30x (compressed) at s=8, i.e. 20.4x / 33.3x at s=100; the content-only compressed figure is 50x. The single-block strategy is constant-size (325 B measured)",
+      "sufficiency": {
+        "accepted": 1000,
+        "counter_names": {
+          "accepted": "single_block_per_block_literal_accepted",
+          "total": "total_challenges"
+        },
+        "machine_checked": true,
+        "total": 1000
+      }
+    },
+    {
+      "case": "yang2026",
+      "does_not_show": [
+        "any attack on this scheme; no failure instance was found",
+        "CP-ABE, deduplication, proof-of-ownership or on-chain behaviour, which are not modelled",
+        "that the scheme is safe in any deployment, only that this rule does not fire"
+      ],
+      "extractability": {
+        "basis": "results/yang2026/neg-final-20260911/analysis.md",
+        "unproven_parts": [
+          "no claim about the scheme beyond the rule check"
+        ],
+        "verdict": "not applicable: the cached-projection strategy is rejected, so no state reduction was achieved"
+      },
+      "generated_at": "2026-09-11T12:40:46+00:00",
+      "mechanism": "single group base with secret per-sector weights; per-sector aggregates in the response",
+      "model_status": "in-model",
+      "model_verdict": "the paper explicitly allows a malicious CSP that falsifies proofs (adversary A3), and the analysis rule does not flag the scheme: the projection weights stay secret, so the required aggregate combination is not server-computable",
+      "original_claim": {
+        "location": "threat model PDF page 5 (adversary A3); TagGen and Eq. (8) PDF page 7; Theorem 4 PDF page 9",
+        "summary": "a malicious CSP that fails to preserve the data cannot forge a proof that passes verification"
+      },
+      "paper": "Yang et al. 2026, IEEE TNSM, DOI 10.1109/TNSM.2025.3650222",
+      "protocol_map": "evidence/yang2026/protocol-map.md",
+      "recorded_state_fields_checked": null,
+      "reproduction_level": "key-audit-path reimplementation, reduced parameters (negative control)",
+      "rerun_command": "D:\\evm\\python3.12.8\\python.exe scripts/run_yang2026_experiments.py --instances 10 --challenges 100 --challenge-size 4 --run-id neg-final-20260911",
+      "role": "negative-control",
+      "run_dir": "results/yang2026/neg-final-20260911",
+      "schema": "aggregate-audit-analysis-certificate-v1",
+      "storage_note": "not applicable (negative control): the cheating prover never passes, so its state is irrelevant",
+      "sufficiency": {
+        "accepted": 0,
+        "counter_names": {
+          "accepted": "published_cached_projection_accepted",
+          "total": "total_challenges"
+        },
+        "machine_checked": true,
+        "total": 1000
+      }
+    },
+    {
+      "case": "miao2025",
+      "does_not_show": [
+        "any attack on this scheme; no failure instance was found",
+        "the searchable index structure, arbitration or on-chain behaviour, which are not modelled",
+        "that the scheme is safe in any deployment, only that this rule does not fire"
+      ],
+      "extractability": {
+        "basis": "results/miao2025/neg-final-20260911/analysis.md",
+        "unproven_parts": [
+          "no claim about the scheme beyond the rule check"
+        ],
+        "verdict": "not applicable: the cached-projection strategy is rejected"
+      },
+      "generated_at": "2026-09-11T12:40:46+00:00",
+      "mechanism": "single group base with secret per-sector weights; per-sector aggregates in the response",
+      "model_status": "in-model",
+      "model_verdict": "adversary A3 attempts to create a fraudulent integrity proof, and the analysis rule does not flag the scheme: as in Yang 2026 the sector weights stay secret, so the weighted aggregate combination is not server-computable",
+      "original_claim": {
+        "location": "adversary A3 in the security model; AuthGen and verification Eq. (1) in the scheme section",
+        "summary": "the cloud cannot forge a proof without holding the data"
+      },
+      "paper": "Miao et al. 2025, IEEE TDSC, DOI 10.1109/TDSC.2025.3579124",
+      "protocol_map": "results/miao2025/neg-final-20260911/analysis.md",
+      "recorded_state_fields_checked": null,
+      "reproduction_level": "key-audit-path reimplementation, reduced parameters (negative control)",
+      "rerun_command": "D:\\evm\\python3.12.8\\python.exe scripts/run_miao2025_experiments.py --instances 10 --challenges 100 --challenge-size 4 --run-id neg-final-20260911",
+      "role": "negative-control",
+      "run_dir": "results/miao2025/neg-final-20260911",
+      "schema": "aggregate-audit-analysis-certificate-v1",
+      "storage_note": "not applicable (negative control)",
+      "sufficiency": {
+        "accepted": 0,
+        "counter_names": {
+          "accepted": "published_cached_projection_accepted",
+          "total": "total_challenges"
+        },
+        "machine_checked": true,
+        "total": 1000
+      }
+    },
+    {
+      "case": "baseline",
+      "does_not_show": [
+        "any property of a published scheme",
+        "an efficiency comparison (full-coverage challenges, no erasure coding)"
+      ],
+      "extractability": {
+        "basis": "results/baseline/baseline-final-20260911/analysis.md",
+        "unproven_parts": [
+          "no erasure-coded subset sampling, so no extractability theorem for sparse challenges"
+        ],
+        "verdict": "full per-sector extraction succeeds against the baseline; the block-sum-only prover is rejected"
+      },
+      "generated_at": "2026-09-11T12:40:46+00:00",
+      "mechanism": "authenticated extractable baseline (per-sector independent generators)",
+      "model_status": "in-model",
+      "model_verdict": "positive control: shows the analysis rule separates an extractable construction from a collapsed one, and is not an attack on any paper",
+      "original_claim": {
+        "location": "workspace test matrix, required baseline row",
+        "summary": "the analysis framework must distinguish a reliable construction from a candidate scheme"
+      },
+      "paper": "positive control (this workspace), no external claim",
+      "protocol_map": "results/baseline/baseline-final-20260911/analysis.md",
+      "recorded_state_fields_checked": null,
+      "reproduction_level": "positive-control-authenticated-extractable-baseline",
+      "rerun_command": "D:\\evm\\python3.12.8\\python.exe scripts/run_baseline_experiments.py --instances 10 --blocks 6 --sectors 3 --challenges 8 --run-id baseline-final-20260911",
+      "role": "positive-control",
+      "run_dir": "results/baseline/baseline-final-20260911",
+      "schema": "aggregate-audit-analysis-certificate-v1",
+      "storage_note": "cached state is smaller but rejected: small state alone does not imply sufficiency",
+      "sufficiency": {
+        "accepted": 80,
+        "counter_names": {
+          "accepted": "independent_honest_accepted",
+          "total": "independent_honest_accepted"
+        },
+        "machine_checked": true,
+        "total": 80
+      }
+    }
+  ],
+  "generated_at": "2026-09-11T12:40:46+00:00",
+  "schema": "aggregate-audit-analysis-certificate-v1",
+  "validation": {
+    "ok": true,
+    "problems": {}
+  }
+}
