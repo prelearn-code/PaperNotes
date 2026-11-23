@@ -1,0 +1,169 @@
+{
+  "input_count": 32,
+  "protocol": {
+    "a_candidates": 12,
+    "alphas": [
+      0.001,
+      0.005,
+      0.01,
+      0.05
+    ],
+    "beta": 0.1,
+    "clean": 4,
+    "days": [
+      "train1_2020-07-11",
+      "train2_2020-08-01"
+    ],
+    "geometry_bank": [
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        8,
+        2
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        12,
+        1
+      ],
+      [
+        12,
+        2
+      ],
+      [
+        12,
+        3
+      ],
+      [
+        16,
+        1
+      ],
+      [
+        16,
+        2
+      ],
+      [
+        16,
+        3
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        24,
+        2
+      ],
+      [
+        24,
+        3
+      ],
+      [
+        32,
+        1
+      ],
+      [
+        32,
+        2
+      ],
+      [
+        32,
+        3
+      ],
+      [
+        40,
+        4
+      ],
+      [
+        48,
+        4
+      ],
+      [
+        64,
+        6
+      ],
+      [
+        96,
+        9
+      ],
+      [
+        128,
+        12
+      ],
+      [
+        192,
+        18
+      ],
+      [
+        224,
+        22
+      ]
+    ],
+    "guard_alpha_max": ".01",
+    "guard_top": 2,
+    "layer_geometries": [
+      [
+        192,
+        16,
+        6
+      ],
+      [
+        192,
+        24,
+        8
+      ],
+      [
+        128,
+        16,
+        4
+      ],
+      [
+        128,
+        32,
+        8
+      ]
+    ],
+    "limits": [
+      32768,
+      65536,
+      131072,
+      262144,
+      524288,
+      1048576,
+      2097152,
+      null
+    ],
+    "modes": [
+      "hot",
+      "cold"
+    ],
+    "planning_cases": 128,
+    "role": "previously seen development; new independent fault seeds, not confirmation",
+    "seed": 63001,
+    "test_counts": [
+      24,
+      24,
+      24,
+      64
+    ]
+  },
+  "root": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan63/pilot_20261022_v1",
+  "source_count": 192
+}

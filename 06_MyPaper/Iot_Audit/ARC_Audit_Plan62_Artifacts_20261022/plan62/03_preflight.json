@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "tests": 30,
+  "seconds": 15.05,
+  "scope": [
+    "short-page integer GF exhaustive masks",
+    "actual short-page cap/CDF boundaries both metadata modes",
+    "seven real wider codecs incl k224 r22",
+    "invalid original/parity/metadata/AEAD byte accounting",
+    "full canonical record boundary and no partial result",
+    "S1/S2 fixed-layout, budget and risk checks"
+  ],
+  "note": "unit/qualification checks; not effect evidence"
+}

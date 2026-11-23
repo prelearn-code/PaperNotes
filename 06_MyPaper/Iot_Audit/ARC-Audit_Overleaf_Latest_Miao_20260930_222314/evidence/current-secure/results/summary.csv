@@ -1,0 +1,359 @@
+clean,hi,interval,layouts,lo,method,metric,n,observations,segment,source_profile,stage,successes,total_cases,value,x
+,15165092.0,"observed min-max; descriptive, not confidence interval",,15165092.0,RAW,cloud_bytes,2,"[15165092.0, 15165092.0]",train2,reduced,C1,,,15165092.0,
+,1628.487821532879,"observed min-max; descriptive, not confidence interval",,1622.5298563891556,RAW,build_seconds,2,"[1622.5298563891556, 1628.487821532879]",train2,reduced,C1,,,1625.5088389610173,
+,232.0,"observed min-max; descriptive, not confidence interval",,232.0,RAW,local_disk_bytes,2,"[232.0, 232.0]",train2,reduced,C1,,,232.0,
+,13727986.0,"observed min-max; descriptive, not confidence interval",,13727986.0,RAW,payload_bytes,2,"[13727986.0, 13727986.0]",train2,reduced,C1,,,13727986.0,
+,162000.0,"observed min-max; descriptive, not confidence interval",,162000.0,RAW,tag_bytes,2,"[162000.0, 162000.0]",train2,reduced,C1,,,162000.0,
+,94500.0,"observed min-max; descriptive, not confidence interval",,94500.0,RAW,aead_bytes,2,"[94500.0, 94500.0]",train2,reduced,C1,,,94500.0,
+,15165102.0,"observed min-max; descriptive, not confidence interval",,15165102.0,RAW,cloud_bytes,2,"[15165102.0, 15165102.0]",train1,reduced,C1,,,15165102.0,
+,1622.214022417087,"observed min-max; descriptive, not confidence interval",,1618.8521600491367,RAW,build_seconds,2,"[1622.214022417087, 1618.8521600491367]",train1,reduced,C1,,,1620.533091233112,
+,232.0,"observed min-max; descriptive, not confidence interval",,232.0,RAW,local_disk_bytes,2,"[232.0, 232.0]",train1,reduced,C1,,,232.0,
+,13727996.0,"observed min-max; descriptive, not confidence interval",,13727996.0,RAW,payload_bytes,2,"[13727996.0, 13727996.0]",train1,reduced,C1,,,13727996.0,
+,162000.0,"observed min-max; descriptive, not confidence interval",,162000.0,RAW,tag_bytes,2,"[162000.0, 162000.0]",train1,reduced,C1,,,162000.0,
+,94500.0,"observed min-max; descriptive, not confidence interval",,94500.0,RAW,aead_bytes,2,"[94500.0, 94500.0]",train1,reduced,C1,,,94500.0,
+,2278001.0,"observed min-max; descriptive, not confidence interval",,2278001.0,Block-CZ-256,cloud_bytes,2,"[2278001.0, 2278001.0]",train1,reduced,C1,,,2278001.0,
+,241.82358823809773,"observed min-max; descriptive, not confidence interval",,241.59766995487735,Block-CZ-256,build_seconds,2,"[241.59766995487735, 241.82358823809773]",train1,reduced,C1,,,241.71062909648754,
+,240.0,"observed min-max; descriptive, not confidence interval",,240.0,Block-CZ-256,local_disk_bytes,2,"[240.0, 240.0]",train1,reduced,C1,,,240.0,
+,2047417.0,"observed min-max; descriptive, not confidence interval",,2047417.0,Block-CZ-256,payload_bytes,2,"[2047417.0, 2047417.0]",train1,reduced,C1,,,2047417.0,
+,24192.0,"observed min-max; descriptive, not confidence interval",,24192.0,Block-CZ-256,tag_bytes,2,"[24192.0, 24192.0]",train1,reduced,C1,,,24192.0,
+,14112.0,"observed min-max; descriptive, not confidence interval",,14112.0,Block-CZ-256,aead_bytes,2,"[14112.0, 14112.0]",train1,reduced,C1,,,14112.0,
+,1770118.0,"observed min-max; descriptive, not confidence interval",,1770118.0,SDA-GGD,cloud_bytes,2,"[1770118.0, 1770118.0]",train2,reduced,C1,,,1770118.0,
+,236.2960930969566,"observed min-max; descriptive, not confidence interval",,234.94522492098622,SDA-GGD,build_seconds,2,"[236.2960930969566, 234.94522492098622]",train2,reduced,C1,,,235.62065900897142,
+,215702.0,"observed min-max; descriptive, not confidence interval",,215702.0,SDA-GGD,local_disk_bytes,2,"[215702.0, 215702.0]",train2,reduced,C1,,,215702.0,
+,1581300.0,"observed min-max; descriptive, not confidence interval",,1581300.0,SDA-GGD,payload_bytes,2,"[1581300.0, 1581300.0]",train2,reduced,C1,,,1581300.0,
+,18672.0,"observed min-max; descriptive, not confidence interval",,18672.0,SDA-GGD,tag_bytes,2,"[18672.0, 18672.0]",train2,reduced,C1,,,18672.0,
+,10892.0,"observed min-max; descriptive, not confidence interval",,10892.0,SDA-GGD,aead_bytes,2,"[10892.0, 10892.0]",train2,reduced,C1,,,10892.0,
+,2227359.0,"observed min-max; descriptive, not confidence interval",,2227359.0,Block-CZ-256,cloud_bytes,2,"[2227359.0, 2227359.0]",train2,reduced,C1,,,2227359.0,
+,237.44489141507074,"observed min-max; descriptive, not confidence interval",,236.02038665115833,Block-CZ-256,build_seconds,2,"[236.02038665115833, 237.44489141507074]",train2,reduced,C1,,,236.73263903311454,
+,240.0,"observed min-max; descriptive, not confidence interval",,240.0,Block-CZ-256,local_disk_bytes,2,"[240.0, 240.0]",train2,reduced,C1,,,240.0,
+,2001509.0,"observed min-max; descriptive, not confidence interval",,2001509.0,Block-CZ-256,payload_bytes,2,"[2001509.0, 2001509.0]",train2,reduced,C1,,,2001509.0,
+,23664.0,"observed min-max; descriptive, not confidence interval",,23664.0,Block-CZ-256,tag_bytes,2,"[23664.0, 23664.0]",train2,reduced,C1,,,23664.0,
+,13804.0,"observed min-max; descriptive, not confidence interval",,13804.0,Block-CZ-256,aead_bytes,2,"[13804.0, 13804.0]",train2,reduced,C1,,,13804.0,
+,1938839.0,"observed min-max; descriptive, not confidence interval",,1938839.0,Per-field-GD,cloud_bytes,2,"[1938839.0, 1938839.0]",train2,reduced,C1,,,1938839.0,
+,206.21982173528522,"observed min-max; descriptive, not confidence interval",,206.1067829732783,Per-field-GD,build_seconds,2,"[206.21982173528522, 206.1067829732783]",train2,reduced,C1,,,206.16330235428177,
+,209287.0,"observed min-max; descriptive, not confidence interval",,209287.0,Per-field-GD,local_disk_bytes,2,"[209287.0, 209287.0]",train2,reduced,C1,,,209287.0,
+,1730715.0,"observed min-max; descriptive, not confidence interval",,1730715.0,Per-field-GD,payload_bytes,2,"[1730715.0, 1730715.0]",train2,reduced,C1,,,1730715.0,
+,20448.0,"observed min-max; descriptive, not confidence interval",,20448.0,Per-field-GD,tag_bytes,2,"[20448.0, 20448.0]",train2,reduced,C1,,,20448.0,
+,11928.0,"observed min-max; descriptive, not confidence interval",,11928.0,Per-field-GD,aead_bytes,2,"[11928.0, 11928.0]",train2,reduced,C1,,,11928.0,
+,1903138.0,"observed min-max; descriptive, not confidence interval",,1903138.0,SDA-GGD,cloud_bytes,2,"[1903138.0, 1903138.0]",train1,reduced,C1,,,1903138.0,
+,275.1827087418642,"observed min-max; descriptive, not confidence interval",,273.5288029911462,SDA-GGD,build_seconds,2,"[275.1827087418642, 273.5288029911462]",train1,reduced,C1,,,274.3557558665052,
+,335884.0,"observed min-max; descriptive, not confidence interval",,335884.0,SDA-GGD,local_disk_bytes,2,"[335884.0, 335884.0]",train1,reduced,C1,,,335884.0,
+,1700595.0,"observed min-max; descriptive, not confidence interval",,1700595.0,SDA-GGD,payload_bytes,2,"[1700595.0, 1700595.0]",train1,reduced,C1,,,1700595.0,
+,20112.0,"observed min-max; descriptive, not confidence interval",,20112.0,SDA-GGD,tag_bytes,2,"[20112.0, 20112.0]",train1,reduced,C1,,,20112.0,
+,11732.0,"observed min-max; descriptive, not confidence interval",,11732.0,SDA-GGD,aead_bytes,2,"[11732.0, 11732.0]",train1,reduced,C1,,,11732.0,
+,2198812.0,"observed min-max; descriptive, not confidence interval",,2198812.0,Per-field-GD,cloud_bytes,2,"[2198812.0, 2198812.0]",train1,reduced,C1,,,2198812.0,
+,232.24046064610593,"observed min-max; descriptive, not confidence interval",,230.80090970825404,Per-field-GD,build_seconds,2,"[230.80090970825404, 232.24046064610593]",train1,reduced,C1,,,231.52068517717998,
+,245064.0,"observed min-max; descriptive, not confidence interval",,245064.0,Per-field-GD,local_disk_bytes,2,"[245064.0, 245064.0]",train1,reduced,C1,,,245064.0,
+,1964584.0,"observed min-max; descriptive, not confidence interval",,1964584.0,Per-field-GD,payload_bytes,2,"[1964584.0, 1964584.0]",train1,reduced,C1,,,1964584.0,
+,23184.0,"observed min-max; descriptive, not confidence interval",,23184.0,Per-field-GD,tag_bytes,2,"[23184.0, 23184.0]",train1,reduced,C1,,,23184.0,
+,13524.0,"observed min-max; descriptive, not confidence interval",,13524.0,Per-field-GD,aead_bytes,2,"[13524.0, 13524.0]",train1,reduced,C1,,,13524.0,
+,6289,"observed min-max; descriptive, not confidence interval",,6237,public/aggregate,wire_bytes,3,"[6237, 6289, 6237]",train1,full,C2,,,6237.0,1
+,3.3906171100679785,"observed min-max; descriptive, not confidence interval",,3.07640862907283,public/aggregate,request_seconds,3,"[3.07640862907283, 3.3906171100679785, 3.105909622972831]",train1,full,C2,,,3.105909622972831,1
+,1445888,"observed min-max; descriptive, not confidence interval",,1392640,public/aggregate,server_read_bytes,3,"[1392640, 1445888, 1392640]",train1,full,C2,,,1392640.0,1
+,173707,"observed min-max; descriptive, not confidence interval",,169600,owner-minref/aggregate,wire_bytes,3,"[169600, 173707, 169601]",train1,full,C2,,,169601.0,1
+,1.1708143160212785,"observed min-max; descriptive, not confidence interval",,1.157155823893845,owner-minref/aggregate,request_seconds,3,"[1.1638976112008095, 1.1708143160212785, 1.157155823893845]",train1,full,C2,,,1.1638976112008095,1
+,323584,"observed min-max; descriptive, not confidence interval",,323584,owner-minref/aggregate,server_read_bytes,3,"[323584, 323584, 323584]",train1,full,C2,,,323584.0,1
+,1452110,"observed min-max; descriptive, not confidence interval",,1398654,public/download,wire_bytes,3,"[1398654, 1452110, 1398654]",train1,full,C2,,,1398654.0,1
+,0.003920888993889093,"observed min-max; descriptive, not confidence interval",,0.0035471240989863873,public/download,request_seconds,3,"[0.0035471240989863873, 0.003907748032361269, 0.003920888993889093]",train1,full,C2,,,0.003907748032361269,1
+,1445888,"observed min-max; descriptive, not confidence interval",,1392640,public/download,server_read_bytes,3,"[1392640, 1445888, 1392640]",train1,full,C2,,,1392640.0,1
+,11204039,"observed min-max; descriptive, not confidence interval",,10846081,owner-minref/aggregate,wire_bytes,3,"[11010612, 10846081, 11204039]",train2,full,C2,,,11010612.0,256
+,30.56194781488739,"observed min-max; descriptive, not confidence interval",,29.459690468851477,owner-minref/aggregate,request_seconds,3,"[30.148310060147196, 29.459690468851477, 30.56194781488739]",train2,full,C2,,,30.148310060147196,256
+,15495168,"observed min-max; descriptive, not confidence interval",,14949331,owner-minref/aggregate,server_read_bytes,3,"[15237036, 14949331, 15495168]",train2,full,C2,,,15237036.0,256
+,16005885,"observed min-max; descriptive, not confidence interval",,15494895,public/download,wire_bytes,3,"[15754868, 15494895, 16005885]",train2,full,C2,,,15754868.0,256
+,0.03783811000175774,"observed min-max; descriptive, not confidence interval",,0.035129528027027845,public/download,request_seconds,3,"[0.035129528027027845, 0.035400984808802605, 0.03783811000175774]",train2,full,C2,,,0.035400984808802605,256
+,15937536,"observed min-max; descriptive, not confidence interval",,15428563,public/download,server_read_bytes,3,"[15687596, 15428563, 15937536]",train2,full,C2,,,15687596.0,256
+,38869,"observed min-max; descriptive, not confidence interval",,38340,public/aggregate,wire_bytes,3,"[38524, 38340, 38869]",train2,full,C2,,,38524.0,256
+,31.417652412084863,"observed min-max; descriptive, not confidence interval",,30.2965744799003,public/aggregate,request_seconds,3,"[30.908197788055986, 30.2965744799003, 31.417652412084863]",train2,full,C2,,,30.908197788055986,256
+,15937536,"observed min-max; descriptive, not confidence interval",,15428563,public/aggregate,server_read_bytes,3,"[15687596, 15428563, 15937536]",train2,full,C2,,,15687596.0,256
+,1423323,"observed min-max; descriptive, not confidence interval",,226750,public/download,wire_bytes,3,"[1419211, 1423323, 226750]",train2,full,C2,,,1419211.0,1
+,0.003924440126866102,"observed min-max; descriptive, not confidence interval",,0.001078869914636016,public/download,request_seconds,3,"[0.003798672929406166, 0.003924440126866102, 0.001078869914636016]",train2,full,C2,,,0.003798672929406166,1
+,1417216,"observed min-max; descriptive, not confidence interval",,225280,public/download,server_read_bytes,3,"[1413120, 1417216, 225280]",train2,full,C2,,,1413120.0,1
+,6258,"observed min-max; descriptive, not confidence interval",,5113,public/aggregate,wire_bytes,3,"[6254, 6258, 5113]",train2,full,C2,,,6254.0,1
+,3.1984733189456165,"observed min-max; descriptive, not confidence interval",,1.024667755002156,public/aggregate,request_seconds,3,"[3.1691675879992545, 3.1984733189456165, 1.024667755002156]",train2,full,C2,,,3.1691675879992545,1
+,1417216,"observed min-max; descriptive, not confidence interval",,225280,public/aggregate,server_read_bytes,3,"[1413120, 1417216, 225280]",train2,full,C2,,,1413120.0,1
+,173702,"observed min-max; descriptive, not confidence interval",,144788,owner-minref/aggregate,wire_bytes,3,"[173696, 173702, 144788]",train2,full,C2,,,173696.0,1
+,1.178952192189172,"observed min-max; descriptive, not confidence interval",,0.9985248278826475,owner-minref/aggregate,request_seconds,3,"[1.12616849783808, 1.178952192189172, 0.9985248278826475]",train2,full,C2,,,1.12616849783808,1
+,327680,"observed min-max; descriptive, not confidence interval",,208896,owner-minref/aggregate,server_read_bytes,3,"[319488, 327680, 208896]",train2,full,C2,,,319488.0,1
+,5775235,"observed min-max; descriptive, not confidence interval",,5540906,public/download,wire_bytes,3,"[5775235, 5750594, 5540906]",train1,full,C2,,,5750594.0,16
+,0.013525133952498436,"observed min-max; descriptive, not confidence interval",,0.012821631971746683,public/download,request_seconds,3,"[0.013263374101370573, 0.013525133952498436, 0.012821631971746683]",train1,full,C2,,,0.013263374101370573,16
+,5750784,"observed min-max; descriptive, not confidence interval",,5517312,public/download,server_read_bytes,3,"[5750784, 5726208, 5517312]",train1,full,C2,,,5726208.0,16
+,20519,"observed min-max; descriptive, not confidence interval",,20339,public/aggregate,wire_bytes,3,"[20512, 20519, 20339]",train1,full,C2,,,20512.0,16
+,12.017712377011776,"observed min-max; descriptive, not confidence interval",,11.559540204005316,public/aggregate,request_seconds,3,"[12.015107182087377, 12.017712377011776, 11.559540204005316]",train1,full,C2,,,12.015107182087377,16
+,5750784,"observed min-max; descriptive, not confidence interval",,5517312,public/aggregate,server_read_bytes,3,"[5750784, 5726208, 5517312]",train1,full,C2,,,5726208.0,16
+,2179470,"observed min-max; descriptive, not confidence interval",,2047818,owner-minref/aggregate,wire_bytes,3,"[2179425, 2179470, 2047818]",train1,full,C2,,,2179425.0,16
+,8.552098176907748,"observed min-max; descriptive, not confidence interval",,8.243958212900907,owner-minref/aggregate,request_seconds,3,"[8.552098176907748, 8.243958212900907, 8.403526833979413]",train1,full,C2,,,8.403526833979413,16
+,3649536,"observed min-max; descriptive, not confidence interval",,3407872,owner-minref/aggregate,server_read_bytes,3,"[3633152, 3649536, 3407872]",train1,full,C2,,,3633152.0,16
+,11216937,"observed min-max; descriptive, not confidence interval",,11122354,owner-minref/aggregate,wire_bytes,3,"[11163473, 11122354, 11216937]",train1,full,C2,,,11163473.0,256
+,31.643883449025452,"observed min-max; descriptive, not confidence interval",,31.203913376899436,owner-minref/aggregate,request_seconds,3,"[31.5320804330986, 31.203913376899436, 31.643883449025452]",train1,full,C2,,,31.5320804330986,256
+,16437248,"observed min-max; descriptive, not confidence interval",,16337367,owner-minref/aggregate,server_read_bytes,3,"[16408576, 16337367, 16437248]",train1,full,C2,,,16408576.0,256
+,17120097,"observed min-max; descriptive, not confidence interval",,16978713,public/download,wire_bytes,3,"[17041940, 16978713, 17120097]",train1,full,C2,,,17041940.0,256
+,0.04215871496126056,"observed min-max; descriptive, not confidence interval",,0.039684152929112315,public/download,request_seconds,3,"[0.04002036387100816, 0.04215871496126056, 0.039684152929112315]",train1,full,C2,,,0.04002036387100816,256
+,17047552,"observed min-max; descriptive, not confidence interval",,16906711,public/download,server_read_bytes,3,"[16969728, 16906711, 17047552]",train1,full,C2,,,16969728.0,256
+,35510,"observed min-max; descriptive, not confidence interval",,35375,public/aggregate,wire_bytes,3,"[35405, 35375, 35510]",train1,full,C2,,,35405.0,256
+,32.745046033058316,"observed min-max; descriptive, not confidence interval",,32.345640272134915,public/aggregate,request_seconds,3,"[32.345640272134915, 32.532050853129476, 32.745046033058316]",train1,full,C2,,,32.532050853129476,256
+,17047552,"observed min-max; descriptive, not confidence interval",,16906711,public/aggregate,server_read_bytes,3,"[16969728, 16906711, 17047552]",train1,full,C2,,,16969728.0,256
+,2158629,"observed min-max; descriptive, not confidence interval",,2031110,owner-minref/aggregate,wire_bytes,3,"[2138835, 2158629, 2031110]",train2,full,C2,,,2138835.0,16
+,8.625472130952403,"observed min-max; descriptive, not confidence interval",,7.674281978048384,owner-minref/aggregate,request_seconds,3,"[8.625472130952403, 8.06628349213861, 7.674281978048384]",train2,full,C2,,,8.06628349213861,16
+,3428352,"observed min-max; descriptive, not confidence interval",,3239936,owner-minref/aggregate,server_read_bytes,3,"[3407872, 3428352, 3239936]",train2,full,C2,,,3407872.0,16
+,5076709,"observed min-max; descriptive, not confidence interval",,4878790,public/download,wire_bytes,3,"[5076709, 5018593, 4878790]",train2,full,C2,,,5018593.0,16
+,0.012648520991206169,"observed min-max; descriptive, not confidence interval",,0.011723299976438284,public/download,request_seconds,3,"[0.012648520991206169, 0.011723299976438284, 0.012235617963597178]",train2,full,C2,,,0.012235617963597178,16
+,5054464,"observed min-max; descriptive, not confidence interval",,4857856,public/download,server_read_bytes,3,"[5054464, 4997120, 4857856]",train2,full,C2,,,4997120.0,16
+,24649,"observed min-max; descriptive, not confidence interval",,19611,public/aggregate,wire_bytes,3,"[24649, 19742, 19611]",train2,full,C2,,,19742.0,16
+,11.486241328995675,"observed min-max; descriptive, not confidence interval",,10.55631237803027,public/aggregate,request_seconds,3,"[11.486241328995675, 10.902284201001748, 10.55631237803027]",train2,full,C2,,,10.902284201001748,16
+,5054464,"observed min-max; descriptive, not confidence interval",,4857856,public/aggregate,server_read_bytes,3,"[5054464, 4997120, 4857856]",train2,full,C2,,,4997120.0,16
+False,0.7904497812792654,Wilson 95%; conditional on tested layouts,5,0.6822862349629212,exact/FrequencyD,success,250,,train2,full,C3,185,,0.74,0.01
+False,0.003649837104603648,success-only descriptive median; failure timing exported separately,,0.003547811880707741,exact/FrequencyD,recovery_seconds,185,,train2,full,C3,,250,0.003583702025935054,0.01
+False,319488.0,success-only descriptive median; failure timing exported separately,,315392.0,exact/FrequencyD,download_bytes,185,,train2,full,C3,,250,319488.0,0.01
+False,,,,,exact/FrequencyD,failure_seconds,65,,train2,full,C3,,,0.0006286699790507555,0.01
+False,0.5298688148477652,Wilson 95%; conditional on tested layouts,5,0.40709971631994324,exact/NoEC,success,250,,train2,full,C3,117,,0.468,0.01
+False,0.0035075671039521694,success-only descriptive median; failure timing exported separately,,0.0033737209159880877,exact/NoEC,recovery_seconds,117,,train2,full,C3,,250,0.003441481851041317,0.01
+False,315392.0,success-only descriptive median; failure timing exported separately,,307200.0,exact/NoEC,download_bytes,117,,train2,full,C3,,250,311296.0,0.01
+False,,,,,exact/NoEC,failure_seconds,133,,train2,full,C3,,,0.0006847481708973646,0.01
+False,0.7904497812792654,Wilson 95%; conditional on tested layouts,5,0.6822862349629212,conservative/Dictionary,success,250,,train2,full,C3,185,,0.74,0.01
+False,0.008383599808439612,success-only descriptive median; failure timing exported separately,,0.007072363048791885,conservative/Dictionary,recovery_seconds,185,,train2,full,C3,,250,0.007654092041775584,0.01
+False,1069056.0,success-only descriptive median; failure timing exported separately,,1040281.6,conservative/Dictionary,download_bytes,185,,train2,full,C3,,250,1040384.0,0.01
+False,,,,,conservative/Dictionary,failure_seconds,65,,train2,full,C3,,,0.004794922890141606,0.01
+False,0.3177137650370787,Wilson 95%; conditional on tested layouts,5,0.20955021872073462,conservative/Uniform,success,250,,train2,full,C3,65,,0.26,0.01
+False,0.006621581967920065,success-only descriptive median; failure timing exported separately,,0.005543702049180865,conservative/Uniform,recovery_seconds,65,,train2,full,C3,,250,0.0056733801029622555,0.01
+False,1036288.0,success-only descriptive median; failure timing exported separately,,675840.0,conservative/Uniform,download_bytes,65,,train2,full,C3,,250,700416.0,0.01
+False,,,,,conservative/Uniform,failure_seconds,185,,train2,full,C3,,,0.0016952031292021275,0.01
+False,0.5968067205426905,Wilson 95%; conditional on tested layouts,5,0.4741036818936376,conservative/FrequencyD,success,250,,train2,full,C3,134,,0.536,0.01
+False,0.007254780502989888,success-only descriptive median; failure timing exported separately,,0.005764461791841313,conservative/FrequencyD,recovery_seconds,134,,train2,full,C3,,250,0.00645040103700012,0.01
+False,1040384.0,success-only descriptive median; failure timing exported separately,,700416.0,conservative/FrequencyD,download_bytes,134,,train2,full,C3,,250,712704.0,0.01
+False,,,,,conservative/FrequencyD,failure_seconds,116,,train2,full,C3,,,0.004865644965320826,0.01
+False,0.17511224175018894,Wilson 95%; conditional on tested layouts,5,0.09214693307442182,conservative/NoEC,success,250,,train2,full,C3,32,,0.128,0.01
+False,0.005773305194452405,success-only descriptive median; failure timing exported separately,,0.005072338972240686,conservative/NoEC,recovery_seconds,32,,train2,full,C3,,250,0.0052919789450243115,0.01
+False,673792.0,success-only descriptive median; failure timing exported separately,,671744.0,conservative/NoEC,download_bytes,32,,train2,full,C3,,250,671744.0,0.01
+False,,,,,conservative/NoEC,failure_seconds,218,,train2,full,C3,,,0.0011494850041344762,0.01
+False,0.7904497812792654,Wilson 95%; conditional on tested layouts,5,0.6822862349629212,exact/Dictionary,success,250,,train2,full,C3,185,,0.74,0.01
+False,0.0037894640117883682,success-only descriptive median; failure timing exported separately,,0.003601865144446492,exact/Dictionary,recovery_seconds,185,,train2,full,C3,,250,0.0036472079809755087,0.01
+False,323584.0,success-only descriptive median; failure timing exported separately,,315392.0,exact/Dictionary,download_bytes,185,,train2,full,C3,,250,319488.0,0.01
+False,,,,,exact/Dictionary,failure_seconds,65,,train2,full,C3,,,0.0005517101380974054,0.01
+False,0.7121252228303963,Wilson 95%; conditional on tested layouts,5,0.5951531877270251,exact/Uniform,success,250,,train2,full,C3,164,,0.656,0.01
+False,0.0036645502084866164,success-only descriptive median; failure timing exported separately,,0.0035080125089734793,exact/Uniform,recovery_seconds,164,,train2,full,C3,,250,0.0036066198954358697,0.01
+False,319488.0,success-only descriptive median; failure timing exported separately,,315392.0,exact/Uniform,download_bytes,164,,train2,full,C3,,250,317440.0,0.01
+False,,,,,exact/Uniform,failure_seconds,86,,train2,full,C3,,,0.0007259509293362498,0.01
+False,0.8484497642103681,Wilson 95%; conditional on tested layouts,5,0.7503491896964016,conservative/Uniform,success,250,,train1,full,C3,201,,0.804,0.001
+False,0.009365193272242323,success-only descriptive median; failure timing exported separately,,0.009207129944115877,conservative/Uniform,recovery_seconds,201,,train1,full,C3,,250,0.009274266893044114,0.001
+False,1421312.0,success-only descriptive median; failure timing exported separately,,1392640.0,conservative/Uniform,download_bytes,201,,train1,full,C3,,250,1392640.0,0.001
+False,,,,,conservative/Uniform,failure_seconds,49,,train1,full,C3,,,0.003108726115897298,0.001
+False,0.928034767507569,Wilson 95%; conditional on tested layouts,5,0.8519796592920389,conservative/FrequencyD,success,250,,train1,full,C3,224,,0.896,0.001
+False,0.009439087472856045,success-only descriptive median; failure timing exported separately,,0.00930422737437766,conservative/FrequencyD,recovery_seconds,224,,train1,full,C3,,250,0.009384240489453077,0.001
+False,1439300.0,success-only descriptive median; failure timing exported separately,,1392640.0,conservative/FrequencyD,download_bytes,224,,train1,full,C3,,250,1394688.0,0.001
+False,,,,,conservative/FrequencyD,failure_seconds,26,,train1,full,C3,,,0.004707872401922941,0.001
+False,0.7496974590312762,Wilson 95%; conditional on tested layouts,5,0.6363702875665094,conservative/NoEC,success,250,,train1,full,C3,174,,0.696,0.001
+False,0.009329651482403278,success-only descriptive median; failure timing exported separately,,0.009208234027028084,conservative/NoEC,recovery_seconds,174,,train1,full,C3,,250,0.009286529500968754,0.001
+False,1392640.0,success-only descriptive median; failure timing exported separately,,1392640.0,conservative/NoEC,download_bytes,174,,train1,full,C3,,250,1392640.0,0.001
+False,,,,,conservative/NoEC,failure_seconds,76,,train1,full,C3,,,0.0030301596270874143,0.001
+False,0.9723317984693053,Wilson 95%; conditional on tested layouts,5,0.9179876987868126,exact/Dictionary,success,250,,train1,full,C3,238,,0.952,0.001
+False,0.0038994104834273458,success-only descriptive median; failure timing exported separately,,0.003810503985732794,exact/Dictionary,recovery_seconds,238,,train1,full,C3,,250,0.003865811973810196,0.001
+False,323584.0,success-only descriptive median; failure timing exported separately,,323584.0,exact/Dictionary,download_bytes,238,,train1,full,C3,,250,323584.0,0.001
+False,,,,,exact/Dictionary,failure_seconds,12,,train1,full,C3,,,0.0005869590677320957,0.001
+False,0.9633055891608915,Wilson 95%; conditional on tested layouts,5,0.9033771072831172,exact/Uniform,success,250,,train1,full,C3,235,,0.94,0.001
+False,0.003828706918284297,success-only descriptive median; failure timing exported separately,,0.0037509510293602943,exact/Uniform,recovery_seconds,235,,train1,full,C3,,250,0.0037751609925180674,0.001
+False,323584.0,success-only descriptive median; failure timing exported separately,,323584.0,exact/Uniform,download_bytes,235,,train1,full,C3,,250,323584.0,0.001
+False,,,,,exact/Uniform,failure_seconds,15,,train1,full,C3,,,0.0007420389447361231,0.001
+False,0.9723317984693053,Wilson 95%; conditional on tested layouts,5,0.9179876987868126,exact/FrequencyD,success,250,,train1,full,C3,238,,0.952,0.001
+False,0.00378310086671263,success-only descriptive median; failure timing exported separately,,0.003690857332549058,exact/FrequencyD,recovery_seconds,238,,train1,full,C3,,250,0.003745718044228852,0.001
+False,323584.0,success-only descriptive median; failure timing exported separately,,323584.0,exact/FrequencyD,download_bytes,238,,train1,full,C3,,250,323584.0,0.001
+False,,,,,exact/FrequencyD,failure_seconds,12,,train1,full,C3,,,0.0006857344415038824,0.001
+False,0.928034767507569,Wilson 95%; conditional on tested layouts,5,0.8519796592920389,exact/NoEC,success,250,,train1,full,C3,224,,0.896,0.001
+False,0.003723267000168562,success-only descriptive median; failure timing exported separately,,0.0036560897366143762,exact/NoEC,recovery_seconds,224,,train1,full,C3,,250,0.0036739890929311514,0.001
+False,323584.0,success-only descriptive median; failure timing exported separately,,323584.0,exact/NoEC,download_bytes,224,,train1,full,C3,,250,323584.0,0.001
+False,,,,,exact/NoEC,failure_seconds,26,,train1,full,C3,,,0.0006870140787214041,0.001
+False,0.9723317984693053,Wilson 95%; conditional on tested layouts,5,0.9179876987868126,conservative/Dictionary,success,250,,train1,full,C3,238,,0.952,0.001
+False,0.009434809442609549,success-only descriptive median; failure timing exported separately,,0.009300063829869032,conservative/Dictionary,recovery_seconds,238,,train1,full,C3,,250,0.009349829517304897,0.001
+False,1441792.0,success-only descriptive median; failure timing exported separately,,1392640.0,conservative/Dictionary,download_bytes,238,,train1,full,C3,,250,1392640.0,0.001
+False,,,,,conservative/Dictionary,failure_seconds,12,,train1,full,C3,,,0.006760285003110766,0.001
+False,0.3177137650370787,Wilson 95%; conditional on tested layouts,5,0.20955021872073462,exact/FrequencyD,success,250,,train2,full,C3,65,,0.26,0.05
+False,0.004225074080750346,success-only descriptive median; failure timing exported separately,,0.0038824209477752447,exact/FrequencyD,recovery_seconds,65,,train2,full,C3,,250,0.004067368106916547,0.05
+False,352256.0,success-only descriptive median; failure timing exported separately,,335872.0,exact/FrequencyD,download_bytes,65,,train2,full,C3,,250,344064.0,0.05
+False,,,,,exact/FrequencyD,failure_seconds,185,,train2,full,C3,,,0.0005380939692258835,0.05
+False,0.06186240283408649,Wilson 95%; conditional on tested layouts,5,0.01630236549364963,exact/NoEC,success,250,,train2,full,C3,8,,0.032,0.05
+False,0.0035053968895226717,success-only descriptive median; failure timing exported separately,,0.0032679748255759478,exact/NoEC,recovery_seconds,8,,train2,full,C3,,250,0.0034135340247303247,0.05
+False,319488.0,success-only descriptive median; failure timing exported separately,,286720.0,exact/NoEC,download_bytes,8,,train2,full,C3,,250,290816.0,0.05
+False,,,,,exact/NoEC,failure_seconds,242,,train2,full,C3,,,0.00035505543928593397,0.05
+False,0.23235187937564278,Wilson 95%; conditional on tested layouts,5,0.13733343230144174,conservative/Dictionary,success,250,,train2,full,C3,45,,0.18,0.05
+False,0.010119087062776089,success-only descriptive median; failure timing exported separately,,0.006653434131294489,conservative/Dictionary,recovery_seconds,45,,train2,full,C3,,250,0.007079283008351922,0.05
+False,1040384.0,success-only descriptive median; failure timing exported separately,,696320.0,conservative/Dictionary,download_bytes,45,,train2,full,C3,,250,704512.0,0.05
+False,,,,,conservative/Dictionary,failure_seconds,205,,train2,full,C3,,,0.0038918349891901016,0.05
+False,0.02869452958320804,Wilson 95%; conditional on tested layouts,5,0.0021966371203094217,conservative/Uniform,success,250,,train2,full,C3,2,,0.008,0.05
+False,0.006581730209290981,success-only descriptive median; failure timing exported separately,,0.005874840077012777,conservative/Uniform,recovery_seconds,2,,train2,full,C3,,250,0.006228285143151879,0.05
+False,745472.0,success-only descriptive median; failure timing exported separately,,745472.0,conservative/Uniform,download_bytes,2,,train2,full,C3,,250,745472.0,0.05
+False,,,,,conservative/Uniform,failure_seconds,248,,train2,full,C3,,,0.0006129170069471002,0.05
+False,0.18403577142946165,Wilson 95%; conditional on tested layouts,5,0.09898127060322204,conservative/FrequencyD,success,250,,train2,full,C3,34,,0.136,0.05
+False,0.007273033959791064,success-only descriptive median; failure timing exported separately,,0.006637675920501351,conservative/FrequencyD,recovery_seconds,34,,train2,full,C3,,250,0.006885361042805016,0.05
+False,753664.0,success-only descriptive median; failure timing exported separately,,733182.95,conservative/FrequencyD,download_bytes,34,,train2,full,C3,,250,739328.0,0.05
+False,,,,,conservative/FrequencyD,failure_seconds,216,,train2,full,C3,,,0.0042226448422297835,0.05
+False,0.015133299495444574,Wilson 95%; conditional on tested layouts,5,8.673617379884035e-19,conservative/NoEC,success,250,,train2,full,C3,0,,0.0,0.05
+False,,success-only descriptive median; failure timing exported separately,,,conservative/NoEC,recovery_seconds,0,,train2,full,C3,,250,,0.05
+False,,success-only descriptive median; failure timing exported separately,,,conservative/NoEC,download_bytes,0,,train2,full,C3,,250,,0.05
+False,,,,,conservative/NoEC,failure_seconds,250,,train2,full,C3,,,0.00039468007162213326,0.05
+False,0.2711034182192054,Wilson 95%; conditional on tested layouts,5,0.16949229589420706,exact/Dictionary,success,250,,train2,full,C3,54,,0.216,0.05
+False,0.004270966979674995,success-only descriptive median; failure timing exported separately,,0.00398259861394763,exact/Dictionary,recovery_seconds,54,,train2,full,C3,,250,0.0040739234536886215,0.05
+False,367222.0,success-only descriptive median; failure timing exported separately,,337920.0,exact/Dictionary,download_bytes,54,,train2,full,C3,,250,346112.0,0.05
+False,,,,,exact/Dictionary,failure_seconds,196,,train2,full,C3,,,0.0004610425094142556,0.05
+False,0.16163076708794527,Wilson 95%; conditional on tested layouts,5,0.08199160692455615,exact/Uniform,success,250,,train2,full,C3,29,,0.116,0.05
+False,0.004107388900592923,success-only descriptive median; failure timing exported separately,,0.0036679289769381285,exact/Uniform,recovery_seconds,29,,train2,full,C3,,250,0.0037848008796572685,0.05
+False,344064.0,success-only descriptive median; failure timing exported separately,,319488.0,exact/Uniform,download_bytes,29,,train2,full,C3,,250,339968.0,0.05
+False,,,,,exact/Uniform,failure_seconds,221,,train2,full,C3,,,0.0005984329618513584,0.05
+False,0.44966463482163566,Wilson 95%; conditional on tested layouts,5,0.3297252242653439,conservative/FrequencyD,success,250,,train1,full,C3,97,,0.388,0.01
+False,0.009634176036342978,success-only descriptive median; failure timing exported separately,,0.007676966954022646,conservative/FrequencyD,recovery_seconds,97,,train1,full,C3,,250,0.009372554020956159,0.01
+False,1429504.0,success-only descriptive median; failure timing exported separately,,958464.0,conservative/FrequencyD,download_bytes,97,,train1,full,C3,,250,1396736.0,0.01
+False,,,,,conservative/FrequencyD,failure_seconds,153,,train1,full,C3,,,0.00420601898804307,0.01
+False,0.10618925218570377,Wilson 95%; conditional on tested layouts,5,0.04288591857836033,conservative/NoEC,success,250,,train1,full,C3,17,,0.068,0.01
+False,0.009348110994324088,success-only descriptive median; failure timing exported separately,,0.006225754041224718,conservative/NoEC,recovery_seconds,17,,train1,full,C3,,250,0.00680977595038712,0.01
+False,1392640.0,success-only descriptive median; failure timing exported separately,,897024.0,conservative/NoEC,download_bytes,17,,train1,full,C3,,250,901120.0,0.01
+False,,,,,conservative/NoEC,failure_seconds,233,,train1,full,C3,,,0.0015048349741846323,0.01
+False,0.7904497812792654,Wilson 95%; conditional on tested layouts,5,0.6822862349629212,exact/Dictionary,success,250,,train1,full,C3,185,,0.74,0.01
+False,0.004044158849865198,success-only descriptive median; failure timing exported separately,,0.003908019978553057,exact/Dictionary,recovery_seconds,185,,train1,full,C3,,250,0.003974298946559429,0.01
+False,335872.0,success-only descriptive median; failure timing exported separately,,327680.0,exact/Dictionary,download_bytes,185,,train1,full,C3,,250,327680.0,0.01
+False,,,,,exact/Dictionary,failure_seconds,65,,train1,full,C3,,,0.0005538009572774172,0.01
+False,0.6702747757346561,Wilson 95%; conditional on tested layouts,5,0.5503353651783642,exact/Uniform,success,250,,train1,full,C3,153,,0.612,0.01
+False,0.003884189995005727,success-only descriptive median; failure timing exported separately,,0.0037747109308838844,exact/Uniform,recovery_seconds,153,,train1,full,C3,,250,0.0038056569173932076,0.01
+False,327680.0,success-only descriptive median; failure timing exported separately,,323584.0,exact/Uniform,download_bytes,153,,train1,full,C3,,250,327680.0,0.01
+False,,,,,exact/Uniform,failure_seconds,97,,train1,full,C3,,,0.0009635188616812229,0.01
+False,0.8123933189701072,Wilson 95%; conditional on tested layouts,5,0.7076162988962981,exact/FrequencyD,success,250,,train1,full,C3,191,,0.764,0.01
+False,0.0038834759034216404,success-only descriptive median; failure timing exported separately,,0.0037415700498968363,exact/FrequencyD,recovery_seconds,191,,train1,full,C3,,250,0.003810998983681202,0.01
+False,331776.0,success-only descriptive median; failure timing exported separately,,327680.0,exact/FrequencyD,download_bytes,191,,train1,full,C3,,250,327680.0,0.01
+False,,,,,exact/FrequencyD,failure_seconds,59,,train1,full,C3,,,0.0005843949038535357,0.01
+False,0.5179395967637979,Wilson 95%; conditional on tested layouts,5,0.39539213359180114,exact/NoEC,success,250,,train1,full,C3,114,,0.456,0.01
+False,0.003700744011439383,success-only descriptive median; failure timing exported separately,,0.003592008026316762,exact/NoEC,recovery_seconds,114,,train1,full,C3,,250,0.003647661884315312,0.01
+False,327680.0,success-only descriptive median; failure timing exported separately,,323584.0,exact/NoEC,download_bytes,114,,train1,full,C3,,250,323584.0,0.01
+False,,,,,exact/NoEC,failure_seconds,136,,train1,full,C3,,,0.0006701365346089005,0.01
+False,0.7904497812792654,Wilson 95%; conditional on tested layouts,5,0.6822862349629212,conservative/Dictionary,success,250,,train1,full,C3,185,,0.74,0.01
+False,0.010041688103228807,success-only descriptive median; failure timing exported separately,,0.009810920449672267,conservative/Dictionary,recovery_seconds,185,,train1,full,C3,,250,0.009944007033482194,0.01
+False,1421312.0,success-only descriptive median; failure timing exported separately,,1392640.0,conservative/Dictionary,download_bytes,185,,train1,full,C3,,250,1392640.0,0.01
+False,,,,,conservative/Dictionary,failure_seconds,65,,train1,full,C3,,,0.0064213210716843605,0.01
+False,0.2539559733670946,Wilson 95%; conditional on tested layouts,5,0.1551240063301722,conservative/Uniform,success,250,,train1,full,C3,50,,0.2,0.01
+False,0.009755837498232722,success-only descriptive median; failure timing exported separately,,0.007011265028268099,conservative/Uniform,recovery_seconds,50,,train1,full,C3,,250,0.00935016805306077,0.01
+False,1441792.0,success-only descriptive median; failure timing exported separately,,929792.0,conservative/Uniform,download_bytes,50,,train1,full,C3,,250,1415168.0,0.01
+False,,,,,conservative/Uniform,failure_seconds,200,,train1,full,C3,,,0.002238393994048238,0.01
+False,0.015133299495444574,Wilson 95%; conditional on tested layouts,5,8.673617379884035e-19,conservative/NoEC,success,250,,train1,full,C3,0,,0.0,0.05
+False,,success-only descriptive median; failure timing exported separately,,,conservative/NoEC,recovery_seconds,0,,train1,full,C3,,250,,0.05
+False,,success-only descriptive median; failure timing exported separately,,,conservative/NoEC,download_bytes,0,,train1,full,C3,,250,,0.05
+False,,,,,conservative/NoEC,failure_seconds,250,,train1,full,C3,,,0.0004171630134806037,0.05
+False,0.1973340188615365,Wilson 95%; conditional on tested layouts,5,0.10931982398325646,exact/Dictionary,success,250,,train1,full,C3,37,,0.148,0.05
+False,0.004667234141379595,success-only descriptive median; failure timing exported separately,,0.004131422843784094,exact/Dictionary,recovery_seconds,37,,train1,full,C3,,250,0.004298391053453088,0.05
+False,376832.0,success-only descriptive median; failure timing exported separately,,344064.0,exact/Dictionary,download_bytes,37,,train1,full,C3,,250,364544.0,0.05
+False,,,,,exact/Dictionary,failure_seconds,213,,train1,full,C3,,,0.00041363900527358055,0.05
+False,0.10618925218570377,Wilson 95%; conditional on tested layouts,5,0.04288591857836033,exact/Uniform,success,250,,train1,full,C3,17,,0.068,0.05
+False,0.004618234932422638,success-only descriptive median; failure timing exported separately,,0.0039522291626781225,exact/Uniform,recovery_seconds,17,,train1,full,C3,,250,0.004368148976936936,0.05
+False,380928.0,success-only descriptive median; failure timing exported separately,,331776.0,exact/Uniform,download_bytes,17,,train1,full,C3,,250,368640.0,0.05
+False,,,,,exact/Uniform,failure_seconds,233,,train1,full,C3,,,0.0005164318718016148,0.05
+False,0.22365272007515946,Wilson 95%; conditional on tested layouts,5,0.13027472439385213,exact/FrequencyD,success,250,,train1,full,C3,43,,0.172,0.05
+False,0.0045824910048395395,success-only descriptive median; failure timing exported separately,,0.0042620389722287655,exact/FrequencyD,recovery_seconds,43,,train1,full,C3,,250,0.004402335966005921,0.05
+False,385024.0,success-only descriptive median; failure timing exported separately,,352256.0,exact/FrequencyD,download_bytes,43,,train1,full,C3,,250,364544.0,0.05
+False,,,,,exact/FrequencyD,failure_seconds,207,,train1,full,C3,,,0.0005812989547848701,0.05
+False,0.051362123813526464,Wilson 95%; conditional on tested layouts,5,0.01104477730613677,exact/NoEC,success,250,,train1,full,C3,6,,0.024,0.05
+False,0.0039296625182032585,success-only descriptive median; failure timing exported separately,,0.0035589695908129215,exact/NoEC,recovery_seconds,6,,train1,full,C3,,250,0.003602480865083635,0.05
+False,335872.0,success-only descriptive median; failure timing exported separately,,325632.0,exact/NoEC,download_bytes,6,,train1,full,C3,,250,327680.0,0.05
+False,,,,,exact/NoEC,failure_seconds,244,,train1,full,C3,,,0.0003209259593859315,0.05
+False,0.15257255840387324,Wilson 95%; conditional on tested layouts,5,0.07529194840055528,conservative/Dictionary,success,250,,train1,full,C3,27,,0.108,0.05
+False,0.012527281884104013,success-only descriptive median; failure timing exported separately,,0.011439163936302066,conservative/Dictionary,recovery_seconds,27,,train1,full,C3,,250,0.011932696914300323,0.05
+False,1445888.0,success-only descriptive median; failure timing exported separately,,1392640.0,conservative/Dictionary,download_bytes,27,,train1,full,C3,,250,1413120.0,0.05
+False,,,,,conservative/Dictionary,failure_seconds,223,,train1,full,C3,,,0.0058100849855691195,0.05
+False,0.015133299495444574,Wilson 95%; conditional on tested layouts,5,8.673617379884035e-19,conservative/Uniform,success,250,,train1,full,C3,0,,0.0,0.05
+False,,success-only descriptive median; failure timing exported separately,,,conservative/Uniform,recovery_seconds,0,,train1,full,C3,,250,,0.05
+False,,success-only descriptive median; failure timing exported separately,,,conservative/Uniform,download_bytes,0,,train1,full,C3,,250,,0.05
+False,,,,,conservative/Uniform,failure_seconds,250,,train1,full,C3,,,0.0007001180201768875,0.05
+False,0.04040980934111918,Wilson 95%; conditional on tested layouts,5,0.006239224570471175,conservative/FrequencyD,success,250,,train1,full,C3,4,,0.016,0.05
+False,0.00846566492691636,success-only descriptive median; failure timing exported separately,,0.007116457913070917,conservative/FrequencyD,recovery_seconds,4,,train1,full,C3,,250,0.008020746405236423,0.05
+False,995328.0,success-only descriptive median; failure timing exported separately,,905216.0,conservative/FrequencyD,download_bytes,4,,train1,full,C3,,250,948224.0,0.05
+False,,,,,conservative/FrequencyD,failure_seconds,246,,train1,full,C3,,,0.003050378989428282,0.05
+False,0.9889552226938632,Wilson 95%; conditional on tested layouts,5,0.9486378761864735,exact/Dictionary,success,250,,train2,full,C3,244,,0.976,0.001
+False,0.0036056090611964464,success-only descriptive median; failure timing exported separately,,0.003500350983813405,exact/Dictionary,recovery_seconds,244,,train2,full,C3,,250,0.0035754700656980276,0.001
+False,315392.0,success-only descriptive median; failure timing exported separately,,311296.0,exact/Dictionary,download_bytes,244,,train2,full,C3,,250,315392.0,0.001
+False,,,,,exact/Dictionary,failure_seconds,6,,train2,full,C3,,,0.0005712254205718637,0.001
+False,0.9752562018325064,Wilson 95%; conditional on tested layouts,5,0.9229422290276481,exact/Uniform,success,250,,train2,full,C3,239,,0.956,0.001
+False,0.0035521958488970995,success-only descriptive median; failure timing exported separately,,0.003409725846722722,exact/Uniform,recovery_seconds,239,,train2,full,C3,,250,0.0034901280887424946,0.001
+False,315392.0,success-only descriptive median; failure timing exported separately,,311296.0,exact/Uniform,download_bytes,239,,train2,full,C3,,250,315392.0,0.001
+False,,,,,exact/Uniform,failure_seconds,11,,train2,full,C3,,,0.0011630221270024776,0.001
+False,0.9863719413991607,Wilson 95%; conditional on tested layouts,5,0.9433422238771394,exact/FrequencyD,success,250,,train2,full,C3,243,,0.972,0.001
+False,0.003495328826829791,success-only descriptive median; failure timing exported separately,,0.00340954284183681,exact/FrequencyD,recovery_seconds,243,,train2,full,C3,,250,0.0034501010086387396,0.001
+False,315392.0,success-only descriptive median; failure timing exported separately,,311296.0,exact/FrequencyD,download_bytes,243,,train2,full,C3,,250,315392.0,0.001
+False,,,,,exact/FrequencyD,failure_seconds,7,,train2,full,C3,,,0.0004992750473320484,0.001
+False,0.953974430741735,Wilson 95%; conditional on tested layouts,5,0.8890714648901645,exact/NoEC,success,250,,train2,full,C3,232,,0.928,0.001
+False,0.0034678580967010928,success-only descriptive median; failure timing exported separately,,0.003368395031429827,exact/NoEC,recovery_seconds,232,,train2,full,C3,,250,0.003425324452109635,0.001
+False,315392.0,success-only descriptive median; failure timing exported separately,,311296.0,exact/NoEC,download_bytes,232,,train2,full,C3,,250,315392.0,0.001
+False,,,,,exact/NoEC,failure_seconds,18,,train2,full,C3,,,0.0010749768698588014,0.001
+False,0.9889552226938632,Wilson 95%; conditional on tested layouts,5,0.9486378761864735,conservative/Dictionary,success,250,,train2,full,C3,244,,0.976,0.001
+False,0.007337995106354356,success-only descriptive median; failure timing exported separately,,0.006641186075285077,conservative/Dictionary,recovery_seconds,244,,train2,full,C3,,250,0.00700687151402235,0.001
+False,1040384.0,success-only descriptive median; failure timing exported separately,,1036288.0,conservative/Dictionary,download_bytes,244,,train2,full,C3,,250,1040384.0,0.001
+False,,,,,conservative/Dictionary,failure_seconds,6,,train2,full,C3,,,0.004599254461936653,0.001
+False,0.901018729396778,Wilson 95%; conditional on tested layouts,5,0.8159642285705384,conservative/Uniform,success,250,,train2,full,C3,216,,0.864,0.001
+False,0.007013240756350569,success-only descriptive median; failure timing exported separately,,0.0065563725074753165,conservative/Uniform,recovery_seconds,216,,train2,full,C3,,250,0.006818476947955787,0.001
+False,1040384.0,success-only descriptive median; failure timing exported separately,,1036288.0,conservative/Uniform,download_bytes,216,,train2,full,C3,,250,1040384.0,0.001
+False,,,,,conservative/Uniform,failure_seconds,34,,train2,full,C3,,,0.002683308091945946,0.001
+False,0.9571140814216397,Wilson 95%; conditional on tested layouts,5,0.8938107478142963,conservative/FrequencyD,success,250,,train2,full,C3,233,,0.932,0.001
+False,0.00708091608248651,success-only descriptive median; failure timing exported separately,,0.006594583159312606,conservative/FrequencyD,recovery_seconds,233,,train2,full,C3,,250,0.006754863075911999,0.001
+False,1040384.0,success-only descriptive median; failure timing exported separately,,1036288.0,conservative/FrequencyD,download_bytes,233,,train2,full,C3,,250,1040384.0,0.001
+False,,,,,conservative/FrequencyD,failure_seconds,17,,train2,full,C3,,,0.0038316030986607075,0.001
+False,0.8160292032115287,Wilson 95%; conditional on tested layouts,5,0.711859348258913,conservative/NoEC,success,250,,train2,full,C3,192,,0.768,0.001
+False,0.0069460151717066765,success-only descriptive median; failure timing exported separately,,0.006479031522758305,conservative/NoEC,recovery_seconds,192,,train2,full,C3,,250,0.006621441571041942,0.001
+False,1040384.0,success-only descriptive median; failure timing exported separately,,854016.0,conservative/NoEC,download_bytes,192,,train2,full,C3,,250,1040384.0,0.001
+False,,,,,conservative/NoEC,failure_seconds,58,,train2,full,C3,,,0.0021330154268071055,0.001
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/Uniform,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.00900819746311754,success-only descriptive median; failure timing exported separately,,0.005218167556449771,conservative/Uniform,recovery_seconds,30,,train2,full,C3,,30,0.007002384634688497,0.0
+True,1417216.0,success-only descriptive median; failure timing exported separately,,671744.0,conservative/Uniform,download_bytes,30,,train2,full,C3,,30,1038336.0,0.0
+True,,,,,conservative/Uniform,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/FrequencyD,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.008663405431434512,success-only descriptive median; failure timing exported separately,,0.005143611656967551,conservative/FrequencyD,recovery_seconds,30,,train2,full,C3,,30,0.007055365014821291,0.0
+True,1417216.0,success-only descriptive median; failure timing exported separately,,671744.0,conservative/FrequencyD,download_bytes,30,,train2,full,C3,,30,1038336.0,0.0
+True,,,,,conservative/FrequencyD,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/NoEC,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.008673411794006824,success-only descriptive median; failure timing exported separately,,0.005263602128252387,conservative/NoEC,recovery_seconds,30,,train2,full,C3,,30,0.006885888520628214,0.0
+True,1417216.0,success-only descriptive median; failure timing exported separately,,671744.0,conservative/NoEC,download_bytes,30,,train2,full,C3,,30,1038336.0,0.0
+True,,,,,conservative/NoEC,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/Dictionary,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.003593898960389197,success-only descriptive median; failure timing exported separately,,0.0033277740905759854,exact/Dictionary,recovery_seconds,30,,train2,full,C3,,30,0.003507078974507749,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,292864.0,exact/Dictionary,download_bytes,30,,train2,full,C3,,30,313344.0,0.0
+True,,,,,exact/Dictionary,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/Uniform,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.0036747666308656335,success-only descriptive median; failure timing exported separately,,0.003364540170878172,exact/Uniform,recovery_seconds,30,,train2,full,C3,,30,0.003483251901343465,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,292864.0,exact/Uniform,download_bytes,30,,train2,full,C3,,30,313344.0,0.0
+True,,,,,exact/Uniform,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/FrequencyD,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.0036213365383446217,success-only descriptive median; failure timing exported separately,,0.003280755481682718,exact/FrequencyD,recovery_seconds,30,,train2,full,C3,,30,0.003457189886830747,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,292864.0,exact/FrequencyD,download_bytes,30,,train2,full,C3,,30,313344.0,0.0
+True,,,,,exact/FrequencyD,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/NoEC,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.0035170254996046424,success-only descriptive median; failure timing exported separately,,0.003226917004212737,exact/NoEC,recovery_seconds,30,,train2,full,C3,,30,0.0034004239132627845,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,292864.0,exact/NoEC,download_bytes,30,,train2,full,C3,,30,313344.0,0.0
+True,,,,,exact/NoEC,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/Dictionary,success,30,,train2,full,C3,30,,1.0,0.0
+True,0.00879634649027139,success-only descriptive median; failure timing exported separately,,0.005244417465291917,conservative/Dictionary,recovery_seconds,30,,train2,full,C3,,30,0.007205033558420837,0.0
+True,1417216.0,success-only descriptive median; failure timing exported separately,,671744.0,conservative/Dictionary,download_bytes,30,,train2,full,C3,,30,1038336.0,0.0
+True,,,,,conservative/Dictionary,failure_seconds,0,,train2,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/NoEC,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.009199070511385798,success-only descriptive median; failure timing exported separately,,0.008720004931092262,conservative/NoEC,recovery_seconds,30,,train1,full,C3,,30,0.008996811462566257,0.0
+True,1441792.0,success-only descriptive median; failure timing exported separately,,1390592.0,conservative/NoEC,download_bytes,30,,train1,full,C3,,30,1392640.0,0.0
+True,,,,,conservative/NoEC,failure_seconds,0,,train1,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/Dictionary,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.0038212285144254565,success-only descriptive median; failure timing exported separately,,0.0036192319821566343,exact/Dictionary,recovery_seconds,30,,train1,full,C3,,30,0.003692644997499883,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,319488.0,exact/Dictionary,download_bytes,30,,train1,full,C3,,30,323584.0,0.0
+True,,,,,exact/Dictionary,failure_seconds,0,,train1,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/Uniform,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.003648777486523613,success-only descriptive median; failure timing exported separately,,0.0035046434495598078,exact/Uniform,recovery_seconds,30,,train1,full,C3,,30,0.0035877235932275653,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,319488.0,exact/Uniform,download_bytes,30,,train1,full,C3,,30,323584.0,0.0
+True,,,,,exact/Uniform,failure_seconds,0,,train1,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/FrequencyD,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.0036490540951490402,success-only descriptive median; failure timing exported separately,,0.0034902055049315095,exact/FrequencyD,recovery_seconds,30,,train1,full,C3,,30,0.003561737947165966,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,319488.0,exact/FrequencyD,download_bytes,30,,train1,full,C3,,30,323584.0,0.0
+True,,,,,exact/FrequencyD,failure_seconds,0,,train1,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,exact/NoEC,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.003601831034757197,success-only descriptive median; failure timing exported separately,,0.0034898760728538035,exact/NoEC,recovery_seconds,30,,train1,full,C3,,30,0.0035277518909424543,0.0
+True,323584.0,success-only descriptive median; failure timing exported separately,,319488.0,exact/NoEC,download_bytes,30,,train1,full,C3,,30,323584.0,0.0
+True,,,,,exact/NoEC,failure_seconds,0,,train1,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/Dictionary,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.009074592031538486,success-only descriptive median; failure timing exported separately,,0.008746492443606257,conservative/Dictionary,recovery_seconds,30,,train1,full,C3,,30,0.00899081351235509,0.0
+True,1441792.0,success-only descriptive median; failure timing exported separately,,1390592.0,conservative/Dictionary,download_bytes,30,,train1,full,C3,,30,1392640.0,0.0
+True,,,,,conservative/Dictionary,failure_seconds,0,,train1,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/Uniform,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.009255183394998312,success-only descriptive median; failure timing exported separately,,0.008831010549329221,conservative/Uniform,recovery_seconds,30,,train1,full,C3,,30,0.009096216526813805,0.0
+True,1441792.0,success-only descriptive median; failure timing exported separately,,1390592.0,conservative/Uniform,download_bytes,30,,train1,full,C3,,30,1392640.0,0.0
+True,,,,,conservative/Uniform,failure_seconds,0,,train1,full,C3,,,,0.0
+True,0.9999999999999999,Wilson 95%; conditional on tested layouts,1,0.8864866068260312,conservative/FrequencyD,success,30,,train1,full,C3,30,,1.0,0.0
+True,0.009242631494998932,success-only descriptive median; failure timing exported separately,,0.008702542865648866,conservative/FrequencyD,recovery_seconds,30,,train1,full,C3,,30,0.008994708536192775,0.0
+True,1441792.0,success-only descriptive median; failure timing exported separately,,1390592.0,conservative/FrequencyD,download_bytes,30,,train1,full,C3,,30,1392640.0,0.0
+True,,,,,conservative/FrequencyD,failure_seconds,0,,train1,full,C3,,,,0.0

@@ -1,0 +1,294 @@
+{
+  "status": "PASS",
+  "generated_utc": "2026-10-21T15:01:53.904193+00:00",
+  "source_project": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY",
+  "result_root": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1",
+  "actual_call_counts": {
+    "qualification": 480,
+    "primary_development": 43392,
+    "posthoc_raw_attribution": 10848,
+    "total": 54720
+  },
+  "model_only_wide_layouts": 42,
+  "tests": {
+    "new_passed": 80,
+    "existing_regression_passed": 25
+  },
+  "figure_visual_qa": "PASS: primary scope-limited, model-only wider-code, and posthoc observed-budget figures inspected",
+  "report_independent_review": "PASS after making 5% cost scope explicit and retaining model/development limitations",
+  "local_markdown_links_checked": 14,
+  "local_markdown_missing_links": [],
+  "manuscript_sha256_unchanged": "13d08379ea2bcb43564ccd1548d5012fd5e8fee1572fb833dc097612cbf8c9ab",
+  "audit_receipts_sha256": {
+    "analysis_independent_audit.json": "ccd34e360923ea1496abca160b99af5c197affd2ab5ca9d8be97d66c3b9ce69c",
+    "analysis_contrasts_review.json": "25c86c8fcd92fb0c32d7f8afbff6138de7a49190cfbc73fb53c103d23d3541ea",
+    "analysis_raw_coaccess_review.json": "0a5b680403e1f25cb2fcc3070b49c5e31bedf493d37f4ad82cda51e8b3453f4b"
+  },
+  "derivative_note": "Local Markdown copies adjust links; the local pipeline matrix additionally includes a dated completion-status note. Original WSL 02/03/09 evidence documents and frozen runtime were not rewritten. Portfolio wording was corrected together with its generator; 11 formula formatting was repaired in source and local copy. Manifest excludes itself.",
+  "files": [
+    {
+      "path": "ARC_Audit_Plan61_Portfolio_20261021.md",
+      "bytes": 18210,
+      "sha256": "f67d3c30a4d255e3834204b90f48b6c4abefbf6769a15758ead2b1e89932c503",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/10_portfolio_results_20261021.md",
+      "source_sha256": "7272acd28a95f4e552de6c171a350fd93a87db454945e850cb36b7daabed86db",
+      "identical_to_source": false
+    },
+    {
+      "path": "ARC_Audit_Plan61_Full_Paper_Pipeline_20261021.md",
+      "bytes": 23046,
+      "sha256": "c0482a4dc67f4258d5165908ff53986479287fdb90d067a1012c748c6aec9f86",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/02_pipeline_evidence.md",
+      "source_sha256": "e684d5458a7125cfb1a930f8f917675979384531d20a202a2526772c0faf8c69",
+      "identical_to_source": false
+    },
+    {
+      "path": "ARC_Audit_Plan61_Related_Work_Gap_20261021.md",
+      "bytes": 21641,
+      "sha256": "278dee2ce5e7e2c38c8806ab266fa5c77cfd00705db0b62f951d9c588fe5a22a",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/03_related_work_gap.md",
+      "source_sha256": "737bb983778773c17f692e291c87d44b89953ae7f23918de276149bb7420bbd6",
+      "identical_to_source": false
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/04_protocol.json",
+      "bytes": 2328,
+      "sha256": "8d33feb6f0933573387d39c58ab5679e1827f02e19d32b2cda7a2b0254c349e6",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/04_protocol.json",
+      "source_sha256": "8d33feb6f0933573387d39c58ab5679e1827f02e19d32b2cda7a2b0254c349e6",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/05_preflight_v2.json",
+      "bytes": 1283,
+      "sha256": "b24499c9d9da5570ba5c9a4de7cb06f20654958846015cbfbea4a4002020fc0f",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/05_preflight_v2.json",
+      "source_sha256": "b24499c9d9da5570ba5c9a4de7cb06f20654958846015cbfbea4a4002020fc0f",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/06_uniform_metadata_check_v2.json",
+      "bytes": 17282,
+      "sha256": "6f16769f3ae084c57c13f130a356086388283f85623f58b5f0ca7b04e13232e3",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/06_uniform_metadata_check_v2.json",
+      "source_sha256": "6f16769f3ae084c57c13f130a356086388283f85623f58b5f0ca7b04e13232e3",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/07_attribution_precommit.md",
+      "bytes": 985,
+      "sha256": "311a81d213a99db1ffd2180c4c2546fca9791b23dd02a9cf05dc287a93a5ab57",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/07_attribution_precommit.md",
+      "source_sha256": "311a81d213a99db1ffd2180c4c2546fca9791b23dd02a9cf05dc287a93a5ab57",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/08_wide_probe_precommit.md",
+      "bytes": 6272,
+      "sha256": "2e3386d2ca8680af6666c36a4f3eceaacffd57b628e5b61b7437977607b6187c",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/08_wide_probe_precommit.md",
+      "source_sha256": "2e3386d2ca8680af6666c36a4f3eceaacffd57b628e5b61b7437977607b6187c",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/09_joint_utility_derivation.md",
+      "bytes": 29004,
+      "sha256": "fb94df08ce4bfb9828c9cc6ec2e7c25f32990a832f6236773941db0e1fa083e1",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/09_joint_utility_derivation.md",
+      "source_sha256": "f6a2b7b6d0f978993511fec49dfd45e82dd3ce0ead884593347c8cb011cf5af7",
+      "identical_to_source": false
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/11_next_core_implementation.md",
+      "bytes": 20745,
+      "sha256": "10144b6ea5836ce45aa4a59829e879dbab9e6c6f5452aca66510930295b80ee4",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/Plan/plan61/11_next_core_implementation.md",
+      "source_sha256": "294e634b218f7a2a1e3952906a0879556453daf589dfd1393acffda15ee147fc",
+      "identical_to_source": false
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/analysis_contrasts_review.json",
+      "bytes": 3012,
+      "sha256": "25c86c8fcd92fb0c32d7f8afbff6138de7a49190cfbc73fb53c103d23d3541ea",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_contrasts_review.json",
+      "source_sha256": "25c86c8fcd92fb0c32d7f8afbff6138de7a49190cfbc73fb53c103d23d3541ea",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/analysis_independent_audit.json",
+      "bytes": 119873,
+      "sha256": "ccd34e360923ea1496abca160b99af5c197affd2ab5ca9d8be97d66c3b9ce69c",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_independent_audit.json",
+      "source_sha256": "ccd34e360923ea1496abca160b99af5c197affd2ab5ca9d8be97d66c3b9ce69c",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/analysis_raw_coaccess_review.json",
+      "bytes": 1528,
+      "sha256": "0a5b680403e1f25cb2fcc3070b49c5e31bedf493d37f4ad82cda51e8b3453f4b",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_raw_coaccess_review.json",
+      "source_sha256": "0a5b680403e1f25cb2fcc3070b49c5e31bedf493d37f4ad82cda51e8b3453f4b",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/candidate_comparison.pdf",
+      "bytes": 21442,
+      "sha256": "6e7e602696a3bf9444d826fb4a03cbdef3207042c500b50a277955f93a71a106",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/candidate_comparison.pdf",
+      "source_sha256": "6e7e602696a3bf9444d826fb4a03cbdef3207042c500b50a277955f93a71a106",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/candidate_comparison.png",
+      "bytes": 107961,
+      "sha256": "ad154489ec69184caaa68bb6a9bb316efdb223d7cf73c0f88a1f572b4ac36fae",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/candidate_comparison.png",
+      "source_sha256": "ad154489ec69184caaa68bb6a9bb316efdb223d7cf73c0f88a1f572b4ac36fae",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/comparison.csv",
+      "bytes": 31148,
+      "sha256": "ff8bffde16f20fa1d0062b97c03d6756f88abc57ab823414c4855ad62c4ed65b",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/comparison.csv",
+      "source_sha256": "ff8bffde16f20fa1d0062b97c03d6756f88abc57ab823414c4855ad62c4ed65b",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/exact.csv",
+      "bytes": 23734,
+      "sha256": "b2edcbe9f1e9ffbcb7f72a796a3a4671143e735fad99bb5118b5d89bdaa43cb5",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/exact.csv",
+      "source_sha256": "b2edcbe9f1e9ffbcb7f72a796a3a4671143e735fad99bb5118b5d89bdaa43cb5",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/pilot_comparison_limited_scope.pdf",
+      "bytes": 22583,
+      "sha256": "39c8aeb80a2a119dd3f29b7978f0f200a86e9597a0fae27a0314cebb6e4c5851",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/report_figures_v1/pilot_comparison_limited_scope.pdf",
+      "source_sha256": "39c8aeb80a2a119dd3f29b7978f0f200a86e9597a0fae27a0314cebb6e4c5851",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/pilot_comparison_limited_scope.png",
+      "bytes": 111147,
+      "sha256": "9bca4620a983b5de2696d54d6d5cde45e4bd6f37e82f650d08ebabe9abb9fc1a",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/report_figures_v1/pilot_comparison_limited_scope.png",
+      "source_sha256": "9bca4620a983b5de2696d54d6d5cde45e4bd6f37e82f650d08ebabe9abb9fc1a",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/raw_comparison.csv",
+      "bytes": 79666,
+      "sha256": "ff92560486c78194b868b6498931a5e88d8c6ed375c6e229abce5d7a3db3262e",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/raw_coaccess_v1/export/comparison.csv",
+      "source_sha256": "ff92560486c78194b868b6498931a5e88d8c6ed375c6e229abce5d7a3db3262e",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/raw_validation.json",
+      "bytes": 510,
+      "sha256": "c6e958aac934d62a31bdaa2b4e06bbdae4b2555774f110f7f65586687ec6a688",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/raw_coaccess_v1/export/validation.json",
+      "source_sha256": "c6e958aac934d62a31bdaa2b4e06bbdae4b2555774f110f7f65586687ec6a688",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/reading.csv",
+      "bytes": 27942,
+      "sha256": "2391dcfc42737d991610d89b1c8fef1bfcc6ab576e0a1191660b28a7838cf16d",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/reading.csv",
+      "source_sha256": "2391dcfc42737d991610d89b1c8fef1bfcc6ab576e0a1191660b28a7838cf16d",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/reading_ablation.pdf",
+      "bytes": 18394,
+      "sha256": "b4f0ee45d8e4f90c2ac573b7d337fa201c39ea1dff75cbf5d14be777f6c6f08c",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/reading_ablation.pdf",
+      "source_sha256": "b4f0ee45d8e4f90c2ac573b7d337fa201c39ea1dff75cbf5d14be777f6c6f08c",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/reading_ablation.png",
+      "bytes": 80364,
+      "sha256": "f02c74032bc35f90f1bff0bcf61fa74c95bd7826a8197cd9f7eb816101566738",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/reading_ablation.png",
+      "source_sha256": "f02c74032bc35f90f1bff0bcf61fa74c95bd7826a8197cd9f7eb816101566738",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/supplemental_contrasts.csv",
+      "bytes": 16906,
+      "sha256": "b47e0fad77175bf9a3cb68efb170867a1f856ef69b5d2a49339cf61c659beaac",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_contrasts_v1/contrasts.csv",
+      "source_sha256": "b47e0fad77175bf9a3cb68efb170867a1f856ef69b5d2a49339cf61c659beaac",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/supplemental_observed_budget_curve.csv",
+      "bytes": 118401,
+      "sha256": "0cf6894f7dc3cfa7144b0e25b36dc971f0987fefc35f8f99e549fd1e39bee7b3",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_contrasts_v1/observed_budget_curve.csv",
+      "source_sha256": "0cf6894f7dc3cfa7144b0e25b36dc971f0987fefc35f8f99e549fd1e39bee7b3",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/supplemental_observed_budget_curve.pdf",
+      "bytes": 31558,
+      "sha256": "bf6221047461face5fdc50bd9c108a80fb37cfb9735e54843da148bc289ae8d3",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_contrasts_v1/observed_budget_curve.pdf",
+      "source_sha256": "bf6221047461face5fdc50bd9c108a80fb37cfb9735e54843da148bc289ae8d3",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/supplemental_observed_budget_curve.png",
+      "bytes": 221983,
+      "sha256": "8b16768a26441320feca6f305710eff25839b637a9f2fe94b49a96996d2b782e",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_contrasts_v1/observed_budget_curve.png",
+      "source_sha256": "8b16768a26441320feca6f305710eff25839b637a9f2fe94b49a96996d2b782e",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/supplemental_paired_costs.csv",
+      "bytes": 60613,
+      "sha256": "72706be818638d0f199150dd6eb7b0aec026fd77aefe98edb230afff8bd96702",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_contrasts_v1/paired_costs.csv",
+      "source_sha256": "72706be818638d0f199150dd6eb7b0aec026fd77aefe98edb230afff8bd96702",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/uniform.csv",
+      "bytes": 7752,
+      "sha256": "cf3233c35388a7c56bcdbdd2bbfc66ec32495630102d21b9676da658f960c4ce",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/analysis_v1/uniform.csv",
+      "source_sha256": "cf3233c35388a7c56bcdbdd2bbfc66ec32495630102d21b9676da658f960c4ce",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/wide_model_diagnostic.pdf",
+      "bytes": 19104,
+      "sha256": "b0f7f4490f99d1187d0ee4bab80efbc8142a3184c29567918153b994bbf29a3b",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/report_figures_v1/wide_model_diagnostic.pdf",
+      "source_sha256": "b0f7f4490f99d1187d0ee4bab80efbc8142a3184c29567918153b994bbf29a3b",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/wide_model_diagnostic.png",
+      "bytes": 108993,
+      "sha256": "67a3c476e81102fe345e493cd9a38ca41f7192def53755498386a525b54cdbc3",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/report_figures_v1/wide_model_diagnostic.png",
+      "source_sha256": "67a3c476e81102fe345e493cd9a38ca41f7192def53755498386a525b54cdbc3",
+      "identical_to_source": true
+    },
+    {
+      "path": "ARC_Audit_Plan61_Artifacts_20261021/wide_wide_model_scores.csv",
+      "bytes": 5827,
+      "sha256": "6b6fffe2f5dc81a45c59ac8649baea8c37ee728c3d16a870a98584ffc24f01f4",
+      "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan61/screening_20261021_v1/wide_probe_v1/wide_model_scores.csv",
+      "source_sha256": "6b6fffe2f5dc81a45c59ac8649baea8c37ee728c3d16a870a98584ffc24f01f4",
+      "identical_to_source": true
+    }
+  ]
+}

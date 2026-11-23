@@ -1,0 +1,29 @@
+{
+  "C1": {
+    "profile": "reduced",
+    "observations": 16,
+    "rows_by_segment": {
+      "train1": 21600,
+      "train2": 21600
+    },
+    "run": "dual_hai_20261008_v3/reduced"
+  },
+  "C2": {
+    "profile": "full",
+    "observations": 54,
+    "rows_by_segment": {
+      "train1": 216001,
+      "train2": 226801
+    },
+    "run": "dual_hai_20261008_v3/full"
+  },
+  "C3": {
+    "profile": "full",
+    "observations": 12480,
+    "rows_by_segment": {
+      "train1": 216001,
+      "train2": 226801
+    },
+    "run": "dual_hai_20261008_v3/full"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "sha256_files": 1804,
+  "summary_values_recomputed": 358,
+  "observations": {
+    "C1": 16,
+    "C2": 54,
+    "C3": 12480
+  },
+  "clean_successes": 480,
+  "scope": "Package integrity and basic summary statistics; prior review covers independent fault reconstruction. No new performance measurement."
+}

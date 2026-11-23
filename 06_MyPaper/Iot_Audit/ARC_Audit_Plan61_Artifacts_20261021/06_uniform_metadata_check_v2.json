@@ -1,0 +1,869 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "day": "train1_2020-07-11",
+      "k": 4,
+      "r": 1,
+      "actual_native_cap": 40,
+      "compact_uniform_cap": 40,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 4,
+      "r": 2,
+      "actual_native_cap": 20,
+      "compact_uniform_cap": 20,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 4,
+      "r": 3,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 8,
+      "r": 1,
+      "actual_native_cap": 40,
+      "compact_uniform_cap": 40,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 8,
+      "r": 2,
+      "actual_native_cap": 20,
+      "compact_uniform_cap": 20,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 8,
+      "r": 3,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 12,
+      "r": 1,
+      "actual_native_cap": 34,
+      "compact_uniform_cap": 34,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 12,
+      "r": 2,
+      "actual_native_cap": 20,
+      "compact_uniform_cap": 20,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 12,
+      "r": 3,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 16,
+      "r": 1,
+      "actual_native_cap": 26,
+      "compact_uniform_cap": 26,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 16,
+      "r": 2,
+      "actual_native_cap": 20,
+      "compact_uniform_cap": 20,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 16,
+      "r": 3,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 24,
+      "r": 1,
+      "actual_native_cap": 17,
+      "compact_uniform_cap": 17,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 24,
+      "r": 2,
+      "actual_native_cap": 17,
+      "compact_uniform_cap": 17,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 24,
+      "r": 3,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 32,
+      "r": 1,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 32,
+      "r": 2,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-11",
+      "k": 32,
+      "r": 3,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 4,
+      "r": 1,
+      "actual_native_cap": 38,
+      "compact_uniform_cap": 38,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 4,
+      "r": 2,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 4,
+      "r": 3,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 8,
+      "r": 1,
+      "actual_native_cap": 37,
+      "compact_uniform_cap": 37,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 8,
+      "r": 2,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 8,
+      "r": 3,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 12,
+      "r": 1,
+      "actual_native_cap": 32,
+      "compact_uniform_cap": 32,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 12,
+      "r": 2,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 12,
+      "r": 3,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 16,
+      "r": 1,
+      "actual_native_cap": 24,
+      "compact_uniform_cap": 24,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 16,
+      "r": 2,
+      "actual_native_cap": 18,
+      "compact_uniform_cap": 18,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 16,
+      "r": 3,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 24,
+      "r": 1,
+      "actual_native_cap": 16,
+      "compact_uniform_cap": 16,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 24,
+      "r": 2,
+      "actual_native_cap": 16,
+      "compact_uniform_cap": 16,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 24,
+      "r": 3,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 32,
+      "r": 1,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 32,
+      "r": 2,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-01",
+      "k": 32,
+      "r": 3,
+      "actual_native_cap": 12,
+      "compact_uniform_cap": 12,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 4,
+      "r": 1,
+      "actual_native_cap": 46,
+      "compact_uniform_cap": 46,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 4,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 4,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 8,
+      "r": 1,
+      "actual_native_cap": 46,
+      "compact_uniform_cap": 46,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 8,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 8,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 12,
+      "r": 1,
+      "actual_native_cap": 39,
+      "compact_uniform_cap": 39,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 12,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 12,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 16,
+      "r": 1,
+      "actual_native_cap": 29,
+      "compact_uniform_cap": 29,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 16,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 16,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 24,
+      "r": 1,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 24,
+      "r": 2,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 24,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 32,
+      "r": 1,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 32,
+      "r": 2,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-12",
+      "k": 32,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 4,
+      "r": 1,
+      "actual_native_cap": 43,
+      "compact_uniform_cap": 43,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 4,
+      "r": 2,
+      "actual_native_cap": 21,
+      "compact_uniform_cap": 21,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 4,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 8,
+      "r": 1,
+      "actual_native_cap": 43,
+      "compact_uniform_cap": 43,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 8,
+      "r": 2,
+      "actual_native_cap": 21,
+      "compact_uniform_cap": 21,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 8,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 12,
+      "r": 1,
+      "actual_native_cap": 36,
+      "compact_uniform_cap": 36,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 12,
+      "r": 2,
+      "actual_native_cap": 21,
+      "compact_uniform_cap": 21,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 12,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 16,
+      "r": 1,
+      "actual_native_cap": 27,
+      "compact_uniform_cap": 27,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 16,
+      "r": 2,
+      "actual_native_cap": 21,
+      "compact_uniform_cap": 21,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 16,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 24,
+      "r": 1,
+      "actual_native_cap": 18,
+      "compact_uniform_cap": 18,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 24,
+      "r": 2,
+      "actual_native_cap": 18,
+      "compact_uniform_cap": 18,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 24,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 32,
+      "r": 1,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 32,
+      "r": 2,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-02",
+      "k": 32,
+      "r": 3,
+      "actual_native_cap": 13,
+      "compact_uniform_cap": 13,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 4,
+      "r": 1,
+      "actual_native_cap": 46,
+      "compact_uniform_cap": 46,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 4,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 4,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 8,
+      "r": 1,
+      "actual_native_cap": 46,
+      "compact_uniform_cap": 46,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 8,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 8,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 12,
+      "r": 1,
+      "actual_native_cap": 39,
+      "compact_uniform_cap": 39,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 12,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 12,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 16,
+      "r": 1,
+      "actual_native_cap": 29,
+      "compact_uniform_cap": 29,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 16,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 16,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 24,
+      "r": 1,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 24,
+      "r": 2,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 24,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 32,
+      "r": 1,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 32,
+      "r": 2,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train1_2020-07-13",
+      "k": 32,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 4,
+      "r": 1,
+      "actual_native_cap": 45,
+      "compact_uniform_cap": 45,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 4,
+      "r": 2,
+      "actual_native_cap": 23,
+      "compact_uniform_cap": 23,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 4,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 8,
+      "r": 1,
+      "actual_native_cap": 45,
+      "compact_uniform_cap": 45,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 8,
+      "r": 2,
+      "actual_native_cap": 22,
+      "compact_uniform_cap": 22,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 8,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 12,
+      "r": 1,
+      "actual_native_cap": 39,
+      "compact_uniform_cap": 39,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 12,
+      "r": 2,
+      "actual_native_cap": 22,
+      "compact_uniform_cap": 22,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 12,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 16,
+      "r": 1,
+      "actual_native_cap": 29,
+      "compact_uniform_cap": 29,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 16,
+      "r": 2,
+      "actual_native_cap": 22,
+      "compact_uniform_cap": 22,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 16,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 24,
+      "r": 1,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 24,
+      "r": 2,
+      "actual_native_cap": 19,
+      "compact_uniform_cap": 19,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 24,
+      "r": 3,
+      "actual_native_cap": 15,
+      "compact_uniform_cap": 15,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 32,
+      "r": 1,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 32,
+      "r": 2,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    },
+    {
+      "day": "train2_2020-08-03",
+      "k": 32,
+      "r": 3,
+      "actual_native_cap": 14,
+      "compact_uniform_cap": 14,
+      "equal": true
+    }
+  ]
+}

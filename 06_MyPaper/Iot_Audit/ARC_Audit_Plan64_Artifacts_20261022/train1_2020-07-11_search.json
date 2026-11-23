@@ -1,0 +1,2829 @@
+{
+  "trace": [
+    {
+      "accepted": true,
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          362
+        ],
+        "stripe": 6
+      },
+      "key": "5d5c08ea167a28a866d88c54eb12d7535ce7281c47ffdb66b667335f8a654026",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          362,
+          357
+        ],
+        "stripe": 1
+      },
+      "key": "7cc74917f2d8b2445f9edaf883f998b1f00d19af0b12d54315f65a15a11e132f",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 362,
+        "old": 354
+      },
+      "key": "18191be9aaa668fcec294d4e86a551a559e221e774f6fe08147b3874ff12065b",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          30,
+          245
+        ],
+        "touch_delta": -1729
+      },
+      "key": "b324275da0f65b5b31812b4ef618a4ee56fd9ccd7013a678a182109571e7183a",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 6,
+        "family": "width_redistribution",
+        "page": 30,
+        "receiver": 12
+      },
+      "key": "c691538a246270538f2a48e386dc99e9705abd6e31f6598ecaf51d7dd7ec8376",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 9,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          397,
+          398
+        ],
+        "receiver": 0
+      },
+      "key": "55c1c39c28951efca98fef727844b6c5865a52bb07b3fe2a72894bc92cc3a638",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 8
+      },
+      "key": "52f4f08b3f66bdc96ad66b064dd3c602c4e9e328ab8879670b3f7ebaa87d98eb",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          362
+        ],
+        "stripe": 11
+      },
+      "key": "40e831f55870a21357d0351260a84ab4585ce950c4799a7ca60984fd9c7c9e69",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          353,
+          358
+        ],
+        "stripe": 1
+      },
+      "key": "2d7a0b1c1530ba3172f0a1683dbc372d3825741db7fb2f1c310db017a00fb233",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 357,
+        "old": 356
+      },
+      "key": "75229f5f67cb4bd0826c20dcc07f93d9345c7bdb350fbde14312b6753d8f38ce",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          294,
+          312
+        ],
+        "touch_delta": -255
+      },
+      "key": "4ef0d485ec3f4bc3133b12282789834872e0a0f0b760821a7a483648efc74e8f",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 5,
+        "family": "width_redistribution",
+        "page": 294,
+        "receiver": 11
+      },
+      "key": "d2d3e33101ece2d08c62224bf633144426c75c925fdc55ba8392dd4016b1e42e",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 9,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          397,
+          398
+        ],
+        "receiver": 4
+      },
+      "key": "54a9c8cb76963fa2091e4dd05c5374f03b590c8963cb3e5623595912e5e229cf",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 16
+      },
+      "key": "d65575447ddd630e920cab29f39edf34e690461e807ec113e9a46bed8b451bf5",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          357
+        ],
+        "stripe": 10
+      },
+      "key": "ce2316a125d7f379ae84e0d5428ae6b8d17e2e0f89f2e9d4069d4c9547a3f0f7",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          321,
+          364
+        ],
+        "stripe": 11
+      },
+      "key": "c0e34fdb4da3c87c11e347656c25044f4510a7b8b10cf91a71c6adaca56d8d82",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 353,
+        "old": 354
+      },
+      "key": "ce1d8aa0eb9f6a2b03cc07e32d99881b5b0a8206c51098b324208d443966ba37",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          94,
+          26
+        ],
+        "touch_delta": -172
+      },
+      "key": "36b80f6cc6636a53663586412cb03db2aa671447eaa5030915d11326b4ebf75d",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 2,
+        "family": "width_redistribution",
+        "page": 94,
+        "receiver": 5
+      },
+      "key": "395d189ee02201745b29c31408ee92e8cdd23c804c75712b46bd8989140b9441",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 10,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          357,
+          358
+        ],
+        "receiver": 0
+      },
+      "key": "4aea4b3720525f6c1624f25174c97e20ae0ceb85cc4be832add5b723ed0a0b91",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 24
+      },
+      "key": "e902f848fba4bec7caff0a3460148b51a03a6252cb27512dc824aa0b4e6c6444",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          357
+        ],
+        "stripe": 3
+      },
+      "key": "8a158ec684d5d3a39b8ec4ae5ef1bf6d6852731fd1aa22f1ae91928dd15980a3",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          402,
+          396
+        ],
+        "stripe": 2
+      },
+      "key": "e0c0ddba3e91e5a7fa709eb78cf25064efd8c7a0243b3607da54e178e4f1e619",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 358,
+        "old": 356
+      },
+      "key": "24fa53661c9d4075c6e8489498c6e232429c86e30b077f55747986e710362861",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          276,
+          202
+        ],
+        "touch_delta": -46
+      },
+      "key": "ccfec9c9132cd1276ee0c18f386bc39026d74b6ac19a1ddda39fa393ee2e4065",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 12,
+        "family": "width_redistribution",
+        "page": 276,
+        "receiver": 3
+      },
+      "key": "41c2e6006a05a64265f7d5b13636b594cdbf8f27b8845c85da8861c18d7744b3",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 10,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          357,
+          358
+        ],
+        "receiver": 4
+      },
+      "key": "4779f75453d4c6ee0526d47e6e43aff23b6cb3b3c8ebc3692cd2cfe3a5590a1b",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 32
+      },
+      "key": "489acec0ae18aa598f27f71c9c7bd4255cb787de7df1c26be0797bd407265f03",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          353
+        ],
+        "stripe": 11
+      },
+      "key": "48cd8e2b389b0360187141214f463d00a1dd2e9bd28d1d454287c51d2defea71",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          37,
+          68
+        ],
+        "touch_delta": -17
+      },
+      "key": "715f02de8d565667fe1c23ee736d6fa2af5583653d50bd1036c87bd385ecad46",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          353
+        ],
+        "stripe": 2
+      },
+      "key": "dcefbcfee454080404e2d714de6075fd66999505d5323fbe428436a1af91c5dd",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          79,
+          74
+        ],
+        "touch_delta": -15
+      },
+      "key": "2c59da710ceb86e3884b72224aedd52d61fdf1ba4ce9df55a885299abb7d6c7a",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          358
+        ],
+        "stripe": 10
+      },
+      "key": "6169fba3e2f040256852134a97b9a392b0f5d2db2abb9ea690f566ef610b15d5",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          134,
+          46
+        ],
+        "touch_delta": -8
+      },
+      "key": "6c61596d7a6b9fcc2d4637bc8a1e8a4efcefa53c16f3840087b3883c6bd3ab31",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          358
+        ],
+        "stripe": 7
+      },
+      "key": "01fe35bdf89c89a04d62f01c0df8a27ec6459e50498921f077103d71fd5aab43",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          140,
+          146
+        ],
+        "touch_delta": 0
+      },
+      "key": "74607f97e937f31a3e0d3383c3e6126dc39fda2b02951f5390d486869c8cfecb",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          321
+        ],
+        "stripe": 11
+      },
+      "key": "e4438c8884bec2f97197e6a78f6325aec72500a1d776ab208f8bd7f536158f28",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          32,
+          75
+        ],
+        "touch_delta": 0
+      },
+      "key": "fd9942e3bdccfc9fffc6f4bf5aa9b722bf39f8bd3f2e784f55e0193658b1afc6",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          321
+        ],
+        "stripe": 5
+      },
+      "key": "2a0eedf972a703b7cc697efffdd1fb70ac372593d45d86292710f9e93bb35cdf",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          274,
+          200
+        ],
+        "touch_delta": 0
+      },
+      "key": "92d561d9bf78fe3e85de94bf427e4d89b13f55ced0cbcf083c069ac5308b2742",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          364
+        ],
+        "stripe": 11
+      },
+      "key": "b4924e232a30e7c9192c21c2884347ae51105ad31acb4f97e2ea73237a16e75b",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          98,
+          165
+        ],
+        "touch_delta": 0
+      },
+      "key": "66b21a9a1e623023ba3c91ae41e9135245d01ee83b238fa282b1878ac776257c",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          364
+        ],
+        "stripe": 2
+      },
+      "key": "cf5d298841560ced0dbc743e14e5ca351544a87b2d43105b725ce8c56f75e2ff",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          8,
+          134
+        ],
+        "touch_delta": 2
+      },
+      "key": "930ce7ae282a48ca925fe35a7229c8836df8a1f78282235eaf49cc8dc1bb9ac4",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          402
+        ],
+        "stripe": 10
+      },
+      "key": "7c2bf673736a7281bfc91a2e41f9fdabf8d4aeebf8371dfaf907a27b242df733",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          402
+        ],
+        "stripe": 2
+      },
+      "key": "236378f6f221c64be9cec5d5c86fcf7b9f7251e3fd6f2ebb28028a2ca02afda4",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          396
+        ],
+        "stripe": 11
+      },
+      "key": "9cf1fe6b22bc67b6b5284ccd213e85bccbc0763b44557a0a4c7488dc78a1df96",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          396
+        ],
+        "stripe": 2
+      },
+      "key": "c57e0def58c53a0fa4fa755c24a1eb4f3db5b5058b722688895df2ff13b895a0",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          357
+        ],
+        "stripe": 10
+      },
+      "key": "f5480ab4e77b3eaaa9f24626b4f2f0958968cf2f79f3500fce83a0761fe22f6b",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          357,
+          353
+        ],
+        "stripe": 1
+      },
+      "key": "da15cc30ee658b8b5a122364b8a91f54d401ac52fc7a1a50e0dd6f2d28b35912",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 357,
+        "old": 356
+      },
+      "key": "303db3b302f3267611dd914508d0db45c189304b325d0cfaaff90d61f312e3e0",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          204,
+          27
+        ],
+        "touch_delta": -2338
+      },
+      "key": "d08798e23c0cd61b103ae2a53c101f1b4532d22dcf187ab37961c3113e77303d",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 1,
+        "family": "width_redistribution",
+        "page": 204,
+        "receiver": 8
+      },
+      "key": "8f987645f5b7f17209bf6fdd0f39d964909a754e8da5f259f145d27dd09174f2",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 9,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          397,
+          398
+        ],
+        "receiver": 0
+      },
+      "key": "e6ba6f0df10de57add4a3a0770884547fc67ab50acceb4b9a763f1fd1ce98f26",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 8
+      },
+      "key": "bf571d6dd2e23f5c5be32de38665cc01cd3982e76bda5aed9478a86e5ad15b14",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "accepted": true,
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          357
+        ],
+        "stripe": 3
+      },
+      "key": "4eb4f581a6555657797e7895eb1b07f46149136e6af71dcec8c4aec4fab22251",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          358,
+          321
+        ],
+        "stripe": 1
+      },
+      "key": "61ce53a043751768bc5fca708117eb19c3d86c87b96f3274c95460edf6f5a2a1",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 353,
+        "old": 354
+      },
+      "key": "2004cc5a581517b63af2e6f387f77c683e259393662a513f57efb70bb2179213",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          42,
+          137
+        ],
+        "touch_delta": -521
+      },
+      "key": "088b84cbc704b97c62389db7b3b1ccea21ee6cf00708d10f1492e1b8f5940533",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 12,
+        "family": "width_redistribution",
+        "page": 42,
+        "receiver": 3
+      },
+      "key": "2bb9c1da0c763c3d26ac92b3f3c65563aaf5b544c410806c4b1f064e8d7cd77a",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 9,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          397,
+          398
+        ],
+        "receiver": 4
+      },
+      "key": "8f688dc92390a23171a6f7786f39dc99032f4c824cbd8c8ee1c3bc5818f1c357",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 16
+      },
+      "key": "332192aad681b0ef482756cceb28a304c2c89bcee82cbcbf9da8edb46d641ea8",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          353
+        ],
+        "stripe": 11
+      },
+      "key": "ebb070650d35b323e2eda3f3fc11dc541850e3ed194288d3fd71803afd928527",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          364,
+          402
+        ],
+        "stripe": 2
+      },
+      "key": "ce420b51684050f7388d1488add385e860382db1aaddd9277b811c713932d507",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 358,
+        "old": 356
+      },
+      "key": "b32bfde8d8873ff995f077fbb13ae26b04452897e9f4520a5665a06af0d643b9",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          27,
+          119
+        ],
+        "touch_delta": -81
+      },
+      "key": "8096ebbc72465169cb189a8383d7e7f0d6a5f77ad80d4244c1e367053a2bde2b",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 8,
+        "family": "width_redistribution",
+        "page": 27,
+        "receiver": 7
+      },
+      "key": "ff999664ecfd3ebbe46518a9be888df6702ee97a39530a601de3e268c3cb6d73",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 10,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          357,
+          358
+        ],
+        "receiver": 0
+      },
+      "key": "efdd8db1deaefea935d063ff114267e3e3f4313af83479d0ede6cce281f193e0",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 24
+      },
+      "key": "731fbad5ea47bc5d4d989b7cd51684ca5b773931326dfc7073946c10975bc625",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          353
+        ],
+        "stripe": 2
+      },
+      "key": "31f8da3267af700f76ce820525493b68ce80f9e52072e4c8fa4f17142f101f14",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          396,
+          413
+        ],
+        "stripe": 1
+      },
+      "key": "ca3d732ffb034b83b086a165e4056972c365b86be8a4422f3b6a3684c4da87f0",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          32,
+          69
+        ],
+        "touch_delta": -13
+      },
+      "key": "2b0827128afb7ac451675af4f9f4f35e695022812c33f6434e7d8220c9a3ed62",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    }
+  ],
+  "rounds": [
+    {
+      "end": "5d5c08ea167a28a866d88c54eb12d7535ce7281c47ffdb66b667335f8a654026",
+      "generated": 48,
+      "round": 1,
+      "start": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1"
+    },
+    {
+      "end": "4eb4f581a6555657797e7895eb1b07f46149136e6af71dcec8c4aec4fab22251",
+      "generated": 24,
+      "round": 2,
+      "start": "5d5c08ea167a28a866d88c54eb12d7535ce7281c47ffdb66b667335f8a654026"
+    }
+  ],
+  "search_counts": {
+    "full_models": 51,
+    "proposed": 72,
+    "read_feasible": 14,
+    "risk_feasible": 47
+  },
+  "guards": {
+    "01fe35bdf89c89a04d62f01c0df8a27ec6459e50498921f077103d71fd5aab43": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "088b84cbc704b97c62389db7b3b1ccea21ee6cf00708d10f1492e1b8f5940533": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "18191be9aaa668fcec294d4e86a551a559e221e774f6fe08147b3874ff12065b": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -4.3530100002441933e-05,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.00012972882498588252,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.00025523421430924273,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.00041494074298520974,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "2004cc5a581517b63af2e6f387f77c683e259393662a513f57efb70bb2179213": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "236378f6f221c64be9cec5d5c86fcf7b9f7251e3fd6f2ebb28028a2ca02afda4": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "24fa53661c9d4075c6e8489498c6e232429c86e30b077f55747986e710362861": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -5.41796148153398e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -3.623657623294215e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "2a0eedf972a703b7cc697efffdd1fb70ac372593d45d86292710f9e93bb35cdf": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "2b0827128afb7ac451675af4f9f4f35e695022812c33f6434e7d8220c9a3ed62": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "2bb9c1da0c763c3d26ac92b3f3c65563aaf5b544c410806c4b1f064e8d7cd77a": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "2c59da710ceb86e3884b72224aedd52d61fdf1ba4ce9df55a885299abb7d6c7a": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -1.7166405762905374e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -8.18948423988838e-06,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "2d7a0b1c1530ba3172f0a1683dbc372d3825741db7fb2f1c310db017a00fb233": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "303db3b302f3267611dd914508d0db45c189304b325d0cfaaff90d61f312e3e0": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "31f8da3267af700f76ce820525493b68ce80f9e52072e4c8fa4f17142f101f14": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "332192aad681b0ef482756cceb28a304c2c89bcee82cbcbf9da8edb46d641ea8": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.38680881269430517,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.1978900144122589,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.027804564823123597,
+          "reference_m": 3
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "36b80f6cc6636a53663586412cb03db2aa671447eaa5030915d11326b4ebf75d": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -2.3260081437305717e-08,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -9.083669791686276e-08,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "395d189ee02201745b29c31408ee92e8cdd23c804c75712b46bd8989140b9441": {
+      "failures": [
+        {
+          "candidate_m": 3,
+          "delta": "-709/6871934592",
+          "delta_pp": -1.031732753721763e-05,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-14063563/39084127992000",
+          "delta_pp": -3.598279844667028e-05,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-90622877/118294627389120",
+          "delta_pp": -7.660777078396285e-05,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 5
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-1/376750800",
+          "delta_pp": -2.654274390392801e-07,
+          "limit": 524288,
+          "mode": "cold",
+          "reference_m": 2
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-90622877/118294627389120",
+        "delta_pp": -7.660777078396285e-05,
+        "limit": 524288,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -7.660777078396285e-05
+    },
+    "40e831f55870a21357d0351260a84ab4585ce950c4799a7ca60984fd9c7c9e69": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "41c2e6006a05a64265f7d5b13636b594cdbf8f27b8845c85da8861c18d7744b3": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -1.8665200875130733e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -8.733901497781448e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "4779f75453d4c6ee0526d47e6e43aff23b6cb3b3c8ebc3692cd2cfe3a5590a1b": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "489acec0ae18aa598f27f71c9c7bd4255cb787de7df1c26be0797bd407265f03": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.1512943812132289,
+          "reference_m": 1
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "48cd8e2b389b0360187141214f463d00a1dd2e9bd28d1d454287c51d2defea71": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "4aea4b3720525f6c1624f25174c97e20ae0ceb85cc4be832add5b723ed0a0b91": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "4eb4f581a6555657797e7895eb1b07f46149136e6af71dcec8c4aec4fab22251": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "4ef0d485ec3f4bc3133b12282789834872e0a0f0b760821a7a483648efc74e8f": {
+      "failures": [
+        {
+          "candidate_m": 3,
+          "delta": "-451/10737397800",
+          "delta_pp": -4.200272807253169e-06,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 3
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 3,
+        "delta": "-451/10737397800",
+        "delta_pp": -4.200272807253169e-06,
+        "limit": 524288,
+        "mode": "hot",
+        "reference_m": 3
+      },
+      "worst_delta_pp": -4.200272807253169e-06
+    },
+    "52f4f08b3f66bdc96ad66b064dd3c602c4e9e328ab8879670b3f7ebaa87d98eb": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.5509253533389923,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.43000978556370484,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.3194090840385411,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.22246168786278736,
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "54a9c8cb76963fa2091e4dd05c5374f03b590c8963cb3e5623595912e5e229cf": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "55c1c39c28951efca98fef727844b6c5865a52bb07b3fe2a72894bc92cc3a638": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "5d5c08ea167a28a866d88c54eb12d7535ce7281c47ffdb66b667335f8a654026": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "6169fba3e2f040256852134a97b9a392b0f5d2db2abb9ea690f566ef610b15d5": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "61ce53a043751768bc5fca708117eb19c3d86c87b96f3274c95460edf6f5a2a1": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "66b21a9a1e623023ba3c91ae41e9135245d01ee83b238fa282b1878ac776257c": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -2.3364522810561773e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -1.1160837696574008e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "6c61596d7a6b9fcc2d4637bc8a1e8a4efcefa53c16f3840087b3883c6bd3ab31": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -6.695915028565235e-07,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -3.2419920932262015e-06,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "715f02de8d565667fe1c23ee736d6fa2af5583653d50bd1036c87bd385ecad46": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -8.386396648457685e-07,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -4.0222687243001724e-06,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "731fbad5ea47bc5d4d989b7cd51684ca5b773931326dfc7073946c10975bc625": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.24775585562634492,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.010942966702910756,
+          "reference_m": 2
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "74607f97e937f31a3e0d3383c3e6126dc39fda2b02951f5390d486869c8cfecb": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -3.0454562021791467e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -1.4499035004281884e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "75229f5f67cb4bd0826c20dcc07f93d9345c7bdb350fbde14312b6753d8f38ce": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -5.6405607935048336e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -3.432419208673868e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "7c2bf673736a7281bfc91a2e41f9fdabf8d4aeebf8371dfaf907a27b242df733": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "7cc74917f2d8b2445f9edaf883f998b1f00d19af0b12d54315f65a15a11e132f": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "8096ebbc72465169cb189a8383d7e7f0d6a5f77ad80d4244c1e367053a2bde2b": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "8a158ec684d5d3a39b8ec4ae5ef1bf6d6852731fd1aa22f1ae91928dd15980a3": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "8f688dc92390a23171a6f7786f39dc99032f4c824cbd8c8ee1c3bc5818f1c357": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "8f987645f5b7f17209bf6fdd0f39d964909a754e8da5f259f145d27dd09174f2": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "92d561d9bf78fe3e85de94bf427e4d89b13f55ced0cbcf083c069ac5308b2742": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "930ce7ae282a48ca925fe35a7229c8836df8a1f78282235eaf49cc8dc1bb9ac4": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -6.017561656950374e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.00028641490599470393,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "9cf1fe6b22bc67b6b5284ccd213e85bccbc0763b44557a0a4c7488dc78a1df96": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "b324275da0f65b5b31812b4ef618a4ee56fd9ccd7013a678a182109571e7183a": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "b32bfde8d8873ff995f077fbb13ae26b04452897e9f4520a5665a06af0d643b9": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "b4924e232a30e7c9192c21c2884347ae51105ad31acb4f97e2ea73237a16e75b": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "bf571d6dd2e23f5c5be32de38665cc01cd3982e76bda5aed9478a86e5ad15b14": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.5313704084253789,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.40037912128750897,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.279560236125203,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.17233016610157897,
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "c0e34fdb4da3c87c11e347656c25044f4510a7b8b10cf91a71c6adaca56d8d82": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "c57e0def58c53a0fa4fa755c24a1eb4f3db5b5058b722688895df2ff13b895a0": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "c691538a246270538f2a48e386dc99e9705abd6e31f6598ecaf51d7dd7ec8376": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -1.1682312576948333e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -5.4475570747061906e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "ca3d732ffb034b83b086a165e4056972c365b86be8a4422f3b6a3684c4da87f0": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "ccfec9c9132cd1276ee0c18f386bc39026d74b6ac19a1ddda39fa393ee2e4065": {
+      "failures": [
+        {
+          "candidate_m": 3,
+          "delta": "-1429/114532243200",
+          "delta_pp": -1.2476835867997737e-06,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-2063/135708777750",
+          "delta_pp": -1.5201669591339313e-06,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 4,
+        "delta": "-2063/135708777750",
+        "delta_pp": -1.5201669591339313e-06,
+        "limit": 524288,
+        "mode": "hot",
+        "reference_m": 4
+      },
+      "worst_delta_pp": -1.5201669591339313e-06
+    },
+    "ce1d8aa0eb9f6a2b03cc07e32d99881b5b0a8206c51098b324208d443966ba37": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -2.2118953253273339e-07,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -6.592030147192647e-07,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -2.0266283033412698e-07,
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "ce2316a125d7f379ae84e0d5428ae6b8d17e2e0f89f2e9d4069d4c9547a3f0f7": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "ce420b51684050f7388d1488add385e860382db1aaddd9277b811c713932d507": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "cf5d298841560ced0dbc743e14e5ca351544a87b2d43105b725ce8c56f75e2ff": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "d08798e23c0cd61b103ae2a53c101f1b4532d22dcf187ab37961c3113e77303d": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "d2d3e33101ece2d08c62224bf633144426c75c925fdc55ba8392dd4016b1e42e": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -8.27903849015724e-07,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -3.1754665303975514e-06,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "d65575447ddd630e920cab29f39edf34e690461e807ec113e9a46bed8b451bf5": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.4067241790600906,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.2285929407755653,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.06974217563823988,
+          "reference_m": 3
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "da15cc30ee658b8b5a122364b8a91f54d401ac52fc7a1a50e0dd6f2d28b35912": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "dcefbcfee454080404e2d714de6075fd66999505d5323fbe428436a1af91c5dd": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "e0c0ddba3e91e5a7fa709eb78cf25064efd8c7a0243b3607da54e178e4f1e619": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "e4438c8884bec2f97197e6a78f6325aec72500a1d776ab208f8bd7f536158f28": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "e6ba6f0df10de57add4a3a0770884547fc67ab50acceb4b9a763f1fd1ce98f26": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "e902f848fba4bec7caff0a3460148b51a03a6252cb27512dc824aa0b4e6c6444": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.26792249956571484,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.04236018172474,
+          "reference_m": 2
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "ebb070650d35b323e2eda3f3fc11dc541850e3ed194288d3fd71803afd928527": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "efdd8db1deaefea935d063ff114267e3e3f4313af83479d0ede6cce281f193e0": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "f5480ab4e77b3eaaa9f24626b4f2f0958968cf2f79f3500fce83a0761fe22f6b": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "fd9942e3bdccfc9fffc6f4bf5aa9b722bf39f8bd3f2e784f55e0193658b1afc6": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -4.318038003420322e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.00020547859270095308,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "ff999664ecfd3ebbe46518a9be888df6702ee97a39530a601de3e268c3cb6d73": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    }
+  },
+  "read_checks": {
+    "01fe35bdf89c89a04d62f01c0df8a27ec6459e50498921f077103d71fd5aab43": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 126976,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 126976,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "088b84cbc704b97c62389db7b3b1ccea21ee6cf00708d10f1492e1b8f5940533": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 24576,
+      "common_successes": 341,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 24576,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "2004cc5a581517b63af2e6f387f77c683e259393662a513f57efb70bb2179213": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 87027,
+      "common_successes": 337,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        0,
+        6,
+        -6
+      ],
+      "hot_common_byte_delta": 86016,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": -1
+      }
+    },
+    "236378f6f221c64be9cec5d5c86fcf7b9f7251e3fd6f2ebb28028a2ca02afda4": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 240980,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 241664,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 0,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "2a0eedf972a703b7cc697efffdd1fb70ac372593d45d86292710f9e93bb35cdf": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 127660,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        0,
+        6
+      ],
+      "hot_common_byte_delta": 126976,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "2b0827128afb7ac451675af4f9f4f35e695022812c33f6434e7d8220c9a3ed62": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 91480,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        4,
+        6,
+        0
+      ],
+      "hot_common_byte_delta": 90112,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "2bb9c1da0c763c3d26ac92b3f3c65563aaf5b544c410806c4b1f064e8d7cd77a": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 192512,
+      "common_successes": 341,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        5,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 192512,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 0,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "2d7a0b1c1530ba3172f0a1683dbc372d3825741db7fb2f1c310db017a00fb233": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 619510,
+      "common_successes": 338,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        -2,
+        0,
+        -6
+      ],
+      "hot_common_byte_delta": 618496,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -6,
+        "hot256": 0,
+        "hot512": -4
+      }
+    },
+    "303db3b302f3267611dd914508d0db45c189304b325d0cfaaff90d61f312e3e0": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 109578,
+      "common_successes": 338,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        0,
+        12,
+        -2
+      ],
+      "hot_common_byte_delta": 110592,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "31f8da3267af700f76ce820525493b68ce80f9e52072e4c8fa4f17142f101f14": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 257706,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        16,
+        0
+      ],
+      "hot_common_byte_delta": 258048,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 3,
+        "hot256": 0,
+        "hot512": 3
+      }
+    },
+    "40e831f55870a21357d0351260a84ab4585ce950c4799a7ca60984fd9c7c9e69": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 122196,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        6,
+        0
+      ],
+      "hot_common_byte_delta": 122880,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "4779f75453d4c6ee0526d47e6e43aff23b6cb3b3c8ebc3692cd2cfe3a5590a1b": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 169762,
+      "common_successes": 329,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        -12,
+        -18,
+        0
+      ],
+      "hot_common_byte_delta": 163840,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -4,
+        "hot256": 0,
+        "hot512": -4
+      }
+    },
+    "48cd8e2b389b0360187141214f463d00a1dd2e9bd28d1d454287c51d2defea71": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 126635,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        0,
+        9,
+        -6
+      ],
+      "hot_common_byte_delta": 126976,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "4aea4b3720525f6c1624f25174c97e20ae0ceb85cc4be832add5b723ed0a0b91": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 169024,
+      "common_successes": 324,
+      "feasible": false,
+      "fold_point_deltas": [
+        11,
+        0,
+        -8,
+        -4
+      ],
+      "hot_common_byte_delta": 163840,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "4eb4f581a6555657797e7895eb1b07f46149136e6af71dcec8c4aec4fab22251": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 230060,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        5,
+        24,
+        5
+      ],
+      "hot_common_byte_delta": 229376,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 4,
+        "hot256": 0,
+        "hot512": 6
+      }
+    },
+    "54a9c8cb76963fa2091e4dd05c5374f03b590c8963cb3e5623595912e5e229cf": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 261972,
+      "common_successes": 327,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        -16,
+        -28,
+        15
+      ],
+      "hot_common_byte_delta": 258048,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -2,
+        "hot256": 0,
+        "hot512": -3
+      }
+    },
+    "55c1c39c28951efca98fef727844b6c5865a52bb07b3fe2a72894bc92cc3a638": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 253398,
+      "common_successes": 322,
+      "feasible": false,
+      "fold_point_deltas": [
+        17,
+        -4,
+        -18,
+        12
+      ],
+      "hot_common_byte_delta": 249856,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "5d5c08ea167a28a866d88c54eb12d7535ce7281c47ffdb66b667335f8a654026": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 86016,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        6,
+        0
+      ],
+      "hot_common_byte_delta": 86016,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "6169fba3e2f040256852134a97b9a392b0f5d2db2abb9ea690f566ef610b15d5": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 131754,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        0,
+        0,
+        -6
+      ],
+      "hot_common_byte_delta": 131072,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": -1
+      }
+    },
+    "61ce53a043751768bc5fca708117eb19c3d86c87b96f3274c95460edf6f5a2a1": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 703136,
+      "common_successes": 340,
+      "feasible": false,
+      "fold_point_deltas": [
+        -4,
+        10,
+        1,
+        6
+      ],
+      "hot_common_byte_delta": 700416,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "7c2bf673736a7281bfc91a2e41f9fdabf8d4aeebf8371dfaf907a27b242df733": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 161454,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        6,
+        0,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 159744,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "7cc74917f2d8b2445f9edaf883f998b1f00d19af0b12d54315f65a15a11e132f": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 594937,
+      "common_successes": 339,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        -2,
+        8,
+        0
+      ],
+      "hot_common_byte_delta": 593920,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -3,
+        "hot256": 0,
+        "hot512": -1
+      }
+    },
+    "8096ebbc72465169cb189a8383d7e7f0d6a5f77ad80d4244c1e367053a2bde2b": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -199684,
+      "common_successes": 340,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        6,
+        7,
+        -6
+      ],
+      "hot_common_byte_delta": -200704,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "8a158ec684d5d3a39b8ec4ae5ef1bf6d6852731fd1aa22f1ae91928dd15980a3": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 144386,
+      "common_successes": 342,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -1,
+        18,
+        5
+      ],
+      "hot_common_byte_delta": 143360,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 4
+      }
+    },
+    "8f688dc92390a23171a6f7786f39dc99032f4c824cbd8c8ee1c3bc5818f1c357": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 336681,
+      "common_successes": 327,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        -10,
+        -22,
+        15
+      ],
+      "hot_common_byte_delta": 331776,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 0,
+        "hot256": 0,
+        "hot512": -1
+      }
+    },
+    "8f987645f5b7f17209bf6fdd0f39d964909a754e8da5f259f145d27dd09174f2": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -112642,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        6,
+        6,
+        -6
+      ],
+      "hot_common_byte_delta": -114688,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "92d561d9bf78fe3e85de94bf427e4d89b13f55ced0cbcf083c069ac5308b2742": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -17064,
+      "common_successes": 340,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        6,
+        -12,
+        0
+      ],
+      "hot_common_byte_delta": -16384,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": -1
+      }
+    },
+    "9cf1fe6b22bc67b6b5284ccd213e85bccbc0763b44557a0a4c7488dc78a1df96": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 139948,
+      "common_successes": 342,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        0,
+        4,
+        0
+      ],
+      "hot_common_byte_delta": 139264,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "b324275da0f65b5b31812b4ef618a4ee56fd9ccd7013a678a182109571e7183a": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -228008,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "hot_common_byte_delta": -229376,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "b32bfde8d8873ff995f077fbb13ae26b04452897e9f4520a5665a06af0d643b9": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 122880,
+      "common_successes": 339,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        12,
+        -6,
+        -6
+      ],
+      "hot_common_byte_delta": 122880,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 0,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "b4924e232a30e7c9192c21c2884347ae51105ad31acb4f97e2ea73237a16e75b": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 156332,
+      "common_successes": 342,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        0,
+        -1,
+        0
+      ],
+      "hot_common_byte_delta": 155648,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "c0e34fdb4da3c87c11e347656c25044f4510a7b8b10cf91a71c6adaca56d8d82": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 292184,
+      "common_successes": 342,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        6,
+        -1,
+        5
+      ],
+      "hot_common_byte_delta": 290816,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 0,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "c57e0def58c53a0fa4fa755c24a1eb4f3db5b5058b722688895df2ff13b895a0": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 206164,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        0,
+        6,
+        -6
+      ],
+      "hot_common_byte_delta": 204800,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 0,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "ca3d732ffb034b83b086a165e4056972c365b86be8a4422f3b6a3684c4da87f0": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 705868,
+      "common_successes": 339,
+      "feasible": false,
+      "fold_point_deltas": [
+        -1,
+        4,
+        1,
+        -6
+      ],
+      "hot_common_byte_delta": 704512,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -4,
+        "hot256": 0,
+        "hot512": -2
+      }
+    },
+    "ce2316a125d7f379ae84e0d5428ae6b8d17e2e0f89f2e9d4069d4c9547a3f0f7": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 75088,
+      "common_successes": 340,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        -6,
+        18,
+        6
+      ],
+      "hot_common_byte_delta": 73728,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "ce420b51684050f7388d1488add385e860382db1aaddd9277b811c713932d507": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 555688,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -1,
+        5,
+        -1
+      ],
+      "hot_common_byte_delta": 552960,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "cf5d298841560ced0dbc743e14e5ca351544a87b2d43105b725ce8c56f75e2ff": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 230058,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -6,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 229376,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": -1
+      }
+    },
+    "d08798e23c0cd61b103ae2a53c101f1b4532d22dcf187ab37961c3113e77303d": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -114006,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        6,
+        12,
+        -6
+      ],
+      "hot_common_byte_delta": -114688,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "da15cc30ee658b8b5a122364b8a91f54d401ac52fc7a1a50e0dd6f2d28b35912": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 699016,
+      "common_successes": 337,
+      "feasible": false,
+      "fold_point_deltas": [
+        -13,
+        -2,
+        23,
+        -6
+      ],
+      "hot_common_byte_delta": 696320,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -4,
+        "hot256": 0,
+        "hot512": -2
+      }
+    },
+    "dcefbcfee454080404e2d714de6075fd66999505d5323fbe428436a1af91c5dd": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 171690,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        0,
+        10,
+        0
+      ],
+      "hot_common_byte_delta": 172032,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "e0c0ddba3e91e5a7fa709eb78cf25064efd8c7a0243b3607da54e178e4f1e619": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 443391,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -1,
+        5,
+        -6
+      ],
+      "hot_common_byte_delta": 442368,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": -1,
+        "hot256": 0,
+        "hot512": -1
+      }
+    },
+    "e4438c8884bec2f97197e6a78f6325aec72500a1d776ab208f8bd7f536158f28": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 134484,
+      "common_successes": 342,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        6,
+        -1,
+        6
+      ],
+      "hot_common_byte_delta": 135168,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "e6ba6f0df10de57add4a3a0770884547fc67ab50acceb4b9a763f1fd1ce98f26": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 327448,
+      "common_successes": 322,
+      "feasible": false,
+      "fold_point_deltas": [
+        17,
+        2,
+        -12,
+        12
+      ],
+      "hot_common_byte_delta": 323584,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 4,
+        "hot256": 0,
+        "hot512": 3
+      }
+    },
+    "ebb070650d35b323e2eda3f3fc11dc541850e3ed194288d3fd71803afd928527": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 214015,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        6,
+        15,
+        -6
+      ],
+      "hot_common_byte_delta": 212992,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "efdd8db1deaefea935d063ff114267e3e3f4313af83479d0ede6cce281f193e0": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 247496,
+      "common_successes": 324,
+      "feasible": false,
+      "fold_point_deltas": [
+        11,
+        6,
+        -2,
+        -4
+      ],
+      "hot_common_byte_delta": 241664,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "f5480ab4e77b3eaaa9f24626b4f2f0958968cf2f79f3500fce83a0761fe22f6b": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 161104,
+      "common_successes": 340,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        0,
+        24,
+        6
+      ],
+      "hot_common_byte_delta": 159744,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 4,
+        "hot256": 0,
+        "hot512": 4
+      }
+    },
+    "ff999664ecfd3ebbe46518a9be888df6702ee97a39530a601de3e268c3cb6d73": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 53932,
+      "common_successes": 342,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        12,
+        0
+      ],
+      "hot_common_byte_delta": 53248,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 3,
+        "hot256": 0,
+        "hot512": 3
+      }
+    }
+  }
+}

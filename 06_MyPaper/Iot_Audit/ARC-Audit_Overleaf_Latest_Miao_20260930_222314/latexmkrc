@@ -1,0 +1,14 @@
+# Build the companion first so xr resolves up-to-date Supplementary references.
+# Direct pdflatex/bibtex calls do not recursively load this latexmk configuration.
+$pdf_mode = 1;
+if (-e 'supplementary.tex') {
+    my @jobs = (
+        ['pdflatex', '-interaction=nonstopmode', '-halt-on-error', 'supplementary.tex'],
+        ['bibtex', 'supplementary'],
+        ['pdflatex', '-interaction=nonstopmode', '-halt-on-error', 'supplementary.tex'],
+        ['pdflatex', '-interaction=nonstopmode', '-halt-on-error', 'supplementary.tex']
+    );
+    for my $job (@jobs) {
+        system(@$job) == 0 or die "Supplementary build failed: @$job\n";
+    }
+}

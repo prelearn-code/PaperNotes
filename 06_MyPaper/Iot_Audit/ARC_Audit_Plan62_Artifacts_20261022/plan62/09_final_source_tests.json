@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "tests": 32,
+  "seconds": 14.69,
+  "regression_tests": 19,
+  "source": "development Plan62 after invalid-classification hardening",
+  "formal_runtime": "v2 before classification-only hardening, preserved"
+}

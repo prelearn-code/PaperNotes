@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "created": "2026-10-21T14:53:17.323773+00:00",
+  "auditor_sha256": "94dc3d5ce7aa6433e342ae022430aa3c85718186e853af6b36210b454a2039c5",
+  "checks": {
+    "new_jobs": 6,
+    "new_actual_rows": 10848,
+    "reused_cases": 5424,
+    "independent_physical_oracle_checks": 10848,
+    "clean_calls": 96,
+    "authenticated_sidecars": 12,
+    "exact_old_new_event_pairs": 21696,
+    "contrasts_and_independent_cp": 120,
+    "conditional_cost_scopes": 240,
+    "old_eight_arm_rows": 43392,
+    "source_output_primary_audit_preserved": true
+  },
+  "hashes": {
+    "new_completion_sha256": "de089819fcf7f75ccc3da1711691e739df77a5be8e08d40b8c8cd986bccc6704",
+    "new_export_receipt_sha256": "f1ad627fc52edc039e5274708f552ce007b7750b63b1a28f167248d29621846f",
+    "diagnostic_source_sha256": "8168f78b7398dac30b972e20e7a46c7398733e61c4145c772fcd34f33c023d81",
+    "original_export_receipt_sha256": "5398c2f6a6dd4371c84bfaa333964f43945ac48c41b32cb0ab4bb7259ad00062",
+    "primary_audit_sha256": "ccd34e360923ea1496abca160b99af5c197affd2ab5ca9d8be97d66c3b9ce69c"
+  },
+  "scope": "Post-hoc development attribution on the same already-seen cases, with all frozen raw candidates retained. Independent disjoint-MDS oracle and authenticated sidecar verification, no new GF expectation sweep and no ciphertext recovery rerun. Existing sealed truth flags checked; no inference of independent confirmation. Paired CP is per-panel without family correction. Elapsed values were not evaluated.",
+  "seconds": 5.861933274078183
+}

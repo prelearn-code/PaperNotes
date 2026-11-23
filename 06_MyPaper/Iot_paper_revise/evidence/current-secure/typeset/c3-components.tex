@@ -1,0 +1,21 @@
+\begingroup\small\setlength{\tabcolsep}{5pt}
+\begin{longtable}{@{}lrlrrrrrr@{}}
+\caption{Dictionary Recovery Components for Successful Fault Requests}\label{tab:c3-components}\\
+\toprule Segment & Loss \% & Policy & $n_s$ & Downloaded B & Returned B & Decrypt ms & Decode ms & Init ms\\\midrule\endfirsthead
+\toprule Segment & Loss \% & Policy & $n_s$ & Downloaded B & Returned B & Decrypt ms & Decode ms & Init ms\\\midrule\endhead
+\midrule\multicolumn{9}{r}{Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+train1 & 0.1 & Exact & 238 & 323,584 & 323,584 & 1.028 & 2.015 & 0.752\\
+train1 & 0.1 & Conservative & 238 & 1,392,640 & 1,392,640 & 4.214 & 2.182 & 0.712\\
+train1 & 1.0 & Exact & 185 & 327,680 & 323,584 & 1.020 & 2.043 & 0.674\\
+train1 & 1.0 & Conservative & 185 & 1,392,640 & 1,392,640 & 4.230 & 2.139 & 0.681\\
+train1 & 5.0 & Exact & 37 & 364,544 & 323,584 & 1.013 & 2.139 & 0.639\\
+train1 & 5.0 & Conservative & 27 & 1,413,120 & 1,392,640 & 4.250 & 2.261 & 0.684\\
+train2 & 0.1 & Exact & 244 & 315,392 & 315,392 & 0.962 & 1.833 & 0.644\\
+train2 & 0.1 & Conservative & 244 & 1,040,384 & 1,040,384 & 3.060 & 1.907 & 0.627\\
+train2 & 1.0 & Exact & 185 & 319,488 & 315,392 & 0.957 & 1.856 & 0.619\\
+train2 & 1.0 & Conservative & 185 & 1,040,384 & 1,040,384 & 3.090 & 1.898 & 0.622\\
+train2 & 5.0 & Exact & 54 & 346,112 & 296,960 & 0.958 & 1.898 & 0.604\\
+train2 & 5.0 & Conservative & 45 & 704,512 & 671,744 & 2.110 & 1.948 & 0.607\\
+\end{longtable}
+\endgroup

@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "key": "3075affd81c0cbb61f60ebc9e1040127090061f1e5fdf64d8256659161abb4f9",
+      "method": "Raw24",
+      "mode": "hot",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "key": "3075affd81c0cbb61f60ebc9e1040127090061f1e5fdf64d8256659161abb4f9",
+      "method": "Raw24",
+      "mode": "cold",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "key": "8d8d5da8817303770dae55a80a5669ad3728aa1ba2561a6bc0e576e197d606f2",
+      "method": "ANoGate",
+      "mode": "hot",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "key": "8d8d5da8817303770dae55a80a5669ad3728aa1ba2561a6bc0e576e197d606f2",
+      "method": "ANoGate",
+      "mode": "cold",
+      "records": 21600,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,127 @@
+{
+  "plan": 61,
+  "stage_intent": "development screening only; all six windows previously seen",
+  "days": [
+    "train1_2020-07-11",
+    "train2_2020-08-01",
+    "train1_2020-07-12",
+    "train2_2020-08-02",
+    "train1_2020-07-13",
+    "train2_2020-08-03"
+  ],
+  "layouts": [
+    64001
+  ],
+  "beta": 0.1,
+  "alphas": [
+    0.001,
+    0.005,
+    0.01,
+    0.05
+  ],
+  "test_counts": [
+    128,
+    128,
+    128,
+    512
+  ],
+  "clean_per_job": 8,
+  "max_evaluations": 64,
+  "test_seed_root": 6100000,
+  "geometries": [
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      12,
+      1
+    ],
+    [
+      12,
+      2
+    ],
+    [
+      12,
+      3
+    ],
+    [
+      16,
+      1
+    ],
+    [
+      16,
+      2
+    ],
+    [
+      16,
+      3
+    ],
+    [
+      24,
+      1
+    ],
+    [
+      24,
+      2
+    ],
+    [
+      24,
+      3
+    ],
+    [
+      32,
+      1
+    ],
+    [
+      32,
+      2
+    ],
+    [
+      32,
+      3
+    ]
+  ],
+  "primary": "exact complete-record U at nominal alpha .05; actual paired development validation separately",
+  "risk": "exact rational comparison on all union breakpoints alpha in (0,.01]; zero tolerance",
+  "reference": "18 native uniform codes: best U5 subject risk>=FD10; candidates risk>=that safe selected baseline",
+  "population": "original ciphertext pages + each method own parity objects; coupled uniform physical-object erasures",
+  "acquisition": "previously frozen six HAI21 six-hour windows; same original archives and graphs",
+  "selection_rule": "provisional advance if positive model gain versus safe strong baseline, no risk violation, actual-engine/oracle/truth agree; actual interval crossing zero is unconfirmed; raw unconstrained fixed winner always reported",
+  "reading_rule": "compare lazy to identical eager layout and exact faults, include successful and failed requests, bytes and total fetch attempts; no assumed improvement",
+  "novelty": "none claimed from parameter tuning, Jaccard, caching or read order alone",
+  "qualification": {
+    "layouts": [
+      64000
+    ],
+    "test_counts": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "clean_per_job": 2,
+    "max_evaluations": 4,
+    "test_seed_root": 6200000
+  }
+}

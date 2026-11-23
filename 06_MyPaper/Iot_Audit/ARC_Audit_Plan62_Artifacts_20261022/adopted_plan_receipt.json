@@ -1,0 +1,6 @@
+{
+  "source": "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan62/pilot_20261022_v1/jobs/train1_2020-07-11/plan.json",
+  "sha256": "2c8a3e87241c1168ae51c7e97913a6c4f6a64fd1ec3c5520b25f22d11cc6eac0",
+  "equivalence_receipt": "runtime/Plan/plan62/05_memoization_equivalence.json",
+  "note": "only repeated-polynomial cache changed; exact integer equality verified on all 73 unique selected/candidate layouts; no test outcomes viewed"
+}

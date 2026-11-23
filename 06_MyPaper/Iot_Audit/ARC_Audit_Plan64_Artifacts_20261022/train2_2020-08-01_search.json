@@ -1,0 +1,3596 @@
+{
+  "trace": [
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          386
+        ],
+        "stripe": 7
+      },
+      "key": "b60a7d7c7e12876b7ee4703c4ec34b7f0816e1fcbfb944f9c009c1d13b1ec417",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          386,
+          377
+        ],
+        "stripe": 0
+      },
+      "key": "7d40d8fac32c64ff4fec87155f729cb5d6d3395194b8914f26ce3d681aebb943",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 386,
+        "old": 364
+      },
+      "key": "edec0c952b2b9ea3cfc7b100885ab9420ee86f4e6d11b9c988bd9e6908230daa",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          254,
+          279
+        ],
+        "touch_delta": -657
+      },
+      "key": "60f6322041d041b35f0cdf21532a6cadd8e20dd5518a93ad8800893f8a76e0d3",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 1,
+        "family": "width_redistribution",
+        "page": 254,
+        "receiver": 11
+      },
+      "key": "83f079f7a9533cb58c66fae8f27ff63b53ff2f04052bd9b1a7ac7d788ebc2b4e",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 5,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          366,
+          368
+        ],
+        "receiver": 0
+      },
+      "key": "b2975bb6d8a1df0d055434cb7d35cd1b05cb3d1f94b7720506082f852f4b04d5",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 8
+      },
+      "key": "85836034f3c3a06b03401f28aab47107afdf21ef706697f338138a9b4b91dd3b",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "accepted": true,
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          386
+        ],
+        "stripe": 10
+      },
+      "key": "8ca9be7e43a4ad3b2399bbb04d3cafe408a14dc7005172efdce36e7420144e44",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          368,
+          373
+        ],
+        "stripe": 3
+      },
+      "key": "0ea0c6c2fe6ee1528d55ca4769466317db8a841678eea558249686ae2f389f9e",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 377,
+        "old": 364
+      },
+      "key": "a4e9009e004644ace181d948b1e5506ecf8c7bc9e3cff6f8996deb5405e192c7",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          107,
+          23
+        ],
+        "touch_delta": -511
+      },
+      "key": "4f4e254b4e68c30ec42d64048ddb6a36d957f2552ac4453384fbea9dec26dd52",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 1,
+        "family": "width_redistribution",
+        "page": 107,
+        "receiver": 6
+      },
+      "key": "1aae2cd3cac7a62a8a11ee429c776025568c96c6667e5be7637b9980a14500f9",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 5,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          366,
+          368
+        ],
+        "receiver": 1
+      },
+      "key": "e34afdb4942236cf0a80b2cce390599d0b3bf8897df39a072fbf98c592ae5055",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 16
+      },
+      "key": "80dbc7ee78fe71183378f93a80b9d1ef0038cd9a170869ce0c4a266d3f5ce09e",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          377
+        ],
+        "stripe": 4
+      },
+      "key": "2c50caeceda6bfbf556ba2dc4ffc9093e38517d0a44fcfbfe4c755ebfd5e527e",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          366,
+          379
+        ],
+        "stripe": 0
+      },
+      "key": "bae165d73cb25ef3b6b8251f329ccba75b99e085d6521f0358324fcf59dbfa37",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 368,
+        "old": 364
+      },
+      "key": "99c096f150c1b30a66b72636204d9aef202158015ff653e80269c7af9f791edf",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          34,
+          278
+        ],
+        "touch_delta": -479
+      },
+      "key": "ba5cb505b87484968e8e1e0d1b1add0fbc195ad0593fccd115dfea6d45a1c3b0",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 10,
+        "family": "width_redistribution",
+        "page": 34,
+        "receiver": 11
+      },
+      "key": "a0b8fb2d108886bddc1fcda86f08495ab45ce289b75982ca53aec4269a1d3c7d",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 4,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          373,
+          377
+        ],
+        "receiver": 0
+      },
+      "key": "922e69b2179340c32cf93d91084931dd3ce7ab20dc53c46409463cff673f77ab",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 24
+      },
+      "key": "ad7ad8b194eba90b458746fbf89ed2054cb35fd4922a7f1b627418c4648330b9",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "accepted": true,
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          377
+        ],
+        "stripe": 9
+      },
+      "key": "d97f7aeac10d437904c7edf071263fce5091aa74acdf78cb6239b1e1c70f505e",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          372,
+          363
+        ],
+        "stripe": 0
+      },
+      "key": "cd5bfea5d9740f2c1d6c1d3017103a95438bd153c71649c5d4f3534ba7f7ff77",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 373,
+        "old": 364
+      },
+      "key": "ae0307fa51a8c6f676092f84df142b77ffe5e492430ee5f725d25b2793b848bd",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          37,
+          25
+        ],
+        "touch_delta": -433
+      },
+      "key": "fd046210ccadf9bb4d399a39c4554339476075239be18754eb66b5a2c4e959fe",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 11,
+        "family": "width_redistribution",
+        "page": 37,
+        "receiver": 9
+      },
+      "key": "39a6dbe26af635b2f78a0e3de68cae871b5f32ce2b85eafd1f42235105469159",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "donor": 4,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          373,
+          377
+        ],
+        "receiver": 1
+      },
+      "key": "863e772bc7d40f9971d96ee3d7b69122889692bbbc7480169e861389f88fa75e",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 32
+      },
+      "key": "e16f947b353d14cf233b2f703217da0606ded9c260835bf1428a30228695028a",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          368
+        ],
+        "stripe": 5
+      },
+      "key": "6d25950db87167a42698d33a5fd0583f6cd0e014215dd20a7493144dbec2054b",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          19,
+          162
+        ],
+        "touch_delta": -370
+      },
+      "key": "36c4ae5418ccc75d6af754b17638ba56a0e316592784c53a8c1995b1f5bc0de7",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          368
+        ],
+        "stripe": 3
+      },
+      "key": "a0f08674078e7f7feadb87064fba2bd3914433647d7afd65b0329f5a8febbee1",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          184,
+          278
+        ],
+        "touch_delta": -354
+      },
+      "key": "c27a5e91ffd0fa8c2a35983662ec5a9d011679b49b63c9aa6f831f53c6718aff",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          373
+        ],
+        "stripe": 4
+      },
+      "key": "a55a26dbeb12df5482e77741be9dd5a09614f36deff0ca02834ce840b2eb8820",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          280,
+          261
+        ],
+        "touch_delta": -171
+      },
+      "key": "772f2097de1e82d0440b5c9c877c726aa8db93522c5389bff63ab2e8b7f28b62",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          373
+        ],
+        "stripe": 3
+      },
+      "key": "9f054575e44c2161bb44f6e6ef379a3d82a6dc51dc0be098c72e04fa85f1866b",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          381,
+          193
+        ],
+        "touch_delta": -63
+      },
+      "key": "cbf8d05eb9c22d22aeda43359450bdc9d903c611ef66a6de00f5b39bb91a4dd1",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          366
+        ],
+        "stripe": 5
+      },
+      "key": "881e5247652fa5fed4558ed58c2d4ad0e4c3010da444f008fb7e2ed7cc29f395",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          112,
+          277
+        ],
+        "touch_delta": -40
+      },
+      "key": "443b3d951cbad03b30d57eb47f4f7d8dcd9453702f2be6c0b330e19db4625e7b",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          366
+        ],
+        "stripe": 3
+      },
+      "key": "e2a8ed66d5c210c9c93a95840a58274135c6f84f7c02f239ac63b5e18f764eb0",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          5,
+          255
+        ],
+        "touch_delta": 0
+      },
+      "key": "a1f9f1711f243eec423e08b060232d039b032b35661708afe4940863f7ff7e1a",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          379
+        ],
+        "stripe": 2
+      },
+      "key": "5b99a649cef3f9052078e4b1dc6c9705b84c78a8cca1abc4288a0ce579044306",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          44,
+          113
+        ],
+        "touch_delta": 0
+      },
+      "key": "608047359f97db4937fb980f87780f23ae3c847f09e707acfac2450e53829be7",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "accepted": true,
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          379
+        ],
+        "stripe": 9
+      },
+      "key": "c2a7a79d42c6520f75401960e57c511c03357f8e00e0f849512112399e8f8170",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          44,
+          161
+        ],
+        "touch_delta": 0
+      },
+      "key": "af3b9a3ab3e59ba5158ee373813c846685b68a3991f9d9571efa366627794b23",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          372
+        ],
+        "stripe": 4
+      },
+      "key": "2f2003fbdf9ed31c5f1c736c9924e2b7ae6341dd0d2d89201d10eebb3fbe7c43",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          372
+        ],
+        "stripe": 3
+      },
+      "key": "53c8e29f92c471f0ed4df211721050ca2795c2d1628276d996b07e3e13ccb07b",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          363
+        ],
+        "stripe": 5
+      },
+      "key": "3b9b968a832530e268331930f90b2844912d48a74ca8c8fbf6344594bc5c56a4",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          363
+        ],
+        "stripe": 10
+      },
+      "key": "9bea60e5248e98ae59024efd16d9d0f7d7fcbdb409f0d8f8839e66ee3fd57eb6",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          386
+        ],
+        "stripe": 7
+      },
+      "key": "ba26777007d3d35e34f5f8577d977c075c80a32b8b237bfcd4cf350405c159bd",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          386,
+          377
+        ],
+        "stripe": 0
+      },
+      "key": "88fc5ca52a762d47657084017efab8cf3ddcef1d017cc2b69116849825604b68",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 386,
+        "old": 364
+      },
+      "key": "260a584298a187af431bd3fcb5985b5c04a144fcbde9df475dbf2ed63f1e1540",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          81,
+          26
+        ],
+        "touch_delta": -2409
+      },
+      "key": "df768f0e6e421c3dae7d284ceded6c9583d4f2402215831aef2cbe280a42a82e",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 1,
+        "family": "width_redistribution",
+        "page": 81,
+        "receiver": 7
+      },
+      "key": "9217881997d1dbb010408f616fd4c725517f8d231249484e36410a15b5afee11",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 5,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          366,
+          368
+        ],
+        "receiver": 0
+      },
+      "key": "b406e38bc6d5d25268de05bfcb35c9b086ac6e6d28aaa18e55f8ad879da5008c",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 8
+      },
+      "key": "5f3062ca5b20a2093ffad76e198e724bfafac21284b521c7ccbd83dc41d0b23e",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "accepted": true,
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          386
+        ],
+        "stripe": 10
+      },
+      "key": "fe141509a6927062d53875c0d9a9928f0610f0928f0f2a573e46ce4fb5ccb2fe",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          368,
+          373
+        ],
+        "stripe": 3
+      },
+      "key": "a5c3796e94c1875f73c83019205f07b87d2c256cd8744878a4e6c751b1cc9a48",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 377,
+        "old": 364
+      },
+      "key": "5d4aa311b78b687ea7355524ee9d1c6ed21722d9c8a22513cc3c5a0da1ea1d38",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          280,
+          29
+        ],
+        "touch_delta": -265
+      },
+      "key": "0a1c9a08d3bf3a4bde0531c436d384735ec95bc031addae885595fd5d4007a18",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 11,
+        "family": "width_redistribution",
+        "page": 280,
+        "receiver": 6
+      },
+      "key": "fdcc6dabdc1b1c22941e0e25cb8bbecb90bd652cb90388885d75dca7023fe37e",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 5,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          366,
+          368
+        ],
+        "receiver": 1
+      },
+      "key": "ea862125d4478696b0391bc5c91d9b011e10e678a6745414e7b78777f3a4beb2",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 16
+      },
+      "key": "640fc52d69839a7dd1cfd5ede2e128a80c45cee614a4cedb425b812a8fcf0b60",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          377
+        ],
+        "stripe": 4
+      },
+      "key": "a3013a144e4e294f7f6edce6e019ead722584a59ed85a0ac0de01f8bea00f9e4",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          366,
+          372
+        ],
+        "stripe": 3
+      },
+      "key": "91dce16a0c7d5e783ecdfb71444238643a3e5c3f4ea1afaac21eeb685ccd0626",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 368,
+        "old": 364
+      },
+      "key": "47c4f88202716be6a41182090e66872d4c8161bdc0565b5dbd812aad72e2bd76",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "protected_swap",
+        "pages": [
+          222,
+          27
+        ],
+        "touch_delta": -257
+      },
+      "key": "eceafa1c6d342349a6c9f955b0cbf1b136f13382249e704a8eea3226fd8db2f6",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 6,
+        "family": "width_redistribution",
+        "page": 222,
+        "receiver": 10
+      },
+      "key": "aad74bcea7a036cab4c899b3f84d493cae503713fb50d2b70af0b30a2f3106f7",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "donor": 4,
+        "family": "parity_transfer_plus_coverage",
+        "pages": [
+          373,
+          377
+        ],
+        "receiver": 0
+      },
+      "key": "c63a897f035f3bb13f20dfc205a8073bec340586c2ddebfb9757c0aa30eb779a",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "tail",
+        "width": 24
+      },
+      "key": "460ea8dd0332fb8bc283414e22fb7b5bcf99e00ad3d8a53c7b47d96a8c09dfdb",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "accepted": true,
+      "info": {
+        "family": "coverage_insert",
+        "pages": [
+          377
+        ],
+        "stripe": 9
+      },
+      "key": "14937517e8cbd5ca74b31c3ee5e8d247c4ebb7a86f4edc12270200461fae644c",
+      "read_feasible": true,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "joint_coverage_insert",
+        "pages": [
+          363,
+          365
+        ],
+        "stripe": 5
+      },
+      "key": "6f7564b48b10749920217b2f3574c178dbc06a56035533ac350b96c6ed1a63cb",
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "family": "coverage_replace",
+        "new": 373,
+        "old": 364
+      },
+      "key": "7df9b6dc59c676db290fb59a48d7e96bbc988ba26427f52e2bbd59cd9c4e8d5c",
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    }
+  ],
+  "rounds": [
+    {
+      "end": "c2a7a79d42c6520f75401960e57c511c03357f8e00e0f849512112399e8f8170",
+      "generated": 48,
+      "round": 1,
+      "start": "f0cbf4048d10b994dbb6fdab50fb84a0664df47459ac548c322a1d6c4e5676dc"
+    },
+    {
+      "end": "14937517e8cbd5ca74b31c3ee5e8d247c4ebb7a86f4edc12270200461fae644c",
+      "generated": 24,
+      "round": 2,
+      "start": "c2a7a79d42c6520f75401960e57c511c03357f8e00e0f849512112399e8f8170"
+    }
+  ],
+  "search_counts": {
+    "full_models": 49,
+    "proposed": 72,
+    "read_feasible": 9,
+    "risk_feasible": 17
+  },
+  "guards": {
+    "0a1c9a08d3bf3a4bde0531c436d384735ec95bc031addae885595fd5d4007a18": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "0ea0c6c2fe6ee1528d55ca4769466317db8a841678eea558249686ae2f389f9e": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-7/612000",
+          "delta_pp": -0.0011437908496732027,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-13097/648720000",
+          "delta_pp": -0.0020188987544703415,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-3666817/137204280000",
+          "delta_pp": -0.0026725237725820214,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-151708921/4825017180000",
+          "delta_pp": -0.0031442151466080375,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-21128796451/609399669834000",
+          "delta_pp": -0.0034671493105264506,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-21128796451/609399669834000",
+        "delta_pp": -0.0034671493105264506,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0034671493105264506
+    },
+    "14937517e8cbd5ca74b31c3ee5e8d247c4ebb7a86f4edc12270200461fae644c": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "1aae2cd3cac7a62a8a11ee429c776025568c96c6667e5be7637b9980a14500f9": {
+      "failures": [
+        {
+          "candidate_m": 3,
+          "delta": "-11179/137204280000",
+          "delta_pp": -8.147705013283842e-06,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-43151/579002061600",
+          "delta_pp": -7.452650493291439e-06,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 3,
+        "delta": "-11179/137204280000",
+        "delta_pp": -8.147705013283842e-06,
+        "limit": 524288,
+        "mode": "hot",
+        "reference_m": 3
+      },
+      "worst_delta_pp": -8.147705013283842e-06
+    },
+    "260a584298a187af431bd3fcb5985b5c04a144fcbde9df475dbf2ed63f1e1540": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "2c50caeceda6bfbf556ba2dc4ffc9093e38517d0a44fcfbfe4c755ebfd5e527e": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-1/459000",
+          "delta_pp": -0.00021786492374727668,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-749/194616000",
+          "delta_pp": -0.00038486044312903363,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-139909/27440856000",
+          "delta_pp": -0.0005098565438337638,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1022269/170294724000",
+          "delta_pp": -0.0006002939938409366,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-18996733/2867763152160",
+          "delta_pp": -0.0006624233589755017,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-18996733/2867763152160",
+        "delta_pp": -0.0006624233589755017,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0006624233589755017
+    },
+    "2f2003fbdf9ed31c5f1c736c9924e2b7ae6341dd0d2d89201d10eebb3fbe7c43": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-1/459000",
+          "delta_pp": -0.00021786492374727668,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-749/194616000",
+          "delta_pp": -0.00038486044312903363,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-139909/27440856000",
+          "delta_pp": -0.0005098565438337638,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1022269/170294724000",
+          "delta_pp": -0.0006002939938409366,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-18996733/2867763152160",
+          "delta_pp": -0.0006624233589755017,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-18996733/2867763152160",
+        "delta_pp": -0.0006624233589755017,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0006624233589755017
+    },
+    "36c4ae5418ccc75d6af754b17638ba56a0e316592784c53a8c1995b1f5bc0de7": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -1.0384346444959186e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -4.943970749640706e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "39a6dbe26af635b2f78a0e3de68cae871b5f32ce2b85eafd1f42235105469159": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -5.260903547705088e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -2.409396288153487e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "3b9b968a832530e268331930f90b2844912d48a74ca8c8fbf6344594bc5c56a4": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-659/1836000",
+          "delta_pp": -0.035893246187363836,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-82049/129744000",
+          "delta_pp": -0.06323914786040202,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-99913/119568000",
+          "delta_pp": -0.08356165529238592,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-167118551/170294724000",
+          "delta_pp": -0.09813489641640337,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-526642693319/487519735867200",
+          "delta_pp": -0.10802489716282113,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-526642693319/487519735867200",
+        "delta_pp": -0.10802489716282113,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.10802489716282113
+    },
+    "443b3d951cbad03b30d57eb47f4f7d8dcd9453702f2be6c0b330e19db4625e7b": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -1.1226951389493981e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -5.3441906866919306e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "460ea8dd0332fb8bc283414e22fb7b5bcf99e00ad3d8a53c7b47d96a8c09dfdb": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.2591379504331727,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.08225009690444222,
+          "reference_m": 2
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "47c4f88202716be6a41182090e66872d4c8161bdc0565b5dbd812aad72e2bd76": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "4f4e254b4e68c30ec42d64048ddb6a36d957f2552ac4453384fbea9dec26dd52": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -9.168361137317234e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -4.362916517044133e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "53c8e29f92c471f0ed4df211721050ca2795c2d1628276d996b07e3e13ccb07b": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-7/765000",
+          "delta_pp": -0.0009150326797385621,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-77/4770000",
+          "delta_pp": -0.0016142557651991614,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-366289/17150535000",
+          "delta_pp": -0.0021357292935759733,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-727033601/28950103080000",
+          "delta_pp": -0.002511333375881023,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-33733891247/1218799339668000",
+          "delta_pp": -0.0027677969743722607,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-33733891247/1218799339668000",
+        "delta_pp": -0.0027677969743722607,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0027677969743722607
+    },
+    "5b99a649cef3f9052078e4b1dc6c9705b84c78a8cca1abc4288a0ce579044306": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-29/3060000",
+          "delta_pp": -0.0009477124183006535,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-2167/129744000",
+          "delta_pp": -0.0016702121100012333,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-6057733/274408560000",
+          "delta_pp": -0.002207559778747427,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-750749449/28950103080000",
+          "delta_pp": -0.00259325311182968,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-1364733769/47796052536000",
+          "delta_pp": -0.0028553273682425597,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-1364733769/47796052536000",
+        "delta_pp": -0.0028553273682425597,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0028553273682425597
+    },
+    "5d4aa311b78b687ea7355524ee9d1c6ed21722d9c8a22513cc3c5a0da1ea1d38": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "5f3062ca5b20a2093ffad76e198e724bfafac21284b521c7ccbd83dc41d0b23e": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.5170462425971953,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.4375070272004039,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.36705702043170224,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.30995175034999173,
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "608047359f97db4937fb980f87780f23ae3c847f09e707acfac2450e53829be7": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -4.7172636872006604e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.00022404889665790618,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "60f6322041d041b35f0cdf21532a6cadd8e20dd5518a93ad8800893f8a76e0d3": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -6.654566979179129e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -3.158497145271363e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "640fc52d69839a7dd1cfd5ede2e128a80c45cee614a4cedb425b812a8fcf0b60": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.38073935990671703,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.2457433149685303,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.12749377875489454,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.029703775284758684,
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "6d25950db87167a42698d33a5fd0583f6cd0e014215dd20a7493144dbec2054b": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-659/1836000",
+          "delta_pp": -0.035893246187363836,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-82049/129744000",
+          "delta_pp": -0.06323914786040202,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-99913/119568000",
+          "delta_pp": -0.08356165529238592,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-167118551/170294724000",
+          "delta_pp": -0.09813489641640337,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-526642693319/487519735867200",
+          "delta_pp": -0.10802489716282113,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-526642693319/487519735867200",
+        "delta_pp": -0.10802489716282113,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.10802489716282113
+    },
+    "6f7564b48b10749920217b2f3574c178dbc06a56035533ac350b96c6ed1a63cb": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-827/2295000",
+          "delta_pp": -0.03603485838779956,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-34313/54060000",
+          "delta_pp": -0.06347206807251202,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-5112953/6097968000",
+          "delta_pp": -0.08384683225625324,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-712481537/723752577000",
+          "delta_pp": -0.09844269431872434,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-528146944879/487519735867200",
+          "delta_pp": -0.10833344909402126,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-528146944879/487519735867200",
+        "delta_pp": -0.10833344909402126,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.10833344909402126
+    },
+    "772f2097de1e82d0440b5c9c877c726aa8db93522c5389bff63ab2e8b7f28b62": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -5.4522120202412765e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -2.5854957599980194e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "7d40d8fac32c64ff4fec87155f729cb5d6d3395194b8914f26ce3d681aebb943": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-121/180000",
+          "delta_pp": -0.06722222222222222,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-460837/389232000",
+          "delta_pp": -0.11839648333127802,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-85831279/54881712000",
+          "delta_pp": -0.15639322439504075,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1968717019/1072226040000",
+          "delta_pp": -0.18361025992243202,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-4925220827029/2437598679336000",
+          "delta_pp": -0.202052161776303,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-4925220827029/2437598679336000",
+        "delta_pp": -0.202052161776303,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.202052161776303
+    },
+    "7df9b6dc59c676db290fb59a48d7e96bbc988ba26427f52e2bbd59cd9c4e8d5c": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "80dbc7ee78fe71183378f93a80b9d1ef0038cd9a170869ce0c4a266d3f5ce09e": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.39880363517342254,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.27271285795299605,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.16323394009844264,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.07399218386170124,
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "83f079f7a9533cb58c66fae8f27ff63b53ff2f04052bd9b1a7ac7d788ebc2b4e": {
+      "failures": [
+        {
+          "candidate_m": 3,
+          "delta": "-25867/274408560000",
+          "delta_pp": -9.426455209706286e-06,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-741113/14475051540000",
+          "delta_pp": -5.119933410613611e-06,
+          "limit": 524288,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-1/3113750",
+          "delta_pp": -3.211561621838619e-05,
+          "limit": 524288,
+          "mode": "cold",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-925787/1608339060000",
+          "delta_pp": -5.7561681054988494e-05,
+          "limit": 524288,
+          "mode": "cold",
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 4,
+        "delta": "-925787/1608339060000",
+        "delta_pp": -5.7561681054988494e-05,
+        "limit": 524288,
+        "mode": "cold",
+        "reference_m": 4
+      },
+      "worst_delta_pp": -5.7561681054988494e-05
+    },
+    "85836034f3c3a06b03401f28aab47107afdf21ef706697f338138a9b4b91dd3b": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.5351102110118956,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.46447568436681663,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -0.4027954771719155,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.3542379647607217,
+          "reference_m": 4
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "863e772bc7d40f9971d96ee3d7b69122889692bbbc7480169e861389f88fa75e": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-1/459000",
+          "delta_pp": -0.00021786492374727668,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-749/194616000",
+          "delta_pp": -0.00038486044312903363,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-139909/27440856000",
+          "delta_pp": -0.0005098565438337638,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1022269/170294724000",
+          "delta_pp": -0.0006002939938409366,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-18996733/2867763152160",
+          "delta_pp": -0.0006624233589755017,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-18996733/2867763152160",
+        "delta_pp": -0.0006624233589755017,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0006624233589755017
+    },
+    "881e5247652fa5fed4558ed58c2d4ad0e4c3010da444f008fb7e2ed7cc29f395": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-743/2295000",
+          "delta_pp": -0.03237472766884532,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-1109921/1946160000",
+          "delta_pp": -0.05703133349775969,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-5743309/7622460000",
+          "delta_pp": -0.07534718450473994,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-3138881/3547806750",
+          "delta_pp": -0.08847384373458334,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-10988911331/11285179071000",
+          "delta_pp": -0.09737471830853502,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-10988911331/11285179071000",
+        "delta_pp": -0.09737471830853502,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.09737471830853502
+    },
+    "88fc5ca52a762d47657084017efab8cf3ddcef1d017cc2b69116849825604b68": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-121/180000",
+          "delta_pp": -0.06722222222222222,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-460837/389232000",
+          "delta_pp": -0.11839648333127802,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-85831279/54881712000",
+          "delta_pp": -0.15639322439504075,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1968717019/1072226040000",
+          "delta_pp": -0.18361025992243202,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-4925220827029/2437598679336000",
+          "delta_pp": -0.202052161776303,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-4925220827029/2437598679336000",
+        "delta_pp": -0.202052161776303,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.202052161776303
+    },
+    "8ca9be7e43a4ad3b2399bbb04d3cafe408a14dc7005172efdce36e7420144e44": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "91dce16a0c7d5e783ecdfb71444238643a3e5c3f4ea1afaac21eeb685ccd0626": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-7/612000",
+          "delta_pp": -0.0011437908496732027,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-13097/648720000",
+          "delta_pp": -0.0020188987544703415,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-3666817/137204280000",
+          "delta_pp": -0.0026725237725820214,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-151708921/4825017180000",
+          "delta_pp": -0.0031442151466080375,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-21128796451/609399669834000",
+          "delta_pp": -0.0034671493105264506,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-21128796451/609399669834000",
+        "delta_pp": -0.0034671493105264506,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0034671493105264506
+    },
+    "9217881997d1dbb010408f616fd4c725517f8d231249484e36410a15b5afee11": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "922e69b2179340c32cf93d91084931dd3ce7ab20dc53c46409463cff673f77ab": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-1/459000",
+          "delta_pp": -0.00021786492374727668,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-749/194616000",
+          "delta_pp": -0.00038486044312903363,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-139909/27440856000",
+          "delta_pp": -0.0005098565438337638,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-168926341/28950103080000",
+          "delta_pp": -0.0005835085993759439,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-14412140447/2437598679336000",
+          "delta_pp": -0.0005912433645937918,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-14412140447/2437598679336000",
+        "delta_pp": -0.0005912433645937918,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0005912433645937918
+    },
+    "99c096f150c1b30a66b72636204d9aef202158015ff653e80269c7af9f791edf": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -1.0276647346569656e-07,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -3.0684173992239894e-07,
+          "reference_m": 3
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "9bea60e5248e98ae59024efd16d9d0f7d7fcbdb409f0d8f8839e66ee3fd57eb6": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "9f054575e44c2161bb44f6e6ef379a3d82a6dc51dc0be098c72e04fa85f1866b": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-7/765000",
+          "delta_pp": -0.0009150326797385621,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-77/4770000",
+          "delta_pp": -0.0016142557651991614,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-366289/17150535000",
+          "delta_pp": -0.0021357292935759733,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-727033601/28950103080000",
+          "delta_pp": -0.002511333375881023,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-33733891247/1218799339668000",
+          "delta_pp": -0.0027677969743722607,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-33733891247/1218799339668000",
+        "delta_pp": -0.0027677969743722607,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0027677969743722607
+    },
+    "a0b8fb2d108886bddc1fcda86f08495ab45ce289b75982ca53aec4269a1d3c7d": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -8.806528228776172e-06,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -4.0693083665035544e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "a0f08674078e7f7feadb87064fba2bd3914433647d7afd65b0329f5a8febbee1": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-7/765000",
+          "delta_pp": -0.0009150326797385621,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-77/4770000",
+          "delta_pp": -0.0016142557651991614,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-366289/17150535000",
+          "delta_pp": -0.0021357292935759733,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-727033601/28950103080000",
+          "delta_pp": -0.002511333375881023,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-33733891247/1218799339668000",
+          "delta_pp": -0.0027677969743722607,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-33733891247/1218799339668000",
+        "delta_pp": -0.0027677969743722607,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0027677969743722607
+    },
+    "a1f9f1711f243eec423e08b060232d039b032b35661708afe4940863f7ff7e1a": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -7.167167226542392e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.000340319067544774,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "a3013a144e4e294f7f6edce6e019ead722584a59ed85a0ac0de01f8bea00f9e4": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-1/459000",
+          "delta_pp": -0.00021786492374727668,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-749/194616000",
+          "delta_pp": -0.00038486044312903363,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-139909/27440856000",
+          "delta_pp": -0.0005098565438337638,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1022269/170294724000",
+          "delta_pp": -0.0006002939938409366,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-18996733/2867763152160",
+          "delta_pp": -0.0006624233589755017,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-18996733/2867763152160",
+        "delta_pp": -0.0006624233589755017,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0006624233589755017
+    },
+    "a4e9009e004644ace181d948b1e5506ecf8c7bc9e3cff6f8996deb5405e192c7": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -1.0276647346569656e-07,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -3.0684173992239894e-07,
+          "reference_m": 3
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "a55a26dbeb12df5482e77741be9dd5a09614f36deff0ca02834ce840b2eb8820": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-1/459000",
+          "delta_pp": -0.00021786492374727668,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-749/194616000",
+          "delta_pp": -0.00038486044312903363,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-139909/27440856000",
+          "delta_pp": -0.0005098565438337638,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1022269/170294724000",
+          "delta_pp": -0.0006002939938409366,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-18996733/2867763152160",
+          "delta_pp": -0.0006624233589755017,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-18996733/2867763152160",
+        "delta_pp": -0.0006624233589755017,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0006624233589755017
+    },
+    "a5c3796e94c1875f73c83019205f07b87d2c256cd8744878a4e6c751b1cc9a48": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-7/612000",
+          "delta_pp": -0.0011437908496732027,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-13097/648720000",
+          "delta_pp": -0.0020188987544703415,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-3666817/137204280000",
+          "delta_pp": -0.0026725237725820214,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-151708921/4825017180000",
+          "delta_pp": -0.0031442151466080375,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-21128796451/609399669834000",
+          "delta_pp": -0.0034671493105264506,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-21128796451/609399669834000",
+        "delta_pp": -0.0034671493105264506,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0034671493105264506
+    },
+    "aad74bcea7a036cab4c899b3f84d493cae503713fb50d2b70af0b30a2f3106f7": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "ad7ad8b194eba90b458746fbf89ed2054cb35fd4922a7f1b627418c4648330b9": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.2727967003181032,
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -0.10310617781378946,
+          "reference_m": 2
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "ae0307fa51a8c6f676092f84df142b77ffe5e492430ee5f725d25b2793b848bd": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -5.138323673284828e-08,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -1.5342086996119947e-07,
+          "reference_m": 3
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "af3b9a3ab3e59ba5158ee373813c846685b68a3991f9d9571efa366627794b23": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -4.690201607392688e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -0.00022273620875438643,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "b2975bb6d8a1df0d055434cb7d35cd1b05cb3d1f94b7720506082f852f4b04d5": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-3953/9180000",
+          "delta_pp": -0.043061002178649235,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-98477/129744000",
+          "delta_pp": -0.0759010050561105,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-91780669/91469520000",
+          "delta_pp": -0.10034016686651466,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-17063536147/14475051540000",
+          "delta_pp": -0.11788238611687872,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-1581740810057/1218799339668000",
+          "delta_pp": -0.12977860740291056,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-1581740810057/1218799339668000",
+        "delta_pp": -0.12977860740291056,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.12977860740291056
+    },
+    "b406e38bc6d5d25268de05bfcb35c9b086ac6e6d28aaa18e55f8ad879da5008c": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-3953/9180000",
+          "delta_pp": -0.043061002178649235,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-98477/129744000",
+          "delta_pp": -0.0759010050561105,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-91780669/91469520000",
+          "delta_pp": -0.10034016686651466,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-17063536147/14475051540000",
+          "delta_pp": -0.11788238611687872,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-1581740810057/1218799339668000",
+          "delta_pp": -0.12977860740291056,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-1581740810057/1218799339668000",
+        "delta_pp": -0.12977860740291056,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.12977860740291056
+    },
+    "b60a7d7c7e12876b7ee4703c4ec34b7f0816e1fcbfb944f9c009c1d13b1ec417": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-703/9180000",
+          "delta_pp": -0.007657952069716776,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-15431/114480000",
+          "delta_pp": -0.01347921034241789,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-12207017/68602140000",
+          "delta_pp": -0.017793930335117825,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-3022072991/14475051540000",
+          "delta_pp": -0.020877804701757905,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-559700747479/2437598679336000",
+          "delta_pp": -0.022961152392462818,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-559700747479/2437598679336000",
+        "delta_pp": -0.022961152392462818,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.022961152392462818
+    },
+    "ba26777007d3d35e34f5f8577d977c075c80a32b8b237bfcd4cf350405c159bd": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-703/9180000",
+          "delta_pp": -0.007657952069716776,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-15431/114480000",
+          "delta_pp": -0.01347921034241789,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-12207017/68602140000",
+          "delta_pp": -0.017793930335117825,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-3022072991/14475051540000",
+          "delta_pp": -0.020877804701757905,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-559700747479/2437598679336000",
+          "delta_pp": -0.022961152392462818,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-559700747479/2437598679336000",
+        "delta_pp": -0.022961152392462818,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.022961152392462818
+    },
+    "ba5cb505b87484968e8e1e0d1b1add0fbc195ad0593fccd115dfea6d45a1c3b0": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -8.347155080319666e-07,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -3.95245541510731e-06,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "bae165d73cb25ef3b6b8251f329ccba75b99e085d6521f0358324fcf59dbfa37": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-121/180000",
+          "delta_pp": -0.06722222222222222,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-460837/389232000",
+          "delta_pp": -0.11839648333127802,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-85831279/54881712000",
+          "delta_pp": -0.15639322439504075,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-1968717019/1072226040000",
+          "delta_pp": -0.18361025992243202,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-4925220827029/2437598679336000",
+          "delta_pp": -0.202052161776303,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-4925220827029/2437598679336000",
+        "delta_pp": -0.202052161776303,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.202052161776303
+    },
+    "c27a5e91ffd0fa8c2a35983662ec5a9d011679b49b63c9aa6f831f53c6718aff": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -9.408291198388369e-07,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -4.492021427818751e-06,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "c2a7a79d42c6520f75401960e57c511c03357f8e00e0f849512112399e8f8170": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "c63a897f035f3bb13f20dfc205a8073bec340586c2ddebfb9757c0aa30eb779a": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-1/459000",
+          "delta_pp": -0.00021786492374727668,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-749/194616000",
+          "delta_pp": -0.00038486044312903363,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-139909/27440856000",
+          "delta_pp": -0.0005098565438337638,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-168926341/28950103080000",
+          "delta_pp": -0.0005835085993759439,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-14412140447/2437598679336000",
+          "delta_pp": -0.0005912433645937918,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-14412140447/2437598679336000",
+        "delta_pp": -0.0005912433645937918,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0005912433645937918
+    },
+    "cbf8d05eb9c22d22aeda43359450bdc9d903c611ef66a6de00f5b39bb91a4dd1": {
+      "failures": [
+        {
+          "candidate_m": 4,
+          "delta_pp": -1.14777138817704e-05,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -5.461568847594913e-05,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "cd5bfea5d9740f2c1d6c1d3017103a95438bd153c71649c5d4f3534ba7f7ff77": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-6031/9180000",
+          "delta_pp": -0.06569716775599128,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-2251709/1946160000",
+          "delta_pp": -0.11570009660048505,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-419344703/274408560000",
+          "delta_pp": -0.15281764643202092,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-5770594357/3216678120000",
+          "delta_pp": -0.1793960770000823,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-4811739579121/2437598679336000",
+          "delta_pp": -0.19739670930703468,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-4811739579121/2437598679336000",
+        "delta_pp": -0.19739670930703468,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.19739670930703468
+    },
+    "d97f7aeac10d437904c7edf071263fce5091aa74acdf78cb6239b1e1c70f505e": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "df768f0e6e421c3dae7d284ceded6c9583d4f2402215831aef2cbe280a42a82e": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "e16f947b353d14cf233b2f703217da0606ded9c260835bf1428a30228695028a": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -0.1820155062546667,
+          "reference_m": 1
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "e2a8ed66d5c210c9c93a95840a58274135c6f84f7c02f239ac63b5e18f764eb0": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-7/765000",
+          "delta_pp": -0.0009150326797385621,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-77/4770000",
+          "delta_pp": -0.0016142557651991614,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-366289/17150535000",
+          "delta_pp": -0.0021357292935759733,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-727033601/28950103080000",
+          "delta_pp": -0.002511333375881023,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-33733891247/1218799339668000",
+          "delta_pp": -0.0027677969743722607,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-33733891247/1218799339668000",
+        "delta_pp": -0.0027677969743722607,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.0027677969743722607
+    },
+    "e34afdb4942236cf0a80b2cce390599d0b3bf8897df39a072fbf98c592ae5055": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-3953/9180000",
+          "delta_pp": -0.043061002178649235,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-98477/129744000",
+          "delta_pp": -0.0759010050561105,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-91780669/91469520000",
+          "delta_pp": -0.10034016686651466,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-214666237/182076120000",
+          "delta_pp": -0.11789917151134371,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-1055072234239/812532893112000",
+          "delta_pp": -0.12984978739729228,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-1055072234239/812532893112000",
+        "delta_pp": -0.12984978739729228,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.12984978739729228
+    },
+    "ea862125d4478696b0391bc5c91d9b011e10e678a6745414e7b78777f3a4beb2": {
+      "failures": [
+        {
+          "candidate_m": 1,
+          "delta": "-3953/9180000",
+          "delta_pp": -0.043061002178649235,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 1
+        },
+        {
+          "candidate_m": 2,
+          "delta": "-98477/129744000",
+          "delta_pp": -0.0759010050561105,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta": "-91780669/91469520000",
+          "delta_pp": -0.10034016686651466,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta": "-214666237/182076120000",
+          "delta_pp": -0.11789917151134371,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta": "-1055072234239/812532893112000",
+          "delta_pp": -0.12984978739729228,
+          "limit": 262144,
+          "mode": "hot",
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": {
+        "candidate_m": 5,
+        "delta": "-1055072234239/812532893112000",
+        "delta_pp": -0.12984978739729228,
+        "limit": 262144,
+        "mode": "hot",
+        "reference_m": 5
+      },
+      "worst_delta_pp": -0.12984978739729228
+    },
+    "eceafa1c6d342349a6c9f955b0cbf1b136f13382249e704a8eea3226fd8db2f6": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "edec0c952b2b9ea3cfc7b100885ab9420ee86f4e6d11b9c988bd9e6908230daa": {
+      "failures": [
+        {
+          "candidate_m": 2,
+          "delta_pp": -5.138323673284828e-08,
+          "reference_m": 2
+        },
+        {
+          "candidate_m": 3,
+          "delta_pp": -1.5342086996119947e-07,
+          "reference_m": 3
+        },
+        {
+          "candidate_m": 4,
+          "delta_pp": -3.906514587788473e-07,
+          "reference_m": 4
+        },
+        {
+          "candidate_m": 5,
+          "delta_pp": -1.0208198835576266e-06,
+          "reference_m": 5
+        }
+      ],
+      "feasible": false,
+      "stage": "all-record exact U necessary condition"
+    },
+    "f0cbf4048d10b994dbb6fdab50fb84a0664df47459ac548c322a1d6c4e5676dc": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "fd046210ccadf9bb4d399a39c4554339476075239be18754eb66b5a2c4e959fe": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "fdcc6dabdc1b1c22941e0e25cb8bbecb90bd652cb90388885d75dca7023fe37e": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    },
+    "fe141509a6927062d53875c0d9a9928f0610f0928f0f2a573e46ce4fb5ccb2fe": {
+      "failures": [],
+      "feasible": true,
+      "scope": "all records averaged; hot/cold; preset L including infinity; alpha [0,.01] all ceil breakpoints; zero tolerance",
+      "stage": "all-record exact V/U",
+      "worst_at": null,
+      "worst_delta_pp": 0.0
+    }
+  },
+  "read_checks": {
+    "0a1c9a08d3bf3a4bde0531c436d384735ec95bc031addae885595fd5d4007a18": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 130072,
+      "common_successes": 344,
+      "feasible": true,
+      "fold_point_deltas": [
+        12,
+        0,
+        0,
+        6
+      ],
+      "hot_common_byte_delta": 126976,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 3,
+        "hot256": 0,
+        "hot512": 3
+      }
+    },
+    "14937517e8cbd5ca74b31c3ee5e8d247c4ebb7a86f4edc12270200461fae644c": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 273080,
+      "common_successes": 343,
+      "feasible": true,
+      "fold_point_deltas": [
+        18,
+        0,
+        6,
+        5
+      ],
+      "hot_common_byte_delta": 270336,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 5,
+        "hot256": 0,
+        "hot512": 4
+      }
+    },
+    "260a584298a187af431bd3fcb5985b5c04a144fcbde9df475dbf2ed63f1e1540": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 141992,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        -5,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 139264,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "47c4f88202716be6a41182090e66872d4c8161bdc0565b5dbd812aad72e2bd76": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 138558,
+      "common_successes": 339,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        -15,
+        0,
+        6
+      ],
+      "hot_common_byte_delta": 135168,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "5d4aa311b78b687ea7355524ee9d1c6ed21722d9c8a22513cc3c5a0da1ea1d38": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 141304,
+      "common_successes": 340,
+      "feasible": false,
+      "fold_point_deltas": [
+        18,
+        -5,
+        6,
+        0
+      ],
+      "hot_common_byte_delta": 139264,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 4,
+        "hot256": 0,
+        "hot512": 3
+      }
+    },
+    "7df9b6dc59c676db290fb59a48d7e96bbc988ba26427f52e2bbd59cd9c4e8d5c": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 133459,
+      "common_successes": 341,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        -5,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 131072,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "8ca9be7e43a4ad3b2399bbb04d3cafe408a14dc7005172efdce36e7420144e44": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 162496,
+      "common_successes": 344,
+      "feasible": true,
+      "fold_point_deltas": [
+        6,
+        0,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": 159744,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "9217881997d1dbb010408f616fd4c725517f8d231249484e36410a15b5afee11": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -198640,
+      "common_successes": 344,
+      "feasible": true,
+      "fold_point_deltas": [
+        12,
+        0,
+        0,
+        6
+      ],
+      "hot_common_byte_delta": -200704,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 3,
+        "hot256": 0,
+        "hot512": 3
+      }
+    },
+    "9bea60e5248e98ae59024efd16d9d0f7d7fcbdb409f0d8f8839e66ee3fd57eb6": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 153610,
+      "common_successes": 343,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -6,
+        6,
+        0
+      ],
+      "hot_common_byte_delta": 151552,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 0,
+        "hot256": 0,
+        "hot512": 0
+      }
+    },
+    "aad74bcea7a036cab4c899b3f84d493cae503713fb50d2b70af0b30a2f3106f7": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 170330,
+      "common_successes": 342,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        0,
+        -6,
+        6
+      ],
+      "hot_common_byte_delta": 167936,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "c2a7a79d42c6520f75401960e57c511c03357f8e00e0f849512112399e8f8170": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 136888,
+      "common_successes": 344,
+      "feasible": true,
+      "fold_point_deltas": [
+        12,
+        0,
+        0,
+        6
+      ],
+      "hot_common_byte_delta": 135168,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 3,
+        "hot256": 0,
+        "hot512": 3
+      }
+    },
+    "d97f7aeac10d437904c7edf071263fce5091aa74acdf78cb6239b1e1c70f505e": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 141322,
+      "common_successes": 343,
+      "feasible": true,
+      "fold_point_deltas": [
+        6,
+        0,
+        6,
+        0
+      ],
+      "hot_common_byte_delta": 139264,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 2,
+        "hot256": 0,
+        "hot512": 2
+      }
+    },
+    "df768f0e6e421c3dae7d284ceded6c9583d4f2402215831aef2cbe280a42a82e": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -225603,
+      "common_successes": 343,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        2,
+        -6,
+        7
+      ],
+      "hot_common_byte_delta": -229376,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 3,
+        "hot256": 0,
+        "hot512": 4
+      }
+    },
+    "eceafa1c6d342349a6c9f955b0cbf1b136f13382249e704a8eea3226fd8db2f6": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 252592,
+      "common_successes": 342,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        0,
+        -8,
+        12
+      ],
+      "hot_common_byte_delta": 249856,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "fd046210ccadf9bb4d399a39c4554339476075239be18754eb66b5a2c4e959fe": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": -21824,
+      "common_successes": 344,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        6,
+        0,
+        0
+      ],
+      "hot_common_byte_delta": -24576,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 1,
+        "hot256": 0,
+        "hot512": 1
+      }
+    },
+    "fdcc6dabdc1b1c22941e0e25cb8bbecb90bd652cb90388885d75dca7023fe37e": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 178536,
+      "common_successes": 344,
+      "feasible": true,
+      "fold_point_deltas": [
+        12,
+        0,
+        0,
+        6
+      ],
+      "hot_common_byte_delta": 176128,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 3,
+        "hot256": 0,
+        "hot512": 3
+      }
+    },
+    "fe141509a6927062d53875c0d9a9928f0610f0928f0f2a573e46ce4fb5ccb2fe": {
+      "allowed_mean_extra_bytes": 4096,
+      "cold_common_byte_delta": 298352,
+      "common_successes": 344,
+      "feasible": true,
+      "fold_point_deltas": [
+        18,
+        0,
+        0,
+        6
+      ],
+      "hot_common_byte_delta": 294912,
+      "scope": "512 paired planning requests at 5%; empirical, not a general read-cost guarantee",
+      "success_deltas": {
+        "cold256": 0,
+        "cold512": 4,
+        "hot256": 0,
+        "hot512": 4
+      }
+    }
+  }
+}

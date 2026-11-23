@@ -1,0 +1,13 @@
+{
+  "status": "SHARE_WITH_CAVEATS",
+  "coverage": "PARTIAL_OVERALL_COMPLETE_REDUCED_REVIEW",
+  "measurements_changed": false,
+  "runtime_changed": false,
+  "formal_rerun_required": false,
+  "remaining_issues": [
+    "P2: four C2/C3 plots lack in-figure segment names",
+    "full C1 still incomplete",
+    "paper claims must retain observed tradeoffs and actual erasure-rate granularity"
+  ],
+  "evidence": "independent_checks.json"
+}

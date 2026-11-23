@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "rows": 44800,
+  "actual_executions": 33600,
+  "paired_cases": 280,
+  "old_files_preserved": 1233,
+  "resume_files_preserved": 12,
+  "tests": 40,
+  "security_cases": 22,
+  "manuscript_sha256": "13d08379ea2bcb43564ccd1548d5012fd5e8fee1572fb833dc097612cbf8c9ab",
+  "source_count": 192,
+  "recommendation": "Continue A research; neither proposal satisfies no-regression; both deploy original CoAccess; pause current B as core."
+}

@@ -1,0 +1,22 @@
+{
+  "main_pid": 2952864,
+  "model_cpu": [
+    0,
+    [
+      "0",
+      "0"
+    ]
+  ],
+  "actual_cpu": [
+    2,
+    [
+      "0",
+      "1"
+    ]
+  ],
+  "locks": [
+    "run.lock",
+    "parallel_actual/<day>/compute.lock"
+  ],
+  "note": "Supersedes initial serial execution context from this point. Disjoint outputs: main case0 only via --stop-after1, extension cases1..139. Qualifiers separate and both counted; no timing comparison. All layouts committed before extension receives cases."
+}

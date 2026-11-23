@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "receipt_count": 1631,
+  "referenced_artifacts_checked": 499,
+  "full_C2_matrix": 54,
+  "full_C3_matrix": 12480,
+  "independently_recomputed_C3_cells_matched": 64,
+  "shared_frozen_source_files": 100,
+  "C1_summary_unchanged": true,
+  "source_renderer_sha256": "ca766f0260c910557418fe353895f6956bf2772a4b36aa29726d542bd6ee5610",
+  "full_measurement_directory_modified": false
+}

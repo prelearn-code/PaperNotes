@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scientific_outcome": "risk-feasible non-fallback layout found; stable superiority NOT established",
+  "test_cases": 824,
+  "metric_rows": 65920,
+  "actual_executions": 39552,
+  "unit_tests": 22,
+  "security_checks": 14,
+  "exact_crosschecks": 8,
+  "old_files_preserved": 1208,
+  "resume_files_preserved": 12,
+  "report_sha256": "5677eecafa8b14686874183f8d7aa827eff6724ae9b9bba1fcc37cbc926c1fcf",
+  "summary_sha256": "6f9ed768e32ce30c29a49cdf922feff1d1a26278afebe38005a0e6624b4aae65",
+  "runtime_manifest_sha256": "78a6d84dbb62441d9b0a689299aebdf1398092cc9fb916d21614937bf4b389f3",
+  "finished_utc": "2026-10-22T12:05:10.241141+00:00",
+  "results_manifest_sha256": "c1066453058a2f1c066785623dac366c1fd64b667aa0a557aef160473ca56433"
+}

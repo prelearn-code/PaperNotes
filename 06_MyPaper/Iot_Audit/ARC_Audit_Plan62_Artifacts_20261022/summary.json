@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "v1_files_unchanged": 271,
+  "analysis_script_sha256": "a9b29f535680c155ad9ca9e9fa851115a9f627cb097b0a15656b227753ebc33d",
+  "invalid_received_bytes_in_trials": 0,
+  "actual_development_calls": 53760,
+  "qualification_calls": 768,
+  "total_actual_calls": 54528,
+  "paired_development_cases": 280,
+  "receipts": 284,
+  "ledger_events": 4017375,
+  "received_bytes": 15960685328,
+  "independent_event_cost_checks": 53760,
+  "old_files_unchanged": 1173,
+  "frozen_files_unchanged": 192,
+  "source_hashes_preserved": {
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan62/pilot_20261022_v2/jobs/train1_2020-07-11/plan.json": "2c8a3e87241c1168ae51c7e97913a6c4f6a64fd1ec3c5520b25f22d11cc6eac0",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan62/pilot_20261022_v2/jobs/train1_2020-07-11/cases.json": "430a2e1048380a7786ed38a416d9090f7af7008ab3da3ae1c45d34b0606f196f",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan62/pilot_20261022_v2/jobs/train1_2020-07-11/full_model.json": "524dc7baa9ee6e3ccd483367f2668bbf467e18e06df7071085d4c3d3b5d5ba0e",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan62/pilot_20261022_v2/jobs/train2_2020-08-01/plan.json": "2f016ebdf008d085467efd497f71b5cfe2e276c0ed11bb76a589bb3de36290e7",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan62/pilot_20261022_v2/jobs/train2_2020-08-01/cases.json": "281afd985c7331b01e7ab4eb45f65c5f6a144fef6da8cfc56a11a163c587fe58",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan62/pilot_20261022_v2/jobs/train2_2020-08-01/full_model.json": "0d07e368845bacb191b3de1a2c2b3de3c5b02de4134fd3a36312193819c882ec"
+  },
+  "statistics": "per-window/mode/alpha/limit conservative paired 95% CP; no simultaneous coverage; finite-grid mean descriptive only",
+  "role": "previously seen development windows; no confirmation claims"
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "unique_layouts": 73,
+  "exact_fields": [
+    "numerators",
+    "denominators",
+    "population",
+    "counts",
+    "limits"
+  ],
+  "seconds": 24.719055267982185,
+  "reference_plan_sha256": "2c8a3e87241c1168ae51c7e97913a6c4f6a64fd1ec3c5520b25f22d11cc6eac0",
+  "optimization": "cache repeated polynomial prefixes; no objective, candidate, risk or protocol change"
+}

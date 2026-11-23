@@ -1,0 +1,7 @@
+{
+  "reason": "Read-only inspection found that layered authentication rejection could classify one payload twice; received-byte total was unaffected. Development Ledger now deduplicates classifications by receive event; real retries still charge and classify separately.",
+  "before_sha256": "6880f4dedf028ac5626a9a0e3bc86ebeb731f711c7f052d7b1b8b5dbc1221426",
+  "after_sha256": "50df26cdf95f863eaa81ada1394ef98fc4f3a716ff435163b0d16192af15899e",
+  "frozen_runtime_changed": false,
+  "experimental_effect": "None on pure-erasure trials: invalid classification branch is not reached; independent audit must verify invalid_bytes==0 for every formal row. Results remain tied to frozen v2, not relabeled as patched-source runs."
+}

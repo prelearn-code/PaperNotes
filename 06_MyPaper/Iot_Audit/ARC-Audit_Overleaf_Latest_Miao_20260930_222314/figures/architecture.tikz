@@ -1,0 +1,35 @@
+% Original vector artwork. Entity/function/interaction organization informed
+% by Gao TDSC 2024 Figs. 3--4 and Miao TDSC 2025 Fig. 1; no copied artwork.
+\begin{tikzpicture}[
+  block/.style={draw=black!65,fill=white,rounded corners=2pt,
+    text width=3.6cm,minimum height=1.05cm,align=center,font=\small},
+  flow/.style={-{Latex[length=2mm]},line width=.75pt},
+  msg/.style={font=\footnotesize,align=center,fill=white,inner sep=1pt}]
+\filldraw[fill=blue!4,draw=black!55,rounded corners=4pt]
+  (-2.15,1.05) rectangle (2.15,-3.45);
+\filldraw[fill=black!4,draw=black!55,rounded corners=4pt]
+  (3.65,1.05) rectangle (7.95,-3.45);
+\filldraw[fill=blue!4,draw=black!55,rounded corners=4pt]
+  (9.45,1.05) rectangle (13.75,-3.45);
+\node[font=\small\bfseries] at (0,.65) {Data owner (trusted)};
+\node[font=\small\bfseries] at (5.8,.65) {CSP (untrusted)};
+\node[font=\small\bfseries] at (11.6,.65) {Verifier / retriever (trusted)};
+\node[block] (encode) at (0,-.45) {Cost-confirmed grouping\\Shared container and layout};
+\node[block] (commit) at (0,-2.35) {Sign snapshot; generate tags\\Optional RS(10,8) sidecar};
+\node[block] (store) at (5.8,-.45) {Immutable container\\Page tags and signed metadata};
+\node[block] (shards) at (5.8,-2.35) {Original pages\\Authenticated parity shards};
+\node[block] (audit) at (11.6,-.45) {Audit: closure $U(T)$\\Fresh aggregate proof};
+\node[block] (read) at (11.6,-2.35) {Authenticated recovery\\Verify bytes; RS; decode};
+\draw[flow] (encode) -- (commit);
+\draw[flow] (encode.east) -- node[msg,above]{container} (store.west);
+\draw[flow] (commit.east) -- node[msg,above]{auth. state,\\parity} (shards.west);
+\draw[flow] (audit.west) ++(0,.22) -- node[msg,above]{challenge} ([yshift=.22cm]store.east);
+\draw[flow] (store.east) ++(0,-.22) -- node[msg,below]{proof} ([yshift=-.22cm]audit.west);
+\draw[flow] (read.west) ++(0,.22) -- node[msg,above]{page IDs} ([yshift=.22cm]shards.east);
+\draw[flow] (shards.east) ++(0,-.22) -- node[msg,below]{reply bytes} ([yshift=-.22cm]read.west);
+\draw[flow,dashed] (commit.south) -- (0,-4.05) --
+  node[msg,below]{Trusted provisioning: public keys and intended snapshot / sidecar pins}
+  (11.6,-4.05) -- (read.south);
+\node[font=\footnotesize,align=center] at (5.8,-4.85)
+  {Audit acceptance concerns the declared challenge; recovery independently authenticates returned bytes.};
+\end{tikzpicture}

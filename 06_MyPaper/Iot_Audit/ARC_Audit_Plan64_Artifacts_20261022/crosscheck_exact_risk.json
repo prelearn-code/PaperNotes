@@ -1,0 +1,69 @@
+{
+  "checks": [
+    {
+      "day": "train1_2020-07-11",
+      "key": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1",
+      "method": "Raw24",
+      "mode": "hot",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "day": "train1_2020-07-11",
+      "key": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1",
+      "method": "Raw24",
+      "mode": "cold",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "day": "train1_2020-07-11",
+      "key": "4eb4f581a6555657797e7895eb1b07f46149136e6af71dcec8c4aec4fab22251",
+      "method": "AConstrained",
+      "mode": "hot",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "day": "train1_2020-07-11",
+      "key": "4eb4f581a6555657797e7895eb1b07f46149136e6af71dcec8c4aec4fab22251",
+      "method": "AConstrained",
+      "mode": "cold",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "day": "train2_2020-08-01",
+      "key": "f0cbf4048d10b994dbb6fdab50fb84a0664df47459ac548c322a1d6c4e5676dc",
+      "method": "Raw24",
+      "mode": "hot",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "day": "train2_2020-08-01",
+      "key": "f0cbf4048d10b994dbb6fdab50fb84a0664df47459ac548c322a1d6c4e5676dc",
+      "method": "Raw24",
+      "mode": "cold",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "day": "train2_2020-08-01",
+      "key": "14937517e8cbd5ca74b31c3ee5e8d247c4ebb7a86f4edc12270200461fae644c",
+      "method": "AConstrained",
+      "mode": "hot",
+      "records": 21600,
+      "status": "PASS"
+    },
+    {
+      "day": "train2_2020-08-01",
+      "key": "14937517e8cbd5ca74b31c3ee5e8d247c4ebb7a86f4edc12270200461fae644c",
+      "method": "AConstrained",
+      "mode": "cold",
+      "records": 21600,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

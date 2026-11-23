@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "profiles": [
+    "reduced",
+    "full"
+  ],
+  "scope": [
+    "equal aggregation sets and coefficients",
+    "union equals separate-cache reads",
+    "tamper rejected",
+    "representation linkage accepted"
+  ]
+}

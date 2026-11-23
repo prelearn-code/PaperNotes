@@ -1,0 +1,9 @@
+{
+  "original_generated_report_sha256": "12ec2ff55aaa4cf9a36e6b6dcc2c615916f35f3ebce52cbb5688b47ed8e33df4",
+  "final_report_sha256": "506127df649f16486fda83b859691382572987c53eb5e9bef128668617d71c54",
+  "changes": [
+    "Clarified equal fault counts on the tested grid and independent seed variation",
+    "Explicitly marked the new July FrequencyFill fallback in the sensitivity table"
+  ],
+  "analysis_summary_unchanged_sha256": "8c8b4bcc112c4d8b5d69782503990e7f17575328dc3968aa2f2ee1da43c44c04"
+}

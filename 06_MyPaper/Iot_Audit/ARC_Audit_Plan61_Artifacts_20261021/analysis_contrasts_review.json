@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "created": "2026-10-21T14:48:36.301979+00:00",
+  "auditor_sha256": "49010be7093db60c267caa965c3f313675bb826f4422fcc4c1181eceedf13b51",
+  "source_hashes": {
+    "actualrows.csv": "b2beb7147fbec80540ae48effd55f7fff4f20b7ffaa65d50b71405faa01bc2bf",
+    "actualrows.jsonl": "6d463e8b872177cdae20152b0226d0edf41d0be50153a3f7467f86b1a1c05c33",
+    "plans.json": "705e9a6d350af64fdfc4496f55b8c2ad0a0e950ab8824ff9440e7cb1855337b1",
+    "receipt.json": "5398c2f6a6dd4371c84bfaa333964f43945ac48c41b32cb0ab4bb7259ad00062",
+    "setups.json": "cdb857ab0d8d5c4b248966560d91f5b6abee6ebb8cbae808aa932c7e9d5eefce",
+    "summary.json": "7f5d53cca0b268fb0da52dbbf0106b051b5b292f7caf10056261396dc9f7e691",
+    "validation.json": "70c806423c02fc0597a6ca418e9311fc28cdeeba065c368a8cb3ec80b1584870"
+  },
+  "analysis_hashes": {
+    "contrasts.csv": "b47e0fad77175bf9a3cb68efb170867a1f856ef69b5d2a49339cf61c659beaac",
+    "observed_budget_curve.csv": "0cf6894f7dc3cfa7144b0e25b36dc971f0987fefc35f8f99e549fd1e39bee7b3",
+    "observed_budget_curve.pdf": "bf6221047461face5fdc50bd9c108a80fb37cfb9735e54843da148bc289ae8d3",
+    "observed_budget_curve.png": "8b16768a26441320feca6f305710eff25839b637a9f2fe94b49a96996d2b782e",
+    "paired_costs.csv": "72706be818638d0f199150dd6eb7b0aec026fd77aefe98edb230afff8bd96702",
+    "receipt.json": "16a93cb92c9c087d11fe710f1f20ca2b5d993b0212a8667bcfe15236d06098ea",
+    "summary.json": "2065e1a8810d2ac09335903c76bcb1361a3a4dc630996b18964375fef3096f4c"
+  },
+  "primary_audit_sha256": "ccd34e360923ea1496abca160b99af5c197affd2ab5ca9d8be97d66c3b9ce69c",
+  "analysis_script_sha256": "aef9c41cc71f615be090b170899614d8a9980a3dc44e6748bfcdd74eab4daa55",
+  "checks": {
+    "actual_rows": 43392,
+    "paired_cases": 5424,
+    "window_alpha_blocks": 30,
+    "contrasts": 150,
+    "independent_cp_intervals": 150,
+    "cost_groups": 485,
+    "common_success_cost_groups": 150,
+    "curve_points": 1920,
+    "monotone_curves": 240,
+    "infinite_endpoints": 240,
+    "csv_json_records": 45947,
+    "source_output_primary_audit_preserved": true
+  },
+  "interpretation": {
+    "inference": "Each contrast/window CP bound has conservative >=95% coverage before multiple-comparison selection; no simultaneous family guarantee.",
+    "cost": "Within both_success, ratio is sum(candidate bytes)/sum(reference bytes), equivalently ratio of the two means over exactly the same successful pairs. It is not mean per-case ratio, nor an unconditional efficiency effect.",
+    "curve": "Empirical complete success AND observed successful payload bytes <= threshold from unbounded runs. Monotonicity and infinity endpoint verified. Excludes setup/metadata and failed-transfer wire overhead; no hard-cap executor or hard-cap service guarantee.",
+    "generalization": "Post-hoc development evidence on six previously inspected windows; no unseen-data, novelty, or causal mechanism confirmation.",
+    "timing": "Elapsed times were neither evaluated nor compared."
+  },
+  "seconds": 1.1322543809656054
+}

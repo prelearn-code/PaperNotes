@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-22",
+  "role": "previously seen development windows; no confirmation claims",
+  "days": [
+    "train1_2020-07-11",
+    "train2_2020-08-01"
+  ],
+  "beta": 0.1,
+  "seed": 62001,
+  "training_records": 32,
+  "search_scores": 12,
+  "alphas": [
+    0.001,
+    0.005,
+    0.01,
+    0.05
+  ],
+  "test_counts": [
+    24,
+    24,
+    24,
+    64
+  ],
+  "clean_cases": 4,
+  "limits": [
+    32768,
+    65536,
+    131072,
+    262144,
+    524288,
+    1048576,
+    2097152,
+    null
+  ],
+  "metadata_modes": [
+    "hot",
+    "cold"
+  ],
+  "geometries": [
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      12,
+      1
+    ],
+    [
+      12,
+      2
+    ],
+    [
+      12,
+      3
+    ],
+    [
+      16,
+      1
+    ],
+    [
+      16,
+      2
+    ],
+    [
+      16,
+      3
+    ],
+    [
+      24,
+      1
+    ],
+    [
+      24,
+      2
+    ],
+    [
+      24,
+      3
+    ],
+    [
+      32,
+      1
+    ],
+    [
+      32,
+      2
+    ],
+    [
+      32,
+      3
+    ],
+    [
+      40,
+      4
+    ],
+    [
+      48,
+      4
+    ],
+    [
+      64,
+      6
+    ],
+    [
+      96,
+      9
+    ],
+    [
+      128,
+      12
+    ],
+    [
+      192,
+      18
+    ],
+    [
+      224,
+      22
+    ]
+  ],
+  "objective": "equal-weight mean exact hot V at alpha=.05 over seven finite L; one immutable layout per method",
+  "risk": "all-record exact U on continuous alpha (0,.01] relative Raw24; exact V on the 32 preselected training records at all low-alpha breakpoints and all declared finite hot L relative Raw24; test does not tune",
+  "scope": "bounded application payload, no network headers/kernel/device IO guarantee; authenticated metadata excluded from erasure population; hot cache provisioned explicitly; cold retrieves complete manifests/signatures",
+  "selection": "Common 50 native FD/raw models. S1 fixed Raw24 coverage and geometry; S2 starts best feasible raw model and explores alternate coverage/geometry/grouping. Each gets 12 additional scores; shared baseline cost excluded and reported. UOnly24 retained. No equal-time claim.",
+  "test_targets": "uniform outside 32 training targets; same rank filtered own N; independent new seeds",
+  "inference": "per-window conservative paired CP; no family-wide confidence or equivalence claim"
+}

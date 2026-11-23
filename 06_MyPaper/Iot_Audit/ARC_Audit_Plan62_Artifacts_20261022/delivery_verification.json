@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "report_sha256": "eb1cec0eb3595cb6b3b9790f07295dfb8419f9343efae3f509085d7631cd21d2",
+  "manuscript_unchanged_sha256": "13d08379ea2bcb43564ccd1548d5012fd5e8fee1572fb833dc097612cbf8c9ab",
+  "links_checked": 18,
+  "old_project_files_unchanged": 1173,
+  "v1_files_unchanged": 271,
+  "frozen_sources_unchanged": 192,
+  "frozen_inputs_unchanged": 30,
+  "figure_visual_review": "3 PNGs inspected; axes, legends, labels and layout readable",
+  "formal_calls": 53760,
+  "qualification_calls": 768,
+  "conclusion": "S1 safer continuation, no standalone algorithm-core evidence; S2 fails full cold low-loss guard"
+}

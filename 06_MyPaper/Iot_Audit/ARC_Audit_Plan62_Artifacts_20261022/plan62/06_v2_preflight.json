@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "new_tests": 31,
+  "seconds": 15.06,
+  "regression_tests": 19,
+  "equivalent_layouts": 73,
+  "protocol_changed": false
+}

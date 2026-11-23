@@ -1,0 +1,13 @@
+{
+  "encode": "X\\mapsto(F,\\mathcal L)",
+  "encrypt": "F_p\\xrightarrow{k_b}C_p",
+  "closure": "U(T)=\\bigcup_{i\\in T}K_{\\mathcal L}(i)",
+  "upload": "\\{(C_p,\\tau_p)\\}",
+  "challenge": "(T,h_{\\rm snap},\\mathsf{chal})",
+  "proof": "\\pi=(\\sigma,\\boldsymbol{\\mu})",
+  "decrypt": "C_p\\xrightarrow{k_b}F_p",
+  "records": "\\{r_i\\}_{i\\in T}",
+  "c1": "C_1",
+  "c2": "C_2",
+  "cn": "C_n"
+}

@@ -1,0 +1,708 @@
+% 当前 IIoT 数据主稿的中文对照版；C1 窗口与完整 C2/C3 工作负载。
+% 以英文稿 main.tex 为准逐段对应：段落切分、编号、公式、算法、表格与引用标签完全一致。
+% 保留 pdfLaTeX 与 XeTeX 下一致的 Times 字形度量。
+\RequirePackage[OT1]{fontenc}
+\documentclass[10pt,journal]{IEEEtran}
+\usepackage{graphicx,amsmath,amssymb,booktabs,array,url}
+\usepackage{fontspec,xeCJK}
+% Windows CJK fonts verified with the desktop editor compiler (XeLaTeX).
+\setmainfont{TeX Gyre Termes}
+\setCJKmainfont{SimSun}[BoldFont=SimHei,ItalicFont=KaiTi,BoldItalicFont=KaiTi]
+\setCJKsansfont{SimHei}
+\setCJKmonofont{FangSong}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\IEEEkeywordsname}{关键词}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\refname}{参考文献}
+\linespread{1.10}
+\usepackage[nocompress]{cite}
+\interdisplaylinepenalty=2500
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\newcounter{algorithm}
+\renewcommand{\thealgorithm}{\arabic{algorithm}}
+\makeatletter
+\newcommand{\fps@algorithm}{tbp}
+\newcommand{\ftype@algorithm}{1}
+\newcommand{\ext@algorithm}{loa}
+\newcommand{\fnum@algorithm}{算法~\thealgorithm}
+% Local ruled algorithm caption; leave IEEE table/figure captions untouched.
+\newenvironment{algorithm}[1][t]{\@float{algorithm}[#1]%
+  \long\def\@makecaption##1##2{%
+    \par\hrule height .8pt\kern2pt
+    {\normalfont\normalsize\noindent\textbf{##1:} ##2\par}%
+    \kern2pt\hrule height .8pt\kern2pt}%
+}{\end@float}
+\makeatother
+\newcommand{\ARC}{ARC-Audit}
+\newcounter{proposition}
+\newenvironment{proposition}[1]{%
+  \refstepcounter{proposition}\par\smallskip\noindent
+  \textbf{命题~\theproposition\ (#1). }\ignorespaces
+}{\par\smallskip}
+\newenvironment{claimproof}{\par\noindent\emph{证明：}\ignorespaces
+}{\hfill\textit{证毕。}\par\smallskip}
+\newcounter{algline}
+\newcommand{\al}{\stepcounter{algline}\thealgline:}
+\newcommand{\tabnote}[1]{\par\smallskip\parbox{\linewidth}{\footnotesize #1}}
+\title{ARC-Audit：面向工业物联网数据的\\依赖感知审计与认证记录恢复}
+\author{匿名作者}
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
+\maketitle
+\begin{abstract}
+共享压缩可降低工业物联网（Industrial Internet of Things，IIoT）数据的存储开销，但单条记录的重建往往需要同时读取局部编码和共享字典。由于字典引用处于加密状态，公开验证者依据布局选取足以覆盖解码依赖的对象，所选范围可能大于实际恢复所需的范围。本文提出 ARC-Audit，以认证恢复闭包（authenticated recovery closure，ARC）描述重建记录所需的密文对象。系统利用认证布局将逻辑编码区间映射到密文页，使公开验证者能够合并多个目标记录的重叠页并生成聚合挑战。授权恢复者先验证并解密引用，再获取其余实际依赖页以重建完整记录。系统还在给定存储预算内对密文页部署冗余，并对修复所得的密文执行与原始密文相同的验证。本文分析了表示正确性、依赖覆盖、聚合响应真实性及恢复记录真实性。在 HAI 数据集的两个工作负载上，共享表示降低了云端存储开销，但延长了构建时间。聚合审计降低了应用层流量，但增加了本地处理时间。在固定 Dictionary 保护且名义擦除率为 5\% 时，精确依赖选择使两个数据段的完整记录恢复率分别由 10.8\% 提高至 14.8\%、由 18.0\% 提高至 21.6\%。
+\end{abstract}
+\begin{IEEEkeywords}
+工业物联网，广义去重，公开完整性审计，认证记录恢复，依赖闭包，认证加密。
+\end{IEEEkeywords}
+
+\section{引言}\label{sec:introduction}
+外包存储的工业物联网（Industrial Internet of Things，IIoT）数据既要支持完整性验证，也要能按请求恢复记录。共享压缩利用传感器字段与记录之间的重复结构。广义去重（generalized deduplication，GD）将数据块表示为共享基及记录特有的引用与偏差~\cite{Talasila2019}，基于相似性的安全去重也已用于外包 IIoT 数据管理~\cite{Gao2024}。引入共享表示后，重建一条记录可能需要同时获取记录专属对象和共享对象，并验证这些对象均属于请求所指定的数据版本。
+
+公开验证者与授权恢复者掌握的信息不同，因而对同一条记录可能选出不同的对象集合。字典引用以密文形式存储，公开验证者可依据布局选取相关组的完整字典，使审计覆盖所有可能被引用的字典页。授权恢复者解密引用后只需获取其中实际用到的页。如果丢失的恰好是未被引用的字典页，完整字典已无法获取，目标记录仍可能正常解码。
+
+现有机制分别解决共享存储中的不同问题。压缩方法优化数据表示~\cite{Hurst2024GreedyGD}，公开存储证明验证选定对象的挑战响应~\cite{ShachamWaters2013}，选择性访问系统优化数据获取~\cite{Taurone2024TREAT}，共享存储保护则考虑公共块丢失的影响~\cite{Bhagwat2006Reliability}。对共享压缩记录执行审计时，还需确定所选对象能否覆盖完整的解码路径。这个范围由编码布局、引用内容以及各角色能够访问的信息共同决定。
+
+ARC-Audit 将足以重建目标记录的一组密文对象表示为\emph{认证恢复闭包}（authenticated recovery closure，ARC）。数据所有者发布经过认证的寻址布局，并加密完整的解码内容。公开验证者根据布局选取相关字典，合并目标记录之间的共享对象，再将所得页集合绑定到本次聚合挑战。授权恢复者先验证并解密引用，确定实际依赖后再获取其余对象。
+
+在给定存储预算内，ARC-Audit 使用 Reed--Solomon（RS）编码保护选定密文页。恢复者对直接获取的原始密文和经 RS 修复的密文执行相同的验证，随后使用通过认证的输入解码完整记录。
+
+本文的主要贡献如下。
+\begin{enumerate}
+\item \emph{支持依赖寻址的加密共享表示。}ARC-Audit 的 SDA-GGD 编码器根据全量输入的序列化成本确认字段分组，并建立逻辑比特区间到密文页的认证映射。该布局允许各角色定位承载解码依赖的密文页，完整解码内容仍以密文保存。
+\item \emph{依赖感知的公开审计。}公开聚合接口（Public-Aggregate）根据认证布局选取足以覆盖目标记录解码依赖的密文页，无需解密引用。验证者合并目标记录之间的重叠页，并将目标和所选对象绑定到同一聚合挑战。
+\item \emph{带预算保护的精确认证恢复。}精确恢复（Exact）根据通过认证的引用确定实际依赖，并在完整解码后接受记录。密文 RS 层在序列化存储上限内保护选定页，修复结果须通过原有的密文验证。
+\end{enumerate}
+
+本文在两个 HAI 工作负载上评估共享编码、公开审计与授权恢复。字段分组以更长的构建时间换取较小的云端存储。公开闭包规划省去引用解析阶段的传输，但可能覆盖更多密文页。精确恢复缩小了获取范围，因此在部分未引用的字典页不可用时仍可完成恢复。
+\section{相关工作}
+\subsection{共享压缩与选择性访问}
+共享压缩决定记录内容如何在局部编码与公共字典之间划分。GD 由共享基与各自的偏差重建数据块~\cite{Talasila2019}。GreedyGD 为压缩与直接分析选择基比特~\cite{Hurst2024GreedyGD}，EntroGD 则把分析摘要与熵引导压缩相结合~\cite{Zhao2026EntroGD}。这些工作优化共享表示及其在分析中的使用。ARC-Audit 通过认证的记录区间与字典布局把该表示连接到验证，使验证者能够在读取引用之前选择密文对象。
+
+安全性与选择性访问对该表示提出进一步要求。基于相似性的安全去重处理所有权与保密性，包括模糊消息锁定加密与所有权证明~\cite{Jiang2023FuzzyDedup}，以及 IIoT 存储管理~\cite{Gao2024}。TREAT 把 GD、编码、重排与选择性获取相结合，用于分布式物联网查询~\cite{Taurone2024TREAT}。其 GD 表示支持按 BaseID 寻址字典项，实际评估的查询流程先获取完整字典，再用 BaseID 过滤不满足谓词的记录。ARC-Audit 在同一认证布局上支持两类角色。公开验证者在引用保持加密时覆盖解码依赖，授权恢复者则在接受完整规范化记录前认证引用及其指向的密文依赖。
+
+\subsection{公开审计与可取回性}
+公开存储验证针对为挑战所选的对象定义保证。PDP 检查外包数据的持有性~\cite{Ateniese2007PDP}；PoR 通过提取把挑战响应与恢复联系起来~\cite{Juels2007POR,ShachamWaters2013}。Bowers 等发展了 PoR 框架~\cite{Bowers2009PORTheory}，HAIL 把完整性检查与分布式冗余相结合~\cite{Bowers2009HAIL}。动态 PDP 使用认证字典认证更新~\cite{Erway2009DPDP}。这些方案认证的都是各自协议定义的对象，都不判断一条记录的解码路径需要哪些对象。最近，Yang 等通过压缩 PDP 减少额外的认证器存储，并使用具有线性通信量的证明交换机制实现去中心化多云自审计~\cite{Yang2025CompressedPDP}；压缩 PDP 减少的是审计表示及其开销。ARC-Audit 处理的是把认证对象连接到共享压缩记录重建的依赖选择。
+
+共享数据审计还降低认证中的冗余并支持选择性验证。已有方案通过存储证明~\cite{Zheng2012POSD}、共享认证器~\cite{Tian2022SharedAudit}、客户端链下去重~\cite{Zhang2023BlockchainAudit}以及减少密钥与认证器冗余~\cite{Miao2024SharedAudit}，把审计与去重结合起来。隐私保护设计在加密数据去重与审计中保护文件所有权~\cite{Song2023EncryptedAudit}，并在使用基于身份的广播加密做密钥管理的同时，保护文件标签与审计证明的隐私~\cite{Zhang2025PrivacyAudit}。这些设计处理共享加密存储中的隐私与认证问题。
+
+细粒度去重还把审计与数据获取连接起来。Liu 等对用户内部及跨用户的密文与认证标签去重，并使用重构矩阵与 Bloom 过滤器获取分布式去重数据块~\cite{Liu2025FineGrained}。带仲裁的可搜索审计~\cite{Miao2025}、动态混合审计~\cite{Pan2026}以及可更新的多副本认证~\cite{Xu2026MPA}处理相关的选择性与共享验证场景。ARC-Audit 显式建立到记录解码的联系：认证布局决定公开覆盖，认证的私有引用决定精确恢复输入。
+
+认证数据结构将目录查询结果绑定到由数据源认证的信息~\cite{Goodrich2003ADS}。ARC-Audit 将这一原则用于页布局及引用与共享基的对应关系。公开验证者依据签名布局取得充分覆盖；授权恢复者先验证并解密引用，再定位实际用到的字典行。两者所需的访问权限和传输内容因而不同。
+
+\subsection{共享存储可靠性}
+共享存储保护必须计入依赖每个受保护对象的记录，因为公共块丢失会影响多个逻辑对象。基于丢失影响的复制~\cite{Bhagwat2006Reliability}以及对去重擦除编码存储的分析~\cite{Li2010Reliability}，说明了这种依赖结构的重要性。在系统层面，CDStore 把收敛分散与两阶段去重相结合，以协调多云环境下的可靠性、安全性与存储效率~\cite{Li2015CDStore}。Per-File Parity 把去重前校验与文件内、文件间恢复相结合~\cite{Wu2019PFP}；RepEC+ 把复制、编码、选择与协同恢复相结合~\cite{Zuo2022RepECPlus}。ARC-Audit 对完整密文对象采用标准 RS 编码~\cite{ReedSolomon1960}。实验固定擦除码与存储预算，比较保护页分配及认证恢复依赖集合的影响。
+
+\section{系统模型与问题定义}\label{sec:model}
+\subsection{参与角色与可信状态}
+在 ARC-Audit 中，批次是独立配置、编码和认证的数据单元。对每个批次，\emph{所有者}编码输入记录，将其封装为不可变密文对象，生成公开审计标签并签署批次清单，同时在本地保留批次级共享基目录与私有编码状态。\emph{云服务提供商}（cloud service provider，CSP）存储生成的密文对象、审计标签、公开参数、签名布局以及已部署的辅助保护文件。每个密文对象由批次标识与局部页索引共同标识，快照表示该批次签名清单所承诺的不可变编码状态。
+
+\emph{公开验证者}把所有者的验证公钥与预期清单摘要作为可信锚点，在构造挑战之前用它们认证公开布局与审计参数。\emph{授权恢复者}还持有批次解密能力，并通过经过认证的云端响应恢复记录。
+
+每份签名清单绑定批次标识、公开布局、密文对象身份、长度与摘要、协议以及审计参数。客户端保留完整的认证清单，因此其元数据状态随密文对象数量增长。加密、清单签名与审计标签使用相互独立的秘密材料。跨批次请求按不可变批次划分，各批次使用对应的可信锚点与密码上下文。
+
+\subsection{威胁模型与安全目标}
+ARC-Audit 的威胁模型允许 CSP 遗漏存储对象、修改密文、替换元数据或审计标签，以及重放快照或响应。模型假设所有者诚实构建编码数据，验证者和恢复者使用真实的可信锚点与预置密钥执行协议。验证者以预期清单摘要识别请求所指定的不可变版本。签名的不可伪造性和哈希的抗碰撞性共同保护上述绑定。
+
+公开视图暴露记录数量、密文长度、组与比特结构、字典基数，以及请求的目标与对象。私有解码数值（包括常量、时间与标签内容、共享基与偏差）仍加密存储于逻辑容器内部。内容保密性针对具有相同声明公开视图的输入定义，其依据是第~\ref{sec:security}~节所述的密钥派生与认证加密假设。该认证加密使用关联数据，简记为 AEAD。
+
+安全目标包括表示正确性、给定公开视图时的内容保密性、依赖关系的认证绑定、所选对象集合的响应真实性，以及返回记录的真实性。第~\ref{sec:security}~节给出相应的前提与分析。恢复是否可用取决于请求期间能够取得并验证的原始对象和修复分片。
+
+\subsection{记录与密文对象}
+ARC-Audit 的共享表示把逻辑记录映射到承载解码输入的密文页。规范化记录包含经缩放的过程值、索引与时间以及标签。精确恢复要求这些值在声明模式下相等。对于批次 $b$，令 $F$ 表示逻辑编码容器，它被划分为至多 $P_0=4068$ B 的明文切片 $F_p$。每个存储的密文对象按下式封装：
+\begin{equation}\label{eq:cipher}
+C_p=N_p\,\|\,\mathsf{Enc}_{k_b}(N_p,F_p,A_p),
+\end{equation}
+其中 $N_p$ 为 12 字节 nonce，$A_p$ 为关联数据，AEAD 输出包含 16 字节标签。因此有效长度为 $\ell(p)=|F_p|+28\leq4096$ B。对象描述符与关联数据绑定身份和长度；较短的末尾切片保留其实际长度。下文用页指代这一完整密文对象；$\mathcal P$ 为带批次限定的对象身份集合。
+
+对于逻辑比特区间 $[a,a+w)$，公开映射为
+\begin{equation}\label{eq:phi}
+\Phi_{\mathcal L}(a,w)=
+\left\{(b,p):\left\lfloor\frac{a}{8P_0}\right\rfloor
+\leq p\leq\left\lfloor\frac{a+w-1}{8P_0}\right\rfloor\right\},
+\end{equation}
+其中 $\Phi_{\mathcal L}(a,0)=\varnothing$。当比特区间跨越切片边界时，该映射包含所有被跨越的页；批次标识用于区分不同批次中相同的局部页索引。
+
+\subsection{记录依赖与接受条件}
+固定一个由 ARC-Audit 按规范构建的表示及其确定性解码器。精确依赖集 $\mathcal D_{\mathcal L}(i)$ 包含覆盖解码记录 $i$ 所需的结构、引用、局部数据、标签以及实际字典行的密文对象。公开恢复闭包 $K_{\mathcal L}(i)$ 则包含相关组的完整字典：
+\begin{equation}\label{eq:sufficient-set}
+\mathcal D_{\mathcal L}(i)\subseteq K_{\mathcal L}(i)\subseteq\mathcal P.
+\end{equation}
+两个集合都指同一固定解码器与页映射。精确依赖由该表示中的实际引用选出；公开闭包利用认证布局覆盖所有此类引用选择。
+
+对于目标集合 $T$，公开审计认证 $U(T)=\bigcup_{i\in T}K_{\mathcal L}(i)$。授权恢复通过认证解密获得引用，并构造 $D(T)=\bigcup_{i\in T}\mathcal D_{\mathcal L}(i)$。单记录集合 $K(i)$ 与 $\mathcal D(i)$ 描述各条记录的覆盖，其并集 $U(T)$ 与 $D(T)$ 则合并一个请求所需的对象。公开验证者使用 $U(T)$；授权恢复者分两个阶段获取 $D(T)$。令 $\mathcal A$ 表示已取得承诺密文与认证明文的页集合，这些页可经直接获取或经过验证的擦除修复获得。记录 $i$ 的恢复定义为
+\begin{equation}\label{eq:record-recovery}
+\mathsf{Rec}_i(\mathcal A)=
+\mathbf1\{\mathcal D_{\mathcal L}(i)\subseteq\mathcal A
+\ \land\ \widehat r_i=r_i\}.
+\end{equation}
+式~\eqref{eq:record-recovery}~定义恢复正确性。恢复者只接受经过认证的输入与完整解码结果，返回全部请求的规范化记录或返回失败。实验中的 Conservative 对照要求在解码之前取得完整的公开闭包 $U(T)$。
+
+公开审计要求签名元数据有效、与验证者预期的挑战上下文一致，且所有涉及批次的响应均通过验证。授权恢复要求解码输入通过认证，并成功解码全部请求记录。两种操作使用同一布局确定所需对象，但要求可用的页集合可能不同。
+
+\begin{table}[t]\centering\small
+\caption{ARC-Audit 的符号说明}\label{tab:notation}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.70\columnwidth}@{}}\toprule
+符号 & 含义\\\midrule
+$b$, $b_T$ & 批次标识；$T$ 涉及的批次数\\
+$F,F_p,C_p$ & 逻辑容器、明文切片、密文对象\\
+$k_b,N_p,A_p$ & 批次加密密钥、nonce、关联数据\\
+$\mathcal L,\Phi_{\mathcal L}$ & 认证公开布局与比特区间映射\\
+$\ell(p),\tau_p$ & 密文有效长度与公开审计标签\\
+$\mathcal D(i),K(i)$ & 精确依赖与公开充分闭包\\
+$D(T),U(T)$ & 精确依赖并集与审计闭包并集\\
+$\pi=(\sigma,\boldsymbol\mu)$ & 聚合审计响应\\
+$\beta,B_{\rm side}$ & 保护预算比例与计费辅助保护文件字节数\\\bottomrule
+\end{tabular}\end{table}
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/cn/architecture.pdf}
+\caption{ARC-Audit 的系统架构。}
+\label{fig:architecture}\end{figure*}
+
+\section{ARC-Audit 方案设计}\label{sec:design}
+\subsection{方案概述}
+图~\ref{fig:architecture}~展示了认证布局如何贯穿批次构建、公开审计与授权恢复。构建时，数据所有者对记录进行分组编码，将逻辑容器封装为可寻址的密文页，并认证其布局。公开审计时，验证者根据布局计算并合并目标记录的充分闭包，再验证 CSP 对本次挑战返回的聚合响应。授权恢复时，恢复者根据通过认证的引用定位实际依赖，并在验证全部必需输入后解码规范化记录。
+
+保护层在存储预算内为选定密文对象部署冗余，并通过原有的认证获取接口提供修复页。
+
+\subsection{经全量成本确认的共享表示}\label{sec:c1}
+ARC-Audit 使用 SDA-GGD 对字段分组，在减少编码字节数的同时保留定位依赖所需的信息。编码器按样本收益对候选合并排序，再根据全量输入的序列化成本决定是否接受合并。所得布局标明记录区间与字典范围，使验证者在读取引用前即可选取审计所需的页。
+
+\emph{编码与序列化成本。}在声明模式下，每个字段被赋予精确的十进制缩放与整数位宽。常量只存储一次，其余字段被划分为若干组。对于总位宽为 $L_g$ 的组 $G$，编码器选择 $k$ 个基比特位置；令 $M_g$ 表示观测到的不同共享基数量。其余 $L_g-k$ 个位置构成偏差。每条记录在其偏差之外存储长度为 $b_g=\lceil\log_2 M_g\rceil$ 比特的定宽共享基标识，组字典则存储共享基。对于 $n$ 条记录，组的序列化成本为
+\begin{equation}\label{eq:cost}
+\begin{split}
+C(G)={}&C_{\mathrm{hdr}}(G,k)+\lceil M_gk/8\rceil+\lceil nb_g/8\rceil\\
+ &+\lceil n(L_g-k)/8\rceil,
+\end{split}
+\end{equation}
+其中 $C_{\mathrm{hdr}}(G,k)=11+2|G|+2k$ 字节用于存储组模式、字段标识和基比特位置。RAW 组的成本为 $C_{\mathrm{hdr}}(G,0)+\lceil nL_g/8\rceil$。各数据流独立进行字节取整，因为这些流分别序列化。完整容器的成本为 $C_0+\sum_G C(G)$，其中 $C_0$ 包含固定模式、常量、时间／标签表示和全局头部。
+
+\emph{组内配置。}配置器按经验二元熵递增对局部比特位置进行稳定排序，并测试长度为 $k=0,1,\ldots,L_g$ 的前缀。当 $M_g=n$ 时停止。在可行候选中，配置器选择字节取整后成本最小的方案，成本相同时由较早的前缀胜出。只要 RAW 的成本不高于该 GD 候选，就选择 RAW。合并组按顺序拼接其字段序列，熵相同时保留该局部比特顺序。因此该配置依据序列化成本在这些候选之间进行选择。
+
+\emph{样本排序与全量确认。}初始化时每个非常量字段构成一个活动组。固定样本给出联合字节收益 $\widehat\Delta=C_m(G_a)+C_m(G_b)-C_m(G_a\mathbin{\|}G_b)$，其中 $C_m$ 在相同样本行上配置并测量各组，$\|$ 表示有序字段拼接。只有样本收益为正的组对才进入队列。候选在全量确认之前刷新，过时版本被丢弃。在合并 $G_a$ 与 $G_b$ 之前，编码器在全部输入记录上重新配置组合组并计算
+\begin{equation}
+\Delta_{\mathrm{full}}=C(G_a)+C(G_b)-C(G_a\mathbin{\|}G_b).
+\end{equation}
+接受条件要求全量序列化字节收益与载荷收益均为正。受影响的候选被更新，直至队列为空。RAW 回退计入配置的真实字节成本。算法~\ref{alg:grouping}~以精确记录 $X$、模式 $\Sigma$ 和固定样本索引 $I$ 为输入。辅助函数 $\operatorname{Config}(X,G)$ 选择组配置，包括 RAW 回退。$C(G;c)$ 表示配置 $c$ 下的序列化成本，$C_{\mathrm{pay}}(G;c)$ 表示其不含组头部的字节取整载荷成本。省略 $c$ 时指当前配置。$\operatorname{SampleGain}$ 返回样本收益与合并配置；仅凭样本估计不能授权合并。
+
+在算法~\ref{alg:grouping}~中，$J$ 存储被拒绝的带版本组对，$d_e$ 记录重新入队次数（上限 $d_{\max}=8$），$\operatorname{TopGain}$ 返回队列头部存储的收益，队列为空时返回 $-\infty$。队列中收益相同的候选按入队顺序处理。端点组的版本过期或该版本的组对已被拒绝时，丢弃候选。刷新后收益降低的候选最多延后八次，随后在全部输入记录上检验。
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{全量成本确认分组}\label{alg:grouping}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输入：}记录 $X$，模式 $\Sigma$，样本索引 $I$。}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输出：}逻辑容器 $F$ 与公开布局 $\mathcal L$。}\\
+\al & $\mathcal G\gets$ 每个非常量字段构成一个组。\\
+\al & 在 $X$ 与 $X_I$ 上配置 $\mathcal G$；$J\gets\varnothing$。\\
+\al & $Q\gets$ 样本收益为正的组对；初始化 $d_e=0$。\\
+\al & \textbf{当} $Q\neq\varnothing$ \textbf{时执行}\\
+\al & \hspace*{1em}$e=(G_a,G_b,\text{versions})\gets\operatorname{PopMax}(Q)$。\\
+\al & \hspace*{1em}\textbf{若} $e$ 过期或 $e\in J$，\textbf{继续}。\\
+\al & \hspace*{1em}$(\widehat\Delta,\widehat c)\gets\operatorname{SampleGain}(X_I,G_a,G_b)$。\\
+\al & \hspace*{1em}\textbf{若} $\widehat\Delta\leq0$，将 $e$ 加入 $J$；\textbf{继续}。\\
+\al & \hspace*{1em}\textbf{若} $\operatorname{TopGain}(Q)>\widehat\Delta$ 且 $d_e<d_{\max}$，\textbf{则}\\
+\al & \hspace*{2em}$d_e\gets d_e+1$；以 $\widehat\Delta$ 将 $e$ 重新入队；\textbf{继续}。\\
+\al & \hspace*{1em}\textbf{结束条件分支}\\
+\al & \hspace*{1em}$G_c\gets G_a\mathbin{\|}G_b$；$c\gets\operatorname{Config}(X,G_c)$。\\
+\al & \hspace*{1em}$\Delta_{\mathrm{full}}\gets C(G_a)+C(G_b)-C(G_c;c)$。\\
+\al & \hspace*{1em}$\Delta_P\gets C_{\mathrm{pay}}(G_a)+C_{\mathrm{pay}}(G_b)-C_{\mathrm{pay}}(G_c;c)$。\\
+\al & \hspace*{1em}\textbf{若} $\Delta_{\mathrm{full}}>0$ 且 $\Delta_P>0$，\textbf{则}\\
+\al & \hspace*{2em}用带有 $(c,\widehat c)$ 的 $G_c$ 替换 $\mathcal G$ 中的 $G_a,G_b$。\\
+\al & \hspace*{2em}使旧组条目失效；将收益为正的新组／存活组对入队。\\
+\al & \hspace*{1em}\textbf{否则}将 $e$ 加入 $J$。\\
+\al & \hspace*{1em}\textbf{结束条件分支}\\
+\al & \textbf{结束循环}\\
+\al & $(F,\mathcal L)\gets\operatorname{Serialize}(X,\Sigma,\mathcal G)$。\\
+\al & \textbf{返回} $(F,\mathcal L)$。\\\bottomrule
+\end{tabular}\end{algorithm}
+
+\begin{proposition}{经确认的逻辑成本下降}\label{prop:cost}
+每次被接受的合并都严格降低经检查的逻辑序列化成本及其载荷成本。从 $g_0$ 个活动组出发，至多接受 $g_0-1$ 次合并。
+\end{proposition}
+\begin{claimproof}
+算法~\ref{alg:grouping}~仅在两项收益均为正时接受合并。未参与合并的组及容器固定部分的成本保持不变，因此合并严格降低逻辑序列化成本及其载荷成本。每次合并使活动组数减一，故至多接受 $g_0-1$ 次合并。算法记录已拒绝的带版本组对、丢弃过期条目并限制重新入队次数，因而两次合并之间的候选处理也会终止。
+\end{claimproof}
+式~\eqref{eq:cloud-cost}~中的实测安全云端成本还包含加密封装、审计标签和公开清单。RQ1 将这一最终成本与逻辑分组目标分别评估。
+
+
+\subsection{页加密与认证布局}\label{sec:seal}
+ARC-Audit 的页加密与认证布局将依赖定位所需的结构信息与私有解码数值分开。公开布局包含流位置、位宽、模式、基比特位置、字典基数与记录数量。该布局支持式~\eqref{eq:phi}~的页映射；私有解码头部与数值（包括数值常量与私有字段值）则与编码记录一起保留在完整逻辑容器的加密切片中。
+
+每次构建时，所有者抽取新的 256 比特批次标识 $b$ 与随机加密主秘密。HKDF-SHA256 以 $b$ 为盐、以 \texttt{ARC/ENC/v1} 为上下文派生 $k_b$~\cite{RFC5869}。nonce 为局部页索引的 96 比特编码，因此同一批次密钥下各页 nonce 互不相同。AES-256-GCM 按式~\eqref{eq:cipher}~封装各切片~\cite{RFC5116}。关联数据是协议、所有者域、批次、对象身份、编解码器与明文长度的规范编码。这些字段保留在公开描述符中。
+
+描述符还记录完整密文长度与哈希。审计标签身份绑定该描述符与公开参数指纹。在创建密文对象与标签之后，所有者用 Ed25519 签署规范清单，其中包含描述符、公开布局、参数以及标签文件摘要。清单摘要与签名公钥构成预置可信锚点。该顺序把标签绑定到不可变对象、把清单绑定到已完成的标签，同时避免摘要的循环依赖。算法~\ref{alg:seal}~概括该构造。
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{封装一个数据批次}\label{alg:seal}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输入：}逻辑容器 $F$，公开布局 $\mathcal L$，所有者域。}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输出：}密文对象、审计标签、签名清单与客户端可信锚点。}\\
+\al & 抽取新的批次 $b$ 与加密主秘密；派生 $k_b$。\\
+\al & 生成独立的审计秘密 $x$、公开参数 $\mathsf{pp}$ 与清单签名密钥。\\
+\al & \textbf{对每个}至多 4068 B 的切片 $F_p$ \textbf{执行}\\
+\al & \hspace*{1em}$N_p\gets\operatorname{Encode}_{96}(p)$；构造关联数据 $A_p$。\\
+\al & \hspace*{1em}$C_p\gets N_p\|\mathsf{Enc}_{k_b}(N_p,F_p,A_p)$。\\
+\al & \hspace*{1em}$d_p\gets(A_p,|C_p|,\mathsf{Hash}(C_p))$。\\
+\al & \hspace*{1em}$\tau_p\gets\operatorname{Tag}(x,\mathsf{pp},d_p,C_p)$。\\
+\al & \textbf{结束循环}\\
+\al & $M\gets\operatorname{Manifest}(b,\mathcal L,\{d_p\},\mathsf{pp},\mathsf{Hash}(\{\tau_p\}))$。\\
+\al & 签署规范清单 $M$；预置签名公钥与 $\mathsf{Hash}(M)$ 作为可信锚点。\\
+\al & 保留批次级私有编码状态与解密能力。\\
+\al & \textbf{返回} $\{C_p\},\{\tau_p\},M$、签名与可信锚点。\\\bottomrule
+\end{tabular}\end{algorithm}
+
+\subsection{认证恢复闭包}\label{sec:c2}
+给定目标集合 $T$ 与认证布局 $\mathcal L$，ARC-Audit 的公开闭包规划由布局计算足以覆盖解码依赖的页并集 $U(T)$，其中包含每个相关组的字典。在位区间映射 $\Phi_{\mathcal L}$ 下，令 $S$ 表示覆盖私有结构元数据的页，$R_g(i)$ 表示记录 $i$ 在组 $g$ 中引用区间所覆盖的页，$V_g(i)$ 表示其偏差或 RAW 内容所覆盖的页，$L(i)$ 表示其标签所覆盖的页。令 $\mathcal P_g^{\rm dict}$ 包含 GD 组映射后的全部字典页。单记录公开恢复闭包定义为
+\begin{equation}\label{eq:closure}
+K(i)=S\cup L(i)\cup\bigcup_g
+\bigl(R_g(i)\cup V_g(i)\cup\mathcal P_g^{\rm dict}\bigr).
+\end{equation}
+RAW 组没有引用和字典，因此相应的集合为空。私有结构包含解码所需的模式与格式信息；标签项覆盖目标记录的标签比特。凡是与所选区间相交的密文页均会纳入，即使同一页还包含其他逻辑流的数据。
+
+公开验证者依据认证布局构造 $K(i)$，用完整组字典覆盖任意有效 BaseID 所选中的行。授权恢复者则认证并解密 $S$ 与引用页，在承诺位置读取各 BaseID、检查其范围，并映射被引用的字典行。把这些字典行页与 $S$、引用、局部内容和标签合并，即得到精确依赖集 $\mathcal D(i)$。
+
+对于目标集合 $T$，公开请求把重叠的单记录闭包合并为 $U(T)=\bigcup_{i\in T}K(i)$。给定密文长度 $\ell(p)$，并集规划与不带缓存的分别遍历所读取的逻辑字节数为
+\begin{equation}\label{eq:reads}
+B_U=\sum_{p\in U(T)}\ell(p),\qquad
+B_N=\sum_{i\in T}\sum_{p\in K(i)}\ell(p).
+\end{equation}
+在同一次请求中，缓存也能让逐记录遍历只读取每个对象一次。实验分别比较缓存或并集规划带来的读取复用，以及聚合证明带来的认证开销变化。当请求涉及多个批次时，先按批次计算目标及其对象并集，再以带批次标识的对象身份汇总请求。
+
+\subsection{基于新鲜挑战的公开聚合审计}\label{sec:audit}
+ARC-Audit 的 Public-Aggregate 接口验证公开闭包上的线性响应。验证者将目标记录、快照和所选对象纳入每次新生成的挑战，使响应与当前请求及所指定的数据版本绑定。
+
+每个完整密文对象被编码为 $s=133$ 个 31 B 的小端扇区，并在其有效长度之外进行虚拟零填充。对于 BLS12-381 的标量阶 $q$，扇区整数满足 $m_{p,j}<2^{248}<q$。因此该扇区化覆盖 nonce、加密载荷与 AEAD 标签；签名有效长度决定尾部去除。
+
+沿用 Shacham--Waters 线性公开认证结构~\cite{ShachamWaters2013}，所有者选择秘密 $x$，公开 $Y=xg_2$，并在配对 $e:\mathbb G_1\times\mathbb G_2\to\mathbb G_T$ 下在 $\mathbb G_1$ 中计算标签：
+\begin{equation}\label{eq:tag}
+\tau_p=x\left(H(W_p)+\sum_{j=1}^{s}m_{p,j}u_j\right).
+\end{equation}
+$W_p$ 绑定完整密文描述符与参数指纹。基点 $u_j$ 与描述符哈希 $H$ 使用域分离的哈希到曲线运算~\cite{RFC9380}。
+
+对每个批次请求，验证者生成新的 256 比特 nonce。规范挑战绑定快照、公开参数、目标集合、所选页集合、请求策略与会话。非零系数 $\nu_p$ 由该完整上下文派生。以规范挑战的摘要、页索引和重试计数器作为 SHA-512 的输入，将输出对 $q$ 取模，若为零则递增计数器重试，得到 $\nu_p\in\mathbb F_q^*$。收到挑战后，CSP 读取每个所选页并返回
+\begin{equation}\label{eq:aggregate}
+\sigma=\sum_{p\in U}\nu_p\tau_p,\qquad
+\mu_j=\sum_{p\in U}\nu_pm_{p,j}\pmod q.
+\end{equation}
+在完成上下文、格式、曲线点、子群、标量范围与维度检查之后，验证者检验
+\begin{equation}\label{eq:pairing}
+e(\sigma,g_2)=e\left(\sum_{p\in U}\nu_pH(W_p)+\sum_j\mu_ju_j,Y\right).
+\end{equation}
+验证者以自己计算的页集合为准。公开参数排除无效基点与单位元，响应须同时通过解析检查和式~\eqref{eq:pairing}~的配对验证。算法~\ref{alg:audit}~给出公开审计流程。
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{ARC-Audit 的公开闭包审计}\label{alg:audit}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输入：}目标 $T$、对应的清单与可信锚点、公开审计参数。}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输出：}\texttt{ACCEPT} 或 \texttt{REJECT}。}\\
+\al & 验证者按不可变批次划分 $T$。\\
+\al & \textbf{对每个}涉及的批次 $b$ \textbf{执行}\\
+\al & \hspace*{1em}依据可信锚点认证其清单；验证 $T_b$ 与参数。\\
+\al & \hspace*{1em}\textbf{若}验证失败，\textbf{返回} \texttt{REJECT}。\\
+\al & \hspace*{1em}$U_b\gets\operatorname{SortUnique}(\bigcup_{i\in T_b}K_{\mathcal L_b}(i))$。\\
+\al & \hspace*{1em}抽取新 nonce；绑定预期快照、请求、$T_b$ 与 $U_b$。\\
+\al & \hspace*{1em}对 $p\in U_b$ 派生 $\nu_p\in\mathbb F_q^*$；发送挑战并保留预期上下文。\\
+\al & \hspace*{1em}CSP 读取唯一的 $C_p$，并用 $p\in U_b$ 的 $\tau_p$ 按式~\eqref{eq:aggregate}~响应。\\
+\al & \hspace*{1em}验证者检查格式、上下文、编码与式~\eqref{eq:pairing}。\\
+\al & \hspace*{1em}\textbf{若}任一检查失败，\textbf{返回} \texttt{REJECT}。\\
+\al & \textbf{结束循环}\\
+\al & \textbf{返回} \texttt{ACCEPT}。\\\bottomrule
+\end{tabular}\end{algorithm}
+
+序列化聚合证明每批次占 $4+2+48+133\cdot32=4310$ B，依次计入协议帧头、扇区数量、聚合群元素和标量向量。因此涉及 $b_T$ 个批次的请求包含 $4310b_T$ 字节的证明，此外还需计入声明与挑战。第~\ref{sec:eval}~节按实际应用层封装，把这一公开接口与授权引用解析和公开下载进行比较。
+
+对于固定挑战，逐页证明对照为每个 $p$ 返回 $(\nu_p\tau_p,(\nu_pm_{p,j})_j)$，并验证相应的单页方程。因此，聚合响应与逐页响应使用相同的所选页与全新系数。响应的序列化与拒收规则见第~\ref{sec:security}~节。
+
+\subsection{精确认证记录恢复}\label{sec:c3}
+ARC-Audit 的 Exact 恢复先认证并解析引用，再获取并认证实际依赖页。首先，恢复者验证清单、版本可信锚点以及任何辅助保护文件绑定。在第 1 阶段，它获取解析目标所需的结构与引用密文，检查各对象的身份、长度与承诺摘要，并执行 AEAD 认证解密。只有认证这些明文之后，它才解析私有结构与 BaseID、检查其范围并构造精确依赖。在第 2 阶段，覆盖被引用字典行、偏差、RAW 内容与目标标签的其余页经同一验证路径获取。
+
+请求本地缓存保留经过验证的密文与认证明文，使引用解析阶段获得的内容可在依赖获取阶段复用。私有解码器的格式与认证的公开布局进行一致性检查；每次比特读取都必须落在已验证明文之内。在全部必需输入可用之后，确定性解码器重建每条请求的规范化记录。认证、引用范围、格式或解码失败均返回 $\bot$。算法~\ref{alg:recovery}~针对单个批次；多批次恢复对每个涉及批次执行相同过程。
+
+给定对象身份与认证批次上下文，辅助函数 $\operatorname{VerifiedOpen}$ 直接或通过受保护获取接口取得承诺密文，验证其描述符并执行认证解密。它返回验证通过的明文或 $\bot$，并且只缓存经过验证的密文与认证明文。
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{ARC-Audit 的精确认证记录恢复}\label{alg:recovery}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输入：}清单与可信锚点、解密能力、目标 $T$、云端获取接口、可选的签名辅助保护文件。}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输出：}完整记录 $\{r_i\}_{i\in T}$ 或 $\bot$。}\\
+\al & 认证清单与辅助保护文件；验证目标与绑定关系。\\
+\al & \textbf{若}验证失败，\textbf{返回} $\bot$。\\
+\al & $I\gets S\cup\bigcup_{i\in T,g}R_g(i)$；$\mathcal C\gets\varnothing$。\\
+\al & \textbf{对每个} $p\in I$ \textbf{执行}\\
+\al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$；失败则\textbf{返回} $\bot$。\\
+\al & \textbf{结束循环}\\
+\al & 解析认证引用；检查范围；推导 $D(T)$。\\
+\al & \textbf{对每个} $p\in D(T)\setminus\operatorname{dom}(\mathcal C)$ \textbf{执行}\\
+\al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$；失败则\textbf{返回} $\bot$。\\
+\al & \textbf{结束循环}\\
+\al & 验证私有／公开格式；从 $\mathcal C$ 解码完整记录。\\
+\al & \textbf{若}解析或解码失败，\textbf{返回} $\bot$。\\
+\al & \textbf{返回} $\{r_i\}_{i\in T}$。\\\bottomrule
+\end{tabular}\end{algorithm}
+
+Conservative 对照把第 3 行的 $I$ 替换为 $U(T)$；其后的认证与解码完全相同。因此，只要实际解码输入可用或可修复，即使某个未使用的字典对象不可用，精确恢复仍可进行。
+
+\subsection{受预算约束的密文保护}\label{sec:protection}
+一个共享页可能参与多条记录的解码。因此，在存储上限相同的情况下，保护哪些页会影响哪些记录能在擦除后恢复。ARC-Audit 对选定的密文对象部署冗余，并在解码前验证修复结果。
+
+GF$(256)$ 上的系统型 RS$(10,8)$ 辅助保护文件把八个密文对象编入一个条带，每个条带存储两个校验分片。原始密文对象保持原位。较短对象被虚拟填充至 4096 B；不完整条带使用声明的虚拟零槽位。校验在密文上计算，包含 nonce 与 AEAD 标签字节。签名辅助保护文件绑定父快照、编码维度、条带成员与校验摘要。
+
+在分数存储预算 $\beta$ 下，本文为 ARC-Audit 的恢复流程评估三种保护排序。Dictionary 把含字典的页排在其他对象之前，Uniform 使用带种子的置换，FrequencyD 按对象在参考记录集合中的依赖频次排序。三种排序使用共同的条带数量，其取值使每个序列化辅助保护文件都符合相同的每批次上限：
+\begin{equation}\label{eq:budget}
+B_{\rm side,b}\leq\left\lfloor\beta B_{\rm cipher,b}\right\rfloor.
+\end{equation}
+预算决定有多少密文条带获得保护，RS$(10,8)$ 则规定每个准入条带内部的冗余。计费内容包括校验分片、序列化清单、签名、签名公钥与摘要锚点。实验使用 $\beta=0.10$ 以及零冗余参照 NoEC；条带数量与上限固定。
+
+受保护获取首先检查原始对象。若其不可用，恢复者从其条带收集互不相同且真实存活的原始槽位与校验槽位。八个有效槽位即可进行 RS 重建。每个重建的真实对象被截断至其签名长度，并在进入缓存之前与其原始密文摘要核对。随后先进行 AEAD 认证，再进行记录解码。同一辅助函数处理引用解析阶段与最终精确依赖集获取阶段所需的修复。
+
+\subsection{计算与存储核算}\label{sec:accounting}
+令 $N$ 为批次内的密文对象数，$u=|U(T)|$。除常驻认证元数据之外，直接闭包枚举需要期望 $O(\sum_{i\in T}|K(i)|)$ 的集合插入工作与 $O(u)$ 的唯一对象状态。分组成本对实际执行的样本配置、全量配置与队列更新求和。每次被接受的合并都减少活动组数量。
+
+标签生成处理 $Ns$ 个扇区。生成证明时，服务器累加 $us$ 个域乘积与 $u$ 个加权标签。验证者计算 $u$ 个描述符哈希项和 $s$ 个扇区基点项，再执行两次配对。请求成本按涉及批次累加。每批次的证明大小固定，挑战材料的大小取决于所选页集合，清单大小则随 $N$ 增长。
+
+对于不含辅助保护文件的编码数据，安全云端字节数为
+\begin{equation}\label{eq:cloud-cost}
+B_{\rm cloud}=B_{\rm cipher}+B_{\rm tags}+B_{\rm manifest},
+\end{equation}
+其中 $B_{\rm tags}=48N$，签名清单包含公开参数。AEAD 在 $B_{\rm cipher}$ 中贡献 $28N$ 字节。所有者侧共享基字节与总私有状态另行统计。部署辅助保护文件会增加其云端文件；保护状态核算还计入其预置可信锚点。由此区分存储的云端字节与客户端预置状态。
+
+应用层流量计入声明、挑战、响应，以及接口需要时传输的第一阶段引用材料。初始化阶段负责认证并解析清单与参数，请求计时从已初始化的上下文开始。恢复耗时包括获取或修复、认证、解密与解码。修复一个返回页可能需要读取多个分片，因此服务器读取量与应用层回复大小分别统计。
+
+令 $a_p=|\{i\in T:p\in K(i)\}|$ 为包含页 $p$ 的目标闭包数量，$B_N$ 和 $B_U$ 分别为无缓存逐目标遍历与并集规划的读取字节数，则请求级复用节省的读取字节为
+\begin{equation}\label{eq:reuse}
+B_N-B_U=\sum_{p\in U(T)}(a_p-1)\ell(p)\geq0.
+\end{equation}
+
+\section{安全性与可恢复性分析}\label{sec:security}
+在第~\ref{sec:model}~节定义的系统模型下，本节先证明原始依赖页足以重建记录，并给出精确依赖集与公开闭包的包含关系。随后分析恢复记录与聚合响应的真实性，以及给定相同公开泄漏时的内容保密性。最后，根据可用的原始页与修复槽位给出充分恢复条件。记 $C_p$ 和 $F_p$ 分别为预期快照中对象 $p$ 的原始密文和对应的明文切片。
+
+\subsection{表示正确性与闭包覆盖}\label{sec:representation-proof}\label{sec:closure-proof}
+\begin{proposition}{正确解码与闭包覆盖}\label{prop:representation}\label{prop:closure}
+对按规范构建的批次，原始依赖页足以解码目标记录。对任意有效目标集合 $T$，有 $D(T)\subseteq U(T)$。
+\end{proposition}
+\begin{claimproof}
+对记录 $i$ 的 GD 组 $g$，令 $x_{i,g}$ 为其组比特串，$I_g$ 为基比特位置，$J_g$ 为其补集。编码满足
+\begin{equation}
+x_{i,g}[I_g]=B_{g,\mathrm{ID}_{i,g}},\qquad
+x_{i,g}[J_g]=d_{i,g}.
+\end{equation}
+解码器把字典行与偏差放回互补位置，逐位恢复 $x_{i,g}$。按字段位宽与精确十进制缩放反变换，并按声明格式解码 RAW、常量、时间和标签字段，即得规范化记录 $r_i$。
+
+令 $L_{g,\mathrm{ID}_{i,g}}$ 为引用字典行的逻辑区间，$L_g^{\mathrm{dict}}$ 为该组完整字典区间。页映射 $\Phi_{\mathcal L}$ 收集与输入区间相交的全部页，故
+\begin{equation}
+L_{g,\mathrm{ID}_{i,g}}\subseteq L_g^{\mathrm{dict}}
+\ \Longrightarrow\
+\Phi_{\mathcal L}(L_{g,\mathrm{ID}_{i,g}})
+\subseteq\Phi_{\mathcal L}(L_g^{\mathrm{dict}}).
+\end{equation}
+两种策略均覆盖结构、引用、局部数据与标签页。对组和目标取并集，得到
+\begin{equation}
+\mathcal D_{\mathcal L}(i)\subseteq K_{\mathcal L}(i)
+\ \Longrightarrow\
+D(T)\subseteq U(T).
+\end{equation}
+\end{claimproof}
+
+\subsection{认证绑定与返回记录真实性}\label{sec:binding}\label{sec:conditional}
+令 $\mathsf{BadSig}$ 表示一个所有者此前未签署的规范消息在可信公钥下通过签名验证。令 $\mathsf{BadDig}$ 表示被接受的清单、页或受摘要约束的辅助保护对象与原承诺字节不同，却具有相同摘要。验证者按可信锚点选择主清单，并核对辅助保护文件与父快照的绑定。若部署指定某一保护布局，则还须核对该布局的预期身份。
+
+\begin{proposition}{返回记录真实性}\label{prop:record-auth}
+令 $\mathsf{WrongRec}$ 表示恢复接口返回成功，但至少一条记录不同于预期快照中的规范化原值。对任意概率多项式时间对手，存在签名伪造归约 $\mathcal B_{\rm sig}$ 与哈希碰撞归约 $\mathcal B_{\rm dig}$，使
+\begin{equation}\label{eq:record-auth}
+\begin{aligned}
+\Pr[\mathsf{WrongRec}]
+&\leq \Pr[\mathsf{BadSig}]+\Pr[\mathsf{BadDig}]\\
+&\leq \operatorname{Adv}^{\rm EUF\text{-}CMA}_{\rm Sig}(\mathcal B_{\rm sig})
++\operatorname{Adv}^{\rm CR}_{H_{\rm dig}}(\mathcal B_{\rm dig}).
+\end{aligned}
+\end{equation}
+\end{proposition}
+\begin{claimproof}
+令 $\mathsf{Good}=\neg(\mathsf{BadSig}\lor\mathsf{BadDig})$。直接获取和 RS 修复的候选页 $C'_p$ 通过身份、长度与上下文检查后，均须满足主清单承诺的页摘要。在 $\mathsf{Good}$ 下，
+\begin{equation}
+\begin{aligned}
+H_{\rm dig}(C'_p)=H_{\rm dig}(C_p)&\ \Longrightarrow\ C'_p=C_p\\
+&\ \Longrightarrow\
+\operatorname{Open}_{k_b,N_p,A_p}(C'_p)=F_p.
+\end{aligned}
+\end{equation}
+第一阶段打开原始引用页，由真实 BaseID 确定 $\widehat D(T)=D(T)$。第二阶段对其余依赖页使用同一接受规则，故依命题~\ref{prop:representation}，
+\begin{equation}
+\begin{aligned}
+\mathsf{Good}\land\mathsf{RecAccept}
+&\ \Longrightarrow\
+\widehat{\mathbf r}_T=\mathbf r_T,\\
+\widehat{\mathbf r}_T
+&=\operatorname{Decode}_T\bigl((F_p)_{p\in D(T)}\bigr).
+\end{aligned}
+\end{equation}
+因此 $\mathsf{WrongRec}\subseteq\mathsf{BadSig}\cup\mathsf{BadDig}$。签名归约输出首个被接受的新消息及其有效签名，摘要归约输出首对通过承诺检查的同摘要异字节对象。对两事件取联合界即得式~\eqref{eq:record-auth}。多所有者情形对相关签名公钥分别取界。
+\end{claimproof}
+
+\subsection{公开视图下的内容保密性}\label{sec:confidentiality}
+在公开视图实验中，对手提交满足 $\mathsf{Leak}(X_0)=\mathsf{Leak}(X_1)$ 的两组规范化输入。给定相同的公开构建选择，$\mathsf{Leak}$ 包含页数、页长度、关联数据、公开布局、字典基数及可见的保护布局。挑战者随机选择一个输入完成封装，发布公开存储状态，并回答对手自适应发起的公开审计查询。对手按输出区分两个输入分支，其优势记为两分支中输出 $1$ 的概率之差的绝对值。若部署还公开由私有 BaseID 决定的授权恢复访问轨迹，则该轨迹须纳入相应部署的泄漏定义。
+
+\begin{proposition}{等泄漏内容保密性}\label{prop:confidentiality}
+若批次密钥派生输出与独立随机密钥不可区分，且 AEAD 满足尊重 nonce 的多消息保密性，则对任意概率多项式时间公开观察者 $\mathcal A$，
+\begin{equation}
+\operatorname{Adv}^{\rm priv}_{\rm ARC}(\mathcal A)
+\leq 2\varepsilon_{\rm KDF}+\sum_{b=1}^{B}\varepsilon_{{\rm AEAD},b}.
+\end{equation}
+其中 $\varepsilon_{\rm KDF}$ 界定在固定的输入分支中替换全部 $B$ 个批次密钥的优势，$\varepsilon_{{\rm AEAD},b}$ 界定批次 $b$ 的多消息加密区分优势。
+\end{proposition}
+\begin{claimproof}
+令 $\mathsf{Real}(X)$ 使用派生密钥，$\mathsf{Rand}(X)$ 使用独立随机密钥。考虑混合序列
+\begin{equation}
+\begin{aligned}
+\mathsf{Real}(X_0)
+&\xrightarrow{\rm KDF}\mathsf{Rand}(X_0)\\
+&\xrightarrow{{\rm AEAD},\,b=1,\ldots,B}\mathsf{Rand}(X_1)
+\xrightarrow{\rm KDF}\mathsf{Real}(X_1).
+\end{aligned}
+\end{equation}
+每次替换使用等长的页明文对和相同的关联数据。同一批次密钥下，各页以不同的局部页索引生成互异的 nonce。给定挑战密文和公开布局，模拟器用独立生成的签名密钥与审计密钥计算摘要、标签和签名，并根据密文生成校验分片。由于所选页由公开布局与请求策略决定，模拟器也能直接计算对应的密文扇区组合和聚合标签，从而回答自适应审计查询。对相邻实验的区分优势求和即得结论。
+\end{claimproof}
+
+\subsection{公开聚合审计的正确性与响应真实性}\label{sec:audit-scope}
+验证者从认证布局计算所选页集合 $U$，并保留绑定预期快照、审计参数、目标、所选页、策略、会话与新鲜 nonce 的挑战上下文。系数 $\nu_p$ 按方案规定从该上下文派生。响应通过格式、维度、标量范围、曲线点及子群检查后进入配对验证。聚合标签允许表示群单位元，其接受仍取决于配对等式。
+
+\emph{正确性。}令 $(\sigma^\star,\boldsymbol\mu^\star)$ 为给定挑战的诚实响应，代入式~\eqref{eq:tag}~与式~\eqref{eq:aggregate}~得
+\begin{equation}\label{eq:honest}
+\begin{aligned}
+\sigma^\star
+&=\sum_{p\in U}\nu_p\tau_p\\
+&=x\left(\sum_{p\in U}\nu_pH(W_p)+\sum_{j=1}^{s}\mu_j^\star u_j\right),\\
+\mu_j^\star&=\sum_{p\in U}\nu_p m_{p,j}.
+\end{aligned}
+\end{equation}
+由 $Y=xg_2$ 和双线性得到式~\eqref{eq:pairing}。由于每个 31 B 扇区的整数值小于 $2^{248}<q$，结合签名描述符中的有效长度，扇区向量唯一确定完整密文字节。
+
+\emph{安全实验。}所有者先诚实封装批次，再向对手发布密文、标签、清单和公开参数。对手随后可进行多次自适应审计交互。当任一挑战的响应满足下式时，对手获胜：
+\begin{equation}\label{eq:bad-audit}
+\mathsf{BadAudit}
+=\{\mathsf{Verify}=1\land\boldsymbol\mu\ne\boldsymbol\mu^\star\}.
+\end{equation}
+
+\begin{proposition}{选定集合响应真实性}\label{prop:audit}
+设 $e$ 为素数阶 Type-3 配对，$x$ 为均匀非零标量，$P$ 为 $\mathbb G_1$ 中均匀非零群元素。假设给定 $(g_1,g_2,P,X_1=xg_1,X_2=xg_2)$ 时计算 $xP$ 是困难的。将基点派生与描述符哈希建模为域分离的随机预言机。在验证者使用预期签名快照、基点派生输入互异且描述符哈希输入唯一绑定各承诺页的条件下，单批次安全实验中的 $\Pr[\mathsf{BadAudit}]$ 可忽略。
+\end{proposition}
+\begin{claimproof}
+归约令 $Y=X_2$，独立采样 $a_j,b_j,r_p\in\mathbb F_q$，设置
+\begin{equation}
+\begin{aligned}
+u_j &= a_jP+b_jg_1,\\
+H(W_p)&=r_pg_1-\sum_{j=1}^{s}m_{p,j}u_j,\\
+\tau_p&=r_pX_1.
+\end{aligned}
+\end{equation}
+遇到单位元基点时，重采该位置的 $(a_j,b_j)$。由于 $b_j$ 独立均匀，各 $u_j$ 在非零群元素上均匀，给定 $u_j$ 后 $a_j$ 仍均匀。给定公开基点与页内容，独立的 $r_p$ 使互异 $W_p$ 的哈希输出独立均匀。归约在发布批次前完成这些查询的编程，其余查询按随机预言机规则回答。由构造，
+\begin{equation}
+\tau_p=x\left(H(W_p)+\sum_{j=1}^{s}m_{p,j}u_j\right),
+\end{equation}
+因而生成的标签及其公开响应与真实分布一致。
+
+对首个被接受的错误响应，令 $\Delta_j=\mu_j-\mu_j^\star$。将其验证方程除以同一挑战的诚实验证方程，得
+\begin{equation}
+e(\sigma-\sigma^\star,g_2)
+=e\left(\sum_j\Delta_j u_j,X_2\right).
+\end{equation}
+由配对非退化性，$Q\mapsto e(Q,g_2)$ 在 $\mathbb G_1$ 上是单射。因此
+\begin{equation}
+\begin{aligned}
+\sigma-\sigma^\star&=x\sum_j\Delta_j u_j=\gamma\,xP+\eta X_1,\\
+\gamma&=\sum_j\Delta_j a_j,\qquad \eta=\sum_j\Delta_j b_j.
+\end{aligned}
+\end{equation}
+模拟视图通过公开 $u_j$ 依赖于其采样，隐藏的 $a_j$ 在给定公开视图后仍独立均匀。由于 $\boldsymbol\Delta\ne\mathbf 0$，有 $\Pr[\gamma=0]=1/q$。当 $\gamma\ne0$ 时，归约输出
+\begin{equation}
+xP=\gamma^{-1}(\sigma-\sigma^\star-\eta X_1).
+\end{equation}
+故若固定真实元数据的实验中对手以概率 $\varepsilon$ 获胜，归约至少以概率 $(1-1/q)\varepsilon$ 求解上述计算问题。实际协议的错误接受概率可由该实验的获胜概率与元数据绑定失败概率之和界定。各批次使用独立审计密钥时，对相关批次取联合界。
+\end{claimproof}
+
+命题~\ref{prop:closure}~说明 $U(T)$ 覆盖解码依赖。对该集合发起挑战时，命题~\ref{prop:audit}~界定验证接受且返回的线性响应与承诺响应不一致的联合事件概率。归约使用绑定挑战确定的系数，适用于上述紧凑编码的确定性系数派生。对涉及多个批次的请求，错误接受要求请求通过且至少一个批次的响应错误，其概率可通过各批次错误接受事件的并集界定。记录能否恢复还取决于实际依赖页能否直接取得或通过修复获得。
+
+\subsection{条件恢复与依赖选择}\label{sec:recovery-condition}
+固定认证保护布局与请求期间的可获取状态。令 $\mathcal A_0$ 为可直接取得的真实原始页集合，$\mathcal P_{\rm prot}$ 为受保护页集合，$S(p)$ 为 $p$ 所在条带的十个槽位，$\mathcal V$ 为可获取并通过认证的真实槽位集合，其中包含布局规定的虚拟零槽位。定义
+\begin{equation}
+\mathcal A_{\rm eff}=\mathcal A_0\cup
+\bigl\{p\in\mathcal P_{\rm prot}:|S(p)\cap\mathcal V|\geq8\bigr\}.
+\end{equation}
+
+\begin{proposition}{充分恢复条件}\label{prop:recovery}
+若元数据真实、解密密钥正确，且
+\begin{equation}\label{eq:recovery-condition}
+D(T)\subseteq\mathcal A_{\rm eff},
+\end{equation}
+则 Exact 恢复成功并返回规范化记录 $\mathbf r_T$。
+\end{proposition}
+\begin{claimproof}
+令 $G\in\mathbb F_{256}^{10\times8}$ 为系统型 RS$(10,8)$ 的生成矩阵。对受保护条带，取八个互异的真实槽位组成索引集 $J$，令 $d_t$ 为字节偏移 $t$ 上的八个原始符号。由 MDS 性质，
+\begin{equation}
+c_{J,t}=G_Jd_t,\qquad\det G_J\ne0
+\ \Longrightarrow\ d_t=G_J^{-1}c_{J,t}.
+\end{equation}
+按承诺长度截取重建结果即得原密文。该结果按与直接获取相同的规则核验并解密，所以 $p\in\mathcal A_{\rm eff}$ 时可取得 $F_p$。
+
+令 $D_0(T)\subseteq D(T)$ 为解析结构与引用所需的页。式~\eqref{eq:recovery-condition}~保证第一阶段打开 $D_0(T)$ 并确定真实的 $D(T)$，也保证第二阶段打开其余依赖。由命题~\ref{prop:representation}，
+\begin{equation}
+\begin{aligned}
+D(T)\subseteq\mathcal A_{\rm eff}
+&\ \Longrightarrow\ \widehat{\mathbf r}_T=\mathbf r_T,\\
+\widehat{\mathbf r}_T
+&=\operatorname{Decode}_T\bigl((F_p)_{p\in D(T)}\bigr).
+\end{aligned}
+\end{equation}
+\end{claimproof}
+
+在相同保护布局和可获取状态下，由 $D(T)\subseteq U(T)$ 有
+\begin{equation}
+U(T)\subseteq\mathcal A_{\rm eff}
+\ \Longrightarrow\ D(T)\subseteq\mathcal A_{\rm eff}.
+\end{equation}
+因此，在 Conservative 的充分恢复条件成立时，Exact 的充分恢复条件也成立。如果 $D(T)$ 中的页均可获取，但 $U(T)\setminus D(T)$ 中有页无法获取，Exact 仍可完成恢复，Conservative 则因无法取得整个公开闭包 $U(T)$而在获取阶段失败。
+
+\section{实验评估}\label{sec:eval}
+% WSL figure data: results/route_a_secure/dual_hai_20261008_v3/{reduced (C1),full (C2,C3)}; deliverables/paper_C1_reduced_C2C3_full_20261009/results/summary.json.
+实验围绕共享编码、公开聚合审计和认证恢复展开。RQ1 比较安全云端存储开销与完整构建时间。RQ2 比较不同依赖规划与响应方式的应用层流量和本地请求时间。RQ3 考察保护分配和依赖选择对恢复成功率及耗时的影响。表~\ref{tab:scope}~汇总各实验的工作负载、对照配置与观测次数。除成功率等直接比例外，成本的相对变化按所报告的中位数计算。
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/cn/c1.pdf}
+\caption{C1 ARC-Audit（SDA-GGD）与编码基线的存储和构建成本。}
+\label{fig:key-c1}\end{figure*}
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/cn/c2.pdf}
+\caption{C2 复用上下文时各接口的每请求应用层流量和本地处理时间。应用层流量包括声明、挑战、可能的第一阶段材料及最终响应。}
+\label{fig:key-c2}\end{figure*}
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/cn/c3.pdf}
+\caption{C3 ARC-Audit 在擦除条件下的认证恢复。图例中的 Exact / Dictionary 为精确恢复与字典页优先保护的组合。}
+\label{fig:key-c3}\end{figure*}
+
+\subsection{实验设置}
+\subsubsection{数据与实现}
+实验使用 HAI 21.03 工业控制数据集~\cite{Shin2021HAI}~的 train1 与 train2，分别包含 216,001 与 226,801 条记录。每条记录有 84 列，包括时间列、79 个过程字段和 4 个攻击指示字段。三个过程级攻击指示字段分别编码，综合指示字段根据前三者计算。数据导入时采用精确十进制规范化，以保留过程值。每次恢复均经云端获取及认证修复接口执行；独立评分器随后以规范化源记录验证 $\widehat r_i=r_i$。
+
+C1 对 train1 和 train2 各选取一个含 21,600 条记录的六小时窗口，起点分别为 2020 年 7 月 11 日和 8 月 1 日 00:00。C2 和 C3 使用完整数据段，将 train1 划分为 3 个批次、train2 划分为 4 个批次。train1 的三个日批次依次包含 86,400、86,400 和 43,201 条记录。train2 的四个日批次依次包含 7,200、86,400、86,400 和 46,801 条记录。各批次分别完成编码配置和密文封装。下文成对数值均按 train1/train2 顺序报告。
+
+原型使用 Python 3.10.12 实现，依赖 NumPy 2.2.6、cryptography 50.0.1 和 py-ecc 8.0.0。实现包含 AES-256-GCM、Ed25519、基于 BLS12-381 的整页审计认证器和密文 RS$(10,8)$。构建与请求计时均排除输入准备和独立评分。请求性能在已初始化的可复用批次上下文中测量，计时从依赖规划开始。
+
+\begin{table}[t]\centering\small
+\caption{评估工作负载}\label{tab:scope}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.31\columnwidth}>{\raggedright\arraybackslash}p{.48\columnwidth}@{}}\toprule
+内容 & 各数据段记录数 & 比较与观测\\\midrule
+C1 & 21,600 / 21,600 & 4 种方法，各 2 次构建；16 次观测\\
+C2 & 216,001 / 226,801 & 3 个目标规模、3 个案例、3 种接口；54 次请求\\
+C3 & 216,001 / 226,801 & 5 个布局、3 个丢失率、50 个案例、8 组对照；12,000 个故障结果\\
+无故障 & 同 C3 & 30 个案例、1 个布局、8 组对照；480 个结果\\\bottomrule
+\end{tabular}\end{table}
+
+\subsubsection{对照与指标}
+C1 比较 ARC-Audit 的 SDA-GGD 编码与 Per-field-GD、RAW 和 Block-CZ-256。图表用 ARC-Audit（SDA-GGD）标记采用该编码的配置。Block-CZ-256 以 256 条记录为一块序列化非常量字段，再用 Zstd 级别 3 将各块压缩为独立帧。Per-field-GD 对各非常量字段独立运行 GD，用于比较字段分组的贡献；RAW 和 Block-CZ-256 作为其他编码基线。四种表示采用相同的加密认证封装和存储成本核算口径。安全云端存储计入密文页、审计标签和签名公开清单。所有者侧共享基内容及全部私有磁盘状态单独报告。构建时间从规范化输入开始，包含分组配置、编码和完整加密认证封装。
+
+候选合并使用 $\min(50{,}000,n)$ 行样本；由于 C1 窗口仅有 21,600 行，排序阶段覆盖整个窗口。因此，C1 的分组比较同时使用全窗口排序和全量序列化成本确认。每种方法在每个窗口重复构建 2 次，报告中位数及最小--最大范围。
+
+C2 分别分析精确引用解析和公开证明响应格式的开销。目标规模设为 $r\in\{1,16,256\}$，每种数据段与目标规模组合选取 3 个目标集合。ARC-Audit（Public-Aggregate）对公开闭包进行聚合认证。Owner-MinRef-Aggregate（简称 Owner-MinRef）先认证解密引用以确定精确依赖。Public-Download 下载公开闭包密文供哈希验证。Public-Aggregate 和 Public-Download 均为无解密密钥的公开接口，比较响应格式开销；Owner-MinRef 需要授权解密能力，用于测量精确依赖确定开销。
+
+同一案例中的三种接口使用相同的目标记录集合。跨批次请求分别使用各批次的认证上下文。应用层流量计入请求声明、挑战、引用解析材料及最终响应。本地请求时间涵盖依赖规划和接口执行，不计网络往返与传输延迟。各数据点报告 3 个匹配目标集合的中位数，并给出最小值至最大值的范围。
+
+C3 在 ARC-Audit 的认证恢复流程中交叉比较精确依赖（Exact）和充分闭包（Conservative），以及 Dictionary、Uniform、FrequencyD、NoEC 四种保护配置。图中以 ARC-Audit（Exact / Dictionary）标记精确恢复与字典页优先保护的配置。比较保护分配时固定 Exact；比较依赖选择时固定同一辅助保护文件。Exact 与 Conservative 采用相同的密文认证及完整记录接受条件。NoEC 作为不部署冗余保护的基线。
+
+所有受保护排序均使用 RS$(10,8)$、相同准入条带数，以及计入校验分片和签名辅助保护文件的每批次 10\% 密文字节预算。FrequencyD 按批次取前 $\min(4096,\max(1,\lfloor n/5\rfloor))$ 条记录作为参考集。C3 的测试目标均不属于 FrequencyD 使用的参考记录集合。其中，7200 条记录的批次使用 1440 条参考记录，其他 6 个批次各使用 4096 条。
+
+\subsubsection{故障与统计}
+C3 在 $\alpha\in\{0.001,0.01,0.05\}$ 的名义丢失率下，每数据段评估 5 个随机种子布局，并为每个布局--丢失率组合生成 50 个单目标恢复案例。每个案例选择 1 条目标记录，在整个数据段的原始页及已部署校验槽位总体上无放回抽取固定数量的擦除位置。train1/train2 的擦除总体规模分别为 $N_{\mathrm{fault}}=5000/4765$，对应三个丢失率的擦除数量分别为 5/50/250 与 5/48/239。每个目标仅访问其所属批次的对象，擦除位置则从全数据段总体抽取。各策略使用相同的目标与擦除掩码；NoEC 仅应用对应原始页擦除。不同案例轮换策略执行顺序。上述结果适用于所测试的两个 HAI 数据段和无放回擦除模型；其他数据源及相关失效模型尚未评估。
+
+每个故障成功率数据点汇总 250 次恢复，并报告基于 5 个测试布局下观测结果计算的逐点 95\% Wilson 区间。故障恢复耗时采用成功请求的中位数。由于不同策略可能在不同请求上成功，解释耗时时应同时考虑成功率。无故障实验固定一个布局，每种数据段与策略的组合测试 30 个案例，共完成 480 次完整记录恢复检查。
+
+
+
+\subsection{RQ1：存储与安全构建}
+如图~\ref{fig:key-c1}~所示，ARC-Audit（SDA-GGD）在两个窗口中的安全云端存储分别为 1,903,138 与 1,770,118 B，低于 Per-field-GD 的 2,198,812 与 1,938,839 B，降幅为 13.45\% 与 8.70\%。Block-CZ-256 分别占用 2,278,001 与 2,227,359 B，RAW 在每个窗口约占用 15.17 MB。全部 16 次构建均通过规范化解码检查。
+
+ARC-Audit（SDA-GGD）的完整安全构建时间中位数为 274.356/235.621 s，较 Per-field-GD 的 231.521/206.163 s 增加 18.50\%/14.29\%。反复配置候选组并确认全量成本，使编解码阶段的耗时由 1.00/0.83 s 增至 73.66/47.63 s。分组后输出对象更少，标签生成时间由 230.25/205.05 s 降至 200.42/187.72 s，抵消了部分新增开销。两个 21,600 条记录的窗口均采用全窗排序，这些耗时反映所测分组流程的开销。更大批次上抽样排序的开销和候选覆盖率仍待测量。
+
+表~\ref{tab:state}~把存储的云端表示与所有者侧私有状态区分开来。ARC-Audit（SDA-GGD）在 335,884/215,702 B 的总私有状态中保留 303,595/184,687 B 的共享基内容。Per-field-GD 在 245,064/209,287 B 的总量中保留 208,267/174,552 B 的共享基。在这些窗口上，分组降低了安全云端存储，同时比 Per-field-GD 保留更多所有者侧私有状态。
+
+
+
+\begin{table}[t]\centering\small
+\caption{C1 云端存储与所有者侧状态}\label{tab:state}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+& \multicolumn{2}{c}{云端（MiB）} & \multicolumn{2}{c}{所有者（KiB）}\\
+方法 & train1 & train2 & train1 & train2\\\midrule
+ARC-Audit（SDA-GGD） & 1.815 & 1.688 & 328.012 & 210.646\\
+Per-field-GD & 2.097 & 1.849 & 239.320 & 204.382\\
+RAW & 14.463 & 14.463 & 0.227 & 0.227\\
+Block-CZ-256 & 2.172 & 2.124 & 0.234 & 0.234\\
+\bottomrule\end{tabular}
+\tabnote{每窗口两次构建的中位数。所有者状态包含共享基目录与私有编码／密钥文件。保护开销另行核算。}
+\end{table}
+
+\subsection{RQ2：公开审计的通信与计算}
+\emph{相同公开访问能力下的响应。}图~\ref{fig:key-c2}~比较在同一公开闭包上返回聚合证明和下载密文页的开销。当 $r=256$ 时，Public-Aggregate 传输 35,405/38,524 B，本地处理耗时 32.532/30.908 s。Public-Download 传输 17,041,940/15,754,868 B，本地处理耗时 0.0400/0.0354 s。聚合审计通过群与域运算压缩响应，下载接口则需传输密文页，但本地可直接验证摘要。用节省的传输比特数除以额外的本地处理时间，按上述中位数估算，串行传输的临界带宽为 4.19/4.07~Mbit/s。这个估算不计入初始化、网络往返或传输与计算重叠。
+
+\emph{不同访问能力下的依赖确定。}公开规划依据认证布局取得充分覆盖。Owner-MinRef-Aggregate 先验证并解密引用，再将字典范围缩小到实际依赖。当 $r=256$ 时，该接口的应用层流量为 11,163,473/11,010,612 B，本地处理耗时 31.532/30.148 s。相较 Owner-MinRef，Public-Aggregate 的流量减少 99.68\%/99.65\%，本地请求时间增加 3.17\%/2.52\%。
+
+对于单目标，Public-Aggregate 耗时 3.106/3.169 s，Owner-MinRef 为 1.164/1.126 s。二者应用层流量分别为 6237/6254 B 与 169,601/173,696 B。引用解析缩小了 MinRef 的最终对象覆盖，而公开规划消除了第一阶段传输。随着目标集合增大，重叠与引用的并集改变这一平衡。当 $r=16$ 时，两种接口的流量分别为 20,512/19,742 B 和 2,179,425/2,138,835 B，本地请求耗时分别为 12.015/10.902 s 和 8.404/8.066 s。
+
+\emph{流量构成。}应用层流量由请求声明与挑战、使用时的第一阶段材料以及最终响应构成。当 $r=256$ 时，Owner-MinRef 第一阶段传输的中位数为 11,128,596/10,972,500 B；两种公开接口没有该阶段。两种聚合接口为涉及的三个／四个批次返回 12,930/17,240 B 的证明。在固定扇区数量下，每个批次贡献 4310 B，而声明与挑战取决于请求。单目标请求的批次上下文初始化中位时间为 8.101/7.805 s。当 $r=256$ 时，首次初始化上下文需要 1,678,681/1,623,188 B 和 20.816/21.168 s。所有 54 次 C2 请求均通过对应接口的验证检查。
+
+\emph{机制对照。}两个代表性的 16 目标案例分别用于比较对象复用和证明聚合。在 train1 的一个批次中，并集规划读取 805 个对象，共 3,297,280 B；无缓存的逐记录遍历读取 5643 次，共 23,113,728 B。使用请求内缓存后，逐记录遍历同样读取 805 个对象。在 train2 的对应案例中，并集规划读取 125 个对象，无缓存遍历读取 892 次，两种复用方式均读取 125 个对象。两个案例中，带缓存的逐记录遍历和并集规划均只读取每个对象一次，与式~\eqref{eq:reuse}~一致。
+
+在相同所选页与系数下，聚合证明为 4310 B，而两个对照的逐页证明总计为 3,475,990 B 与 539,750 B。验证时间分别从 472.659 s 降至 3.477 s、从 73.646 s 降至 1.074 s。两个篡改对照中，末字节被修改的密文均未通过验证。
+
+\emph{表示布局对照。}对同一批次内的相同 16 个目标，SDA-GGD 与 Per-field-GD 均使用公开并集规划和相同的聚合后端。在 train1 上，两种表示分别选取 805 和 883 页，服务端读取 3,297,280 和 3,616,768 B，本地耗时 6.437 和 7.023 s。在 train2 上，相应结果为 125 和 143 页、509,589 和 585,227 B、1.489 和 1.683 s。两种表示的每批次响应均为 4310 B。SDA-GGD 在这两个请求中缩小了覆盖范围并减少处理开销。上文的重复请求曲线衡量 SDA-GGD 上各接口的开销。
+
+
+
+\subsection{RQ3：认证恢复与保护分配}
+\emph{保护位置。}固定 Exact 恢复策略后，可在相同预算下比较完整的保护策略。如图~\ref{fig:key-c3}~所示，Dictionary 的恢复成功率高于 Uniform 和 NoEC。在 1\% 名义丢失率下，Dictionary 在两个数据段均恢复 185/250 条记录，成功率为 74.0\%。Uniform 分别恢复 153/250 和 164/250 条，成功率为 61.2\%/65.6\%，比 Dictionary 低 12.8/8.4 个百分点。NoEC 分别恢复 114/250 和 117/250 条，成功率为 45.6\%/46.8\%。在 0.1\% 丢失率下，Dictionary 的成功率为 95.2\%/97.6\%，Uniform 为 94.0\%/95.6\%。
+
+\emph{基于频率的分配。}在 5\% 下，FrequencyD 与 Exact 恢复组合分别取得 43/250 与 65/250 次成功，即 17.2\%/26.0\%，而 Dictionary 为 14.8\%/21.6\%。在 0.1\% 下，两种策略在 train1 上相同，在 train2 上 Dictionary 略高。FrequencyD 优先保护其参考记录中频繁使用的依赖对象；Dictionary 按对象类型确定优先级。改变排序可同时改变受保护页集合和条带成员。表~\ref{tab:paired-layouts}~列出了 5\% 擦除率下各布局的配对结果。在 5\% 丢失下，FrequencyD 的总体成功率比 Dictionary 高 2.4/4.4 个百分点，各布局的差值在 train1 上为 $-2$ 至 $+8$ 个百分点，在 train2 上为 $0$ 至 $+12$ 个百分点。在 1\% 下，FrequencyD 分别恢复 191/250 与 185/250 条记录，Dictionary 在两个数据段均恢复 185/250 条。
+
+\emph{依赖策略。}在同一 Dictionary 保护布局下，Exact 与 Conservative 在 0.1\% 和 1\% 丢失率下成功恢复的案例完全相同。在 5\% 丢失率下，Exact 分别恢复 37/250 和 54/250 条记录，成功率为 14.8\%/21.6\%；Conservative 分别恢复 27/250 和 45/250 条，成功率为 10.8\%/18.0\%。Exact 的成功率分别提高 4.0 和 3.6 个百分点，失败率为 85.2\% 和 78.4\%。逐一比较配对案例，Exact 分别额外恢复了十条和九条记录，Conservative 成功的记录也均能由 Exact 恢复。额外恢复的案例中，缺失的是未被引用的字典页，实际依赖仍可直接取得或经修复获得。
+
+\begin{table}[t]
+\centering\small
+\caption{5\% 擦除率下的配对恢复结果}
+\label{tab:paired-layouts}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+数据段 & 对照 & 41001 & 41002 & 41003 & 41004 & 41005 \\
+\midrule
+train1 & F/D & 0/1 & 2/2 & 5/1 & 3/1 & 4/3 \\
+       & D/U & 9/0 & 3/1 & 3/3 & 2/0 & 8/1 \\
+       & E/C & 3/0 & 1/0 & 1/0 & 2/0 & 3/0 \\
+\midrule
+train2 & F/D & 2/1 & 4/0 & 7/1 & 2/2 & 2/2 \\
+       & D/U & 4/0 & 7/0 & 4/2 & 8/2 & 7/1 \\
+       & E/C & 1/0 & 2/0 & 2/0 & 2/0 & 2/0 \\
+\bottomrule
+\end{tabular}
+\tabnote{列为布局种子。每格表示 50 个配对案例中仅由前一配置／后一配置成功恢复的数量。F、D、U 分别表示 Exact 下的 FrequencyD、Dictionary 和 Uniform。E/C 在固定 Dictionary 保护布局下比较 Exact 与 Conservative。}
+\end{table}
+
+\emph{恢复时间。}无故障条件下，Dictionary/Exact 的恢复耗时为 3.693/3.507 ms，Dictionary/Conservative 为 8.991/7.205 ms。在相同的成功目标总体下，精确选择降低了被获取与解码的认证内容量。5\% 丢失率下，Dictionary/Exact 成功请求的中位恢复时间为 4.298/4.074 ms，Dictionary/Conservative 为 11.933/7.079 ms。同一条件下，Exact 的失败请求中位耗时为 0.414/0.461 ms，Conservative 为 5.810/3.892 ms。
+
+保护分配决定哪些对象获得冗余，依赖选择决定恢复时必须取得哪些对象。两者分别改变了擦除后可取得的页集合和恢复所需的页集合，因此即使保护布局相同，缩小依赖范围也可能使更多请求完成恢复。
+
+\subsection{实验产物}
+实验归档 \texttt{dual\_hai\_20261008\_v3} 保存 C1 使用的 reduced 配置及 C2、C3 使用的 full 配置。归档包含逐案观测、机制对照、实验源码快照，以及记录输入与源码哈希的配置清单。汇总核验脚本复算报告的统计量，并检查每批次序列化保护文件是否符合预算。编译说明记录归档位置、核验命令和复跑入口。
+
+\section{结论}
+本文提出 ARC-Audit，利用记录到密文页的认证依赖映射支持工业物联网数据的公开审计与授权恢复。公开验证者依据认证布局构造充分闭包，合并目标记录的重叠页并验证聚合响应。授权恢复者验证并解密私有引用以定位实际依赖，再以相同规则认证直接获取的密文与经纠删码修复的密文。
+
+在 HAI 的两个六小时窗口中，SDA-GGD 相较 Per-field-GD 分别减少 13.45\% 和 8.70\% 的安全云端存储，构建时间相应增加。在完整数据段的审计实验中，覆盖相同密文页时，公开聚合降低了应用层流量，但延长了本地处理时间。在固定 Dictionary 保护布局且名义擦除率为 5\% 时，Exact 相较 Conservative 在两个数据段的完整记录恢复率分别提高 4.0 和 3.6 个百分点。新增的成功案例均可取得实际依赖，只是部分未引用的字典页不可用。
+
+后续将研究跨批次共享字典，考察复用历史页时如何更新索引与清单，以及由此产生的元数据开销。恢复实验将采用相同的存储预算，考察连续页擦除和整批对象不可用等相关故障下的完整记录恢复率与修复读取量，并在其他工业物联网数据上验证保护策略的适用性。
+
+\IEEEtriggeratref{24}
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bstcontrol,references}
+\end{document}

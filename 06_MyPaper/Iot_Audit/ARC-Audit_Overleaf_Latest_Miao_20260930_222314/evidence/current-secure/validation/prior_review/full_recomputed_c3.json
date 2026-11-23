@@ -1,0 +1,578 @@
+[
+  {
+    "segment": "train1",
+    "method": "conservative/Dictionary",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/Dictionary",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 238,
+    "success_rate": 0.952
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/Dictionary",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 185,
+    "success_rate": 0.74
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/Dictionary",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 27,
+    "success_rate": 0.108
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 224,
+    "success_rate": 0.896
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 97,
+    "success_rate": 0.388
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 4,
+    "success_rate": 0.016
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/NoEC",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/NoEC",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 174,
+    "success_rate": 0.696
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/NoEC",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 17,
+    "success_rate": 0.068
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/NoEC",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 0,
+    "success_rate": 0.0
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/Uniform",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/Uniform",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 201,
+    "success_rate": 0.804
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/Uniform",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 50,
+    "success_rate": 0.2
+  },
+  {
+    "segment": "train1",
+    "method": "conservative/Uniform",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 0,
+    "success_rate": 0.0
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Dictionary",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Dictionary",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 238,
+    "success_rate": 0.952
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Dictionary",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 185,
+    "success_rate": 0.74
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Dictionary",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 37,
+    "success_rate": 0.148
+  },
+  {
+    "segment": "train1",
+    "method": "exact/FrequencyD",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "exact/FrequencyD",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 238,
+    "success_rate": 0.952
+  },
+  {
+    "segment": "train1",
+    "method": "exact/FrequencyD",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 191,
+    "success_rate": 0.764
+  },
+  {
+    "segment": "train1",
+    "method": "exact/FrequencyD",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 43,
+    "success_rate": 0.172
+  },
+  {
+    "segment": "train1",
+    "method": "exact/NoEC",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "exact/NoEC",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 224,
+    "success_rate": 0.896
+  },
+  {
+    "segment": "train1",
+    "method": "exact/NoEC",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 114,
+    "success_rate": 0.456
+  },
+  {
+    "segment": "train1",
+    "method": "exact/NoEC",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 6,
+    "success_rate": 0.024
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Uniform",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Uniform",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 235,
+    "success_rate": 0.94
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Uniform",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 153,
+    "success_rate": 0.612
+  },
+  {
+    "segment": "train1",
+    "method": "exact/Uniform",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 17,
+    "success_rate": 0.068
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Dictionary",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Dictionary",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 244,
+    "success_rate": 0.976
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Dictionary",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 185,
+    "success_rate": 0.74
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Dictionary",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 45,
+    "success_rate": 0.18
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 233,
+    "success_rate": 0.932
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 134,
+    "success_rate": 0.536
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/FrequencyD",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 34,
+    "success_rate": 0.136
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/NoEC",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/NoEC",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 192,
+    "success_rate": 0.768
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/NoEC",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 32,
+    "success_rate": 0.128
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/NoEC",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 0,
+    "success_rate": 0.0
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Uniform",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Uniform",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 216,
+    "success_rate": 0.864
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Uniform",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 65,
+    "success_rate": 0.26
+  },
+  {
+    "segment": "train2",
+    "method": "conservative/Uniform",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 2,
+    "success_rate": 0.008
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Dictionary",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Dictionary",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 244,
+    "success_rate": 0.976
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Dictionary",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 185,
+    "success_rate": 0.74
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Dictionary",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 54,
+    "success_rate": 0.216
+  },
+  {
+    "segment": "train2",
+    "method": "exact/FrequencyD",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "exact/FrequencyD",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 243,
+    "success_rate": 0.972
+  },
+  {
+    "segment": "train2",
+    "method": "exact/FrequencyD",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 185,
+    "success_rate": 0.74
+  },
+  {
+    "segment": "train2",
+    "method": "exact/FrequencyD",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 65,
+    "success_rate": 0.26
+  },
+  {
+    "segment": "train2",
+    "method": "exact/NoEC",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "exact/NoEC",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 232,
+    "success_rate": 0.928
+  },
+  {
+    "segment": "train2",
+    "method": "exact/NoEC",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 117,
+    "success_rate": 0.468
+  },
+  {
+    "segment": "train2",
+    "method": "exact/NoEC",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 8,
+    "success_rate": 0.032
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Uniform",
+    "alpha": 0.0,
+    "clean": true,
+    "n": 30,
+    "successes": 30,
+    "success_rate": 1.0
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Uniform",
+    "alpha": 0.001,
+    "clean": false,
+    "n": 250,
+    "successes": 239,
+    "success_rate": 0.956
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Uniform",
+    "alpha": 0.01,
+    "clean": false,
+    "n": 250,
+    "successes": 164,
+    "success_rate": 0.656
+  },
+  {
+    "segment": "train2",
+    "method": "exact/Uniform",
+    "alpha": 0.05,
+    "clean": false,
+    "n": 250,
+    "successes": 29,
+    "success_rate": 0.116
+  }
+]

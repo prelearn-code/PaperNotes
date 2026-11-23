@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/.venv-plan16/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan64/pilot_20261022_v1/runtime/sandbox/route_a_utility_plan64/test_plan64.py",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/results/route_a_utility_plan64/pilot_20261022_v1/runtime/sandbox/route_a_utility_plan64/test_plan63.py"
+  ],
+  "returncode": 0,
+  "stdout": "......................                                                   [100%]\n22 passed in 0.82s\n",
+  "stderr": "",
+  "tests_sha256": {
+    "test_plan64.py": "19524950f99a1413478c08c6f2c40c37418900c2e540ef7f212631f1df73823e",
+    "test_plan63.py": "fc0251b5c071e8c79173b6630487905b6b20ea2573b409c269bee3655508981e"
+  }
+}

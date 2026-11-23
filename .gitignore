@@ -8,3 +8,33 @@ tmp/
 # Python 缓存
 __pycache__/
 *.pyc
+
+# Obsidian 本机窗口布局
+/.obsidian/workspace.json
+/.obsidian/workspace-mobile.json
+
+# 本地导出、编译日志和文献提取中间件
+/output/
+/supplementary-build.txt
+/_refs/*.txt
+/_refs/*.png
+/_refs/*.xml
+/_refs/*.py
+
+# LaTeX 编译产物及修订稿的检查副本
+/06_MyPaper/**/_build/
+/06_MyPaper/**/*.aux
+/06_MyPaper/**/*.bbl
+/06_MyPaper/**/*.blg
+/06_MyPaper/**/*.fdb_latexmk
+/06_MyPaper/**/*.fls
+/06_MyPaper/**/*.log
+/06_MyPaper/**/*.out
+/06_MyPaper/**/*.synctex.gz
+/06_MyPaper/**/*.xdv
+/06_MyPaper/Iot_paper_revise/main_cn_*.pdf
+
+# IoT Audit 实验源码副本和含源码的复现包，本地保留
+/06_MyPaper/Iot_Audit/**/*.py
+/06_MyPaper/Iot_Audit/**/source_snapshot/
+/06_MyPaper/Iot_Audit/paper_C1_reduced_C2C3_full_20261009.zip

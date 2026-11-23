@@ -1,0 +1,133 @@
+ M AGENTS.md
+ M docs/REPRODUCE_ALL.md
+ M sandbox/arc-audit/scripts/b1_correctness.py
+ M sandbox/arc-audit/scripts/b4_scalability.py
+ M sandbox/arc-audit/scripts/c6_figures.py
+ M sandbox/arc-audit/scripts/m1_gates.py
+ M sandbox/arc-audit/src/arcaudit/pages.py
+ M sandbox/arc-audit/src/arcaudit/por/pairing.py
+ M sandbox/arc-audit/src/arcaudit/record_index.py
+ M sandbox/arc-audit/src/arcaudit/retrieval/layout.py
+ M sandbox/arc-audit/src/arcaudit/retrieval/record_extractor.py
+ M sandbox/arc-audit/src/arcaudit/retrieval/rs_record.py
+ M sandbox/arc-audit/tests/test_pages.py
+ M sandbox/sda-ggd/scripts/summarize_record_access.py
+ M scripts/reproduce_all.sh
+?? Plan/plan21/
+?? Plan/plan22/
+?? Plan/plan23/
+?? Plan/plan24/
+?? Plan/plan25/
+?? Plan/plan26/
+?? Plan/plan27/
+?? Plan/plan28/
+?? Plan/plan29/
+?? Plan/plan30/
+?? Plan/plan31/
+?? Plan/plan32/
+?? Plan/plan33/
+?? Plan/plan34/
+?? Plan/plan35/
+?? Plan/plan36/
+?? Plan/plan37/
+?? Plan/plan38/
+?? Plan/plan39/
+?? Plan/plan40/
+?? Plan/plan41/
+?? Plan/plan42/
+?? Plan/plan43/
+?? Plan/plan44/
+?? Plan/plan45/
+?? Plan/plan46/
+?? Plan/plan47/
+?? Plan/plan48/
+?? Plan/plan49/
+?? Plan/plan50/
+?? Plan/plan51/
+?? Plan/plan52/
+?? Plan/plan53/
+?? Plan/plan54/
+?? Plan/plan55/
+?? Plan/plan56/
+?? Plan/plan57/
+?? Plan/plan58/
+?? Plan/plan59/
+?? Plan/plan60/
+?? Plan/plan61/
+?? Plan/plan62/
+?? deliverables/
+?? docs/AUDIT_CRYPTO_20260926.md
+?? docs/ExpBaselineMinimum.txt
+?? docs/ExpPaperSupplement.md
+?? docs/ExpRouteA.md
+?? docs/ExpRouteAC1.md
+?? docs/ExpRouteAC2Union.md
+?? docs/ExpRouteADayOne.md
+?? docs/ExpRouteAEveningComparisons.md
+?? docs/ExpRouteAFaults.md
+?? docs/ExpRouteAFinalLocalBaselines.txt
+?? docs/ExpRouteAFinalOneShot.txt
+?? docs/ExpRouteAFinalSupplement.txt
+?? docs/ExpRouteAFullRequestFollowup.md
+?? docs/ExpRouteAKeyExecution.txt
+?? docs/ExpRouteAKeyMetrics.txt
+?? docs/ExpRouteAKeyReducedExecution.txt
+?? docs/ExpRouteAMain.md
+?? docs/ExpRouteAModulesToday.md
+?? docs/ExpRouteAPaperCompletion.md
+?? docs/ExpRouteAPlan59TwoDirections.md
+?? docs/ExpRouteAPlan60RiskAblation.md
+?? docs/ExpRouteAPlan61Portfolio.md
+?? docs/ExpRouteAPrioritySchedule.txt
+?? docs/ExpRouteARecordUtilityPilotPlan58.md
+?? docs/ExpRouteASecureReduced.txt
+?? docs/ExpRouteASmallComparisons.md
+?? docs/ExpRouteATodayKeyMetrics.md
+?? docs/ROUTE_A_C2_C3_SUITE_STATUS_20260929.md
+?? docs/ROUTE_A_EXECUTION_REVIEW_20260929.md
+?? docs/ROUTE_A_FAULT_PANEL_STATUS_20260929.md
+?? docs/ROUTE_A_FAULT_STATUS_20260929.md
+?? docs/ROUTE_A_IMPLEMENTATION_STATUS_20260929.md
+?? docs/ROUTE_A_MAIN_STATUS_20260929.md
+?? docs/ROUTE_A_PROTOCOL_v1.md
+?? reference/Blockchain-Based_Decentralized_Cloud_Storage_With_Reliable_Deduplication_and_Storage_Balancing.pdf
+?? "reference/Concurrency and Computation - 2021 - Zuo - Ensuring high reliability and performance with low space overhead for.pdf"
+?? reference/GreedyGD_Enhanced_Generalized_Deduplication_for_Direct_Analytics_in_IoT.pdf
+?? reference/paper_completion_inbox/
+?? sandbox/arc-audit/src/arcaudit/route_a/
+?? sandbox/arc-audit/tests/test_bit_page_boundaries.py
+?? sandbox/arc-audit/tests/test_dictionary_damage_bits.py
+?? sandbox/arc-audit/tests/test_route_a_crypto.py
+?? sandbox/arc-audit/tests/test_route_a_fault_matrix.py
+?? sandbox/arc-audit/tests/test_route_a_main_runner.py
+?? sandbox/arc-audit/tests/test_route_a_policies.py
+?? sandbox/arc-audit/tests/test_route_a_recovery.py
+?? sandbox/arc-audit/tests/test_route_a_runner.py
+?? sandbox/arc-audit/tests/test_rs_extraction_source.py
+?? sandbox/baseline_minimum/
+?? sandbox/route_a_compare_next/
+?? sandbox/route_a_compare_today/
+?? sandbox/route_a_final/
+?? sandbox/route_a_key/
+?? sandbox/route_a_modules_today/
+?? sandbox/route_a_next/
+?? sandbox/route_a_paper_completion_v1/
+?? sandbox/route_a_priority/
+?? sandbox/route_a_secure/
+?? sandbox/route_a_utility_plan58/
+?? sandbox/route_a_utility_plan59/
+?? sandbox/route_a_utility_plan60/
+?? sandbox/route_a_utility_plan61/
+?? sandbox/sda-ggd/tests/test_c1_source_replay.py
+?? sandbox/sda-ggd/tests/test_record_access_summary.py
+?? scripts/audit/
+?? scripts/launch_key_after_qualification.py
+?? scripts/paper/
+?? scripts/run_baseline_minimum.sh
+?? scripts/run_reduced_literature.py
+?? scripts/run_route_a_coordinated.sh
+?? scripts/run_route_a_final.sh
+?? scripts/run_route_a_key.sh
+?? scripts/run_route_a_priority.sh
+?? scripts/run_route_a_secure.sh
+?? scripts/run_route_a_secure_queue.py

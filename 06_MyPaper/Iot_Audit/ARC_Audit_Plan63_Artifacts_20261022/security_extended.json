@@ -1,0 +1,42 @@
+[
+  {
+    "bytes": 326890,
+    "case": "corrupt-original-repaired",
+    "day": "train1_2020-07-11",
+    "invalid_bytes": 4096,
+    "status": "PASS"
+  },
+  {
+    "bytes": 326890,
+    "case": "corrupt-parity-skipped",
+    "day": "train1_2020-07-11",
+    "invalid_bytes": 4096,
+    "status": "PASS"
+  },
+  {
+    "case": "cross-archive-sidecar-rejected",
+    "day": "train1_2020-07-11",
+    "failure": "ValueError:sidecar binding",
+    "status": "PASS"
+  },
+  {
+    "bytes": 300338,
+    "case": "corrupt-original-repaired",
+    "day": "train2_2020-08-01",
+    "invalid_bytes": 4096,
+    "status": "PASS"
+  },
+  {
+    "bytes": 300338,
+    "case": "corrupt-parity-skipped",
+    "day": "train2_2020-08-01",
+    "invalid_bytes": 4096,
+    "status": "PASS"
+  },
+  {
+    "case": "cross-archive-sidecar-rejected",
+    "day": "train2_2020-08-01",
+    "failure": "ValueError:sidecar binding",
+    "status": "PASS"
+  }
+]

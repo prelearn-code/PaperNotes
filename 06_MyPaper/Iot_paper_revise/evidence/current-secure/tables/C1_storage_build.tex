@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Reduced secure archives: median storage and construction time; ranges are observed minima and maxima, not confidence intervals. Local state is separate; recovery sidecars are not included in cloud bytes.}
+\label{tab:C1_storage_build}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllllllll}
+\hline
+Segment & Method & Cloud B & Cloud MiB & Build s & Min s & Max s & Local B & n \\
+\hline
+train1 & SDA-GGD & 1903138 & 1.815 & 274.356 & 273.529 & 275.183 & 335884 & 2 \\
+train1 & Per-field-GD & 2198812 & 2.097 & 231.521 & 230.801 & 232.240 & 245064 & 2 \\
+train1 & RAW & 15165102 & 14.463 & 1620.533 & 1618.852 & 1622.214 & 232 & 2 \\
+train1 & Block-CZ-256 & 2278001 & 2.172 & 241.711 & 241.598 & 241.824 & 240 & 2 \\
+train2 & SDA-GGD & 1770118 & 1.688 & 235.621 & 234.945 & 236.296 & 215702 & 2 \\
+train2 & Per-field-GD & 1938839 & 1.849 & 206.163 & 206.107 & 206.220 & 209287 & 2 \\
+train2 & RAW & 15165092 & 14.463 & 1625.509 & 1622.530 & 1628.488 & 232 & 2 \\
+train2 & Block-CZ-256 & 2227359 & 2.124 & 236.733 & 236.020 & 237.445 & 240 & 2 \\
+\hline
+\end{tabular}}
+\end{table}

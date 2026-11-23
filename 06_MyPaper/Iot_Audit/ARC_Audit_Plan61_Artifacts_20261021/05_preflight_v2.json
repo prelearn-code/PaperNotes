@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/.venv-plan16/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/home/zsw/codes/Paper/Exp/Iot_Audit_MY/sandbox/route_a_utility_plan61"
+  ],
+  "exit_code": 0,
+  "seconds": 4.766100671957247,
+  "created": "2026-10-21T13:55:12.460200+00:00",
+  "source_sha256": {
+    "analyze_screening.py": "f9ee871de7985c28760f6690cf3f4551bd3bb560be02532fbe8138cc299db0e0",
+    "candidate_planners.py": "8dd52910c190f2dc45994d8c39d74e8af089c821d4ef29776b37f91dca2e3f7f",
+    "test_analysis.py": "a7ffa7b4117cc0cd63994e48a22296a98a7457873a478088f7da7559457a95ea",
+    "freeze_screening.py": "5d15d52d6fff2e119446ba9518f1042337023ce1203e996e42969afb7a8d2e48",
+    "mixed_rs.py": "470b76000183172903fe1623cda25f08d3c4df125053b944f92fca62ca364d70",
+    "test_runner.py": "bc5781a1841dfb72570c801fa261ad3fc4a4efe1dc05062b76f9307489da5a40",
+    "run_screening.py": "6a3575085a4095693ccc7c82c9664d74c15c6f10fac64f3f933deff08f130379",
+    "test_mixed_rs.py": "d702bb75a4aebad5baa652fbfb1690a0f79eabd1d0b708f646cbd5db27d66cac",
+    "test_candidate_planners.py": "83f28fa670df959f6475426c3f9fc0e3cf644b03d5ed8c06f9c68d120895b334"
+  },
+  "compact_uniform_native_cap_checks": 108,
+  "old_suite_passed": 25
+}

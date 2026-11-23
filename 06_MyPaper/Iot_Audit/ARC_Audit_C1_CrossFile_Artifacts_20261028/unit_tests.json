@@ -1,0 +1,7 @@
+{
+  "command": ".venv-plan16/bin/python -B -m pytest -q sandbox/route_a_crossfile_v1/test_c1.py -p no:cacheprovider",
+  "passed": 17,
+  "failed": 0,
+  "elapsed_seconds": 5.0,
+  "test_sha256": "db62a7938585e5a094fa23e6b863eabae382b809ecaa06cc9bb89fbf125db17d"
+}

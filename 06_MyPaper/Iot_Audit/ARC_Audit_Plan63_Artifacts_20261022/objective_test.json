@@ -1,0 +1,92 @@
+{
+  "ADeploy": {
+    "score": 0.26562499999999967,
+    "delta_pp": 0.0,
+    "ci95_pp": [
+      0.0,
+      0.0
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "AProposal": {
+    "score": 0.2734374999999997,
+    "delta_pp": 0.78125,
+    "ci95_pp": [
+      -1.618303571428571,
+      3.2366071428571423
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "BDeploy": {
+    "score": 0.26562499999999967,
+    "delta_pp": 0.0,
+    "ci95_pp": [
+      0.0,
+      0.0
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "BProposal": {
+    "score": 0.14174107142857137,
+    "delta_pp": -12.388392857142865,
+    "ci95_pp": [
+      -16.12723214285713,
+      -8.593750000000004
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "BestRaw": {
+    "score": 0.2672991071428569,
+    "delta_pp": 0.1674107142857143,
+    "ci95_pp": [
+      -2.2321428571428563,
+      2.6227678571428568
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "Fixed24": {
+    "score": 0.22712053571428545,
+    "delta_pp": -3.850446428571428,
+    "ci95_pp": [
+      -6.975446428571429,
+      -0.7812499999999998
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "FrequencyFill": {
+    "score": 0.27232142857142827,
+    "delta_pp": 0.6696428571428571,
+    "ci95_pp": [
+      0.0,
+      1.6741071428571428
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "LRCUniform": {
+    "score": 0.12834821428571427,
+    "delta_pp": -13.727678571428573,
+    "ci95_pp": [
+      -17.299107142857135,
+      -10.04464285714286
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "Raw24": {
+    "score": 0.26562499999999967,
+    "delta_pp": 0.0,
+    "ci95_pp": [
+      0.0,
+      0.0
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  },
+  "Wide192Raw": {
+    "score": 0.2003348214285712,
+    "delta_pp": -6.5290178571428585,
+    "ci95_pp": [
+      -9.87723214285715,
+      -3.1249999999999987
+    ],
+    "unit": "fault-request, all finite caps and hot/cold averaged"
+  }
+}

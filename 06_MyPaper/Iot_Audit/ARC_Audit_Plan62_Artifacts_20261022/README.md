@@ -1,0 +1,7 @@
+# Plan62附件
+
+主报告在上一级ARC_Audit_Plan62_Budget_20261022.md。rates.csv为全部实际预算曲线，comparisons.csv为配对差值与区间，full_model_contrasts.json为全记录低alpha精确审查；figures提供PNG/PDF。
+
+source_frozen_v2是本轮实际结果对应的新增模块；source_development含最后的invalid_received分类加固。两者不要混作相同版本。完整运行依赖、冻结输入和逐次账本留在WSL项目results/route_a_utility_plan62/pilot_20261022_v2；本附件仅复制本轮新增源码，不是独立可运行的整个项目。compact_rows.jsonl.gz含正式调用摘要，不包含记录内容和私钥。
+
+plan62保留预设协议、实施合同、测试回执、审计及作图脚本和下一步门槛。manifest_sha256.json记录本附件文件哈希，主报告在delivery_verification.json中另记。

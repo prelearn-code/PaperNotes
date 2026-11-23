@@ -1,0 +1,130 @@
+{
+  "C1": {
+    "alphas": [
+      0.001,
+      0.01,
+      0.05
+    ],
+    "beta": 0.1,
+    "build_repeats": 2,
+    "cases": 30,
+    "clean_cases": 30,
+    "coefficient_mode": "compact; selected-set soundness remains conditional",
+    "days": {
+      "train1_2020-07-11": {
+        "date": "2020-07-11",
+        "rows": 21600,
+        "segment": "train1",
+        "start": 0
+      },
+      "train2_2020-08-01": {
+        "date": "2020-08-01",
+        "rows": 21600,
+        "segment": "train2",
+        "start": 7200
+      }
+    },
+    "layouts": [
+      41001,
+      41002,
+      41003
+    ],
+    "methods": [
+      "SDA-GGD",
+      "Per-field-GD",
+      "RAW",
+      "Block-CZ-256"
+    ],
+    "profile": "reduced",
+    "protocol": "Plan49-day-aead-reduced-v1",
+    "qualification": false,
+    "request_repeats": 3,
+    "selection": "first complete natural day, first six hours",
+    "targets": [
+      1,
+      16,
+      256
+    ],
+    "timing": "local application time; metadata initialization reported separately"
+  },
+  "C2_C3": {
+    "alphas": [
+      0.001,
+      0.01,
+      0.05
+    ],
+    "beta": 0.1,
+    "build_repeats": 2,
+    "cases": 50,
+    "clean_cases": 30,
+    "coefficient_mode": "compact; selected-set soundness remains conditional",
+    "days": {
+      "train1_2020-07-11": {
+        "date": "2020-07-11",
+        "rows": 86400,
+        "segment": "train1",
+        "start": 0
+      },
+      "train1_2020-07-12": {
+        "date": "2020-07-12",
+        "rows": 86400,
+        "segment": "train1",
+        "start": 86400
+      },
+      "train1_2020-07-13": {
+        "date": "2020-07-13",
+        "rows": 43201,
+        "segment": "train1",
+        "start": 172800
+      },
+      "train2_2020-07-31": {
+        "date": "2020-07-31",
+        "rows": 7200,
+        "segment": "train2",
+        "start": 0
+      },
+      "train2_2020-08-01": {
+        "date": "2020-08-01",
+        "rows": 86400,
+        "segment": "train2",
+        "start": 7200
+      },
+      "train2_2020-08-02": {
+        "date": "2020-08-02",
+        "rows": 86400,
+        "segment": "train2",
+        "start": 93600
+      },
+      "train2_2020-08-03": {
+        "date": "2020-08-03",
+        "rows": 46801,
+        "segment": "train2",
+        "start": 180000
+      }
+    },
+    "layouts": [
+      41001,
+      41002,
+      41003,
+      41004,
+      41005
+    ],
+    "methods": [
+      "SDA-GGD",
+      "Per-field-GD",
+      "RAW",
+      "Block-CZ-256"
+    ],
+    "profile": "full",
+    "protocol": "Plan49-day-aead-reduced-v1",
+    "qualification": false,
+    "request_repeats": 3,
+    "selection": "all source rows",
+    "targets": [
+      1,
+      16,
+      256
+    ],
+    "timing": "local application time; metadata initialization reported separately"
+  }
+}

@@ -1,0 +1,395 @@
+\RequirePackage[OT1]{fontenc}
+\documentclass[10pt,journal,onecolumn]{IEEEtran}
+\usepackage{graphicx,amsmath,amssymb,booktabs,array,url,longtable,needspace}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+\usepackage[nocompress]{cite}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\renewcommand{\thesection}{S-\Roman{section}}
+\renewcommand{\thesectiondis}{S-\Roman{section}.}
+\renewcommand{\thesubsection}{\thesection-\Alph{subsection}}
+\renewcommand{\thetable}{S-\Roman{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\newcommand{\ARC}{ARC-Audit}
+\title{ARC-Audit: Protocol, Security, and Experimental Supplement}
+\author{Anonymous Author(s)}
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
+\maketitle
+This supplement accompanies \emph{ARC-Audit: Dependency-Aware Auditing
+and Authenticated Record Recovery for Industrial IoT Data}. It specifies
+the encrypted object format, dependency interfaces, proof premises, and the
+complete measurements underlying the three research questions. The evidence
+uses two 21,600-record windows for construction and the complete train1/train2
+segments for auditing and recovery. Tables retain the corresponding units
+and comparison populations.
+
+\section{Encrypted Objects and Public Geometry}\label{sec:protocol}
+\subsection{Canonical Representation and Disclosure}
+The logical SDA-GGD container stores private schema values, constants,
+record time/label content, shared bases, references, and deviations. Public
+geometry records the encoded length, record count, label offsets and widths,
+and group modes, widths, base-bit positions, dictionary cardinalities and
+stream offsets. This geometry permits addressing of complete ciphertext
+objects without decrypting BaseIDs. Public hashes commit to ciphertext.
+
+For a logical bit range $[a,a+w)$, the first and last physical objects are
+$\lfloor a/(8\cdot4068)\rfloor$ and
+$\lfloor(a+w-1)/(8\cdot4068)\rfloor$ when $w>0$. Empty ranges map to an empty
+set. The map is applied independently within each batch; an object is named
+by batch identity and local index. A page may contain portions of several
+logical streams. The complete page is authenticated whenever any required
+range intersects it.
+
+The initial exact-recovery set contains private framing and target reference
+ranges. Target label bits and local deviation/RAW content are included in
+the final dependency set. Each GD BaseID is authenticated and decrypted before
+its value is used to select a dictionary row. A RAW group contributes local
+content without a dictionary lookup.
+
+\subsection{AEAD Framing and Key Material}
+Each construction samples a 256-bit batch identifier and encryption master
+secret. HKDF-SHA256 uses the batch as salt and \texttt{ARC/ENC/v1} as context
+to derive a 32-byte key~\cite{RFC5869}. Page index supplies the 12-byte nonce.
+AES-256-GCM encrypts at most 4068 plaintext bytes, producing a ciphertext
+with a 16-byte tag~\cite{RFC5116}. The stored frame prepends the nonce and
+has at most 4096 bytes.
+
+Associated data contains protocol, owner domain, batch, object identity,
+codec and plaintext length. These fields are serialized canonically. The
+manifest descriptor adds complete frame length and SHA-256 digest. For a
+logical container of $B_F>0$ bytes, the object count is
+$N=\lceil B_F/4068\rceil$, and $B_{\rm cipher}=B_F+28N$.
+Virtual zeros used in audit sectorization or RS coding are not stored as
+ciphertext padding. The final object's true length is authenticated.
+
+The manifest-signing and public-audit secrets are independently generated.
+The signing public key and expected manifest digest are provisioned as 64 binary
+bytes of client pin material. Owner-side files also contain the encryption
+secret, batch-scoped base catalog, private framing and base locators.
+The local-disk metric includes the actual serialized owner files, whereas
+local-base bytes count only catalog content.
+
+\subsection{Manifest and Object Identity}
+The public manifest records format, batch, domain, plaintext/ciphertext page
+capacities, layout, descriptors, public audit parameters, tag digest and
+audit readiness. Ciphertext objects are created before their audit tags;
+the complete manifest is then canonically serialized and signed. The audit
+identity binds protocol, parameter fingerprint and the entire object descriptor.
+
+Manifest verification checks the expected digest, Ed25519 signature,
+canonical serialization, format, capacities, expected object count, and
+per-object batch/index/length binding. Public parameters are decoded and
+validated in their proper groups. Ciphertext verification checks identity,
+valid length and committed hash before authenticated decryption.
+
+\section{Algorithm Details}\label{sec:configuration}
+\subsection{Deterministic Group Configuration}
+Group positions concatenate fields in stored order and bits in increasing
+field-bit order. A stable ascending sort of empirical binary entropy
+preserves local order on ties. The configurator tests prefixes of this
+order as base positions, beginning with the empty basis. It stops after all
+positions or when every row has a distinct basis. The first minimum-cost
+prefix wins ties; RAW is selected whenever it costs no more than GD.
+
+The cost includes a group header of $11+2|G|+2k$ bytes, a dictionary stream,
+a reference stream and a deviation stream, each byte-rounded independently.
+The dependency-ratio parameter is the largest basis frequency divided by
+row count. The evaluated value $\rho=1$ admits every candidate.
+
+Sample ranking uses $\min(50{,}000,n)$ rows without replacement, with sorted
+indices and fixed build seed. Thus each C1 window uses every row for ranking.
+The sampled joint gain is computed directly from two separate groups and
+their ordered concatenation. Only positive gains enter the max queue.
+Equal priorities follow insertion order; stale group versions and rejected
+pairs are discarded. A lower refreshed gain may be deferred at most eight
+times before full-data examination. A merge requires both strictly positive
+serialized gain and strictly positive payload gain on the complete input.
+Accepted groups retain their concatenated field order.
+
+\subsection{Verified Opening and Exact Recovery}
+The protected fetch helper first checks the requested original ciphertext.
+If a protected object is absent or invalid, it gathers distinct valid stripe
+slots. Original objects are checked against their parent descriptors; parity
+is checked against the signed sidecar digest. Declared virtual zeros occupy
+the unused data slots of an incomplete stripe. Eight valid slots permit RS
+reconstruction. Each reconstructed real original is truncated to its committed
+length, hash-checked, and cached.
+
+The opening helper then repeats the original descriptor check and performs
+AEAD authenticated decryption. Verified plaintext enters a request-local
+cache. After structural/reference opening, exact planning selects actual
+basis rows plus target-local material. A sparse logical adapter supplies the
+private parser, and all decoder bit reads are redirected to cache-checked
+spans. The parser's record count, label geometry, group modes, widths, offsets
+and base positions must agree with public geometry. Any failed required
+check produces failure with an empty decoded result map.
+
+Conservative recovery initially acquires the public closure and then follows
+the identical exact-planning and decoding helpers. Hence the comparison
+changes the demanded availability set while preserving authentication rules.
+The RS helper serves both the initial reference stage and subsequent data stage.
+
+\subsection{Ciphertext Protection Allocation}
+The per-batch budget determines the number of admitted stripes, while
+RS$(10,8)$ fixes the redundancy within each stripe. Parity and its authenticated
+sidecar state are charged against the complete batch ciphertext size.
+A reference record's exact dependency set contributes once per object to the
+FrequencyD count. Dictionary shuffles all objects and then places
+ dictionary-containing objects first; Uniform uses the shuffle directly;
+FrequencyD stably orders the shuffled objects by decreasing count. A shared
+stripe count is reduced until the largest serialized cost among the three
+orders fits the per-batch budget.
+
+For $s_R$ stripes, the charged cost is
+\[
+B_{\rm side}=8192s_R+|M_R|+64+32+32.
+\]
+The last three terms are signature, signing public key and digest pin.
+$M_R$ records parent snapshot, RS dimensions, page capacity, stripe members
+and two parity digests per stripe. Admission uses the actual canonical
+serialization length. The budget is
+$\lfloor0.10\sum_p\ell(p)\rfloor$. Two 4096-byte parity shards are stored
+per stripe, and existing ciphertext originals are reused.
+
+\section{Security Interfaces and Composition}
+\subsection{Public-View Confidentiality}
+Equal-leakage inputs have identical declared geometry, counts, lengths and
+public access schedules. Batch identifiers and secrets are sampled
+independently of private content. Under secure derivation, batch keys may
+be replaced by independent pseudorandom keys. The nonce-respecting
+multi-message AEAD experiment then replaces plaintext slices while retaining
+the same public associated data and lengths. This is a hybrid over encrypted
+objects and batches.
+
+The reduction generates independent authentication secrets and computes
+ciphertext descriptors, audit tags, signatures and RS parity from the
+challenge ciphertexts. Public aggregate responses can likewise be generated
+from those ciphertext sectors for the public queries. Thus the additional
+public artifacts are simulatable post-processing of the encrypted view.
+The confidentiality statement uses the specified public leakage; authorized
+recovery receives decryption capability as a separate interface.
+
+\subsection{Concrete Backend Interface}\label{sec:backend-interface}
+The public authenticator uses additive BLS12-381 groups, 133 sector bases
+in $\mathbb G_1$, and a public key in $\mathbb G_2$. Every sector is a
+31-byte little-endian integer below the scalar order. The complete frame
+is injectively encoded with a signed valid length and prescribed zero padding.
+Descriptors and sector bases use distinct hash-to-curve domains~\cite{RFC9380}.
+
+The compact challenge includes the expected snapshot, parameter fingerprint,
+targets, full page set, policy/session declaration and fresh nonce.
+A canonical-challenge digest enters the coefficient domain. SHA-512 expands
+the digest, page index and retry counter; the output is reduced modulo the
+scalar order and zero is retried. The deployed coefficients are defined by
+this deterministic expansion of a fresh bound challenge.
+
+The selected-set response-authentication assumption covers these parameters and this
+adaptive interface: accepted $\boldsymbol\mu$ must equal the specified
+linear combination of the committed ciphertext sectors. It includes
+multi-request transcripts, compact coefficient derivation, context binding
+and valid parsing. The main-paper composition conditions on this property
+and authentic metadata. Honest correctness follows separately by substitution
+into the pairing equation, following the linear authentication structure
+of Shacham--Waters~\cite{ShachamWaters2013}. The pairing identity establishes
+honest correctness; the response-authentication assumption supplies the
+adversarial guarantee used by the closure-composition argument.
+
+Response parsing enforces framing, dimension, canonical point representation,
+subgroup membership and scalar ranges. Public bases are nonidentity points.
+An aggregate identity point is parsed within the declared domain and still
+must satisfy the pairing equation. The verifier retains its own selected
+set; a server-supplied alternative cannot redefine the challenge.
+
+\subsection{Response Serialization}\label{sec:wire-format}
+The aggregate response occupies $4+2+48+133\cdot32=4310$ B: protocol framing,
+sector count, aggregate point and canonical scalar vector. An individual
+response adds an 8-byte page identifier, totaling $4318|U|$ B for a fixed set.
+The individual control uses the same fresh coefficient vector and cached
+verification context as its aggregate counterpart.
+
+Ciphertext page messages use an 8-byte framing/count prefix and a 12-byte
+identifier/length header per returned page. Complete application traffic
+also includes the canonical request declaration and serialized challenge.
+Owner-MinRef includes its first-stage encrypted page message. A request
+spanning $b_T$ data batches accumulates $b_T$ distinct proofs and batch
+contexts. Initial manifest/parameter state is charged separately.
+
+\subsection{Binding and Returned Authenticity}
+Under authentic pins, a metadata substitution requires a signature or hash
+binding failure. Direct and repaired ciphertexts must match the original
+signed descriptor. Conditioned on binding, authenticated decryption with
+correct keys recovers the original slices, reference parsing selects the
+original basis rows, and deterministic decoding reconstructs complete records.
+An incorrect returned record therefore requires the binding events defined
+in the main paper. Byte withholding instead affects whether the sufficient
+availability condition is met.
+
+RS recovery requires eight distinct authentic slots for each missing protected
+object. This criterion applies to the true dependency set, including the
+initial reference objects. It is a deterministic sufficient condition on an
+execution's available objects. The fault experiment samples executions to
+measure how frequently recovery succeeds under its stated loss rule.
+
+\section{Workloads and Measurement Definitions}\label{sec:key-evidence}
+\subsection{Data and Batches}
+The HAI 21.03 train1/train2 source identities are retained in the accompanying
+configuration manifests~\cite{Shin2021HAI}. C1 windows each contain 21,600
+records; C2 and C3 use 216,001 and 226,801 records. Table~\ref{tab:batches}
+gives the batch partition. Each batch is encoded independently and stores
+its own ciphertext and authenticated context.
+
+\begin{longtable}{@{}llrr@{}}
+\caption{Full-Workload Data Batches}\label{tab:batches}\\
+\toprule Segment & Date (2020) & Source offset & Records\\\midrule\endfirsthead
+\toprule Segment & Date (2020) & Source offset & Records\\\midrule\endhead
+train1 & July 11 & 0 & 86,400\\
+train1 & July 12 & 86,400 & 86,400\\
+train1 & July 13 & 172,800 & 43,201\\
+train2 & July 31 & 0 & 7,200\\
+train2 & August 1 & 7,200 & 86,400\\
+train2 & August 2 & 93,600 & 86,400\\
+train2 & August 3 & 180,000 & 46,801\\\bottomrule
+\end{longtable}
+
+The source schema has time, 79 process fields, and four attack indicators.
+The independent encoded label stream contains attack\_P1/P2/P3; their
+combined indicator is derived. Constants and exact decimal scales belong
+to each canonical schema. The C1 windows begin at July 11 00:00 and August 1
+00:00, ending at 05:59:59; their source offsets are 0 and 7200.
+
+\subsection{Execution and Timing}
+Python is 3.10.12; package versions are NumPy 2.2.6, cryptography 50.0.1,
+py-ecc 8.0.0 and the source renderer's Matplotlib 3.10.9. C1 and full-workload
+measurement processes use CPU affinity sets $\{2\}$ and $\{4\}$ respectively
+with shared host memory and disk. The source manifests bind input digests,
+configuration and implementation-file digests.
+
+Block-CZ-256 uses independent Zstd frames at level 3, each covering up to
+256 consecutive records. Within a block, nonconstant fields are concatenated
+in the fixed schema order, with values retained in source row order and
+stored in little-endian byte widths rounded up from their declared bit widths.
+The encoder uses a single-threaded compression context with content-size and
+checksum fields enabled. The container stores schema and constant metadata,
+a separate label stream, and a block index. Record lookup decompresses the
+corresponding block frame and combines its field values with this metadata.
+The resulting container receives the same page encryption, audit tags, and
+signed manifest as the other C1 representations.
+
+C1 builds use seeds 41001 and 41002. Build time is codec configuration and
+encoding plus complete secure sealing. Seal time includes encryption, audit
+parameter generation, tags, manifest creation and associated file work.
+Normalized input preparation and independent full scoring are separate.
+Cloud storage counts ciphertext, tags, manifest and its signature; public
+parameters reside in the manifest. Base catalog and total owner disk bytes
+are reported separately.
+
+C2 uses targets of sizes 1, 16 and 256, with three cases per size/segment.
+The seed function binds \texttt{secure-audit}, segment, target count and case.
+A request is partitioned among batch contexts and accumulates their measured
+local times and bytes. A context is initialized once per batch; values
+reused in request rows represent that same initialization. Tables of setup
+state therefore describe the contexts needed by requests rather than new
+independent initialization repetitions.
+
+C3 uses layout seeds 41001--41005, with 50 cases at each nonzero loss rate.
+The seed function binds \texttt{secure-fault}, segment, layout, loss rate,
+case and clean status. The first layout supplies 30 clean cases per control.
+A signed-sidecar context is initialized before timing the recovery operation.
+That initialization is reported separately. The measured recovery operation
+includes protected fetching, hash checks, decryption and decoding. External
+source comparison follows the service timer.
+
+\subsection{Fault Population and Statistical Units}
+Each segment's fault universe contains all original ciphertext objects across
+its data batches and the deployed parity slots. The shared admitted stripe
+count lets the protected methods use the same slot-loss mask. A target's
+retriever sees losses affecting its own batch. NoEC inherits original-object
+losses from the same mask. Losses are sampled without replacement with count
+$\lceil\alpha N_{\mathrm{fault}}\rceil$, where $N_{\mathrm{fault}}$ is the size
+of this fault universe. For train1, $N_{\mathrm{fault}}=5000$ and the three
+counts are 5/50/250; for train2, $N_{\mathrm{fault}}=4765$ and they are 5/48/239. The realized fractions
+are 0.1000/1.0000/5.0000\% and approximately 0.1049/1.0073/5.0157\%.
+
+Recovery targets exclude FrequencyD reference records: 1440 for the 7200-row
+batch and 4096 for each other batch. All eight controls share a case's target
+and faults, and execution order rotates across cases. This gives 250 outcomes
+per fault point, 12,000 fault outcomes and 480 clean outcomes. Counts remain
+in the success denominator whether the operation succeeds or fails.
+
+C1 and C2 report medians with observed minima and maxima ($n=2$ and $3$).
+C3 success intervals are pointwise 95\% Wilson intervals. For $k$ successes
+in $n$ cases, $\widehat p=k/n$, and $z=1.95996398454$, their center and half-width are
+\[
+\frac{\widehat p+z^2/(2n)}{1+z^2/n},\qquad
+\frac{z\sqrt{\widehat p(1-\widehat p)/n+z^2/(4n^2)}}{1+z^2/n}.
+\]
+These describe the tested layouts. Success and failure timing summaries use
+their respective outcome populations; a missing median denotes an empty
+population. Ratios of reported medians are descriptive effect summaries.
+
+\section{C1 Complete Storage and Construction Results}
+
+\input{evidence/current-secure/typeset/c1-storage.tex}
+
+\Needspace{14\baselineskip}
+\input{evidence/current-secure/typeset/c1-time.tex}
+
+Ciphertext includes AEAD framing. Manifest bytes include its signature and public parameters. Local total is the actual owner-directory byte count; local base content is a component of that total. Build time includes the full seal operation, including work beyond the listed component timers.
+
+\section{C2 Complete Audit Measurements}
+
+\input{evidence/current-secure/typeset/c2-requests.tex}
+
+\input{evidence/current-secure/typeset/c2-accounting.tex}
+
+Values summarize the contexts used by the three request cases. Setup times reused across rows refer to the same actual batch initialization; they are not independent new setup trials. For Public-Download, the response column is the framed ciphertext page message rather than a pairing proof.
+
+\Needspace{18\baselineskip}
+\subsection{Representative Mechanism Controls}
+The two controls each use one 16-target set, on train1 July 11 and train2 July 31. The page set and fresh coefficients are fixed for the aggregate/individual comparison. The following values are direct control observations.
+
+\input{evidence/current-secure/typeset/c2-reuse.tex}
+
+\input{evidence/current-secure/typeset/c2-aggregate.tex}
+
+The corresponding SDA/Per-field public controls select 805/883 pages on train1 and 125/143 pages on train2. Their local request times are 6.437/7.023 s and 1.489/1.683 s. Last-byte ciphertext mutation is rejected in both segment controls.
+
+\section{C3 Complete Recovery Measurements}
+
+\input{evidence/current-secure/typeset/c3-success.tex}
+
+\input{evidence/current-secure/typeset/c3-time.tex}
+
+A dash indicates no observations of that outcome. Clean results use one layout and 30 cases per control; nonzero-loss results use five layouts and 250 cases. The successful/failure populations are retained separately.
+
+\input{evidence/current-secure/typeset/c3-components.tex}
+
+Downloaded bytes include originals and repair shards fetched by the protected reader. Returned bytes are ciphertext objects supplied to the record-recovery layer. Sidecar initialization precedes the recovery timer. Decrypt time includes the checks performed inside the opening helper. Component medians need not sum to the median total.
+
+\Needspace{30\baselineskip}
+\section{Protection Ledger}
+
+\input{evidence/current-secure/typeset/protection.tex}
+
+All listed charged costs satisfy their batch caps. Each cost includes stored parity, signed sidecar metadata and the 64-byte provisioned key/digest pair. NoEC uses zero sidecar bytes. Base ciphertext, audit tags, base manifest and owner state belong to their separate ledgers.
+
+\section{Reproducible Evidence}
+The accompanying \path{evidence/current-secure} directory contains raw observations,
+summary tables, configuration manifests, input schemas and identities, the source
+snapshot, and the figure/table generation scripts. The selected source profiles
+are recorded in \path{CONTRIBUTION_SOURCES.json}. Each raw observation retains
+its segment, method, case and configuration fields. C3 additionally records layout,
+loss fraction, target, outcome, failure reason, reads, repairs and timer components.
+
+The evidence verifier checks observation-key uniqueness, comparison counts,
+source-summary agreement, and serialized protection caps. Plot-source rows are
+saved with the vector figures; tables are generated from the same observations.
+The full source experiment defines input preparation, immutable sealing,
+request generation and recovery scoring. Reproduction uses the recorded source
+identities, seeds, parameters and package versions, with newly generated test
+cryptographic keys and batch identifiers.
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bstcontrol,references}
+\end{document}

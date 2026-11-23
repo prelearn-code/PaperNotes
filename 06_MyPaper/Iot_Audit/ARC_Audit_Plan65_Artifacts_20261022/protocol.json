@@ -1,0 +1,179 @@
+{
+  "days": [
+    "train1_2020-07-11",
+    "train2_2020-08-01",
+    "train1_2020-07-12T12",
+    "train2_2020-08-02T12"
+  ],
+  "role": "Frozen allocator, two old and two new six-hour windows; per-archive planning and separate calibration/test targets",
+  "seed": 65001,
+  "beta": 0.1,
+  "limits": [
+    32768,
+    65536,
+    131072,
+    262144,
+    524288,
+    1048576,
+    2097152,
+    null
+  ],
+  "modes": [
+    "hot",
+    "cold"
+  ],
+  "alphas": [
+    0.001,
+    0.005,
+    0.01,
+    0.05
+  ],
+  "test_counts": [
+    16,
+    16,
+    16,
+    64
+  ],
+  "clean": 4,
+  "planning_cases": 512,
+  "guard_alpha_max": ".01",
+  "geometry_bank": [
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      12,
+      1
+    ],
+    [
+      12,
+      2
+    ],
+    [
+      12,
+      3
+    ],
+    [
+      16,
+      1
+    ],
+    [
+      16,
+      2
+    ],
+    [
+      16,
+      3
+    ],
+    [
+      24,
+      1
+    ],
+    [
+      24,
+      2
+    ],
+    [
+      24,
+      3
+    ],
+    [
+      32,
+      1
+    ],
+    [
+      32,
+      2
+    ],
+    [
+      32,
+      3
+    ],
+    [
+      40,
+      4
+    ],
+    [
+      48,
+      4
+    ],
+    [
+      64,
+      6
+    ],
+    [
+      96,
+      9
+    ],
+    [
+      128,
+      12
+    ],
+    [
+      192,
+      18
+    ],
+    [
+      224,
+      22
+    ]
+  ],
+  "round_sizes": [
+    64,
+    48
+  ],
+  "read_domain_limit": 131072,
+  "replicates": 3,
+  "training_folds": 4,
+  "common_byte_allowance": 4096,
+  "development_days": [
+    "train1_2020-07-11",
+    "train2_2020-08-01"
+  ],
+  "new_days": [
+    "train1_2020-07-12T12",
+    "train2_2020-08-02T12"
+  ],
+  "new_windows": [
+    [
+      "train1_2020-07-12T12",
+      129600,
+      "2020-07-12 12:00:00"
+    ],
+    [
+      "train2_2020-08-02T12",
+      136800,
+      "2020-08-02 12:00:00"
+    ]
+  ],
+  "fault_models": [
+    "ceil",
+    "fixed_m",
+    "bernoulli"
+  ],
+  "calibration_cases": 256,
+  "boundary_reserve": 4096,
+  "primary": "cold512 at alpha .05; hot512 and finite-profile secondary",
+  "stable_rule": "positive cold512 difference vs Raw24, BestRaw, FrequencyFill in all new-window/model/seed strata; paired lower CI >0 and zero observed Raw24-to-A regressions at hot/cold512"
+}

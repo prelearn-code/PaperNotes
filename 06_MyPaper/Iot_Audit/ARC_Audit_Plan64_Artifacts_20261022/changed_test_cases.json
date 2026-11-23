@@ -1,0 +1,80 @@
+[
+  {
+    "day": "train1_2020-07-11",
+    "replicate": 0,
+    "case": 78,
+    "changes": [
+      {
+        "mode": "hot",
+        "limit": 524288,
+        "raw_success": false,
+        "a_success": true,
+        "raw_unlimited_bytes": 495616,
+        "a_unlimited_bytes": 507904
+      },
+      {
+        "mode": "hot",
+        "limit": 1048576,
+        "raw_success": false,
+        "a_success": true,
+        "raw_unlimited_bytes": 495616,
+        "a_unlimited_bytes": 507904
+      },
+      {
+        "mode": "hot",
+        "limit": 2097152,
+        "raw_success": false,
+        "a_success": true,
+        "raw_unlimited_bytes": 495616,
+        "a_unlimited_bytes": 507904
+      },
+      {
+        "mode": "hot",
+        "limit": null,
+        "raw_success": false,
+        "a_success": true,
+        "raw_unlimited_bytes": 495616,
+        "a_unlimited_bytes": 507904
+      },
+      {
+        "mode": "cold",
+        "limit": 1048576,
+        "raw_success": false,
+        "a_success": true,
+        "raw_unlimited_bytes": 527594,
+        "a_unlimited_bytes": 539884
+      },
+      {
+        "mode": "cold",
+        "limit": 2097152,
+        "raw_success": false,
+        "a_success": true,
+        "raw_unlimited_bytes": 527594,
+        "a_unlimited_bytes": 539884
+      },
+      {
+        "mode": "cold",
+        "limit": null,
+        "raw_success": false,
+        "a_success": true,
+        "raw_unlimited_bytes": 527594,
+        "a_unlimited_bytes": 539884
+      }
+    ]
+  },
+  {
+    "day": "train1_2020-07-11",
+    "replicate": 0,
+    "case": 133,
+    "changes": [
+      {
+        "mode": "cold",
+        "limit": 524288,
+        "raw_success": true,
+        "a_success": false,
+        "raw_unlimited_bytes": 523498,
+        "a_unlimited_bytes": 527596
+      }
+    ]
+  }
+]

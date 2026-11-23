@@ -1,0 +1,8178 @@
+{
+  "trace": [
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion",
+        "proxy_delta": 84425
+      },
+      "key": "dcefbcfee454080404e2d714de6075fd66999505d5323fbe428436a1af91c5dd",
+      "rank": [
+        946,
+        980,
+        6010
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion_relocate",
+        "moved": 298,
+        "proxy_delta": 7070
+      },
+      "key": "0f54b7c9dee06cc2d57a15d680087a7ff75279ec8d65e25ec931eac38ec0f6a9",
+      "rank": [
+        949,
+        978,
+        6003
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 45620,
+        "swap": [
+          298,
+          310
+        ]
+      },
+      "key": "ce0500f3b236155ce838650bc572f5956b5f974cc916bfa5d81a61a489d95e08",
+      "rank": [
+        946,
+        977,
+        5999
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -41496,
+        "swap": [
+          310,
+          67
+        ]
+      },
+      "key": "ea383ab6910800c48cb84ad7a8cbfce897d1d2fd087629a18b8751fbf81e9b93",
+      "rank": [
+        937,
+        969,
+        5946
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion",
+        "proxy_delta": 85474
+      },
+      "key": "8a158ec684d5d3a39b8ec4ae5ef1bf6d6852731fd1aa22f1ae91928dd15980a3",
+      "rank": [
+        944,
+        977,
+        5997
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          358
+        ],
+        "family": "expansion_relocate",
+        "moved": 298,
+        "proxy_delta": 13516
+      },
+      "key": "59dc6f2158c5641523add16155eb1fe41436299279a57b9f79b6a839193680ac",
+      "rank": [
+        946,
+        977,
+        5991
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          358
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 52066,
+        "swap": [
+          298,
+          310
+        ]
+      },
+      "key": "0c1bf189f41a6a372bb37332d86b4f7d1ea76c4a5d9c755934488759a4ffa549",
+      "rank": [
+        945,
+        976,
+        5989
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -36868,
+        "swap": [
+          274,
+          115
+        ]
+      },
+      "key": "c05cff7f45eb5f91737b2e8921d06166c01eccb39103b6480f49e877995ecf48",
+      "rank": [
+        946,
+        979,
+        5997
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          358
+        ],
+        "family": "expansion",
+        "proxy_delta": 88794
+      },
+      "key": "44401c612ce723ab47d8980fab175719a4f4a1fc66e6c0e1eac5f744e3f93114",
+      "rank": [
+        944,
+        975,
+        5987
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          321
+        ],
+        "family": "expansion_relocate",
+        "moved": 133,
+        "proxy_delta": 15267
+      },
+      "key": "9434cd3bacdf282278f39f80169bcb7b3e1f313135f88748d85c93d531793100",
+      "rank": [
+        954,
+        986,
+        6048
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 55335,
+        "swap": [
+          285,
+          310
+        ]
+      },
+      "key": "bb85163615788dbb7007c41c729a8737ba4e233bf470e0ee29153429e7d751d6",
+      "rank": [
+        941,
+        972,
+        5969
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -11928,
+        "swap": [
+          174,
+          93
+        ]
+      },
+      "key": "bc9b6de6a4518ec1c095bbf935cd30f25f15ea5ededcbf4aae5426dd433ede4b",
+      "rank": [
+        943,
+        976,
+        5983
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          362
+        ],
+        "family": "expansion",
+        "proxy_delta": 125799
+      },
+      "key": "33c4fae1db8f658157b06659fd4b911715e671bca291c58a35df37c0713d5883",
+      "rank": [
+        939,
+        973,
+        5964
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          321
+        ],
+        "family": "expansion_relocate",
+        "moved": 134,
+        "proxy_delta": 15818
+      },
+      "key": "4d4db87b81e29ca7b32d20bb1ed1899b82c3598f4fbcc14422da0041e83ec93e",
+      "rank": [
+        948,
+        983,
+        6023
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          358
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 61981,
+        "swap": [
+          285,
+          310
+        ]
+      },
+      "key": "c5e9fe420fc7bb9039df45a3965f833c947d23e1b96401b410ecaa616671d1a8",
+      "rank": [
+        939,
+        971,
+        5958
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -11480,
+        "swap": [
+          274,
+          135
+        ]
+      },
+      "key": "8985062bf132d3d7fdb33edf13cd897659f913a769338bf7e8351a4362162e28",
+      "rank": [
+        941,
+        976,
+        5973
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          321
+        ],
+        "family": "expansion",
+        "proxy_delta": 123543
+      },
+      "key": "f5511591dd72d67124567bcc1d7e75c26d3b04a92d5ffaace343460c93d87000",
+      "rank": [
+        943,
+        979,
+        6010
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          362
+        ],
+        "family": "expansion_relocate",
+        "moved": 133,
+        "proxy_delta": 17488
+      },
+      "key": "90b893b13ee81f26e938b9a8d848f5c6f507ddaa4b9c15b18650e2c0566adff0",
+      "rank": [
+        948,
+        981,
+        6001
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 69410,
+        "swap": [
+          116,
+          260
+        ]
+      },
+      "key": "e990e237bd0eb8d2aeb49c9f1842ba9ca33af3acd3ea51451660800f0c8da76d",
+      "rank": [
+        943,
+        975,
+        5982
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -10782,
+        "swap": [
+          156,
+          95
+        ]
+      },
+      "key": "9477a7fc227dc7fd7b49cb359c09fc9d4180ef279a43f016f0c5af3ce8476e82",
+      "rank": [
+        940,
+        973,
+        5965
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          362
+        ],
+        "family": "expansion",
+        "proxy_delta": 164469
+      },
+      "key": "7444551faea7b39c75d07b15cbea0fe9c6b48f601ce80e5a6665d7aadb01b137",
+      "rank": [
+        938,
+        972,
+        5970
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion_relocate",
+        "moved": 285,
+        "proxy_delta": 19387
+      },
+      "key": "8ea20d9f8232d2816478250705442fbde0f60db7cb18b8a98ebb61412de637a6",
+      "rank": [
+        947,
+        978,
+        6001
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 75052,
+        "swap": [
+          97,
+          310
+        ]
+      },
+      "key": "7e69c49d24f1e9174b25fd47484c707e975b10d02cef30fdbd01d89f2963b6b0",
+      "rank": [
+        942,
+        974,
+        5988
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -8594,
+        "swap": [
+          134,
+          205
+        ]
+      },
+      "key": "492e21bd05400ea384bf5b2aa49d03559ca111f71572742efe1215da0b6ed0fd",
+      "rank": [
+        938,
+        970,
+        5952
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          364
+        ],
+        "family": "expansion",
+        "proxy_delta": 92719
+      },
+      "key": "cf5d298841560ced0dbc743e14e5ca351544a87b2d43105b725ce8c56f75e2ff",
+      "rank": [
+        940,
+        974,
+        5974
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          362
+        ],
+        "family": "expansion_relocate",
+        "moved": 134,
+        "proxy_delta": 19813
+      },
+      "key": "c8b555d84ac09101f9c6973454fea7c97710d7d6ce880ad67b991cd9d4593d18",
+      "rank": [
+        943,
+        977,
+        5972
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 76004,
+        "swap": [
+          141,
+          267
+        ]
+      },
+      "key": "c81b48c2960ba264806b40eac88764402ab000e9171343fe22bd010a508cdfa7",
+      "rank": [
+        947,
+        980,
+        6015
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -5828,
+        "swap": [
+          26,
+          174
+        ]
+      },
+      "key": "0f6fdd09dc02f62a9a18949b2eda9a8b358d9283321f864672338d0aa1ebc61d",
+      "rank": [
+        943,
+        976,
+        5983
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          321
+        ],
+        "family": "expansion",
+        "proxy_delta": 170161
+      },
+      "key": "0e8218438cbd4b5642f82305779696faf37189d0de5aa409a24558d74f2c35f8",
+      "rank": [
+        942,
+        979,
+        6013
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          358
+        ],
+        "family": "expansion_relocate",
+        "moved": 285,
+        "proxy_delta": 26033
+      },
+      "key": "d3e416aadd8cdc58126ab243be5534cfc4c828037230abb6940e647a92929dd7",
+      "rank": [
+        944,
+        977,
+        5989
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 78501,
+        "swap": [
+          141,
+          101
+        ]
+      },
+      "key": "4ed69fc32ff7df50f5e317c1d768beb2f30a17583101c77aa4b07acf2dc2f96a",
+      "rank": [
+        942,
+        976,
+        5990
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -3756,
+        "swap": [
+          239,
+          281
+        ]
+      },
+      "key": "00c494f01b033f7d97efe929c9aa4c7d98409ad12a0e0abe0f37d73634844d67",
+      "rank": [
+        942,
+        976,
+        5982
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          396
+        ],
+        "family": "expansion",
+        "proxy_delta": 87421
+      },
+      "key": "c57e0def58c53a0fa4fa755c24a1eb4f3db5b5058b722688895df2ff13b895a0",
+      "rank": [
+        940,
+        975,
+        5979
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 296,
+        "proxy_delta": 26537
+      },
+      "key": "474fdd6205d4b3b816e8d754b73ea1a4ea30dc5ad88f7c71eebc246abbcf8945",
+      "rank": [
+        946,
+        978,
+        6008
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 78913,
+        "swap": [
+          94,
+          267
+        ]
+      },
+      "key": "9e166c87b4ace447cebcc0c629751ae19e94816b2c155e2dbcd672343c6468dd",
+      "rank": [
+        946,
+        980,
+        6002
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -3226,
+        "swap": [
+          363,
+          191
+        ]
+      },
+      "key": "1d963e371e40d54c8a773d21b8ed31f4dffe928255d5f8f729a602ce87f80ced",
+      "rank": [
+        942,
+        977,
+        5979
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          358
+        ],
+        "family": "expansion",
+        "proxy_delta": 184761
+      },
+      "key": "1e4120dfaa8175bc59eaf19839bd5978d6591d5a358d546d7d17251219f9b568",
+      "rank": [
+        940,
+        974,
+        5982
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 95,
+        "proxy_delta": 26562
+      },
+      "key": "8a46dfa43db1b0f68dc37b46b05040d6b51a61d79cc2f6dce502fe222b8707a8",
+      "rank": [
+        947,
+        979,
+        6006
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 81125,
+        "swap": [
+          235,
+          310
+        ]
+      },
+      "key": "65bacd5167615e5c691d89c7e5d993c2b7ca74650c85a212729e95f007fb3d27",
+      "rank": [
+        947,
+        979,
+        6010
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -2088,
+        "swap": [
+          41,
+          38
+        ]
+      },
+      "key": "036bfe471a331930a8b08c39ed8bebe0b5055bc860de59b0b64193c41d330f60",
+      "rank": [
+        942,
+        974,
+        5976
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          357
+        ],
+        "family": "expansion",
+        "proxy_delta": 187747
+      },
+      "key": "f9d084667e3850dbb675196789238836a46feda67e37b6d500658b595541f3c2",
+      "rank": [
+        942,
+        978,
+        6000
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 233,
+        "proxy_delta": 27194
+      },
+      "key": "44412a280b61601d8b595dafc8568d34a343d546474767dcdd9e97c463b67acb",
+      "rank": [
+        948,
+        979,
+        6007
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 81410,
+        "swap": [
+          94,
+          101
+        ]
+      },
+      "key": "bf7e34bccf66236ee1431768f3ec805094970ec9b6dd9a566159ce3c388baa26",
+      "rank": [
+        942,
+        977,
+        5983
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -2014,
+        "swap": [
+          363,
+          131
+        ]
+      },
+      "key": "471e65d962ffd9d0dba1b3dc90dbd1df6ac0aa41abb4ecf43ab155e2a76d2b01",
+      "rank": [
+        942,
+        978,
+        5988
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion",
+        "proxy_delta": 189769
+      },
+      "key": "bec71e99e5a4abbf57f81961b19a82f2fa21bb1b7b76370ca43c8aa9638083f8",
+      "rank": [
+        937,
+        973,
+        5978
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 142,
+        "proxy_delta": 28317
+      },
+      "key": "8f62cc6c45060dde1b059e5018a0a0e987f910dfccc8c57fbd24ac5b7110980b",
+      "rank": [
+        948,
+        980,
+        6012
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          358
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 81610,
+        "swap": [
+          97,
+          310
+        ]
+      },
+      "key": "d328d074a642f1cfe1141d9ea7e9178246f213ded59ff43d0d1fb80cdedaf3fd",
+      "rank": [
+        942,
+        974,
+        5984
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -1588,
+        "swap": [
+          274,
+          200
+        ]
+      },
+      "key": "92d561d9bf78fe3e85de94bf427e4d89b13f55ced0cbcf083c069ac5308b2742",
+      "rank": [
+        940,
+        973,
+        5961
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          402
+        ],
+        "family": "expansion",
+        "proxy_delta": 96166
+      },
+      "key": "abc0a8fcdaabc1321ddb03c880386b68c76432fb6777fd80a5084b86d47acfc9",
+      "rank": [
+        942,
+        974,
+        5984
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 283,
+        "proxy_delta": 28438
+      },
+      "key": "ca54baa56df6360ca91c72156a10a55471692cc3e66608a683b5caf60a4828ca",
+      "rank": [
+        947,
+        979,
+        6006
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 83397,
+        "swap": [
+          141,
+          184
+        ]
+      },
+      "key": "3ac701673062c16c0b0285d4cd74935a1ea2e263ae194a802e1eeaeabdc06967",
+      "rank": [
+        947,
+        981,
+        6012
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -1288,
+        "swap": [
+          252,
+          184
+        ]
+      },
+      "key": "a6c716381d404e1907f7ae8990d191ed15f50b134a8457d28b7b7a128899a339",
+      "rank": [
+        946,
+        980,
+        5998
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          402
+        ],
+        "family": "expansion",
+        "proxy_delta": 104723
+      },
+      "key": "236378f6f221c64be9cec5d5c86fcf7b9f7251e3fd6f2ebb28028a2ca02afda4",
+      "rank": [
+        939,
+        972,
+        5967
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 248,
+        "proxy_delta": 30153
+      },
+      "key": "b2a39fffbf7be91b076d49a510db2fa3030ef90ea554c36b0501e475c3f7ffe3",
+      "rank": [
+        945,
+        979,
+        6000
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 85432,
+        "swap": [
+          88,
+          260
+        ]
+      },
+      "key": "090b03ac4ea3862009f591f4b8d9d12df498f077c506ce04abd9ceabbef502d8",
+      "rank": [
+        942,
+        977,
+        5991
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -926,
+        "swap": [
+          255,
+          249
+        ]
+      },
+      "key": "7e664312c286af7d768c59be9dfd4c8086be58c5e471959e36043fbc36c3c7c1",
+      "rank": [
+        944,
+        977,
+        5993
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          364
+        ],
+        "family": "expansion",
+        "proxy_delta": 171869
+      },
+      "key": "2d6ffbcb301d0f60d921e8cec069b3114ab20f09dedd68fb8ca3940b667eac2b",
+      "rank": [
+        935,
+        969,
+        5956
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 163,
+        "proxy_delta": 32145
+      },
+      "key": "94288f3310dd7e62ff530692e56ae1bf563884821b7e564271e264155cc5ee78",
+      "rank": [
+        946,
+        979,
+        6009
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 85708,
+        "swap": [
+          282,
+          267
+        ]
+      },
+      "key": "59d4e83f53cbfc818574337559a4295a515932bc09d289a8353d5625b3c23b71",
+      "rank": [
+        948,
+        982,
+        6026
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": 2576,
+        "swap": [
+          363,
+          74
+        ]
+      },
+      "key": "27c1ec491473ade33d4ed9927527c216058f03c6ead8d4c372e5aeb34cebf2da",
+      "rank": [
+        945,
+        979,
+        5996
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          396
+        ],
+        "family": "expansion",
+        "proxy_delta": 174789
+      },
+      "key": "b2ea5592d0ec038b2011b1980f3e3fcae04ffb920ca5cc01a86d10ce7573173f",
+      "rank": [
+        936,
+        971,
+        5963
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_relocate",
+        "moved": 131,
+        "proxy_delta": 33003
+      },
+      "key": "b106f1217def69ddab6cb443cb9d39de74434f1145a5b4130b8536538135d2c0",
+      "rank": [
+        948,
+        981,
+        6021
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [
+          353
+        ],
+        "family": "expansion_swap",
+        "proxy_delta": 86306,
+        "swap": [
+          94,
+          184
+        ]
+      },
+      "key": "d199e4ccdda49b967e1e4b895438dd929dd9042d8d790dbd8afc4da8978ffee0",
+      "rank": [
+        946,
+        981,
+        5999
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": 3816,
+        "swap": [
+          199,
+          45
+        ]
+      },
+      "key": "82416102c35ae9a990bcd54eb17206483c016515c62ed91a49078807a569f569",
+      "rank": [
+        944,
+        979,
+        5991
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 1
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -20112,
+        "swap": [
+          281,
+          191
+        ]
+      },
+      "key": "54e7ac6869943c5a43315b1c6a4745b09248e155eda8eb3fe1d4ef66c182fe1d",
+      "rank": [
+        943,
+        975,
+        5978
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -14238,
+        "swap": [
+          152,
+          134
+        ]
+      },
+      "key": "863dffa915a2012741643a4fa01c913f9b0e8f2eb424f9aea23e36d1acf78db5",
+      "rank": [
+        939,
+        973,
+        5960
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -12672,
+        "swap": [
+          30,
+          69
+        ]
+      },
+      "key": "38366b3187deff7e38bcd43cc0ef5c43c95161432a89218747dccc16f91a6cda",
+      "rank": [
+        939,
+        973,
+        5960
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -12072,
+        "swap": [
+          95,
+          168
+        ]
+      },
+      "key": "876ab3f60b1e20167a80b9d91629c71b307d477f09e5bdf7446c1ca03042af20",
+      "rank": [
+        938,
+        971,
+        5953
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -12072,
+        "swap": [
+          146,
+          101
+        ]
+      },
+      "key": "25ea53edc12c1775adb273126f7b6dc3bcbecac03f25b0babd220890117032ff",
+      "rank": [
+        943,
+        978,
+        5985
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -11486,
+        "swap": [
+          208,
+          142
+        ]
+      },
+      "key": "3b7b37100ece206ec92824955ae637d3b789ca881f4abc78d1d48f008ece3165",
+      "rank": [
+        943,
+        976,
+        5983
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -10546,
+        "swap": [
+          135,
+          122
+        ]
+      },
+      "key": "905595ca7620a82d99f075ff278e1f5602e9b6a077be221831ac68d2816361d1",
+      "rank": [
+        945,
+        979,
+        5996
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -9144,
+        "swap": [
+          28,
+          250
+        ]
+      },
+      "key": "9e58472257953aa32d07f55adfe9eb5c21a7e7aa0c5ca55df374e8c757627dc3",
+      "rank": [
+        944,
+        977,
+        5989
+      ],
+      "read_feasible": false,
+      "risk_feasible": true,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -6108,
+        "swap": [
+          37,
+          320
+        ]
+      },
+      "key": "7b59cb1df07d603223e999d96db3204df6138e43150c0627992fb3dbd4776922",
+      "rank": [
+        943,
+        976,
+        5979
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -5724,
+        "swap": [
+          184,
+          320
+        ]
+      },
+      "key": "aa6095c6ac111f046036294ac79c0dc3b14f0cc7f81a65e54c5dea3bb1d5094d",
+      "rank": [
+        940,
+        978,
+        5982
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact U necessary condition",
+      "round": 2
+    },
+    {
+      "info": {
+        "added": [],
+        "family": "layout_swap",
+        "proxy_delta": -4608,
+        "swap": [
+          117,
+          254
+        ]
+      },
+      "key": "074143b460d2248710ae4e00558cf1d751373dfc6c0a434001e50f1b15b624a5",
+      "rank": [
+        944,
+        977,
+        6001
+      ],
+      "risk_feasible": false,
+      "risk_stage": "all-record exact V/U",
+      "round": 2
+    }
+  ],
+  "read_checks": {
+    "090b03ac4ea3862009f591f4b8d9d12df498f077c506ce04abd9ceabbef502d8": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 1,
+        "hot512": 3
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 208896,
+            "hot": 208896
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            5,
+            1,
+            5
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 225280,
+            "hot": 225280
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -2,
+            0,
+            0,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 241664,
+            "hot": 241664
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -1,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 675840,
+        "hot": 675840
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        4,
+        4,
+        1,
+        -1
+      ],
+      "regressions512": {
+        "cold512": 7,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 6
+      }
+    },
+    "0c1bf189f41a6a372bb37332d86b4f7d1ea76c4a5d9c755934488759a4ffa549": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 25912,
+            "hot": 24576
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -7,
+            0,
+            13
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -72368,
+            "hot": -73728
+          },
+          "common_successes": 340,
+          "feasible": false,
+          "fold_point_deltas": [
+            -2,
+            0,
+            -12,
+            7
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -6852,
+            "hot": -8192
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -6,
+            -5,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -53308,
+        "hot": -57344
+      },
+      "common_successes": 1009,
+      "feasible": false,
+      "fold_point_deltas": [
+        16,
+        -13,
+        -17,
+        20
+      ],
+      "regressions512": {
+        "cold512": 8,
+        "hot512": 8
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 10,
+        "hot512": 8
+      }
+    },
+    "0e8218438cbd4b5642f82305779696faf37189d0de5aa409a24558d74f2c35f8": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 8,
+        "hot512": 5
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 311962,
+            "hot": 311296
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            -1,
+            16,
+            -7
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 3
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 397998,
+            "hot": 397312
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            5,
+            6,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 422562,
+            "hot": 421888
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            6,
+            13,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 1132522,
+        "hot": 1130496
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        10,
+        35,
+        -9
+      ],
+      "regressions512": {
+        "cold512": 7,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 8
+      }
+    },
+    "0f54b7c9dee06cc2d57a15d680087a7ff75279ec8d65e25ec931eac38ec0f6a9": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 9,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -153983,
+            "hot": -155648
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -6,
+            1,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -47437,
+            "hot": -49152
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            12,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 67221,
+            "hot": 65536
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            -1,
+            1,
+            1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -134199,
+        "hot": -139264
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        17,
+        7,
+        2,
+        -6
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 8,
+        "hot512": 6
+      }
+    },
+    "0f6fdd09dc02f62a9a18949b2eda9a8b358d9283321f864672338d0aa1ebc61d": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -111924,
+            "hot": -110592
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -46424,
+            "hot": -45056
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            0,
+            0,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -1352,
+            "hot": 0
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -159700,
+        "hot": -155648
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        6,
+        0,
+        -12
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 3
+      }
+    },
+    "1e4120dfaa8175bc59eaf19839bd5978d6591d5a358d546d7d17251219f9b568": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 10,
+        "hot512": 6
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 340967,
+            "hot": 339968
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -7,
+            -1,
+            4
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 2
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 427013,
+            "hot": 425984
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            3
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 3
+          },
+          "common_extra": {
+            "cold": 422899,
+            "hot": 421888
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 1190879,
+        "hot": 1187840
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        -1,
+        -1,
+        7
+      ],
+      "regressions512": {
+        "cold512": 6,
+        "hot512": 6
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 4
+      }
+    },
+    "236378f6f221c64be9cec5d5c86fcf7b9f7251e3fd6f2ebb28028a2ca02afda4": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 4
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 195940,
+            "hot": 196608
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -7,
+            -1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 220498,
+            "hot": 221184
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            4
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 191840,
+            "hot": 192512
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -12,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 608278,
+        "hot": 610304
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -19,
+        -1,
+        4
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 0,
+        "hot512": 0
+      }
+    },
+    "2d6ffbcb301d0f60d921e8cec069b3114ab20f09dedd68fb8ca3940b667eac2b": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 8,
+        "hot512": 6
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 332769,
+            "hot": 331776
+          },
+          "common_successes": 331,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -13,
+            -3,
+            -7
+          ],
+          "regressions512": {
+            "cold512": 6,
+            "hot512": 5
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 435205,
+            "hot": 434176
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            -3
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 3
+          },
+          "common_extra": {
+            "cold": 443382,
+            "hot": 442368
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            -1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 1211356,
+        "hot": 1208320
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -13,
+        -4,
+        -10
+      ],
+      "regressions512": {
+        "cold512": 8,
+        "hot512": 7
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 0,
+        "hot512": 0
+      }
+    },
+    "33c4fae1db8f658157b06659fd4b911715e671bca291c58a35df37c0713d5883": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 5,
+        "hot512": 5
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 241664,
+            "hot": 241664
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            -11
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "common_extra": {
+            "cold": 278528,
+            "hot": 278528
+          },
+          "common_successes": 341,
+          "feasible": false,
+          "fold_point_deltas": [
+            -4,
+            0,
+            -1,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 262144,
+            "hot": 262144
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            -1,
+            0,
+            -1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 782336,
+        "hot": 782336
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        -5,
+        0,
+        -2,
+        -12
+      ],
+      "regressions512": {
+        "cold512": 5,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 1,
+        "hot512": 1
+      }
+    },
+    "3ac701673062c16c0b0285d4cd74935a1ea2e263ae194a802e1eeaeabdc06967": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 1,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 138930,
+            "hot": 139264
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -1,
+            5,
+            7
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 106153,
+            "hot": 106496
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            4,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 48815,
+            "hot": 49152
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 293898,
+        "hot": 294912
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        3,
+        7,
+        7
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 2
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 7,
+        "hot512": 7
+      }
+    },
+    "44401c612ce723ab47d8980fab175719a4f4a1fc66e6c0e1eac5f744e3f93114": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 9,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 178808,
+            "hot": 176128
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -1,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 199344,
+            "hot": 196608
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            0,
+            5
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 182920,
+            "hot": 180224
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 561072,
+        "hot": 552960
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        -13,
+        0,
+        11
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 3
+      }
+    },
+    "44412a280b61601d8b595dafc8568d34a343d546474767dcdd9e97c463b67acb": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 3,
+        "hot512": 4
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 20146,
+            "hot": 20480
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            5,
+            -6,
+            6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": -86359,
+            "hot": -86016
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -24914,
+            "hot": -24576
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -91127,
+        "hot": -90112
+      },
+      "common_successes": 1015,
+      "feasible": false,
+      "fold_point_deltas": [
+        13,
+        5,
+        -6,
+        12
+      ],
+      "regressions512": {
+        "cold512": 1,
+        "hot512": 2
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 5
+      }
+    },
+    "474fdd6205d4b3b816e8d754b73ea1a4ea30dc5ad88f7c71eebc246abbcf8945": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 4
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 89778,
+            "hot": 90112
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            5,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 85674,
+            "hot": 86016
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            4,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 61102,
+            "hot": 61440
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            10
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 236554,
+        "hot": 237568
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        9,
+        0,
+        10
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 5
+      }
+    },
+    "492e21bd05400ea384bf5b2aa49d03559ca111f71572742efe1215da0b6ed0fd": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -4762,
+            "hot": -4096
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            0,
+            0,
+            -10
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 27992,
+            "hot": 28672
+          },
+          "common_successes": 340,
+          "feasible": false,
+          "fold_point_deltas": [
+            -5,
+            0,
+            -6,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -94876,
+            "hot": -94208
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            -8,
+            -2,
+            -4,
+            0
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -71646,
+        "hot": -69632
+      },
+      "common_successes": 1007,
+      "feasible": false,
+      "fold_point_deltas": [
+        -7,
+        -2,
+        -10,
+        -12
+      ],
+      "regressions512": {
+        "cold512": 8,
+        "hot512": 9
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 3
+      }
+    },
+    "4d4db87b81e29ca7b32d20bb1ed1899b82c3598f4fbcc14422da0041e83ec93e": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -215748,
+            "hot": -217088
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            0,
+            12,
+            1
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -39592,
+            "hot": -40960
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            6,
+            6,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -43716,
+            "hot": -45056
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            0,
+            22,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -299056,
+        "hot": -303104
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        6,
+        40,
+        0
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 9,
+        "hot512": 10
+      }
+    },
+    "4ed69fc32ff7df50f5e317c1d768beb2f30a17583101c77aa4b07acf2dc2f96a": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 121881,
+            "hot": 122880
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -1,
+            -1,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 101374,
+            "hot": 102400
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            4,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 121869,
+            "hot": 122880
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 345124,
+        "hot": 348160
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        3,
+        -1,
+        -1
+      ],
+      "regressions512": {
+        "cold512": 6,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 5
+      }
+    },
+    "59d4e83f53cbfc818574337559a4295a515932bc09d289a8353d5625b3c23b71": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 164510,
+            "hot": 163840
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            17,
+            4,
+            -1,
+            11
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 6
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -130386,
+            "hot": -131072
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 29348,
+            "hot": 28672
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            11
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 63472,
+        "hot": 61440
+      },
+      "common_successes": 1016,
+      "feasible": false,
+      "fold_point_deltas": [
+        18,
+        4,
+        -1,
+        22
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 1
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 8,
+        "hot512": 7
+      }
+    },
+    "59dc6f2158c5641523add16155eb1fe41436299279a57b9f79b6a839193680ac": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -174788,
+            "hot": -176128
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            0,
+            1,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 2
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -23208,
+            "hot": -24576
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 75072,
+            "hot": 73728
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            -5,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -122924,
+        "hot": -126976
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        -6,
+        -4,
+        12
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 4
+      }
+    },
+    "65bacd5167615e5c691d89c7e5d993c2b7ca74650c85a212729e95f007fb3d27": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 157640,
+            "hot": 155648
+          },
+          "common_successes": 332,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -7,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 5,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 75768,
+            "hot": 73728
+          },
+          "common_successes": 340,
+          "feasible": false,
+          "fold_point_deltas": [
+            10,
+            6,
+            -12,
+            1
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 4
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 6118,
+            "hot": 4096
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            9,
+            0,
+            14,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 239526,
+        "hot": 233472
+      },
+      "common_successes": 1009,
+      "feasible": false,
+      "fold_point_deltas": [
+        31,
+        -1,
+        2,
+        -5
+      ],
+      "regressions512": {
+        "cold512": 10,
+        "hot512": 10
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 14,
+        "hot512": 13
+      }
+    },
+    "7444551faea7b39c75d07b15cbea0fe9c6b48f601ce80e5a6665d7aadb01b137": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 6
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 343729,
+            "hot": 344064
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -1,
+            -1,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 417449,
+            "hot": 417792
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            0,
+            0,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 3
+          },
+          "common_extra": {
+            "cold": 401072,
+            "hot": 401408
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            -6,
+            -1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 1162250,
+        "hot": 1163264
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -7,
+        -2,
+        -4
+      ],
+      "regressions512": {
+        "cold512": 6,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 1,
+        "hot512": 1
+      }
+    },
+    "7e69c49d24f1e9174b25fd47484c707e975b10d02cef30fdbd01d89f2963b6b0": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 102276,
+            "hot": 98304
+          },
+          "common_successes": 331,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -13,
+            -6,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 6,
+            "hot512": 5
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 106480,
+            "hot": 102400
+          },
+          "common_successes": 340,
+          "feasible": false,
+          "fold_point_deltas": [
+            4,
+            10,
+            -12,
+            7
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 4
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 176064,
+            "hot": 172032
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            -3,
+            0,
+            12,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 384820,
+        "hot": 372736
+      },
+      "common_successes": 1007,
+      "feasible": false,
+      "fold_point_deltas": [
+        13,
+        -3,
+        -6,
+        1
+      ],
+      "regressions512": {
+        "cold512": 12,
+        "hot512": 12
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 11,
+        "hot512": 10
+      }
+    },
+    "8a158ec684d5d3a39b8ec4ae5ef1bf6d6852731fd1aa22f1ae91928dd15980a3": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 8,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 193511,
+            "hot": 192512
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -7,
+            0,
+            -7
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 177157,
+            "hot": 176128
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 177142,
+            "hot": 176128
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            -1,
+            -1,
+            6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 547810,
+        "hot": 544768
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        17,
+        -2,
+        6,
+        -7
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 5
+      }
+    },
+    "8a46dfa43db1b0f68dc37b46b05040d6b51a61d79cc2f6dce502fe222b8707a8": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 3,
+        "hot512": 4
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 89778,
+            "hot": 90112
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            5,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 40617,
+            "hot": 40960
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 61103,
+            "hot": 61440
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            -6,
+            12
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 191498,
+        "hot": 192512
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        5,
+        -6,
+        18
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 6
+      }
+    },
+    "8ea20d9f8232d2816478250705442fbde0f60db7cb18b8a98ebb61412de637a6": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 10,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 153550,
+            "hot": 151552
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -6,
+            0,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -137206,
+            "hot": -139264
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 51180,
+            "hot": 49152
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            -1,
+            1,
+            6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 67524,
+        "hot": 61440
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        17,
+        1,
+        6,
+        -6
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 5
+      }
+    },
+    "8f62cc6c45060dde1b059e5018a0a0e987f910dfccc8c57fbd24ac5b7110980b": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 1,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -21816,
+            "hot": -20480
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            5,
+            6,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 10916,
+            "hot": 12288
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 60088,
+            "hot": 61440
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 49188,
+        "hot": 53248
+      },
+      "common_successes": 1015,
+      "feasible": false,
+      "fold_point_deltas": [
+        13,
+        5,
+        6,
+        5
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 2
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 7,
+        "hot512": 6
+      }
+    },
+    "90b893b13ee81f26e938b9a8d848f5c6f507ddaa4b9c15b18650e2c0566adff0": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -3097,
+            "hot": -4096
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            1,
+            0,
+            0,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 3
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -146436,
+            "hot": -147456
+          },
+          "common_successes": 340,
+          "feasible": false,
+          "fold_point_deltas": [
+            -4,
+            5,
+            -6,
+            13
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 82931,
+            "hot": 81920
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            -1,
+            6,
+            6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -66602,
+        "hot": -69632
+      },
+      "common_successes": 1010,
+      "feasible": false,
+      "fold_point_deltas": [
+        -4,
+        11,
+        0,
+        11
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 9,
+        "hot512": 10
+      }
+    },
+    "92d561d9bf78fe3e85de94bf427e4d89b13f55ced0cbcf083c069ac5308b2742": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -17048,
+            "hot": -16384
+          },
+          "common_successes": 332,
+          "feasible": false,
+          "fold_point_deltas": [
+            -4,
+            -6,
+            -1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -160426,
+            "hot": -159744
+          },
+          "common_successes": 341,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            -6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 60766,
+            "hot": 61440
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            7,
+            0,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -116708,
+        "hot": -114688
+      },
+      "common_successes": 1010,
+      "feasible": false,
+      "fold_point_deltas": [
+        -4,
+        -5,
+        -7,
+        -6
+      ],
+      "regressions512": {
+        "cold512": 6,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 2
+      }
+    },
+    "94288f3310dd7e62ff530692e56ae1bf563884821b7e564271e264155cc5ee78": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 61773,
+            "hot": 61440
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -1,
+            -1,
+            6
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": -20137,
+            "hot": -20480
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 53586,
+            "hot": 53248
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            10
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 95222,
+        "hot": 94208
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        -1,
+        -1,
+        16
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 6
+      }
+    },
+    "9434cd3bacdf282278f39f80169bcb7b3e1f313135f88748d85c93d531793100": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -15379,
+            "hot": -16384
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            12,
+            9
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -154622,
+            "hot": -155648
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            6,
+            0,
+            13
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 4
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 58349,
+            "hot": 57344
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            -7,
+            12,
+            26,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 6,
+            "hot512": 6
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -111652,
+        "hot": -114688
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        -7,
+        18,
+        38,
+        16
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 15,
+        "hot512": 15
+      }
+    },
+    "9e166c87b4ace447cebcc0c629751ae19e94816b2c155e2dbcd672343c6468dd": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 200704,
+            "hot": 200704
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            5,
+            0,
+            7
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 6
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -65536,
+            "hot": -65536
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            1,
+            0,
+            -6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 90112,
+            "hot": 90112
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 225280,
+        "hot": 225280
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        13,
+        5,
+        -6,
+        7
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 7,
+        "hot512": 7
+      }
+    },
+    "9e58472257953aa32d07f55adfe9eb5c21a7e7aa0c5ca55df374e8c757627dc3": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 97302,
+            "hot": 98304
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            -5
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -87042,
+            "hot": -86016
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            6,
+            -6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -54259,
+            "hot": -53248
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            5,
+            6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -43999,
+        "hot": -40960
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        5,
+        12,
+        -6,
+        -5
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 4,
+        "hot512": 5
+      }
+    },
+    "abc0a8fcdaabc1321ddb03c880386b68c76432fb6777fd80a5084b86d47acfc9": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 8,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 218428,
+            "hot": 217088
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -1,
+            0,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 255324,
+            "hot": 253952
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            6,
+            5
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 230724,
+            "hot": 229376
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            -1,
+            -7,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 704476,
+        "hot": 700416
+      },
+      "common_successes": 1015,
+      "feasible": false,
+      "fold_point_deltas": [
+        -1,
+        -8,
+        6,
+        4
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 2,
+        "hot512": 2
+      }
+    },
+    "b106f1217def69ddab6cb443cb9d39de74434f1145a5b4130b8536538135d2c0": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 1,
+        "hot512": 3
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 73728,
+            "hot": 73728
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            11,
+            0,
+            5
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 98304,
+            "hot": 98304
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 8192,
+            "hot": 8192
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            10
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 180224,
+        "hot": 180224
+      },
+      "common_successes": 1016,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        11,
+        0,
+        15
+      ],
+      "regressions512": {
+        "cold512": 1,
+        "hot512": 1
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 6
+      }
+    },
+    "b2a39fffbf7be91b076d49a510db2fa3030ef90ea554c36b0501e475c3f7ffe3": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 3
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 65201,
+            "hot": 65536
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            5,
+            -1,
+            5
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": -29013,
+            "hot": -28672
+          },
+          "common_successes": 341,
+          "feasible": false,
+          "fold_point_deltas": [
+            -12,
+            0,
+            0,
+            2
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -41298,
+            "hot": -40960
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -5110,
+        "hot": -4096
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        5,
+        -1,
+        13
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 6
+      }
+    },
+    "b2ea5592d0ec038b2011b1980f3e3fcae04ffb920ca5cc01a86d10ce7573173f": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 5
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 352256,
+            "hot": 352256
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -7,
+            -1,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 430080,
+            "hot": 430080
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -6,
+            4,
+            -3
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 425984,
+            "hot": 425984
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            -4,
+            -6,
+            -1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 1208320,
+        "hot": 1208320
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        2,
+        -19,
+        2,
+        -5
+      ],
+      "regressions512": {
+        "cold512": 8,
+        "hot512": 6
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 1,
+        "hot512": 1
+      }
+    },
+    "bb85163615788dbb7007c41c729a8737ba4e233bf470e0ee29153429e7d751d6": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 132059,
+            "hot": 131072
+          },
+          "common_successes": 329,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -19,
+            0,
+            -17
+          ],
+          "regressions512": {
+            "cold512": 7,
+            "hot512": 7
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -48129,
+            "hot": -49152
+          },
+          "common_successes": 341,
+          "feasible": false,
+          "fold_point_deltas": [
+            10,
+            6,
+            -12,
+            1
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 3
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 33776,
+            "hot": 32768
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            -3,
+            0,
+            12,
+            -4
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 117706,
+        "hot": 114688
+      },
+      "common_successes": 1006,
+      "feasible": false,
+      "fold_point_deltas": [
+        19,
+        -13,
+        0,
+        -20
+      ],
+      "regressions512": {
+        "cold512": 11,
+        "hot512": 12
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 9,
+        "hot512": 8
+      }
+    },
+    "bc9b6de6a4518ec1c095bbf935cd30f25f15ea5ededcbf4aae5426dd433ede4b": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -70302,
+            "hot": -69632
+          },
+          "common_successes": 335,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -66220,
+            "hot": -65536
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            0,
+            0,
+            1
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 23900,
+            "hot": 24576
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            6,
+            0,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -112622,
+        "hot": -110592
+      },
+      "common_successes": 1015,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        6,
+        0,
+        0
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 1
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 2,
+        "hot512": 1
+      }
+    },
+    "bec71e99e5a4abbf57f81961b19a82f2fa21bb1b7b76370ca43c8aa9638083f8": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 8,
+        "hot512": 5
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 332442,
+            "hot": 331776
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -9,
+            -1,
+            3
+          ],
+          "regressions512": {
+            "cold512": 5,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 3
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 422572,
+            "hot": 421888
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            0,
+            0,
+            -3
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 414370,
+            "hot": 413696
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            0,
+            -1,
+            6
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 1169384,
+        "hot": 1167360
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        0,
+        -9,
+        -2,
+        6
+      ],
+      "regressions512": {
+        "cold512": 9,
+        "hot512": 7
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 4
+      }
+    },
+    "bf7e34bccf66236ee1431768f3ec805094970ec9b6dd9a566159ce3c388baa26": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 183654,
+            "hot": 184320
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -1,
+            0,
+            1
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 183638,
+            "hot": 184320
+          },
+          "common_successes": 341,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            0,
+            -6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 109918,
+            "hot": 110592
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 477210,
+        "hot": 479232
+      },
+      "common_successes": 1011,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        -1,
+        -6,
+        1
+      ],
+      "regressions512": {
+        "cold512": 6,
+        "hot512": 5
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 6
+      }
+    },
+    "c57e0def58c53a0fa4fa755c24a1eb4f3db5b5058b722688895df2ff13b895a0": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 3
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 210232,
+            "hot": 208896
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -7,
+            -1,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 197980,
+            "hot": 196608
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            0,
+            5,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 173380,
+            "hot": 172032
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 581592,
+        "hot": 577536
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        -13,
+        4,
+        -1
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 1,
+        "hot512": 2
+      }
+    },
+    "c5e9fe420fc7bb9039df45a3965f833c947d23e1b96401b410ecaa616671d1a8": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 119446,
+            "hot": 118784
+          },
+          "common_successes": 331,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -13,
+            0,
+            -5
+          ],
+          "regressions512": {
+            "cold512": 5,
+            "hot512": 5
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -27992,
+            "hot": -28672
+          },
+          "common_successes": 340,
+          "feasible": false,
+          "fold_point_deltas": [
+            -2,
+            -6,
+            -12,
+            7
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 41630,
+            "hot": 40960
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            -2,
+            -6,
+            6,
+            -4
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 133084,
+        "hot": 131072
+      },
+      "common_successes": 1006,
+      "feasible": false,
+      "fold_point_deltas": [
+        8,
+        -25,
+        -6,
+        -2
+      ],
+      "regressions512": {
+        "cold512": 11,
+        "hot512": 11
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 7,
+        "hot512": 6
+      }
+    },
+    "c81b48c2960ba264806b40eac88764402ab000e9171343fe22bd010a508cdfa7": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 143025,
+            "hot": 143360
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            5,
+            -1,
+            11
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 5
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -135511,
+            "hot": -135168
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            1,
+            4,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 110255,
+            "hot": 110592
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 117769,
+        "hot": 118784
+      },
+      "common_successes": 1015,
+      "feasible": false,
+      "fold_point_deltas": [
+        13,
+        9,
+        -1,
+        11
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 2
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 7,
+        "hot512": 6
+      }
+    },
+    "c8b555d84ac09101f9c6973454fea7c97710d7d6ce880ad67b991cd9d4593d18": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 9,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -203801,
+            "hot": -204800
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            7,
+            0,
+            0,
+            -10
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 2
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -23553,
+            "hot": -24576
+          },
+          "common_successes": 341,
+          "feasible": false,
+          "fold_point_deltas": [
+            -4,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -19472,
+            "hot": -20480
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            2,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -246826,
+        "hot": -249856
+      },
+      "common_successes": 1010,
+      "feasible": false,
+      "fold_point_deltas": [
+        3,
+        -6,
+        2,
+        -10
+      ],
+      "regressions512": {
+        "cold512": 3,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 4
+      }
+    },
+    "ca54baa56df6360ca91c72156a10a55471692cc3e66608a683b5caf60a4828ca": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 0,
+        "hot512": 4
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 84346,
+            "hot": 86016
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            5,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 22861,
+            "hot": 24576
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 10598,
+            "hot": 12288
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 117805,
+        "hot": 122880
+      },
+      "common_successes": 1015,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        5,
+        0,
+        12
+      ],
+      "regressions512": {
+        "cold512": 1,
+        "hot512": 2
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 5
+      }
+    },
+    "ce0500f3b236155ce838650bc572f5956b5f974cc916bfa5d81a61a489d95e08": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 46052,
+            "hot": 45056
+          },
+          "common_successes": 332,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -13,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 5,
+            "hot512": 4
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -93185,
+            "hot": -94208
+          },
+          "common_successes": 341,
+          "feasible": false,
+          "fold_point_deltas": [
+            10,
+            12,
+            -12,
+            1
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 4
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -11280,
+            "hot": -12288
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            5,
+            0,
+            1,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 2
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -58413,
+        "hot": -61440
+      },
+      "common_successes": 1009,
+      "feasible": false,
+      "fold_point_deltas": [
+        27,
+        -1,
+        -11,
+        1
+      ],
+      "regressions512": {
+        "cold512": 9,
+        "hot512": 9
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 12,
+        "hot512": 10
+      }
+    },
+    "cf5d298841560ced0dbc743e14e5ca351544a87b2d43105b725ce8c56f75e2ff": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 4
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 193180,
+            "hot": 192512
+          },
+          "common_successes": 334,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -7,
+            5,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 197292,
+            "hot": 196608
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 180900,
+            "hot": 180224
+          },
+          "common_successes": 338,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 571372,
+        "hot": 569344
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        -6,
+        -7,
+        5,
+        -1
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 1,
+        "hot512": 1
+      }
+    },
+    "d199e4ccdda49b967e1e4b895438dd929dd9042d8d790dbd8afc4da8978ffee0": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 194843,
+            "hot": 192512
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -1,
+            6,
+            3
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 5,
+            "hot512": 6
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 190810,
+            "hot": 188416
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            -6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 31031,
+            "hot": 28672
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 416684,
+        "hot": 409600
+      },
+      "common_successes": 1012,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        -1,
+        2,
+        3
+      ],
+      "regressions512": {
+        "cold512": 4,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 7,
+        "hot512": 8
+      }
+    },
+    "d328d074a642f1cfe1141d9ea7e9178246f213ded59ff43d0d1fb80cdedaf3fd": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 84584,
+            "hot": 81920
+          },
+          "common_successes": 333,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -7,
+            -6,
+            7
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 125592,
+            "hot": 122880
+          },
+          "common_successes": 339,
+          "feasible": false,
+          "fold_point_deltas": [
+            -8,
+            -2,
+            -12,
+            13
+          ],
+          "regressions512": {
+            "cold512": 5,
+            "hot512": 5
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 182904,
+            "hot": 180224
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            -2,
+            -6,
+            12,
+            0
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 393080,
+        "hot": 385024
+      },
+      "common_successes": 1007,
+      "feasible": false,
+      "fold_point_deltas": [
+        2,
+        -15,
+        -6,
+        20
+      ],
+      "regressions512": {
+        "cold512": 11,
+        "hot512": 11
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 10,
+        "hot512": 9
+      }
+    },
+    "d3e416aadd8cdc58126ab243be5534cfc4c828037230abb6940e647a92929dd7": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 8,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 136843,
+            "hot": 135168
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            0,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 4,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -112978,
+            "hot": -114688
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 63125,
+            "hot": 61440
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            -6,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 86990,
+        "hot": 81920
+      },
+      "common_successes": 1014,
+      "feasible": false,
+      "fold_point_deltas": [
+        6,
+        -12,
+        0,
+        12
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 2
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 3,
+        "hot512": 3
+      }
+    },
+    "dcefbcfee454080404e2d714de6075fd66999505d5323fbe428436a1af91c5dd": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 2,
+        "hot512": 3
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 175793,
+            "hot": 176128
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            5,
+            -1,
+            5
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 179881,
+            "hot": 180224
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 143022,
+            "hot": 143360
+          },
+          "common_successes": 338,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 498696,
+        "hot": 499712
+      },
+      "common_successes": 1016,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        5,
+        -1,
+        11
+      ],
+      "regressions512": {
+        "cold512": 2,
+        "hot512": 1
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 5
+      }
+    },
+    "e990e237bd0eb8d2aeb49c9f1842ba9ca33af3acd3ea51451660800f0c8da76d": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 7,
+        "hot512": 2
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 151884,
+            "hot": 151552
+          },
+          "common_successes": 332,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            -7,
+            -5,
+            5
+          ],
+          "regressions512": {
+            "cold512": 4,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 4,
+            "hot512": 4
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 49494,
+            "hot": 49152
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            1,
+            4,
+            0,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 74064,
+            "hot": 73728
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            -5,
+            -6,
+            0,
+            6
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 2
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 275442,
+        "hot": 274432
+      },
+      "common_successes": 1010,
+      "feasible": false,
+      "fold_point_deltas": [
+        8,
+        -9,
+        -5,
+        5
+      ],
+      "regressions512": {
+        "cold512": 7,
+        "hot512": 6
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 7,
+        "hot512": 5
+      }
+    },
+    "ea383ab6910800c48cb84ad7a8cbfce897d1d2fd087629a18b8751fbf81e9b93": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 1
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": -150556,
+            "hot": -151552
+          },
+          "common_successes": 332,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -6,
+            0,
+            -10
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -179216,
+            "hot": -180224
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            -14,
+            -12,
+            -18,
+            1
+          ],
+          "regressions512": {
+            "cold512": 8,
+            "hot512": 8
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": -23565,
+            "hot": -24576
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            10,
+            0,
+            6,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        }
+      },
+      "common_extra": {
+        "cold": -353337,
+        "hot": -356352
+      },
+      "common_successes": 1005,
+      "feasible": false,
+      "fold_point_deltas": [
+        2,
+        -18,
+        -12,
+        -9
+      ],
+      "regressions512": {
+        "cold512": 11,
+        "hot512": 11
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 4
+      }
+    },
+    "f5511591dd72d67124567bcc1d7e75c26d3b04a92d5ffaace343460c93d87000": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 8,
+        "hot512": 5
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 238238,
+            "hot": 237568
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            0,
+            0,
+            12,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "common_extra": {
+            "cold": 266924,
+            "hot": 266240
+          },
+          "common_successes": 342,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            6,
+            6,
+            -1
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 2
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 230048,
+            "hot": 229376
+          },
+          "common_successes": 336,
+          "feasible": false,
+          "fold_point_deltas": [
+            -7,
+            5,
+            19,
+            -6
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 3
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 2,
+            "hot512": 3
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 735210,
+        "hot": 733184
+      },
+      "common_successes": 1013,
+      "feasible": false,
+      "fold_point_deltas": [
+        -13,
+        11,
+        37,
+        -8
+      ],
+      "regressions512": {
+        "cold512": 6,
+        "hot512": 4
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 6,
+        "hot512": 7
+      }
+    },
+    "f9d084667e3850dbb675196789238836a46feda67e37b6d500658b595541f3c2": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 6,
+        "hot512": 6
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 2
+          },
+          "common_extra": {
+            "cold": 352256,
+            "hot": 352256
+          },
+          "common_successes": 335,
+          "feasible": false,
+          "fold_point_deltas": [
+            6,
+            -1,
+            -1,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 3,
+            "hot512": 1
+          },
+          "common_extra": {
+            "cold": 421888,
+            "hot": 421888
+          },
+          "common_successes": 343,
+          "feasible": false,
+          "fold_point_deltas": [
+            12,
+            6,
+            0,
+            -2
+          ],
+          "regressions512": {
+            "cold512": 1,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 3,
+            "hot512": 3
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 3
+          },
+          "common_extra": {
+            "cold": 409600,
+            "hot": 409600
+          },
+          "common_successes": 337,
+          "feasible": false,
+          "fold_point_deltas": [
+            -6,
+            0,
+            5,
+            0
+          ],
+          "regressions512": {
+            "cold512": 2,
+            "hot512": 1
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 1,
+            "hot512": 1
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 1183744,
+        "hot": 1183744
+      },
+      "common_successes": 1015,
+      "feasible": false,
+      "fold_point_deltas": [
+        12,
+        5,
+        4,
+        -4
+      ],
+      "regressions512": {
+        "cold512": 6,
+        "hot512": 3
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 5,
+        "hot512": 5
+      }
+    }
+  },
+  "calibration": {
+    "AExpand": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 0,
+            "hot": 0
+          },
+          "common_successes": 177,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 0,
+            "hot": 0
+          },
+          "common_successes": 171,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 0,
+            "hot": 0
+          },
+          "common_successes": 169,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 0,
+        "hot": 0
+      },
+      "common_successes": 517,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "regressions512": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 0,
+        "hot512": 0
+      }
+    },
+    "AJoint": {
+      "allowance": 4096,
+      "boundary_worsen": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "by_model": {
+        "bernoulli": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 0,
+            "hot": 0
+          },
+          "common_successes": 177,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "ceil": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 0,
+            "hot": 0
+          },
+          "common_successes": 171,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        },
+        "fixed_m": {
+          "allowance": 4096,
+          "boundary_worsen": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "common_extra": {
+            "cold": 0,
+            "hot": 0
+          },
+          "common_successes": 169,
+          "feasible": true,
+          "fold_point_deltas": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "regressions512": {
+            "cold512": 0,
+            "hot512": 0
+          },
+          "reserve": 4096,
+          "scope": "paired finite sample only; not a guarantee on unseen faults",
+          "wins512": {
+            "cold512": 0,
+            "hot512": 0
+          }
+        }
+      },
+      "common_extra": {
+        "cold": 0,
+        "hot": 0
+      },
+      "common_successes": 517,
+      "feasible": true,
+      "fold_point_deltas": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "regressions512": {
+        "cold512": 0,
+        "hot512": 0
+      },
+      "reserve": 4096,
+      "scope": "paired finite sample only; not a guarantee on unseen faults",
+      "wins512": {
+        "cold512": 0,
+        "hot512": 0
+      }
+    }
+  },
+  "proposed": {
+    "AExpand": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1",
+    "AJoint": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1"
+  },
+  "rounds": [
+    {
+      "end": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1",
+      "generated": 64,
+      "round": 1,
+      "start": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1"
+    },
+    {
+      "end": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1",
+      "generated": 48,
+      "round": 2,
+      "start": "a4e3895dcc6ecc9ce2e63b477c6cd5e4ac2b6fc7554246825c41f4e6440362a1"
+    }
+  ],
+  "search_counts": {
+    "full_models": 67,
+    "proposed": 75,
+    "read_feasible": 0,
+    "risk_feasible": 54
+  }
+}

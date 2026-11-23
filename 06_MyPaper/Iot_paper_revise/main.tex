@@ -1,0 +1,952 @@
+\RequirePackage[OT1]{fontenc}
+\documentclass[10pt,journal]{IEEEtran}
+\usepackage{graphicx,amsmath,amssymb,booktabs,array,url}
+\usepackage[nocompress]{cite}
+\interdisplaylinepenalty=2500
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\newcounter{algorithm}
+\renewcommand{\thealgorithm}{\arabic{algorithm}}
+\makeatletter
+\newcommand{\fps@algorithm}{tbp}
+\newcommand{\ftype@algorithm}{1}
+\newcommand{\ext@algorithm}{loa}
+\newcommand{\fnum@algorithm}{Algorithm~\thealgorithm}
+% Local ruled algorithm caption; leave IEEE table/figure captions untouched.
+\newenvironment{algorithm}[1][t]{\@float{algorithm}[#1]%
+  \long\def\@makecaption##1##2{%
+    \par\hrule height .8pt\kern2pt
+    {\normalfont\normalsize\noindent\textbf{##1:} ##2\par}%
+    \kern2pt\hrule height .8pt\kern2pt}%
+}{\end@float}
+\makeatother
+\newcommand{\ARC}{ARC-Audit}
+\newcounter{proposition}
+\newenvironment{proposition}[1]{%
+  \refstepcounter{proposition}\par\smallskip\noindent
+  \textbf{Proposition~\theproposition\ (#1). }\ignorespaces
+}{\par\smallskip}
+\newenvironment{claimproof}{\par\noindent\emph{Proof. }\ignorespaces
+}{\hfill\textit{Q.E.D.}\par\smallskip}
+\newcounter{algline}
+\newcommand{\al}{\stepcounter{algline}\thealgline:}
+\newcommand{\tabnote}[1]{\par\smallskip\parbox{\linewidth}{\footnotesize #1}}
+\title{ARC-Audit: Dependency-Aware Auditing\\and Authenticated Record Recovery\\for Industrial IoT Data}
+\author{Anonymous Author(s)}
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
+\maketitle
+\begin{abstract}
+Shared compression reduces storage requirements for industrial Internet of Things (IIoT) data, but reconstructing a record can require both its local encoding and a shared dictionary. When references are encrypted, public verifiers may need to select more objects than an authorized retriever needs for decoding. ARC-Audit represents those dependencies through an authenticated recovery closure (ARC), a set of ciphertext objects sufficient to reconstruct the target records. An authenticated layout maps logical bit spans to ciphertext pages. Public verifiers use it to select sufficient coverage, merge overlapping pages, and issue an aggregate challenge. Authorized retrievers authenticate and decrypt references before fetching the remaining pages needed to reconstruct complete records. Within a storage budget, ARC-Audit protects selected ciphertext pages and applies the same checks to repaired and directly retrieved pages. We analyze representation correctness, dependency coverage, aggregate response authenticity, and returned-record authenticity. On two HAI workloads, the shared representation reduces cloud storage at the cost of longer construction, and aggregate auditing reduces application-layer traffic at the cost of more local processing. At 5\% nominal erasure with Dictionary protection, exact dependency selection raises complete-record recovery from 10.8\% to 14.8\% and from 18.0\% to 21.6\% on the two segments.
+\end{abstract}
+\begin{IEEEkeywords}
+Industrial Internet of Things, generalized deduplication, public integrity
+auditing, authenticated record recovery, dependency closure, authenticated encryption.
+\end{IEEEkeywords}
+
+\section{Introduction}\label{sec:introduction}
+\IEEEPARstart{O}{utsourced} industrial Internet of Things (IIoT) data must support integrity verification and reliable recovery of requested records. Shared compression exploits repetition across sensor fields and records. Generalized deduplication (GD) represents data blocks with shared bases and record-specific references and deviations~\cite{Talasila2019}. Secure similarity-based deduplication has also been used to manage outsourced IIoT data~\cite{Gao2024}. With a shared representation, reconstructing one record can require both record-specific and shared objects, all of which must be authenticated against the requested data version.
+
+Public verifiers and authorized retrievers have access to different information, so they can select different object sets for the same record. With encrypted dictionary references, a public verifier can use the layout to select complete dictionaries for the relevant groups, covering every page the record could reference. An authorized retriever can decrypt the references and fetch only the pages they identify. If an unreferenced dictionary page is lost, complete dictionary coverage is unavailable, yet the record may still be decodable.
+
+Existing mechanisms address different parts of this problem. Compression methods optimize the representation~\cite{Hurst2024GreedyGD}, public storage proofs authenticate responses for selected objects~\cite{ShachamWaters2013}, and selective access systems optimize retrieval~\cite{Taurone2024TREAT}. Shared-storage protection accounts for the impact of losing common chunks~\cite{Bhagwat2006Reliability}. Auditing a shared-compressed record also requires determining whether the selected objects cover its complete decoding path. That coverage depends on the encoding layout, the authenticated references, and the information available to each role.
+
+ARC-Audit uses an \emph{authenticated recovery closure} (ARC) to describe a set of ciphertext objects sufficient to reconstruct the target records. The owner publishes an authenticated layout that locates those objects and encrypts all decoding content. The public verifier uses the layout to select the relevant dictionaries, merge objects shared by the targets, and bind the resulting page set to a fresh aggregate challenge. The authorized retriever authenticates and decrypts references to identify the actual dependencies before fetching the remaining objects.
+
+Within a storage budget, ARC-Audit uses Reed--Solomon (RS) coding to protect selected ciphertext pages. The retriever applies the same verification rules to directly fetched pages and pages reconstructed by RS decoding, then decodes complete records from authenticated inputs.
+
+The main contributions of this paper are as follows.
+\begin{itemize}
+\item \emph{An encrypted shared representation with addressable dependencies.} The SDA-GGD encoder confirms field grouping decisions using the serialized cost on the full input and provides an authenticated mapping from logical bit spans to ciphertext pages. The mapping lets each role locate the pages that carry decoding dependencies while the decoding content remains encrypted.
+\item \emph{Dependency-aware public auditing.} Public-Aggregate uses the authenticated layout to select ciphertext pages that cover the target records' decoding dependencies without decrypting references. The verifier merges overlapping pages and binds the targets and selected objects to an aggregate challenge.
+\item \emph{Exact authenticated recovery with budgeted protection.} Exact recovery identifies the actual dependencies from authenticated references and accepts a record only after complete decoding. A ciphertext RS layer protects selected pages within a serialized storage cap, and repaired pages must pass the existing ciphertext checks.
+\end{itemize}
+
+We evaluate shared encoding, public auditing, and authorized recovery on two HAI workloads. Field grouping reduces cloud storage at the cost of longer construction. Public closure planning avoids transferring reference material but can cover a larger set of ciphertext pages. Exact recovery fetches and decodes fewer objects, allowing some requests to succeed when unreferenced dictionary pages are unavailable.
+\section{Related Work}
+\subsection{Shared Compression and Selective Access}
+Shared compression determines how record content is divided between local
+encodings and common dictionaries. GD reconstructs chunks from shared bases and individual
+deviations~\cite{Talasila2019}. GreedyGD selects base bits for compression
+and direct analytics~\cite{Hurst2024GreedyGD}, while EntroGD combines
+analytical summaries with entropy-guided compression~\cite{Zhao2026EntroGD}.
+These works optimize the shared representation and its use for analytics.
+ARC-Audit connects that representation to verification through authenticated
+record spans and dictionary geometry, enabling ciphertext selection before
+reading references.
+
+Security and selective access introduce further requirements on this
+representation. Secure similarity deduplication addresses ownership and confidentiality,
+including fuzzy message-locked encryption and ownership
+proofs~\cite{Jiang2023FuzzyDedup} and IIoT storage management~\cite{Gao2024}.
+TREAT combines GD, coding, rearrangement, and selective fetching for
+distributed IoT queries~\cite{Taurone2024TREAT}. Its GD representation supports BaseID-addressed dictionary entries, and its evaluated query pipeline fetches the dictionary upfront and uses BaseIDs for predicate filtering.
+ARC-Audit uses a single authenticated layout for two access roles. A public verifier covers decoding dependencies while references remain encrypted, and an authorized retriever authenticates the references and the resulting ciphertext dependencies before accepting a complete canonical record.
+
+\subsection{Public Auditing and Retrievability}
+Public storage verification defines guarantees over the objects selected
+for a challenge. PDP checks outsourced possession~\cite{Ateniese2007PDP}; PoR connects
+challenge responses to recovery through extraction~\cite{Juels2007POR,ShachamWaters2013}.
+Bowers et al. develop the PoR framework~\cite{Bowers2009PORTheory}, and
+HAIL combines integrity checking with distributed redundancy~\cite{Bowers2009HAIL}.
+Dynamic PDP authenticates updates with an authenticated
+dictionary~\cite{Erway2009DPDP}. These interfaces establish properties of
+their specified authentication objects. More recently, Yang et al. reduce
+additional authenticator storage through compressed PDP and use a proof-exchange
+mechanism with linear communication for decentralized multi-cloud
+self-auditing~\cite{Yang2025CompressedPDP}. Here, compressed PDP concerns
+the audit representation and its overhead. ARC-Audit instead studies the
+dependency selection that connects authentication objects to shared-compressed
+record reconstruction.
+
+Shared-data auditing also reduces redundancy in authentication and
+supports selective verification. Prior schemes combine auditing and deduplication through storage proofs~\cite{Zheng2012POSD}, shared authenticators~\cite{Tian2022SharedAudit},
+client-side off-chain deduplication~\cite{Zhang2023BlockchainAudit}, and
+reduced key and authenticator redundancy~\cite{Miao2024SharedAudit}.
+Privacy-preserving designs protect file ownership in encrypted-data
+deduplication and auditing~\cite{Song2023EncryptedAudit}, and protect file-tag
+and audit-proof privacy while using identity-based broadcast encryption for
+key management~\cite{Zhang2025PrivacyAudit}. These designs address privacy
+and authentication in shared encrypted storage.
+
+Fine-grained deduplication also connects auditing with data retrieval.
+Liu et al. deduplicate ciphertexts and authentication tags within and across
+users and use a reconstruction matrix and a Bloom filter to retrieve distributed
+deduplicated blocks~\cite{Liu2025FineGrained}.
+Searchable auditing with arbitration~\cite{Miao2025}, dynamic mixed
+auditing~\cite{Pan2026}, and updatable multi-copy authentication~\cite{Xu2026MPA}
+address related selective and shared verification settings. ARC-Audit makes
+the connection to record decoding explicit: authenticated geometry determines
+public coverage, and authenticated private references determine exact recovery
+inputs.
+
+Authenticated data structures bind directory answers to source-authenticated
+information~\cite{Goodrich2003ADS}. This paper applies this principle to the layout and the reference-to-basis relation. Public closure planning obtains sufficient
+coverage from the signed geometry. Authorized reference discovery first
+authenticates and decrypts the referenced positions, then selects a tighter set.
+This distinction determines both access permissions and communication costs.
+
+\subsection{Reliability of Shared Storage}
+Shared-storage protection must account for the records that depend on each protected object, because shared-chunk loss affects several logical objects. Loss-impact-based
+replication~\cite{Bhagwat2006Reliability} and analysis of deduplicated,
+erasure-coded storage~\cite{Li2010Reliability} establish the importance of
+this dependency structure. At the system level, CDStore combines convergent
+dispersal with two-stage deduplication to coordinate reliability, security,
+and storage efficiency across multiple clouds~\cite{Li2015CDStore}.
+Per-File Parity combines pre-deduplication parity
+with intra- and inter-file recovery~\cite{Wu2019PFP}; RepEC+ combines replication,
+coding, selection, and cooperative restore~\cite{Zuo2022RepECPlus}.
+ARC-Audit uses standard RS coding~\cite{ReedSolomon1960} on complete ciphertext
+objects. Its evaluation holds the code and storage cap fixed while varying
+page allocation and the dependency set required by authenticated recovery.
+
+\section{System Model and Problem Formulation}\label{sec:model}
+\subsection{Roles and Trusted State}
+In ARC-Audit, a batch is a data unit that is configured, encoded, and authenticated independently. For each batch, the \emph{owner} encodes the input records, seals them into immutable ciphertext objects, generates public audit tags, and signs a batch manifest while retaining the batch-scoped base catalog and private encoding state locally. The \emph{cloud service provider}, abbreviated as CSP, stores the resulting ciphertext objects, audit tags, public parameters, signed layout, and any deployed protection sidecar. Each ciphertext object is identified by a batch identifier paired with a local page index, and a snapshot denotes the immutable encoded state committed by that batch's signed manifest.
+
+The \emph{public verifier} holds the owner's verification key and the intended manifest digest as trusted pins, using them to authenticate the public layout and audit parameters before constructing challenges. The \emph{authorized
+retriever} additionally holds the batch decryption capability and recovers
+records through authenticated cloud replies.
+
+Each signed manifest binds the batch identifier, public layout, ciphertext object identities, lengths and digests, protocol, and audit parameters. Clients retain the complete authenticated manifest, so their metadata state grows with the number of ciphertext objects.
+Encryption, manifest signing, and audit tagging use separate secret material.
+Requests spanning batches are partitioned by immutable batch, each with its
+corresponding pins and cryptographic context.
+
+\subsection{Threat Model and Security Goals}
+The threat model allows an untrusted CSP to omit stored objects, modify ciphertext, substitute metadata or audit tags, and replay snapshots or responses. We assume the owner constructs the encoded data honestly, and that verifiers and retrievers follow the protocol using authentic pins and provisioned keys. The expected manifest digest identifies the immutable version requested. Signature unforgeability and hash collision resistance protect this binding.
+
+The public view exposes record counts, ciphertext lengths, group and bit
+geometry, dictionary cardinalities, and requested targets and objects.
+Private decoding values, including constants, time and label contents, bases, and deviations, remain encrypted inside the logical container. Content confidentiality is defined for inputs with the same declared public view under the key-derivation and authenticated-encryption assumptions stated in Section~\ref{sec:security}. The authenticated encryption uses associated data and is abbreviated as AEAD.
+
+The security goals are exact representation, content confidentiality
+conditioned on this public view, authenticated dependency binding,
+selected-set response authentication, and authenticity of returned records.
+Section~\ref{sec:security} states the premises and analysis for these goals.
+Recovery availability is characterized by
+the authenticated originals and repair shards available during the request.
+
+\subsection{Records and Ciphertext Objects}
+ARC-Audit maps logical records to the ciphertext pages that carry their decoding inputs. A canonical record contains scaled process values, an index and time, and labels. Exact recovery requires equality of these values under the declared schema. For batch $b$, let $F$ denote the logical encoded container, partitioned into plaintext slices $F_p$ of at most $P_0=4068$ B. Each stored ciphertext object is sealed as
+\begin{equation}\label{eq:cipher}
+C_p=N_p\,\|\,\mathsf{Enc}_{k_b}(N_p,F_p,A_p),
+\end{equation}
+where $N_p$ is a 12-byte nonce, $A_p$ is associated data, and the AEAD
+output includes a 16-byte tag. Thus the valid length
+$\ell(p)=|F_p|+28\leq4096$ B. The object descriptor and associated data
+bind identity and length; short final slices retain their actual lengths.
+Hereafter, a page denotes this complete ciphertext object; $\mathcal P$ is the set of its batch-qualified object identities.
+
+For a logical bit interval $[a,a+w)$, the public mapping is
+\begin{equation}\label{eq:phi}
+\Phi_{\mathcal L}(a,w)=
+\left\{(b,p):\left\lfloor\frac{a}{8P_0}\right\rfloor
+\leq p\leq\left\lfloor\frac{a+w-1}{8P_0}\right\rfloor\right\},
+\end{equation}
+with $\Phi_{\mathcal L}(a,0)=\varnothing$. The mapping includes all spanned pages whenever a bit interval crosses a slice boundary, and the batch identity disambiguates equal local page indices across different batches.
+
+\subsection{Record Dependencies and Acceptance}
+Fix an honestly constructed representation and its deterministic decoder. The exact
+dependency set $\mathcal D_{\mathcal L}(i)$ contains ciphertext objects
+covering the structure, reference, local data, labels, and actual dictionary
+rows used to decode record $i$. The public recovery closure
+$K_{\mathcal L}(i)$ instead includes the complete relevant group dictionaries:
+\begin{equation}\label{eq:sufficient-set}
+\mathcal D_{\mathcal L}(i)\subseteq K_{\mathcal L}(i)\subseteq\mathcal P.
+\end{equation}
+Both sets refer to the same fixed decoder and page mapping. Exact dependencies
+are selected by the actual references in that representation; the public
+closure covers all such reference choices using authenticated layout geometry.
+
+For targets $T$, public auditing authenticates
+$U(T)=\bigcup_{i\in T}K_{\mathcal L}(i)$. Authorized recovery obtains
+references through authenticated decryption and constructs
+$D(T)=\bigcup_{i\in T}\mathcal D_{\mathcal L}(i)$.
+The single-record sets $K(i)$ and $\mathcal D(i)$ describe coverage for each record, while their unions $U(T)$ and $D(T)$ combine objects for a request. The public
+verifier uses $U(T)$; the authorized retriever acquires $D(T)$ in two stages.
+Let $\mathcal A$ denote the set of pages whose committed ciphertexts and authenticated plaintexts have been obtained, either directly or through verified erasure repair. Recovery of record $i$ is defined by
+\begin{equation}\label{eq:record-recovery}
+\mathsf{Rec}_i(\mathcal A)=
+\mathbf1\{\mathcal D_{\mathcal L}(i)\subseteq\mathcal A
+\ \land\ \widehat r_i=r_i\}.
+\end{equation}
+Equation~\eqref{eq:record-recovery} defines recovery correctness. The retriever accepts only authenticated inputs and complete decoding, returning either all requested canonical records or failure. The experimental Conservative control requires the full public closure $U(T)$ before decoding.
+
+Public audit acceptance requires signed metadata that passes verification and matches the expected challenge context, along with a valid response for each involved batch. Authorized recovery requires authenticated decoding inputs and successful decoding of every requested record. Both operations use the same layout, but the pages they require may differ.
+
+\begin{table}[t]\centering\small
+\caption{NOTATION FOR ARC-AUDIT}\label{tab:notation}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.70\columnwidth}@{}}\toprule
+Symbol & Meaning\\\midrule
+$b$, $b_T$ & Batch identity; number of batches involved in $T$\\
+$F,F_p,C_p$ & Logical container, plaintext slice, ciphertext object\\
+$k_b,N_p,A_p$ & Batch encryption key, nonce, associated data\\
+$\mathcal L,\Phi_{\mathcal L}$ & Authenticated public layout and bit-span map\\
+$\ell(p),\tau_p$ & Valid ciphertext length and public audit tag\\
+$\mathcal D(i),K(i)$ & Exact dependencies and public sufficient closure\\
+$D(T),U(T)$ & Exact dependency union and audit closure union\\
+$\pi=(\sigma,\boldsymbol\mu)$ & Aggregate audit response\\
+$\beta,B_{\rm side}$ & Protection budget fraction and charged sidecar bytes\\\bottomrule
+\end{tabular}\end{table}
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/architecture.pdf}
+\caption{ARC-Audit system architecture.}
+\label{fig:architecture}\end{figure*}
+
+\section{ARC-Audit Design}\label{sec:design}
+\subsection{Overview}
+Fig.~\ref{fig:architecture} shows how the authenticated layout supports batch construction, public auditing, and authorized recovery. During construction, the owner groups and encodes records, seals the logical container into addressable ciphertext pages, and authenticates the layout. To audit a request, the public verifier builds and merges sufficient closures for the targets, then checks the CSP's aggregate response to a fresh challenge. For recovery, the authorized retriever uses authenticated references to identify the actual dependencies and decodes canonical records after verifying all required inputs.
+
+The protection layer adds redundancy to selected ciphertext objects within a storage budget and returns repaired pages through the same authenticated retrieval interface.
+
+\subsection{Cost-Confirmed Shared Representation}\label{sec:c1}
+SDA-GGD groups fields to reduce the encoded size while retaining the locations needed for dependency planning. The encoder ranks candidate merges by gains measured on a sample and decides whether to accept them using the serialized cost on the full input. The resulting layout records the spans and dictionary ranges that let a verifier select pages before reading references.
+
+\emph{Encoding and serialized cost.}
+Under the declared schema, each field is assigned an exact decimal scale and integer width. Constants are stored once, while the remaining fields are partitioned into groups.
+For a group $G$ of total bit width $L_g$, the encoder selects $k$ base-bit positions; let $M_g$ denote the number of distinct observed bases. The remaining $L_g-k$ positions form the deviation. Each record stores a fixed-width base identifier of $b_g=\lceil\log_2 M_g\rceil$ bits alongside its deviation, and a group dictionary stores the bases.
+
+For $n$ records the serialized group cost is
+\begin{equation}\label{eq:cost}
+\begin{split}
+C(G)={}&C_{\mathrm{hdr}}(G,k)+\lceil M_gk/8\rceil+\lceil nb_g/8\rceil\\
+ &+\lceil n(L_g-k)/8\rceil,
+\end{split}
+\end{equation}
+where $C_{\mathrm{hdr}}(G,k)=11+2|G|+2k$ bytes stores the group mode,
+field identifiers, and base-bit positions. A RAW group costs
+$C_{\mathrm{hdr}}(G,0)+\lceil nL_g/8\rceil$. Each stream is byte-rounded independently because the streams are serialized separately. The full
+container costs $C_0+\sum_G C(G)$, where $C_0$ contains the fixed schema,
+constants, time/label representation, and global header.
+
+\emph{Within-group configuration.}
+The configurator stably sorts local bit positions by increasing empirical
+binary entropy and tests prefixes of length $k=0,1,\ldots,L_g$.
+It stops when $M_g=n$. Among feasible candidates, the configurator selects the smallest byte-rounded cost, with the earlier prefix winning ties. It selects RAW whenever RAW costs no more than that GD candidate. Merged groups concatenate their field sequences, and entropy ties preserve this local bit order. The tested configuration therefore selects among these candidates by serialized cost.
+
+\emph{Sample ranking and full-data confirmation.}
+Initialization uses one active group per nonconstant field. A fixed
+sample supplies the joint byte gain
+$\widehat\Delta=C_m(G_a)+C_m(G_b)-C_m(G_a\mathbin{\|}G_b)$,
+where $C_m$ configures and measures each group on the same sampled rows,
+and $\|$ denotes ordered field concatenation. Only pairs with positive sampled gain enter the queue. Candidates are refreshed before full-input confirmation, and obsolete versions are discarded.
+Before merging $G_a$ and $G_b$, the encoder reconfigures the combined group on all input records and computes
+\begin{equation}
+\Delta_{\mathrm{full}}=C(G_a)+C(G_b)-C(G_a\mathbin{\|}G_b).
+\end{equation}
+Acceptance requires both a positive full-input serialized-byte gain and a positive payload gain. Affected candidates are updated until the queue is exhausted.
+RAW fallback is included in the configuration's real byte cost.
+Algorithm~\ref{alg:grouping} takes exact records $X$, schema $\Sigma$,
+and fixed sample indices $I$. The helper $\operatorname{Config}(X,G)$
+selects a group configuration, including RAW fallback.
+$C(G;c)$ denotes serialized cost under configuration $c$, and
+$C_{\mathrm{pay}}(G;c)$ denotes its byte-rounded payload cost without the
+group header. Omitting $c$ refers to the current configuration.
+$\operatorname{SampleGain}$ returns the sampled gain and merged
+configuration; sample estimates alone cannot authorize a merge.
+
+In Algorithm~\ref{alg:grouping}, $J$ stores rejected versioned pairs,
+$d_e$ counts requeues up to $d_{\max}=8$, and $\operatorname{TopGain}$
+returns the stored queue-head gain, or $-\infty$ when the queue is empty.
+Equal queue priorities follow insertion order. The algorithm discards stale group versions and previously rejected versioned pairs. A candidate whose refreshed gain drops may be deferred at most eight times before full-input examination.
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{Cost-Confirmed Grouping.}\label{alg:grouping}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Records $X$, schema $\Sigma$, sample indices $I$.}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} Logical container $F$ and public geometry $\mathcal L$.}\\
+\al & $\mathcal G\gets$ singleton nonconstant-field groups.\\
+\al & Configure $\mathcal G$ on $X$ and $X_I$; $J\gets\varnothing$.\\
+\al & $Q\gets$ positive sampled-gain pairs; initialize $d_e=0$.\\
+\al & \textbf{while} $Q\neq\varnothing$ \textbf{do}\\
+\al & \hspace*{1em}$e=(G_a,G_b,\text{versions})\gets\operatorname{PopMax}(Q)$.\\
+\al & \hspace*{1em}\textbf{if} $e$ is stale or $e\in J$, \textbf{continue}.\\
+\al & \hspace*{1em}$(\widehat\Delta,\widehat c)\gets\operatorname{SampleGain}(X_I,G_a,G_b)$.\\
+\al & \hspace*{1em}\textbf{if} $\widehat\Delta\leq0$, add $e$ to $J$; \textbf{continue}.\\
+\al & \hspace*{1em}\textbf{if} $\operatorname{TopGain}(Q)>\widehat\Delta$ and $d_e<d_{\max}$ \textbf{then}\\
+\al & \hspace*{2em}$d_e\gets d_e+1$; requeue $e$ with $\widehat\Delta$; \textbf{continue}.\\
+\al & \hspace*{1em}\textbf{end if}\\
+\al & \hspace*{1em}$G_c\gets G_a\mathbin{\|}G_b$; $c\gets\operatorname{Config}(X,G_c)$.\\
+\al & \hspace*{1em}$\Delta_{\mathrm{full}}\gets C(G_a)+C(G_b)-C(G_c;c)$.\\
+\al & \hspace*{1em}$\Delta_P\gets C_{\mathrm{pay}}(G_a)+C_{\mathrm{pay}}(G_b)-C_{\mathrm{pay}}(G_c;c)$.\\
+\al & \hspace*{1em}\textbf{if} $\Delta_{\mathrm{full}}>0$ and $\Delta_P>0$ \textbf{then}\\
+\al & \hspace*{2em}Replace $G_a,G_b$ in $\mathcal G$ by $G_c$ with $(c,\widehat c)$.\\
+\al & \hspace*{2em}Invalidate old-group entries; queue positive new/live pairs.\\
+\al & \hspace*{1em}\textbf{else} add $e$ to $J$.\\
+\al & \hspace*{1em}\textbf{end if}\\
+\al & \textbf{end while}\\
+\al & $(F,\mathcal L)\gets\operatorname{Serialize}(X,\Sigma,\mathcal G)$.\\
+\al & \textbf{return} $(F,\mathcal L)$.\\\bottomrule
+\end{tabular}
+\end{algorithm}
+
+\begin{proposition}{Confirmed logical cost reduction}\label{prop:cost}
+Every accepted merge strictly decreases both the checked logical serialized
+cost and its payload cost. Starting from $g_0$ active groups, at most
+$g_0-1$ merges are accepted.
+\end{proposition}
+\begin{claimproof}
+Algorithm~\ref{alg:grouping} accepts a merge only if both the full-input serialized gain and the payload gain are positive. Since the costs of other groups and the fixed container component stay unchanged, each merge strictly reduces both costs. Each merge also reduces the number of active groups by one, so the algorithm accepts at most $g_0-1$ merges. Recording rejected versioned pairs, discarding obsolete entries, and limiting requeues ensure that candidate processing terminates between merges.
+\end{claimproof}
+The measured secure cloud cost in Eq.~\eqref{eq:cloud-cost} additionally includes encryption framing, audit tags, and the public manifest. RQ1 evaluates that final cost separately from the logical grouping objective.
+
+
+\subsection{Page Encryption and Authenticated Layout}\label{sec:seal}
+ARC-Audit uses page encryption and an authenticated layout to separate the structural information needed to locate dependencies from the values needed to decode them. The public layout contains stream positions, widths, modes, base-bit positions, dictionary cardinalities, and record counts. This geometry supports the page mapping in Eq.~\eqref{eq:phi}, while the private decoding header and values, including numeric constants and private field values, remain in the encrypted slices of the complete logical container together with the encoded records.
+
+For each construction, the owner samples a fresh 256-bit batch identifier
+$b$ and a random encryption master secret. HKDF-SHA256 derives $k_b$ with
+salt $b$ and context \texttt{ARC/ENC/v1}~\cite{RFC5869}.
+The nonce is the 96-bit encoding of the local page index, so page nonces are distinct under the batch key. AES-256-GCM seals each slice
+using Eq.~\eqref{eq:cipher}~\cite{RFC5116}. Associated data is the canonical
+encoding of the protocol, owner domain, batch, object identity, codec, and plaintext length. These fields are retained in the public descriptor.
+
+The descriptor also records the complete ciphertext length and hash. Audit tag identity binds this descriptor and the public-parameter
+fingerprint. After creating ciphertext objects and tags, the owner signs a
+canonical manifest containing their descriptors, public layout, parameters,
+and tag-file digest using Ed25519. The manifest digest and signing public
+key form the provisioned pins. This order binds tags to immutable objects
+and the manifest to completed tags without a circular digest dependency.
+Algorithm~\ref{alg:seal} summarizes this construction.
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{Seal a Data Batch.}\label{alg:seal}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Logical container $F$, public geometry $\mathcal L$, owner domain.}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} Ciphertext objects, audit tags, signed manifest, and client pins.}\\
+\al & Sample fresh batch $b$ and encryption master secret; derive $k_b$.\\
+\al & Generate independent audit secret $x$, public parameters $\mathsf{pp}$, and a manifest signing key.\\
+\al & \textbf{for each} slice $F_p$ of at most 4068 B \textbf{do}\\
+\al & \hspace*{1em}$N_p\gets\operatorname{Encode}_{96}(p)$; form associated data $A_p$.\\
+\al & \hspace*{1em}$C_p\gets N_p\|\mathsf{Enc}_{k_b}(N_p,F_p,A_p)$.\\
+\al & \hspace*{1em}$d_p\gets(A_p,|C_p|,\mathsf{Hash}(C_p))$.\\
+\al & \hspace*{1em}$\tau_p\gets\operatorname{Tag}(x,\mathsf{pp},d_p,C_p)$.\\
+\al & \textbf{end for}\\
+\al & $M\gets\operatorname{Manifest}(b,\mathcal L,\{d_p\},\mathsf{pp},\mathsf{Hash}(\{\tau_p\}))$.\\
+\al & Sign canonical $M$; provision signing public key and $\mathsf{Hash}(M)$ as pins.\\
+\al & Retain batch-scoped private encoding state and decryption capability.\\
+\al & \textbf{return} $\{C_p\},\{\tau_p\},M$, signature, and pins.\\\bottomrule
+\end{tabular}\end{algorithm}
+
+\subsection{Authenticated Recovery Closure}\label{sec:c2}
+Given a target set $T$ and the authenticated layout $\mathcal L$, public closure planning computes the sufficient page union $U(T)$ directly from public geometry by including each relevant group dictionary. Under the bit-span map $\Phi_{\mathcal L}$, let $S$ denote the pages covering private structural metadata, $R_g(i)$ the pages covering the reference span of record $i$ in group $g$, $V_g(i)$ the pages covering its deviation or RAW content, and $L(i)$ the pages covering its labels. Let $\mathcal P_g^{\rm dict}$ contain all mapped dictionary pages for a GD group. The single-record public recovery closure is defined as
+\begin{equation}\label{eq:closure}
+K(i)=S\cup L(i)\cup\bigcup_g
+\bigl(R_g(i)\cup V_g(i)\cup\mathcal P_g^{\rm dict}\bigr).
+\end{equation}
+RAW groups have no references or dictionary, so both terms are empty. Private structure contains the schema and framing needed for decoding, and label coverage selects the target record's label bits. The mapping includes every ciphertext page that intersects a selected span, even when a page also contains data from other logical streams.
+
+The public verifier constructs $K(i)$ from authenticated geometry, using the complete group dictionaries to cover the row selected by any valid BaseID. An authorized retriever instead authenticates and decrypts $S$ and the reference pages, reads each BaseID at its committed position, checks its range, and maps the referenced dictionary row. Combining those dictionary-row pages with $S$, references, local content, and labels yields the exact dependency set $\mathcal D(i)$.
+
+Across a target set $T$, public requests merge overlapping per-record closures into $U(T)=\bigcup_{i\in T}K(i)$. Given ciphertext lengths $\ell(p)$, the logical bytes read under union planning and separate uncached traversal are
+\begin{equation}\label{eq:reads}
+B_U=\sum_{p\in U(T)}\ell(p),\qquad
+B_N=\sum_{i\in T}\sum_{p\in K(i)}\ell(p).
+\end{equation}
+A cache can also let separate per-record traversals read each object once per request. The experiment controls distinguish read reuse through caching or union planning from the effect of aggregating proofs. For a request spanning batches, the verifier computes target sets and page unions separately for each batch and combines them using batch-qualified object identifiers.
+
+\subsection{Fresh Public Aggregate Audit}\label{sec:audit}
+Public-Aggregate verifies the linear response over the public closure. The verifier binds the targets, snapshot, and selected pages to a fresh challenge so that the response pertains to the current request and the intended version.
+
+Each complete ciphertext object is encoded in $s=133$ little-endian sectors of 31 B, with virtual zero padding beyond its valid length. Sector integers satisfy $m_{p,j}<2^{248}<q$
+for the BLS12-381 scalar order $q$. This sectorization therefore covers the nonce, encrypted payload, and AEAD tag; the signed valid length determines tail removal.
+
+Following the Shacham--Waters linear public authentication structure~\cite{ShachamWaters2013}, the owner selects secret $x$, publishes $Y=xg_2$, and computes tags in $\mathbb G_1$ under the pairing $e:\mathbb G_1\times\mathbb G_2\to\mathbb G_T$:
+\begin{equation}\label{eq:tag}
+\tau_p=x\left(H(W_p)+\sum_{j=1}^{s}m_{p,j}u_j\right).
+\end{equation}
+$W_p$ binds the complete ciphertext descriptor and parameter fingerprint.
+The bases $u_j$ and descriptor hash $H$ use domain-separated hash-to-curve
+operations~\cite{RFC9380}.
+
+For each batch request, the verifier generates a fresh 256-bit nonce.
+The canonical challenge binds the snapshot, public parameters, target set, selected page set, request policy, and session. Nonzero coefficients $\nu_p$ are derived from
+this complete context. SHA-512 expands the canonical-challenge digest with
+the page index and retry counter. The output is reduced modulo $q$, with
+zero retried, to obtain $\nu_p\in\mathbb F_q^*$. Upon receiving the challenge, the CSP reads each selected page and returns
+\begin{equation}\label{eq:aggregate}
+\sigma=\sum_{p\in U}\nu_p\tau_p,\qquad
+\mu_j=\sum_{p\in U}\nu_pm_{p,j}\pmod q.
+\end{equation}
+After context, framing, point, subgroup, scalar-range, and dimension checks,
+the verifier tests
+\begin{equation}\label{eq:pairing}
+e(\sigma,g_2)=e\left(\sum_{p\in U}\nu_pH(W_p)+\sum_j\mu_ju_j,Y\right).
+\end{equation}
+The verifier retains its own expected page set. Public parameters exclude
+invalid or identity bases, and responses must satisfy both parsing rules and
+Eq.~\eqref{eq:pairing}. Algorithm~\ref{alg:audit} gives the public flow.
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{ARC-Audit Public Closure Audit.}\label{alg:audit}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Targets $T$, corresponding manifests and pins, public audit parameters.}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} \texttt{ACCEPT} or \texttt{REJECT}.}\\
+\al & Verifier partitions $T$ by immutable batch.\\
+\al & \textbf{for each} involved batch $b$ \textbf{do}\\
+\al & \hspace*{1em}Authenticate its manifest against the pins; validate $T_b$ and parameters.\\
+\al & \hspace*{1em}\textbf{if} validation fails, \textbf{return} \texttt{REJECT}.\\
+\al & \hspace*{1em}$U_b\gets\operatorname{SortUnique}(\bigcup_{i\in T_b}K_{\mathcal L_b}(i))$.\\
+\al & \hspace*{1em}Sample fresh nonce; bind expected snapshot, request, $T_b$, and $U_b$.\\
+\al & \hspace*{1em}Derive $\nu_p\in\mathbb F_q^*$ for $p\in U_b$; send challenge and retain expected context.\\
+\al & \hspace*{1em}CSP reads unique $C_p$ and uses $\tau_p$ for $p\in U_b$ to respond by Eq.~\eqref{eq:aggregate}.\\
+\al & \hspace*{1em}Verifier checks framing, context, encodings, and Eq.~\eqref{eq:pairing}.\\
+\al & \hspace*{1em}\textbf{if} any check fails, \textbf{return} \texttt{REJECT}.\\
+\al & \textbf{end for}\\
+\al & \textbf{return} \texttt{ACCEPT}.\\\bottomrule
+\end{tabular}\end{algorithm}
+
+The serialized aggregate proof occupies $4+2+48+133\cdot32=4310$ B per batch, accounting for framing, the sector count, the aggregate point, and the scalar vector. A request involving $b_T$ batches therefore has $4310b_T$ proof bytes, in addition to declarations and challenges. Section~\ref{sec:eval} compares
+this public interface with authorized reference discovery and public download
+using their actual application framing.
+
+For a fixed challenge, the individual-proof control returns
+$(\nu_p\tau_p,(\nu_pm_{p,j})_j)$ for each $p$ and verifies the corresponding
+single-page equation. Aggregate and individual responses therefore use the
+same selected pages and fresh coefficients.
+
+\subsection{Authenticated Exact Record Recovery}\label{sec:c3}
+ARC-Audit's Exact recovery authenticates and parses references before acquiring the remaining dependencies. First, the retriever validates the manifest, version pins, and any sidecar binding. In Stage 1, it acquires the structural and reference ciphertext needed to resolve the targets, checks each object's identity, length, and committed digest, and applies AEAD authenticated decryption. Only after authenticating these plaintexts does it parse the private structure and BaseIDs, check their ranges, and construct exact dependencies. In Stage 2, the remaining pages covering referenced dictionary rows, deviations, RAW content, and target labels are fetched through the same verified path.
+
+A request-local cache retains verified ciphertext and authenticated plaintext, allowing content obtained during reference discovery to be reused during dependency acquisition. The private decoder's
+framing is checked against the authenticated public geometry; every bit read
+must be present in verified plaintext. After all required inputs are
+available, the deterministic decoder reconstructs every requested canonical
+record. Authentication, reference-range, framing, or decoding failure yields
+$\bot$. Algorithm~\ref{alg:recovery} operates on one batch; multi-batch recovery
+applies the same procedure to each involved batch.
+
+Given an object identity and authenticated batch context, the helper
+$\operatorname{VerifiedOpen}$ obtains the committed ciphertext directly or
+through the protected fetch interface, verifies its descriptor and performs
+authenticated decryption. It returns the verified plaintext or $\bot$ and
+caches only verified ciphertext and authenticated plaintext.
+
+\begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
+\caption{Authenticated Exact Record Recovery.}\label{alg:recovery}
+\begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Manifest and pins, decryption capability, targets $T$, cloud fetch interface, optional signed sidecar.}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} Complete records $\{r_i\}_{i\in T}$ or $\bot$.}\\
+\al & Authenticate manifest and sidecar; validate targets and binding.\\
+\al & \textbf{if} validation fails, \textbf{return} $\bot$.\\
+\al & $I\gets S\cup\bigcup_{i\in T,g}R_g(i)$; $\mathcal C\gets\varnothing$.\\
+\al & \textbf{for each} $p\in I$ \textbf{do}\\
+\al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$; on failure \textbf{return} $\bot$.\\
+\al & \textbf{end for}\\
+\al & Parse authenticated references; check ranges; derive $D(T)$.\\
+\al & \textbf{for each} $p\in D(T)\setminus\operatorname{dom}(\mathcal C)$ \textbf{do}\\
+\al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$; on failure \textbf{return} $\bot$.\\
+\al & \textbf{end for}\\
+\al & Validate private/public framing; decode complete records from $\mathcal C$.\\
+\al & \textbf{if} parsing or decoding fails, \textbf{return} $\bot$.\\
+\al & \textbf{return} $\{r_i\}_{i\in T}$.\\\bottomrule
+\end{tabular}\end{algorithm}
+
+The Conservative control
+replaces $I$ in line 3 by $U(T)$; subsequent authentication and decoding are
+identical. Exact recovery can thus proceed when an unused dictionary object
+is unavailable, provided its actual decoding inputs are available or repairable.
+
+\subsection{Budgeted Ciphertext Protection}\label{sec:protection}
+A shared page can be needed to decode several records, so the choice of pages to protect affects which records can recover under the same storage cap. ARC-Audit adds redundancy to selected ciphertext objects and verifies repaired pages before decoding.
+
+A systematic RS$(10,8)$ sidecar over GF$(256)$ groups eight ciphertext
+objects and stores two parity shards per stripe. Original ciphertext objects remain in place.
+Short objects are virtually padded to 4096 B; incomplete stripes use declared
+virtual zero slots. Parity is computed over ciphertext, including nonce and
+AEAD tag bytes. A signed sidecar binds the parent snapshot, code dimensions,
+stripe members, and parity digests.
+
+Under a fractional storage budget $\beta$, this paper evaluates three protection orders. Dictionary places dictionary-containing pages before other objects, Uniform uses a seeded permutation, and FrequencyD ranks objects by dependency frequency in a reference set of records. These orders use a common stripe count chosen so that every serialized sidecar fits the same per-batch cap:
+\begin{equation}\label{eq:budget}
+B_{\rm side,b}\leq\left\lfloor\beta B_{\rm cipher,b}\right\rfloor.
+\end{equation}
+The budget determines how many ciphertext stripes receive protection, while RS$(10,8)$ specifies redundancy within each admitted stripe.
+The sidecar charge includes parity, the serialized manifest, signature, signing public key, and digest pin. The evaluation uses $\beta=0.10$ and a NoEC
+zero-redundancy reference. The common stripe count and cap are fixed, although actual serialized sidecar lengths may differ.
+
+Protected retrieval first checks the original object. If it is unavailable, the retriever collects distinct authentic surviving original and parity slots from its stripe. Eight valid slots permit RS reconstruction. Every reconstructed
+real object is truncated to its signed length and checked against its
+original ciphertext digest before entering the cache. AEAD authentication
+then precedes record decoding. The same helper handles repairs needed during reference discovery and acquisition of the final exact dependency set.
+
+\subsection{Computation and Storage Accounting}\label{sec:accounting}
+Let $N$ be the number of ciphertext objects and $u=|U(T)|$ within a batch.
+Direct closure enumeration takes expected
+$O(\sum_{i\in T}|K(i)|)$ set-insertion work and $O(u)$ unique-object state,
+in addition to resident authenticated metadata. Grouping cost sums the
+sample configurations, full-input configurations, and queue updates actually
+performed. Each accepted merge decreases the active-group count.
+
+Tag generation processes $Ns$ sectors. To generate a proof, the server accumulates $us$ field products and $u$ weighted tags. The verifier computes $u$ descriptor-hash terms and $s$ sector-base terms, then performs two pairings. Request costs sum across batches. The proof size is fixed per batch, the challenge material depends on the selected page set, and the manifest grows with $N$.
+
+For encoded data without the protection sidecar, secure cloud bytes are
+\begin{equation}\label{eq:cloud-cost}
+B_{\rm cloud}=B_{\rm cipher}+B_{\rm tags}+B_{\rm manifest},
+\end{equation}
+where $B_{\rm tags}=48N$ and the signed manifest contains public parameters.
+AEAD contributes $28N$ bytes within $B_{\rm cipher}$. Owner-side base bytes
+and total private state are separate. A deployed sidecar adds its cloud
+files; the accounted protection state also charges its provisioned pins.
+This distinguishes stored cloud bytes from client provisioning.
+
+Application-layer traffic includes declarations, challenges, responses, and any first-stage reference material required by the interface. Initialization authenticates and parses the manifest and parameters. Request timing starts with that context already initialized. Recovery timing includes retrieval or repair, authentication, decryption, and decoding. We count server reads separately from application replies because producing one repaired page can require reading several shards.
+
+\section{Security and Recoverability Analysis}\label{sec:security}
+Under the system model in Section~\ref{sec:model}, we establish that the original dependency pages suffice for reconstruction, and that the public closure contains the exact dependencies. We then analyze returned-record authenticity, confidentiality under equal leakage, aggregate response authenticity, and sufficient conditions for recovery. Let $C_p$ and $F_p$ denote the original ciphertext and its plaintext slice in the expected snapshot.
+
+\subsection{Representation Correctness and Closure Coverage}\label{sec:representation-proof}\label{sec:closure-proof}
+\begin{proposition}{Correct decoding and closure coverage}\label{prop:representation}\label{prop:closure}
+For a correctly constructed batch, the original dependency pages suffice to decode the target records. For every valid target set $T$, $D(T)\subseteq U(T)$.
+\end{proposition}
+\begin{claimproof}
+Let $x_{i,g}$ be the group bit string for record $i$ and GD group $g$. Let $I_g$ be the base-bit positions and $J_g$ their complement. The encoder satisfies
+\begin{equation}
+x_{i,g}[I_g]=B_{g,\mathrm{ID}_{i,g}},\qquad
+x_{i,g}[J_g]=d_{i,g}.
+\end{equation}
+The decoder places the dictionary row and deviation in their complementary positions to reconstruct $x_{i,g}$. It reverses the field widths and exact decimal scaling and decodes RAW values, constants, timestamps, and labels according to the declared format, yielding the canonical record $r_i$.
+
+Let $L_{g,\mathrm{ID}_{i,g}}$ denote the referenced dictionary row's logical interval and $L_g^{\mathrm{dict}}$ the complete group dictionary interval. The page map $\Phi_{\mathcal L}$ collects all pages intersecting the given interval, so
+\begin{equation}
+L_{g,\mathrm{ID}_{i,g}}\subseteq L_g^{\mathrm{dict}}
+\ \Longrightarrow\
+\Phi_{\mathcal L}(L_{g,\mathrm{ID}_{i,g}})
+\subseteq\Phi_{\mathcal L}(L_g^{\mathrm{dict}}).
+\end{equation}
+Both policies cover the structure, references, local data, and labels. Taking unions over groups and targets yields
+\begin{equation}
+\mathcal D_{\mathcal L}(i)\subseteq K_{\mathcal L}(i)
+\ \Longrightarrow\ D(T)\subseteq U(T).
+\end{equation}
+\end{claimproof}
+
+\subsection{Authenticated Binding and Returned-Record Authenticity}\label{sec:binding}\label{sec:conditional}
+Let $\mathsf{BadSig}$ be acceptance under the trusted public key of a canonical message that the owner never signed. Let $\mathsf{BadDig}$ be acceptance of a manifest, page, or digest-bound protection object whose bytes differ from those committed to by the same digest. The verifier selects the primary manifest using its trusted pin and checks the sidecar binding to the parent snapshot. When the deployment specifies a protection layout, it also checks that layout's expected identity.
+
+\begin{proposition}{Returned-record authenticity}\label{prop:record-auth}
+Let $\mathsf{WrongRec}$ denote successful recovery with at least one record differing from its canonical value in the expected snapshot. For every probabilistic polynomial-time adversary there are reductions $\mathcal B_{\rm sig}$ and $\mathcal B_{\rm dig}$ such that
+\begin{equation}\label{eq:record-auth}
+\begin{aligned}
+\Pr[\mathsf{WrongRec}]
+&\leq \Pr[\mathsf{BadSig}]+\Pr[\mathsf{BadDig}]\\
+&\leq \operatorname{Adv}^{\rm EUF\text{-}CMA}_{\rm Sig}(\mathcal B_{\rm sig})
++\operatorname{Adv}^{\rm CR}_{H_{\rm dig}}(\mathcal B_{\rm dig}).
+\end{aligned}
+\end{equation}
+\end{proposition}
+\begin{claimproof}
+Let $\mathsf{Good}=\neg(\mathsf{BadSig}\lor\mathsf{BadDig})$. Candidate pages $C'_p$ from direct retrieval or RS repair must match the manifest digest after identity, length, and context checks. Under $\mathsf{Good}$,
+\begin{equation}
+\begin{aligned}
+H_{\rm dig}(C'_p)=H_{\rm dig}(C_p)&\ \Longrightarrow\ C'_p=C_p\\
+&\ \Longrightarrow\ \operatorname{Open}_{k_b,N_p,A_p}(C'_p)=F_p.
+\end{aligned}
+\end{equation}
+The first phase opens the original reference pages and uses their BaseIDs to derive $\widehat D(T)=D(T)$. The second phase applies the same acceptance rule to the remaining dependencies. By Proposition~\ref{prop:representation},
+\begin{equation}
+\begin{aligned}
+\mathsf{Good}\land\mathsf{RecAccept}&\ \Longrightarrow\ \widehat{\mathbf r}_T=\mathbf r_T,\\
+\widehat{\mathbf r}_T&=\operatorname{Decode}_T\bigl((F_p)_{p\in D(T)}\bigr).
+\end{aligned}
+\end{equation}
+Thus $\mathsf{WrongRec}\subseteq\mathsf{BadSig}\cup\mathsf{BadDig}$. The signature reduction outputs the first newly accepted message and its signature. The hash reduction outputs the first pair of different accepted strings with the same committed digest. The union bound yields Eq.~\eqref{eq:record-auth}. With multiple owners, the bound applies across the relevant signing keys.
+\end{claimproof}
+
+\subsection{Content Confidentiality under the Public View}\label{sec:confidentiality}
+The adversary supplies canonical inputs $X_0,X_1$ with $\mathsf{Leak}(X_0)=\mathsf{Leak}(X_1)$. For fixed public construction choices, the leakage includes page counts and lengths, associated data, public layout, dictionary cardinalities, and visible protection layouts. The challenger seals one input at random, publishes the public storage state, and answers adaptive public audit queries. The distinguishing advantage is the absolute difference between the probabilities of outputting $1$ in the two branches. If a deployment exposes authorized recovery access traces determined by private BaseIDs, those traces belong in its leakage definition.
+
+\begin{proposition}{Content confidentiality under equal leakage}\label{prop:confidentiality}
+If the derived batch keys are indistinguishable from independent random keys and AEAD provides nonce-respecting multi-message confidentiality, then for every probabilistic polynomial-time public observer $\mathcal A$,
+\begin{equation}
+\operatorname{Adv}^{\rm priv}_{\rm ARC}(\mathcal A)
+\leq 2\varepsilon_{\rm KDF}+\sum_{b=1}^{B}\varepsilon_{{\rm AEAD},b}.
+\end{equation}
+Here $\varepsilon_{\rm KDF}$ bounds the advantage of replacing all $B$ batch keys in one input branch, and $\varepsilon_{{\rm AEAD},b}$ bounds multi-message distinguishing advantage for batch $b$.
+\end{proposition}
+\begin{claimproof}
+Let $\mathsf{Real}(X)$ use derived keys and $\mathsf{Rand}(X)$ use independent random keys. The hybrids are
+\begin{equation}
+\begin{aligned}
+\mathsf{Real}(X_0)
+&\xrightarrow{\rm KDF}\mathsf{Rand}(X_0)\\
+&\xrightarrow{{\rm AEAD},\,b=1,\ldots,B}\mathsf{Rand}(X_1)
+\xrightarrow{\rm KDF}\mathsf{Real}(X_1).
+\end{aligned}
+\end{equation}
+Each batch substitution uses equal-length plaintext pairs and the same associated data. Local page indices give distinct nonces under each batch key. Given the challenge ciphertexts and public layout, the simulator uses independently generated signing and audit keys to compute digests, tags, and signatures, and computes parity shards from the ciphertexts. The public layout and request policy determine the selected audit pages, so the simulator can compute the corresponding sector sums and aggregate tags for adaptive requests. Summing the adjacent distinguishing advantages gives the bound.
+\end{claimproof}
+
+\subsection{Public Aggregate Audit Correctness and Response Authenticity}\label{sec:audit-scope}
+The verifier derives $U$ from the authenticated layout and retains a challenge context binding the expected snapshot, audit parameters, targets, selected pages, policy, session, and fresh nonce. The coefficients $\nu_p$ are derived from that context. The verifier checks the format, dimension, scalar ranges, curve points, and subgroup membership before pairing verification. The aggregate tag may encode the identity and remains subject to the pairing equation.
+
+\emph{Correctness.} Let $(\sigma^\star,\boldsymbol\mu^\star)$ denote the honest response. Substituting Eqs.~\eqref{eq:tag} and~\eqref{eq:aggregate} gives
+\begin{equation}\label{eq:honest}
+\begin{aligned}
+\sigma^\star
+&=\sum_{p\in U}\nu_p\tau_p\\
+&=x\left(\sum_{p\in U}\nu_pH(W_p)+\sum_{j=1}^{s}\mu_j^\star u_j\right),\\
+\mu_j^\star&=\sum_{p\in U}\nu_p m_{p,j}.
+\end{aligned}
+\end{equation}
+Bilinearity and $Y=xg_2$ give Eq.~\eqref{eq:pairing}. Each 31-byte sector represents an integer below $2^{248}<q$. Together with the valid length in the signed descriptor, its sector vector uniquely determines the ciphertext bytes.
+
+\emph{Security experiment.} The owner honestly seals a batch and publishes its ciphertexts, tags, manifest, and public parameters. The adversary may interact in multiple adaptive audits and wins if any challenged response satisfies
+\begin{equation}\label{eq:bad-audit}
+\mathsf{BadAudit}
+=\{\mathsf{Verify}=1\land\boldsymbol\mu\ne\boldsymbol\mu^\star\}.
+\end{equation}
+
+\begin{proposition}{Selected-set response authenticity}\label{prop:audit}
+Let $e$ be a prime-order Type-3 pairing, $x$ a uniformly random nonzero scalar, and $P$ a uniformly random nonidentity element of $\mathbb G_1$. Assume computing $xP$ from $(g_1,g_2,P,X_1=xg_1,X_2=xg_2)$ is hard. Model the basis derivation and descriptor hash as domain-separated random oracles. If the verifier uses the expected signed snapshot, the basis-derivation inputs are distinct, and descriptor-hash inputs uniquely bind committed pages, then $\Pr[\mathsf{BadAudit}]$ is negligible in the single-batch experiment.
+\end{proposition}
+\begin{claimproof}
+The reduction sets $Y=X_2$, samples independent $a_j,b_j,r_p\in\mathbb F_q$, and sets
+\begin{equation}
+\begin{aligned}
+u_j &= a_jP+b_jg_1,\\
+H(W_p)&=r_pg_1-\sum_{j=1}^{s}m_{p,j}u_j,\\
+\tau_p&=r_pX_1.
+\end{aligned}
+\end{equation}
+If $u_j$ is the identity, it resamples $(a_j,b_j)$. Uniform $b_j$ makes the resulting $u_j$ uniform over nonidentity group elements and leaves $a_j$ uniform given $u_j$. Conditional on the bases and page contents, independent $r_p$ make the distinct $H(W_p)$ independent and uniform. The reduction programs these queries before publishing the batch and answers other queries according to the random-oracle rules. The resulting tags satisfy Eq.~\eqref{eq:tag}, giving the real tag and response distribution.
+
+For the first accepted incorrect response let $\Delta_j=\mu_j-\mu_j^\star$. Dividing its pairing equation by the honest equation yields
+\begin{equation}
+e(\sigma-\sigma^\star,g_2)
+=e\left(\sum_j\Delta_j u_j,X_2\right).
+\end{equation}
+By nondegeneracy, $Q\mapsto e(Q,g_2)$ is injective on $\mathbb G_1$. Therefore
+\begin{equation}
+\begin{aligned}
+\sigma-\sigma^\star&=x\sum_j\Delta_j u_j=\gamma\,xP+\eta X_1,\\
+\gamma&=\sum_j\Delta_j a_j,\qquad \eta=\sum_j\Delta_j b_j.
+\end{aligned}
+\end{equation}
+The view depends on the basis samples through public $u_j$, so the hidden $a_j$ remain independently uniform given the view. Since $\boldsymbol\Delta\ne\mathbf 0$, $\Pr[\gamma=0]=1/q$. For $\gamma\ne0$, the reduction outputs
+\begin{equation}
+xP=\gamma^{-1}(\sigma-\sigma^\star-\eta X_1).
+\end{equation}
+If the adversary wins with probability $\varepsilon$ with genuine fixed metadata, the reduction solves the assumed hard problem with probability at least $(1-1/q)\varepsilon$. For the full protocol, add the probability of a metadata-binding failure. Independent batch audit keys permit a union bound over the involved batch responses.
+\end{claimproof}
+Proposition~\ref{prop:closure} establishes that $U(T)$ covers the decoding dependencies. For a challenge over that set, Proposition~\ref{prop:audit} bounds the probability that verification accepts and the returned linear response differs from the committed response. The reduction uses the coefficients determined by the bound challenge and applies to their compact deterministic expansion. For a multi-batch request, the error event is acceptance with at least one incorrect batch response, which is bounded by the union of the per-batch error events. Record recovery depends on whether the actual dependencies can be retrieved directly or reconstructed from repair shards.
+
+\subsection{Conditional Recovery and Dependency Selection}\label{sec:recovery-condition}
+Fix an authenticated protection layout and the availability state during the request. Let $\mathcal A_0$ be the set of directly available genuine original pages, $\mathcal P_{\rm prot}$ the protected pages, and $S(p)$ the ten slots in the stripe containing $p$. Let $\mathcal V$ be the available authenticated slots, including declared virtual zero slots. Define
+\begin{equation}
+\mathcal A_{\rm eff}=\mathcal A_0\cup
+\bigl\{p\in\mathcal P_{\rm prot}:|S(p)\cap\mathcal V|\geq8\bigr\}.
+\end{equation}
+\begin{proposition}{Sufficient recovery condition}\label{prop:recovery}
+If the metadata are authentic, the decryption keys are correct, and
+\begin{equation}\label{eq:recovery-condition}
+D(T)\subseteq\mathcal A_{\rm eff},
+\end{equation}
+then Exact recovery succeeds and returns the canonical records $\mathbf r_T$.
+\end{proposition}
+\begin{claimproof}
+Let $G\in\mathbb F_{256}^{10\times8}$ be the systematic RS$(10,8)$ generator matrix. Choose eight distinct genuine stripe slots $J$, and let $d_t$ contain the eight original symbols at byte offset $t$. By the MDS property,
+\begin{equation}
+c_{J,t}=G_Jd_t,\qquad\det G_J\ne0
+\ \Longrightarrow\ d_t=G_J^{-1}c_{J,t}.
+\end{equation}
+Trimming to the committed length yields the original ciphertext. It is verified and decrypted as in direct retrieval, so $F_p$ can be obtained for every $p\in\mathcal A_{\rm eff}$.
+
+Let $D_0(T)\subseteq D(T)$ be the pages required to parse structure and references. Equation~\eqref{eq:recovery-condition} ensures the first phase can open $D_0(T)$ and determine the true $D(T)$, and the second phase can open the remaining pages. Proposition~\ref{prop:representation} gives
+\begin{equation}
+\begin{aligned}
+D(T)\subseteq\mathcal A_{\rm eff}&\ \Longrightarrow\ \widehat{\mathbf r}_T=\mathbf r_T,\\
+\widehat{\mathbf r}_T&=\operatorname{Decode}_T\bigl((F_p)_{p\in D(T)}\bigr).
+\end{aligned}
+\end{equation}
+\end{claimproof}
+With identical protection and availability, $D(T)\subseteq U(T)$ implies
+\begin{equation}
+U(T)\subseteq\mathcal A_{\rm eff}
+\ \Longrightarrow\ D(T)\subseteq\mathcal A_{\rm eff}.
+\end{equation}
+When every exact dependency is available but a page in $U(T)\setminus D(T)$ is unavailable, Exact can complete recovery. Conservative requires the full $U(T)$ and fails during acquisition.
+
+\section{Experimental Evaluation}\label{sec:eval}
+The experiments evaluate ARC-Audit's shared encoding, public aggregate auditing, and authenticated recovery. RQ1 measures the storage and construction costs of the shared representation. RQ2 quantifies the communication and local computation trade-offs of public dependency planning and aggregate auditing. RQ3 examines how protection allocation and dependency selection affect authenticated record recovery under erasures. Table~\ref{tab:scope} records the workload size and experimental unit of each comparison.
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/c1_arc_audit.pdf}
+\caption{C1 storage and construction costs of ARC-Audit (SDA-GGD) and the encoding baselines.}
+\label{fig:key-c1}\end{figure*}
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/c2_arc_audit.pdf}
+\caption{C2 application traffic per request and local processing time with reused contexts. Application traffic includes declarations, challenges, any first-stage material, and the final response.}
+\label{fig:key-c2}\end{figure*}
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{figures/c3_arc_audit.pdf}
+\caption{C3 authenticated recovery under erasures. ARC-Audit (Exact / Dictionary) combines exact recovery with dictionary-first protection.}
+\label{fig:key-c3}\end{figure*}
+
+\subsection{Experimental Setup}
+\subsubsection{Data and Implementation}
+This paper evaluates ARC-Audit using the train1 and train2 segments of the HAI 21.03 industrial control dataset~\cite{Shin2021HAI}, which contain 216,001 and 226,801 records, respectively. Each record comprises 84 columns: time, 79 process fields, and four attack indicators. Three process-specific indicators are encoded independently, and the combined indicator is derived from them.
+Exact decimal canonicalization during ingestion preserves process values. After each recovery
+operation, an independent scorer checks $\widehat r_i=r_i$ against the canonical
+source, separately from the client's authentication and complete-decoding checks.
+
+C1 uses six-hour windows containing 21,600 records each, starting at 00:00 on July 11, 2020, for train1 and August 1, 2020, for train2.
+C2 and C3 use all records. The three daily train1 batches contain 86,400, 86,400, and 43,201 records. The four daily train2 batches contain 7,200, 86,400, 86,400, and 46,801 records. Each batch is configured and sealed independently. These are two workloads from one HAI source. Throughout this section, paired numeric values follow train1/train2 order.
+
+The prototype is implemented in Python 3.10.12 using NumPy 2.2.6, cryptography 50.0.1, and py-ecc 8.0.0. It combines AES-256-GCM, Ed25519, the BLS12-381 full-page
+authenticator, and ciphertext RS$(10,8)$. Input preparation and independent scoring are outside the measured construction and request operations. Request timing starts at dependency planning in an initialized, reusable batch context.
+
+\begin{table}[t]\centering\small
+\caption{EVALUATION WORKLOADS}\label{tab:scope}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.31\columnwidth}>{\raggedright\arraybackslash}p{.48\columnwidth}@{}}\toprule
+Focus & Records per segment & Comparisons and observations\\\midrule
+C1 & 21,600 / 21,600 & 4 methods, 2 builds each; 16 observations\\
+C2 & 216,001 / 226,801 & 3 target sizes, 3 cases, 3 interfaces; 54 requests\\
+C3 & 216,001 / 226,801 & 5 layouts, 3 loss rates, 50 cases, 8 controls; 12,000 fault outcomes\\
+Clean & Same as C3 & 30 cases, 1 layout, 8 controls; 480 outcomes\\\bottomrule
+\end{tabular}\end{table}
+
+\subsubsection{Controls and Metrics}
+C1 compares the SDA-GGD encoder in ARC-Audit with Per-field-GD, RAW canonical encoding, and Block-CZ-256.
+Block-CZ-256 serializes nonconstant columns within blocks of 256 records and
+compresses each block as an independent Zstd frame at level 3. Per-field-GD applies GD independently to each nonconstant field to isolate the grouping choice; RAW and Block-CZ-256 provide alternative representations. All four representations use the same secure sealing and accounting. Cloud bytes include ciphertext,
+audit tags and the signed public manifest. Owner base bytes and total
+private disk state are separate. Construction covers configuration,
+encoding and complete secure sealing from normalized input.
+
+The merge-ranking sample contains $\min(50{,}000,n)$ rows and therefore covers the full 21,600-row C1 window.
+This setting evaluates grouping with full-window ranking and full-input
+cost confirmation. Each method/window has two runs; plots show the median
+and observed range.
+
+C2 distinguishes dependency discovery from proof response format. It uses target counts $r=1,16,256$, with three target sets for each segment and target count. The
+Public-Aggregate interface of ARC-Audit selects the public closure; Owner-MinRef-Aggregate, abbreviated as Owner-MinRef in plots and tables, authenticates and decrypts
+the reference material needed to identify exact dependencies; Public-Download
+returns public-closure ciphertext for hash verification. The public interfaces use no decryption key, whereas the MinRef control has authorized decryption capability. Public-Aggregate versus Public-Download compares response formats under
+the same public access capability. Public-Aggregate versus Owner-MinRef then
+compares dependency planning with different access capabilities.
+
+All three share the same
+targets within a case. Cross-batch targets are served through their respective
+batch contexts. Application bytes include declarations, challenges,
+first-stage material and responses. Complete local request time includes
+planning and the work executed by the request interface. Initialization
+is reported separately; the time axis measures local processing rather
+than network transfer. Each point reports the median and min--max range across the three matched target sets.
+
+C3 evaluates ARC-Audit with the Exact and Conservative dependency-selection policies under four allocation controls: Dictionary, Uniform, FrequencyD, and NoEC. Holding Exact fixed compares protection allocation, while holding a sidecar fixed compares dependency selection. NoEC supplies the zero-redundancy reference.
+
+Protected orders share RS$(10,8)$, an admitted stripe count, and a per-batch
+10\% ciphertext-byte cap including parity and signed sidecar state.
+FrequencyD uses the first $\min(4096,\max(1,\lfloor n/5\rfloor))$ reference records of
+each batch. All C3 recovery targets are drawn from outside these reference ranges. The 7200-record batch has 1440 reference records; the
+other six batches each have 4096. The scorer accesses source records only
+after the service timer ends; recovery obtains content through the cloud
+fetch interface and authenticated repairs.
+
+\subsubsection{Faults and Statistics}
+For each segment, C3 evaluates five seeded protection layouts at nominal loss fractions $\alpha=0.001,0.01,0.05$, with 50 single-record recovery cases per layout and loss rate.
+Each case selects one target and draws a fixed-count erasure mask without replacement from the segment-wide union of original objects and deployed parity slots.
+The population sizes are $N_{\mathrm{fault}}=5000$ and $4765$, giving $\lceil\alpha N_{\mathrm{fault}}\rceil$
+loss counts of 5/50/250 and 5/48/239. A target accesses its own batch
+within this population. Controls share targets and slot-loss masks; NoEC
+uses the corresponding original-page losses. Policy order is rotated across cases.
+
+Each fault-success point includes all 250 outcomes and a pointwise 95\% Wilson confidence interval conditional on the five tested layouts. Recovery-time medians are computed over successful fault requests. Because the successful target sets may differ across controls, these times are interpreted alongside success probabilities. Clean
+recovery uses 30 cases per segment/control on one layout, giving 480
+successful complete-record checks.
+
+
+
+\subsection{RQ1: Storage and Secure Construction}
+ARC-Audit (SDA-GGD) reduces secure cloud storage relative to Per-field-GD on both
+windows, as shown in Fig.~\ref{fig:key-c1}. Its stored sizes are 1,903,138 and
+1,770,118 B, compared with 2,198,812 and 1,938,839 B for Per-field-GD:
+reductions of 13.45\% and 8.70\%. Block-CZ-256 stores 2,278,001 and
+2,227,359 B, while RAW stores approximately 15.17 MB per window.
+All 16 constructions pass canonical decoding checks.
+
+
+The median complete secure construction time is 274.356/235.621 s for SDA-GGD and 231.521/206.163 s for Per-field-GD, an increase of 18.50\%/14.29\% based on the observed medians. SDA-GGD spends 73.66/47.63 s on the codec stage, compared with 1.00/0.83 s for Per-field-GD, chiefly because it repeatedly configures groups and checks the full-input cost. Fewer resulting objects reduce tag-generation time to 200.42/187.72 s from 230.25/205.05 s, offsetting some of the additional encoding work. Both 21,600-record windows use full-window ranking, so these timings characterize the measured grouping pipeline and leave the cost and candidate coverage of sampled ranking at larger scales open.
+
+Table~\ref{tab:state} distinguishes the stored cloud representation from owner-side private state. SDA-GGD retains 303,595/184,687 B of base content within
+335,884/215,702 B of total private state. Per-field-GD retains
+208,267/174,552 B of bases within 245,064/209,287 B total. On these windows, grouping reduces
+secure cloud storage while retaining more owner-side private state than
+Per-field-GD. These measurements characterize
+the representation and secure construction together.
+
+
+
+\begin{table}[t]\centering\small
+\caption{C1 STORAGE AND OWNER-SIDE STATE}\label{tab:state}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+& \multicolumn{2}{c}{Cloud (MiB)} & \multicolumn{2}{c}{Owner (KiB)}\\
+Method & train1 & train2 & train1 & train2\\\midrule
+ARC-Audit (SDA-GGD) & 1.815 & 1.688 & 328.012 & 210.646\\
+Per-field-GD & 2.097 & 1.849 & 239.320 & 204.382\\
+RAW & 14.463 & 14.463 & 0.227 & 0.227\\
+Block-CZ-256 & 2.172 & 2.124 & 0.234 & 0.234\\
+\bottomrule\end{tabular}
+\tabnote{Medians of two builds per window. Owner state includes the base catalog and private encoding/key files. Protection is accounted separately.}
+\end{table}
+
+\subsection{RQ2: Public Audit Communication and Computation}
+\emph{Responses under the same public access capability.}
+Fig.~\ref{fig:key-c2} compares returning an aggregate proof with downloading ciphertext pages for the same public closure. At $r=256$, Public-Aggregate transfers 35,405/38,524 B and takes 32.532/30.908 s of local processing. Public-Download transfers 17,041,940/15,754,868 B and takes 0.0400/0.0354 s locally. Aggregation uses group and field arithmetic to reduce response traffic. Downloading transfers the pages themselves and allows inexpensive local digest verification. A serial transfer estimate using these medians gives break-even link rates of 4.19/4.07~Mbit/s, obtained by dividing the saved bits by the additional local time. This estimate excludes initialization, network round trips, and overlap between transfer and computation.
+
+\emph{Dependency discovery under different access capabilities.}
+Public planning obtains sufficient coverage from authenticated geometry.
+Owner-MinRef-Aggregate first authenticates and decrypts reference material
+to narrow its final dictionary coverage. At $r=256$, its application traffic
+is 11,163,473/11,010,612 B and its local processing takes 31.532/30.148 s.
+Relative to this authorized interface, Public-Aggregate reduces traffic by
+99.68\%/99.65\% while increasing local processing by 3.17\%/2.52\%.
+These percentages are descriptive ratios of the observed medians rather than paired effect intervals.
+
+For a single target, Public-Aggregate takes 3.106/3.169 s, compared with 1.164/1.126 s for Owner-MinRef. Their application traffic is 6237/6254 B and 169,601/173,696 B, respectively. Reference discovery reduces MinRef's final
+object coverage, while public planning eliminates the first-stage transfer.
+As the target set grows, overlap and the union of references change this
+balance. At $r=16$, Public-Aggregate sends 20,512/19,742 B in 12.015/10.902 s, and Owner-MinRef sends 2,179,425/2,138,835 B in 8.404/8.066 s.
+
+\emph{Traffic composition.}
+Application traffic consists of request declarations and challenges,
+first-stage material when used, and the final response. At $r=256$, the
+median first-stage transfer for Owner-MinRef is 11,128,596/10,972,500 B;
+the two public interfaces have no such phase. Both aggregate interfaces
+return 12,930/17,240 B of proofs for the three/four involved batches.
+Each batch contributes 4310 B for the fixed sector count, while declarations
+and challenges depend on the request. For $r=1$, the required contexts have median setup times
+of 8.101/7.805 s, separate from the request times above. Each batch context is
+initialized once and reused; these values describe the contexts needed by
+the requests, rather than a setup charge repeated for every request. At $r=256$, cold context setup requires 1,678,681/1,623,188 B and 20.816/21.168 s. All 54
+honest requests pass their declared verification interface.
+
+\emph{Mechanism controls.}
+Two representative 16-target controls isolate object reuse and proof aggregation. On the train1 batch, union planning reads 805 objects totaling 3,297,280 B, while uncached per-record traversal makes 5643 reads totaling 23,113,728 B. With a request-local cache, per-record traversal also reads 805 objects. On the train2 batch, union planning reads 125 objects and uncached traversal makes 892 reads. With reuse, both approaches read 125 objects. In both cases, union planning and cached traversal read each selected object once.
+
+For the same selected pages and coefficients, the aggregate proof is 4310 B,
+whereas the individual-proof totals are 3,475,990 B and 539,750 B for the
+two controls. Verification time decreases from 472.659 to 3.477 s and
+from 73.646 to 1.074 s, respectively. These representative controls explain
+the mechanism; the repeated request experiment supplies the main traffic
+and time curves. Both controls reject the tested last-byte ciphertext
+mutation, consistent with the full-frame authentication design.
+
+\emph{Representation control.}
+For the same 16 targets within each batch, both SDA-GGD and Per-field-GD use public union planning and the same aggregate backend. SDA-GGD selects 805 vs. 883 pages on train1 and 125 vs. 143 on train2. Reported server reads are 3,297,280 vs. 3,616,768 B and 509,589 vs. 585,227 B, and local request times are 6.437 vs. 7.023 s and 1.489 vs. 1.683 s, respectively. Both representations return a 4310 B response per batch. The layout reduces coverage and processing in these two requests. The repeated request curves above quantify interface costs on SDA-GGD.
+
+
+
+\subsection{RQ3: Authenticated Recovery and Protection Allocation}
+\emph{Protection placement.}
+Holding Exact recovery fixed compares complete protection strategies. Dictionary
+increases recovery success over
+Uniform and NoEC under the common cap, as shown in Fig.~\ref{fig:key-c3}. At 1\%
+nominal loss, Dictionary recovers 185/250 records on each segment, corresponding to 74.0\%, compared with 153/250 and 164/250 for Uniform, corresponding to 61.2\%/65.6\%. The
+observed differences are 12.8/8.4 percentage points. NoEC recovers 114/250 and 117/250 records, corresponding to 45.6\%/46.8\%. At 0.1\%, Dictionary reaches
+95.2\%/97.6\%, compared with Uniform's 94.0\%/95.6\%.
+
+\emph{Frequency-based allocation.}
+At 5\%, FrequencyD with Exact recovery obtains 43/250 and 65/250
+successes, corresponding to 17.2\%/26.0\%, compared with Dictionary's 14.8\%/21.6\%.
+At 0.1\% the two policies are equal on train1, while Dictionary is slightly
+higher on train2. FrequencyD prioritizes frequently used dependency objects
+from its reference records; Dictionary prioritizes object type. With the code,
+stripe count, and budget held fixed, changing the ranking can change both the protected pages and their stripe membership. Table~\ref{tab:paired-layouts} shows the paired outcomes for each layout at 5\% loss. At 5\% loss, the FrequencyD minus Dictionary difference ranges from $-2$ to $+8$ percentage points on train1 and from $0$ to $+12$ on train2.
+At 1\% loss, FrequencyD with Exact recovers 191/250 and 185/250 records, compared with 185/250 on each segment for Dictionary.
+
+\emph{Dependency policy.}
+With the Dictionary sidecar held fixed, Exact and Conservative succeed on the same requests at 0.1\% and 1\% loss. At 5\%, Exact recovers 37/250 and 54/250 records (14.8\%/21.6\%), while Conservative recovers 27/250 and 45/250 records (10.8\%/18.0\%). Exact improves recovery by 4.0/3.6 percentage points, with failure rates of 85.2\%/78.4\%. Across the paired cases, Exact recovers ten and nine additional records, and it recovers every record that Conservative does. In the additional successful cases, some unreferenced dictionary pages were unavailable while every actual dependency could be retrieved or repaired.
+
+\begin{table}[t]
+\centering\small
+\caption{Paired Recovery Outcomes at 5\% Loss}
+\label{tab:paired-layouts}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Segment & Pair & 41001 & 41002 & 41003 & 41004 & 41005 \\
+\midrule
+train1 & F/D & 0/1 & 2/2 & 5/1 & 3/1 & 4/3 \\
+       & D/U & 9/0 & 3/1 & 3/3 & 2/0 & 8/1 \\
+       & E/C & 3/0 & 1/0 & 1/0 & 2/0 & 3/0 \\
+\midrule
+train2 & F/D & 2/1 & 4/0 & 7/1 & 2/2 & 2/2 \\
+       & D/U & 4/0 & 7/0 & 4/2 & 8/2 & 7/1 \\
+       & E/C & 1/0 & 2/0 & 2/0 & 2/0 & 2/0 \\
+\bottomrule
+\end{tabular}
+\tabnote{Columns are layout seeds. Each cell gives the cases recovered only by the first/second configuration out of 50 matched cases. F, D, and U are FrequencyD, Dictionary, and Uniform with Exact. E/C compares Exact and Conservative with Dictionary fixed.}
+\end{table}
+
+\emph{Recovery time.}
+Clean Dictionary/Exact recovery takes 3.693/3.507 ms, compared with
+8.991/7.205 ms for Conservative. With the same successful target population,
+exact selection lowers the amount of authenticated content acquired and decoded.
+At 5\% loss, successful Dictionary/Exact requests take median times of
+4.298/4.074 ms, while Conservative takes 11.933/7.079 ms. These fault
+time medians include retrieval and any repair work for successful requests;
+the successful populations differ across controls. Reading them with the
+success curves distinguishes inexpensive completion from the probability
+of obtaining a complete record. At 5\% loss with Dictionary protection, the failed-request medians are 0.414/0.461 ms for Exact and 5.810/3.892 ms for Conservative.
+
+Protection allocation determines which objects receive redundancy, and dependency selection determines which objects a request must obtain. Under the same protection layout and verification rules, reducing the required page set can therefore allow more requests to complete. The observed rankings apply to the tested workloads and fault settings.
+
+\subsection{Experimental Artifacts}
+The experiment archive \texttt{dual\_hai\_20261008\_v3} records the reduced profile used for C1 and the full profile used for C2 and C3. It contains case-level observations, mechanism controls, the source snapshot, and configuration manifests with input and source hashes. The summary verifier recomputes the reported statistics and checks the serialized protection caps. The build notes identify the archive and the validation and reproduction entry points.
+
+\section{Conclusion}
+ARC-Audit maps record dependencies to authenticated ciphertext pages to support public auditing and authorized recovery of industrial IoT data. The public verifier constructs sufficient closures from the authenticated layout, merges overlapping pages, and checks an aggregate response. The authorized retriever verifies and decrypts private references to locate the actual dependencies, then applies the same authentication rules to directly retrieved and erasure-repaired ciphertext.
+
+In two six-hour HAI windows, ARC-Audit's SDA-GGD encoder reduced secure cloud storage by 13.45\% and 8.70\% relative to Per-field-GD, with higher construction time. On the full segments, public aggregation reduced application traffic over the same ciphertext closure at the cost of additional local processing. With Dictionary protection fixed and a nominal erasure rate of 5\%, Exact increased complete-record recovery over Conservative by 4.0 and 3.6 percentage points. In the additional successful requests, all actual dependencies remained available while some unreferenced dictionary pages were unavailable.
+
+Future work will extend the authenticated dependency map to dictionaries shared across batches and examine how reusing existing pages affects index updates, manifest updates, and metadata costs. Under a common storage budget, we will measure complete-record recovery and repair reads for correlated failures, including contiguous page erasures and whole-batch unavailability, and evaluate the protection policies on other industrial IoT datasets.
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bstcontrol,references}
+\end{document}
+

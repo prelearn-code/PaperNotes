@@ -1,0 +1,15 @@
+\begingroup\small\setlength{\tabcolsep}{5pt}
+\begin{longtable}{@{}llrr@{}}
+\caption{Read Reuse Controls}\label{tab:reuse}\\
+\toprule Segment & Traversal & Reads & Bytes\\\midrule\endfirsthead
+\toprule Segment & Traversal & Reads & Bytes\\\midrule\endhead
+\midrule\multicolumn{4}{r}{Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+train1 & Union & 805 & 3,297,280\\
+train1 & Separate & 5643 & 23,113,728\\
+train1 & Separate-cache & 805 & 3,297,280\\
+train2 & Union & 125 & 509,589\\
+train2 & Separate & 892 & 3,651,221\\
+train2 & Separate-cache & 125 & 509,589\\
+\end{longtable}
+\endgroup
