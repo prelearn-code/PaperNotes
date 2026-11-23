@@ -232,12 +232,12 @@ $\beta,B_{\rm side}$ & Protection budget fraction and charged sidecar bytes\\\bo
 
 \begin{figure*}[t]\centering
 \includegraphics[width=\textwidth]{figures/architecture.pdf}
-\caption{ARC-Audit system architecture.}
+\caption{ARC-Audit system architecture. The page strips illustrate dictionary coverage for public auditing and authorized recovery.}
 \label{fig:architecture}\end{figure*}
 
 \section{ARC-Audit Design}\label{sec:design}
 \subsection{Overview}
-Fig.~\ref{fig:architecture} shows how the authenticated layout supports batch construction, public auditing, and authorized recovery. During construction, the owner groups and encodes records, seals the logical container into addressable ciphertext pages, and authenticates the layout. To audit a request, the public verifier builds and merges sufficient closures for the targets, then checks the CSP's aggregate response to a fresh challenge. For recovery, the authorized retriever uses authenticated references to identify the actual dependencies and decodes canonical records after verifying all required inputs.
+Fig.~\ref{fig:architecture} shows how public auditing and authorized recovery select pages from the same batch. The owner groups and encodes records with SDA-GGD, seals the logical container into addressable ciphertext pages, and commits to their layout in a signed manifest. Both clients authenticate the layout against their provisioned pins. The public verifier includes all dictionary pages for the relevant groups in the sufficient closure and merges per-record closures into $U(T)$ before issuing a fresh challenge and verifying the CSP's aggregate response. The authorized retriever first authenticates and decrypts the reference pages to read the BaseIDs. It uses the referenced dictionary rows to plan the exact dependency set $D(T)$, fetches the remaining pages, and decodes canonical records after verifying the required inputs.
 
 The protection layer adds redundancy to selected ciphertext objects within a storage budget and returns repaired pages through the same authenticated retrieval interface.
 
