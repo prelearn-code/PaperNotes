@@ -6,6 +6,9 @@ IEEEtran.cls、IEEEtran.bst、IEEEabrv.bib、bstcontrol.bib、references.bib 和
 中文独立主稿使用 main_cn.tex 和 XeLaTeX，打包时选用中文主文件及其引用的插图。
 中文稿指定 Windows 中文字体，在线编译时需在上传副本中配置可用的对应字体。
 
+中英文稿分别作为独立主稿编译。方法、评估口径及用于支撑结论的机制对照
+均在主稿中。evidence/ 用于核验和复现实验。
+
 当前目录保存论文、排版表格、插图及绘图源行。原始观测、配置和源码快照位于本工作区的独立归档。
 
 归档标识
