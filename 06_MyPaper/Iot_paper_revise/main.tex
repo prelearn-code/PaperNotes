@@ -98,7 +98,7 @@ For a fixed representation and deterministic decoder, the exact dependency set $
 \begin{equation}\label{eq:sufficient-set}
 \mathcal D_{\mathcal L}(i)\subseteq K_{\mathcal L}(i)\subseteq\mathcal P.
 \end{equation}
-For a request $T$, write $U(T)=\bigcup_{i\in T}K_{\mathcal L}(i)$ for the public closure and $D(T)=\bigcup_{i\in T}\mathcal D_{\mathcal L}(i)$ for the exact dependencies. Thus $D(T)\subseteq U(T)$. The verifier can compute $U(T)$ from the layout. The retriever first authenticates and decrypts the reference pages to resolve $D(T)$.
+For a request $T$, write $U(T)=\bigcup_{i\in T}K_{\mathcal L}(i)$ for the public closure and $D(T)=\bigcup_{i\in T}\mathcal D_{\mathcal L}(i)$ for the exact dependencies. Thus $D(T)\subseteq U(T)$. The verifier can compute $U(T)$ from the layout. The retriever first authenticates and decrypts the reference pages to resolve $D(T)$. We omit the subscript $\mathcal L$ when the layout is clear from context.
 
 \subsection{Threat Model and Public View}
 We assume an honest owner and clients that follow the protocol with authentic pins and provisioned keys. The untrusted CSP may observe public state and requests, omit objects, alter ciphertext, substitute metadata or tags, or replay a snapshot or response. The expected manifest digest fixes the requested snapshot. A fresh challenge binds the response to the current audit context. Manifest authentication relies on signature unforgeability and hash collision resistance.
@@ -169,8 +169,8 @@ $\operatorname{Config}(X,G)$ stably sorts the local bit positions of $G$
 by increasing empirical binary entropy and tests prefixes of length
 $k=0,1,\ldots,L_g$, stopping when $M_g=n$. Within merged groups, entropy
 ties preserve the local bit order induced by field concatenation.
-For each prefix, let $n_b$ count the records that share base $b$. A prefix
-is feasible if $R_{\mathrm{dep}}=\max_b n_b/n\leq\rho$.
+For each prefix, let $n_v$ count the records that share base $v$. A prefix
+is feasible under a configured dependency cap $\rho\in(0,1]$ if $R_{\mathrm{dep}}=\max_v n_v/n\leq\rho$.
 The configurator selects the feasible prefix with the smallest serialized
 cost in Eq.~\eqref{eq:cost}, breaking ties by smaller $k$. If none is feasible,
 it takes the prefix with the lowest $R_{\mathrm{dep}}$, breaking ties by cost and then by smaller $k$.
@@ -246,11 +246,11 @@ ARC-Audit uses page encryption and an authenticated layout to separate the struc
 For each construction, the owner samples a fresh 256-bit batch identifier
 $b$ and a random encryption master secret, then derives $k_b$ via HKDF-SHA256 with
 salt $b$ and context \texttt{ARC/ENC/v1}~\cite{RFC5869}.
-Each slice uses the 96-bit encoding of its local page index as the nonce $N_p$, so page nonces are distinct under $k_b$. The associated data $A_p$ canonically encodes the protocol, owner domain, batch, object identity, codec, and plaintext length, and these fields are retained in the public descriptor. With $P_0=4,068$ B, AES-256-GCM seals each slice as~\cite{RFC5116}
+Each slice uses the 96-bit encoding of its local page index as the nonce $N_p$, so page nonces are distinct under $k_b$. The associated data $A_p$ canonically encodes the protocol, owner domain, batch, object identity, codec, and plaintext length, and these fields are retained in the public descriptor. With $P_0=4{,}068$ B, AES-256-GCM seals each slice as~\cite{RFC5116}
 \begin{equation}\label{eq:cipher}
 C_p=N_p\,\|\,\mathsf{Enc}_{k_b}(N_p,F_p,A_p).
 \end{equation}
-The 12-byte nonce and 16-byte authentication tag give a valid ciphertext length of $\ell(p)=|F_p|+28\leq4,096$ B, while the final slice retains its actual length. A container of $B_F>0$ bytes has $N=\lceil B_F/P_0\rceil$ pages and occupies $B_{\rm cipher}=B_F+28N$ ciphertext bytes, as virtual zeros used for auditing and repair add no stored ciphertext bytes.
+The 12-byte nonce and 16-byte authentication tag give a valid ciphertext length of $\ell(p)=|F_p|+28\leq4{,}096$ B, while the final slice retains its actual length. A container of $B_F>0$ bytes has $N=\lceil B_F/P_0\rceil$ pages and occupies $B_{\rm cipher}=B_F+28N$ ciphertext bytes, as virtual zeros used for auditing and repair add no stored ciphertext bytes.
 
 Each descriptor also records the complete ciphertext length and SHA-256 digest, and the corresponding audit tag binds this descriptor to the public-parameter fingerprint. After generating all ciphertext objects and tags, the owner serializes the tags in ascending page-index order and signs a canonical manifest containing the object descriptors, public layout, audit parameters, and SHA-256 digest of the tag file using Ed25519. The resulting 32-byte manifest digest and 32-byte signing public key serve as the clients' provisioned pins. This ordering binds tags to immutable ciphertexts and binds the manifest to completed tags without introducing a circular digest dependency (Algorithm~\ref{alg:seal}).
 
@@ -342,7 +342,7 @@ Eq.~\eqref{eq:pairing}. Algorithm~\ref{alg:audit} gives the public flow.
 \al & \textbf{return} \texttt{ACCEPT}.\\\bottomrule
 \end{tabular}\end{algorithm}
 
-The serialized aggregate proof occupies $4+2+48+133\cdot32=4,310$ B per batch, accounting for framing, the sector count, the aggregate point, and the scalar vector. A request involving $b_T$ batches therefore has $4,310 b_T$ proof bytes, in addition to declarations and challenges. Section~\ref{sec:eval} compares
+The serialized aggregate proof occupies $4+2+48+133\cdot32=4{,}310$ B per batch, accounting for framing, the sector count, the aggregate point, and the scalar vector. A request involving $b_T$ batches therefore has $4{,}310 b_T$ proof bytes, in addition to declarations and challenges. Section~\ref{sec:eval} compares
 this public interface with authorized reference discovery and public download
 using their actual application framing.
 
@@ -351,7 +351,7 @@ $(\nu_p\tau_p,(\nu_pm_{p,j})_j)$ for each $p$ and verifies the corresponding
 single-page equation. Aggregate and individual responses therefore use the
 same selected pages and fresh coefficients. Each individual proof adds an
 8-byte page identifier to the 4,310 B proof format, so its total for $u$ pages
-is $4,318u$ B.
+is $4{,}318u$ B.
 
 \subsection{Authenticated Exact Record Recovery}\label{sec:c3}
 ARC-Audit's exact recovery policy (Exact) authenticates and parses references before acquiring the remaining dependencies. First, the retriever validates the manifest, version pins, and any sidecar binding. In Stage 1, it acquires the structural and reference ciphertext needed to resolve the targets, checks each object's identity, length, and committed digest, and applies AEAD authenticated decryption. Only after authenticating these plaintexts does it parse the private structure and BaseIDs, check their ranges, and construct exact dependencies. In Stage 2, the remaining pages covering referenced dictionary rows, deviations, RAW content, and target labels are fetched through the same verified path.
@@ -413,7 +413,7 @@ B_{\rm side,b}\leq\left\lfloor\beta B_{\rm cipher,b}\right\rfloor.
 \end{equation}
 Each admitted stripe stores two 4,096-byte parity shards. For $s_R$ stripes
 and a serialized sidecar manifest $M_R$, the charge is
-$8,192s_R+|M_R|+128$ bytes. The final 128 bytes cover the signature,
+$8{,}192s_R+|M_R|+128$ bytes. The final 128 bytes cover the signature,
 signing public key, and digest pin. Admission uses the largest charge
 among the three orders. The evaluation sets $\beta=0.10$ and includes NoEC
 as a zero-redundancy reference.
@@ -674,10 +674,10 @@ Within each test case, all three interfaces evaluate the same targets, and cross
 
 For RQ3, we evaluate ARC-Audit under the Exact and Conservative dependency-selection policies across four protection configurations: Dictionary, Uniform, FrequencyD, and NoEC. Holding Exact fixed isolates protection placement, whereas holding a protection layout fixed isolates dependency selection, with NoEC serving as the zero-redundancy baseline.
 
-All protected configurations share RS$(10,8)$, a common admitted stripe count, and a per-batch 10\% ciphertext-byte cap covering parity shards and signed sidecar metadata. FrequencyD ranks objects using the first $\min(4,096,\max(1,\lfloor n/5\rfloor))$ reference records of each batch, and all RQ3 recovery targets are drawn outside these reference ranges. Accordingly, the 7,200-record batch uses 1,440 reference records, and the remaining six batches each use 4,096. The independent scorer accesses source records only after the service timer stops, while recovery obtains inputs solely through the cloud fetch interface and verified repairs.
+All protected configurations share RS$(10,8)$, a common admitted stripe count, and a per-batch 10\% ciphertext-byte cap covering parity shards and signed sidecar metadata. FrequencyD ranks objects using the first $\min(4{,}096,\max(1,\lfloor n/5\rfloor))$ reference records of each batch, and all RQ3 recovery targets are drawn outside these reference ranges. Accordingly, the 7,200-record batch uses 1,440 reference records, and the remaining six batches each use 4,096. The independent scorer accesses source records only after the service timer stops, while recovery obtains inputs solely through the cloud fetch interface and verified repairs.
 
 \subsubsection{Faults and Statistics}
-For each segment, RQ3 evaluates five protection layouts generated with seeds 41001--41005 at nominal loss fractions $\alpha\in\{0.001,0.01,0.05\}$, using 50 single-record recovery cases per layout and loss rate. Each case selects one target record and draws a fixed-count erasure mask without replacement from the segment-wide union of original objects and deployed parity slots. The fault population sizes are $N_{\mathrm{fault}}=5,000$ on \texttt{train1} and $4,765$ on \texttt{train2}, yielding $\lceil\alpha N_{\mathrm{fault}}\rceil$ erasure counts of 5, 50, and 250 on \texttt{train1}, and 5, 48, and 239 on \texttt{train2}. Each target accesses only its own batch within this population. All controls share the same targets and slot-loss masks, with NoEC observing the corresponding original-page losses, and policy execution order is rotated across cases.
+For each segment, RQ3 evaluates five protection layouts generated with seeds 41001--41005 at nominal loss fractions $\alpha\in\{0.001,0.01,0.05\}$, using 50 single-record recovery cases per layout and loss rate. Each case selects one target record and draws a fixed-count erasure mask without replacement from the segment-wide union of original objects and deployed parity slots. The fault population sizes are $N_{\mathrm{fault}}=5{,}000$ on \texttt{train1} and $4{,}765$ on \texttt{train2}, yielding $\lceil\alpha N_{\mathrm{fault}}\rceil$ erasure counts of 5, 50, and 250 on \texttt{train1}, and 5, 48, and 239 on \texttt{train2}. Each target accesses only its own batch within this population. All controls share the same targets and slot-loss masks, with NoEC observing the corresponding original-page losses, and policy execution order is rotated across cases.
 
 Each fault-success point aggregates all 250 outcomes with a pointwise 95\% Wilson confidence interval conditional on the five tested layouts. Recovery-time medians are computed over successful fault requests. Because different controls can succeed on different target subsets, recovery times should be interpreted alongside success probabilities. Clean recovery evaluates 30 cases per segment and control on a single layout, yielding 480 successful complete-record checks.
 
@@ -716,7 +716,7 @@ Public closure planning eliminates first-stage reference transfer while matching
 At smaller target sets, reference discovery saves more local pairing work because each record touches fewer objects, though it still incurs substantial reference traffic. For $r=1$, Public-Aggregate transfers 6,237 B and 6,254 B in 3.106 s and 3.169 s locally, whereas Owner-MinRef transfers 169,601 B and 173,696 B in 1.164 s and 1.126 s. As $r$ grows, cross-target overlap and the union of references narrow this runtime gap: at $r=16$, Public-Aggregate transfers 20,512 B and 19,742 B in 12.015 s and 10.902 s, compared with 2,179,425 B and 2,138,835 B in 8.404 s and 8.066 s for Owner-MinRef.
 
 \emph{Traffic composition and context reuse.}
-Reference material dominates Owner-MinRef traffic at $r=256$, accounting for median first-stage transfers of 11,128,596 B and 10,972,500 B that both public interfaces avoid. Both aggregate interfaces return a 4,310 B proof per batch (12,930 B across the three \texttt{train1} batches and 17,240 B across the four \texttt{train2} batches), with declarations and challenges forming the remainder. The request timings above use initialized batch contexts reused across requests. Cold context setup requires a median of 8.101 s and 7.805 s at $r=1$, and 1,678,681 B and 1,623,188 B with 20.816 s and 21.168 s at $r=256$. All 54 honest requests pass verification under their respective interfaces.
+Reference material dominates Owner-MinRef traffic at $r=256$, accounting for median first-stage transfers of 11,128,596 B and 10,972,500 B that both public interfaces avoid. Both aggregate interfaces return a 4,310 B proof per batch (12,930 B across the three \texttt{train1} batches and 17,240 B across the four \texttt{train2} batches), with declarations and challenges forming the remainder. The request timings above use initialized batch contexts reused across requests. Cold context setup requires a median of 8.101 s and 7.805 s at $r=1$, and fetches 1,678,681 B and 1,623,188 B of manifests and public parameters in 20.816 s and 21.168 s at $r=256$. All 54 honest requests pass verification under their respective interfaces.
 
 \emph{Mechanism controls.}
 Table~\ref{tab:c2-mechanisms} isolates read reuse, proof aggregation, and data representation on two 16-target requests from the July 11 \texttt{train1} batch and July 31 \texttt{train2} batch. Union planning and cached per-record traversal both read each selected object once, and aggregation sharply reduces proof size and verification time when pages and challenge coefficients are held fixed. The tested last-byte ciphertext mutation is rejected in both batches. Under identical targets, union planning, and aggregate backend, SDA-GGD selects fewer pages than Per-field-GD, lowering server reads and local processing time in both test requests while keeping the 4,310 B per-batch proof unchanged.
