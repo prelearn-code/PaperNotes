@@ -239,12 +239,12 @@ C_p=N_p\,\|\,\mathsf{Enc}_{k_b}(N_p,F_p,A_p).
 \al & \textbf{对每个}至多 4,068 B 的切片 $F_p$ \textbf{执行}\\
 \al & \hspace*{1em}$N_p\gets\operatorname{Encode}_{96}(p)$；构造关联数据 $A_p$。\\
 \al & \hspace*{1em}$C_p\gets N_p\|\mathsf{Enc}_{k_b}(N_p,F_p,A_p)$。\\
-\al & \hspace*{1em}$d_p\gets(A_p,|C_p|,\mathsf{Hash}(C_p))$。\\
+\al & \hspace*{1em}$d_p\gets(A_p,|C_p|,\mathsf{SHA256}(C_p))$。\\
 \al & \hspace*{1em}$\tau_p\gets\operatorname{Tag}(x,\mathsf{pp},d_p,C_p)$。\\
 \al & \textbf{结束循环}\\
 \al & 按页索引递增顺序序列化标签，得到 $B_\tau$。\\
 \al & $M\gets\operatorname{Manifest}(b,\mathcal L,\{d_p\},\mathsf{pp},\mathsf{SHA256}(B_\tau))$。\\
-\al & 签署规范清单 $M$；预置签名公钥与 $\mathsf{Hash}(M)$ 作为可信锚点。\\
+\al & 签署规范清单 $M$；预置签名公钥与 $\mathsf{SHA256}(M)$ 作为可信锚点。\\
 \al & 保留批次级私有编码状态与解密能力。\\
 \al & \textbf{返回} $\{C_p\},\{\tau_p\},M$、签名与可信锚点。\\\bottomrule
 \end{tabular}\end{algorithm}
@@ -293,7 +293,7 @@ e(\sigma,g_2)=e\left(\sum_{p\in U}\nu_pH(W_p)+\sum_j\mu_ju_j,Y\right).
 \begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输入：}目标 $T$、对应的清单与可信锚点、公开审计参数。}\\
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输出：}\texttt{ACCEPT} 或 \texttt{REJECT}。}\\
-\al & 若 $T$ 为空则拒绝。按不可变批次划分 $T$。\\
+\al & \textbf{若} $T=\varnothing$，\textbf{返回} \texttt{REJECT}。按不可变批次将 $T$ 划分为 $\{T_b\}$。\\
 \al & \textbf{对每个}涉及的批次 $b$ \textbf{执行}\\
 \al & \hspace*{1em}依据可信锚点认证清单，检查 $T_b$ 中的目标是否互异且在有效范围内，并验证公开参数。\\
 \al & \hspace*{1em}\textbf{若}验证失败，\textbf{返回} \texttt{REJECT}。\\
@@ -325,13 +325,13 @@ ARC-Audit 的精确恢复策略（Exact）先认证并解析引用，再获取�
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{输出：}完整解码记录 $\{\widehat r_i\}_{i\in T}$ 或 $\bot$。}\\
 \al & 认证清单并验证 $T$。若提供辅助保护文件，依据其可信锚点认证该文件，并检查它与当前批次快照的绑定。\\
 \al & \textbf{若}验证失败，\textbf{返回} $\bot$。\\
-\al & $I\gets S\cup\bigcup_{i\in T,g}R_g(i)$；$\mathcal C\gets\varnothing$。\\
-\al & \textbf{对每个} $p\in I$ \textbf{执行}\\
+\al & $D_0(T)\gets S\cup\bigcup_{i\in T,g}R_g(i)$；$\mathcal C\gets\varnothing$。\\
+\al & \textbf{对每个} $p\in D_0(T)$ \textbf{执行}\\
 \al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$；失败则\textbf{返回} $\bot$。\\
 \al & \textbf{结束循环}\\
 \al & 解析已认证的私有结构与 BaseID。\\
 \al & \textbf{若}解析失败或任一 BaseID 越界，\textbf{返回} $\bot$。\\
-\al & 将目标偏差或 RAW 内容页、标签页及经校验的 BaseID 所指字典行覆盖的页并入 $I$，得到 $D(T)$。\\
+\al & 将目标偏差或 RAW 内容页、标签页及经校验的 BaseID 所指字典行覆盖的页并入 $D_0(T)$，得到 $D(T)$。\\
 \al & \textbf{对每个} $p\in D(T)\setminus\operatorname{dom}(\mathcal C)$ \textbf{执行}\\
 \al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$；失败则\textbf{返回} $\bot$。\\
 \al & \textbf{结束循环}\\
@@ -340,7 +340,7 @@ ARC-Audit 的精确恢复策略（Exact）先认证并解析引用，再获取�
 \al & \textbf{返回} $\{\widehat r_i\}_{i\in T}$。\\\bottomrule
 \end{tabular}\end{algorithm}
 
-Conservative 对照把第 3 行的 $I$ 替换为 $U(T)$；其后的认证与解码完全相同。因此，只要实际解码输入可用或可修复，即使某个未使用的字典对象不可用，精确恢复仍可进行。
+Conservative 对照把第 3 行的 $D_0(T)$ 替换为 $U(T)$；其后的认证与解码完全相同。因此，只要实际解码输入可用或可修复，即使某个未使用的字典对象不可用，精确恢复仍可进行。
 
 \subsection{受预算约束的密文保护}\label{sec:protection}
 一个共享页可能参与多条记录的解码。因此，在存储上限相同的情况下，保护哪些页会影响哪些记录能在擦除后恢复。ARC-Audit 对选定的密文对象部署冗余，并在解码前验证修复结果。

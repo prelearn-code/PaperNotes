@@ -203,7 +203,7 @@ Because merging two groups can alter the gains of adjacent pairs, Algorithm~\ref
 \caption{Cost-Confirmed Grouping.}\label{alg:grouping}
 \begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Records $X$, schema $\Sigma$, sample indices $I$.}\\
-\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} Logical container $F$ and public geometry $\mathcal L$.}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} Logical container $F$ and public layout $\mathcal L$.}\\
 \al & $\mathcal G\gets$ singleton nonconstant-field groups.\\
 \al & Configure $\mathcal G$ on $X$ and $X_I$; $J\gets\varnothing$.\\
 \al & $Q\gets$ positive sampled-gain pairs; initialize $d_e=0$.\\
@@ -257,19 +257,19 @@ Each descriptor also records the complete ciphertext length and SHA-256 digest, 
 \begin{algorithm}[t]\centering\normalsize\setcounter{algline}{0}
 \caption{Seal a Data Batch.}\label{alg:seal}
 \begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
-\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Logical container $F$, public geometry $\mathcal L$, owner domain.}\\
+\multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Logical container $F$, public layout $\mathcal L$, owner domain.}\\
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} Ciphertext objects, audit tags, signed manifest, and client pins.}\\
 \al & Sample fresh batch $b$ and encryption master secret; derive $k_b$.\\
 \al & Generate independent audit secret $x$, public parameters $\mathsf{pp}$, and a manifest signing key.\\
 \al & \textbf{for each} slice $F_p$ of at most 4,068 B \textbf{do}\\
 \al & \hspace*{1em}$N_p\gets\operatorname{Encode}_{96}(p)$; form associated data $A_p$.\\
 \al & \hspace*{1em}$C_p\gets N_p\|\mathsf{Enc}_{k_b}(N_p,F_p,A_p)$.\\
-\al & \hspace*{1em}$d_p\gets(A_p,|C_p|,\mathsf{Hash}(C_p))$.\\
+\al & \hspace*{1em}$d_p\gets(A_p,|C_p|,\mathsf{SHA256}(C_p))$.\\
 \al & \hspace*{1em}$\tau_p\gets\operatorname{Tag}(x,\mathsf{pp},d_p,C_p)$.\\
 \al & \textbf{end for}\\
 \al & Serialize tags in page-index order to obtain $B_\tau$.\\
 \al & $M\gets\operatorname{Manifest}(b,\mathcal L,\{d_p\},\mathsf{pp},\mathsf{SHA256}(B_\tau))$.\\
-\al & Sign canonical $M$; provision signing public key and $\mathsf{Hash}(M)$ as pins.\\
+\al & Sign canonical $M$; provision signing public key and $\mathsf{SHA256}(M)$ as pins.\\
 \al & Retain batch-scoped private encoding state and decryption capability.\\
 \al & \textbf{return} $\{C_p\},\{\tau_p\},M$, signature, and pins.\\\bottomrule
 \end{tabular}\end{algorithm}
@@ -328,7 +328,7 @@ Eq.~\eqref{eq:pairing}. Algorithm~\ref{alg:audit} gives the public flow.
 \begin{tabular}{@{}r@{\enspace} >{\raggedright\arraybackslash}p{.88\columnwidth}@{}}
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Require:} Targets $T$, corresponding manifests and pins, public audit parameters.}\\
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} \texttt{ACCEPT} or \texttt{REJECT}.}\\
-\al & Reject an empty $T$. Partition $T$ by immutable batch.\\
+\al & \textbf{if} $T=\varnothing$, \textbf{return} \texttt{REJECT}. Partition $T$ into per-batch sets $\{T_b\}$.\\
 \al & \textbf{for each} involved batch $b$ \textbf{do}\\
 \al & \hspace*{1em}Authenticate its manifest against the pins. Check target ranges, uniqueness, and public parameters.\\
 \al & \hspace*{1em}\textbf{if} validation fails, \textbf{return} \texttt{REJECT}.\\
@@ -377,13 +377,13 @@ caches only verified ciphertext and authenticated plaintext.
 \multicolumn{2}{@{}p{\columnwidth}@{}}{\textbf{Ensure:} Complete decoded records $\{\widehat r_i\}_{i\in T}$ or $\bot$.}\\
 \al & Authenticate the manifest and validate $T$. If present, authenticate the sidecar against its own pin and check its binding to the batch snapshot.\\
 \al & \textbf{if} validation fails, \textbf{return} $\bot$.\\
-\al & $I\gets S\cup\bigcup_{i\in T,g}R_g(i)$; $\mathcal C\gets\varnothing$.\\
-\al & \textbf{for each} $p\in I$ \textbf{do}\\
+\al & $D_0(T)\gets S\cup\bigcup_{i\in T,g}R_g(i)$; $\mathcal C\gets\varnothing$.\\
+\al & \textbf{for each} $p\in D_0(T)$ \textbf{do}\\
 \al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$; on failure \textbf{return} $\bot$.\\
 \al & \textbf{end for}\\
 \al & Parse the authenticated private structure and BaseIDs.\\
 \al & \textbf{if} parsing fails or any BaseID is out of range, \textbf{return} $\bot$.\\
-\al & Form $D(T)$ by adding to $I$ the pages covering target deviations or RAW data, labels, and the dictionary rows selected by the validated BaseIDs.\\
+\al & Form $D(T)$ by adding to $D_0(T)$ the pages covering target deviations or RAW data, labels, and the dictionary rows selected by the validated BaseIDs.\\
 \al & \textbf{for each} $p\in D(T)\setminus\operatorname{dom}(\mathcal C)$ \textbf{do}\\
 \al & \hspace*{1em}$\mathcal C[p]\gets\operatorname{VerifiedOpen}(p)$; on failure \textbf{return} $\bot$.\\
 \al & \textbf{end for}\\
@@ -393,7 +393,7 @@ caches only verified ciphertext and authenticated plaintext.
 \end{tabular}\end{algorithm}
 
 The Conservative control
-replaces $I$ in line 3 with $U(T)$, while subsequent authentication and decoding remain
+replaces $D_0(T)$ in line 3 with $U(T)$, while subsequent authentication and decoding remain
 identical. Exact recovery can thus proceed when an unused dictionary object
 is unavailable, provided its actual decoding inputs are available or repairable.
 
