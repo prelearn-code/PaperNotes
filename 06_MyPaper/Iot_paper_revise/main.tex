@@ -778,9 +778,6 @@ Exact recovery also reduces latency because it fetches and decrypts fewer authen
 
 Taken together, protection allocation determines which objects receive redundancy and dependency selection determines which objects a request requires. Reducing the required page set under fixed protection and verification rules therefore enables more requests to complete within the tested HAI workloads and erasure settings.
 
-\subsection{Experimental Artifacts}
-The archived evaluation bundle \texttt{dual\_hai\_20261008\_v3} preserves the reduced-profile encoding runs (RQ1) and the full-workload auditing and recovery runs (RQ2 and RQ3). It includes case-level observations, mechanism controls, the prototype source snapshot, and configuration manifests recording input and source hashes. Automated verification checks recompute all reported summary statistics and validate the serialized per-batch protection caps against the archived manifests.
-
 \section{Conclusion}
 ARC-Audit uses a single authenticated layout to reconcile public auditing and authorized recovery over shared-compressed IIoT records. Without decryption keys, a public verifier builds a sufficient closure covering all dictionary pages a target set could reference and binds it to a fresh aggregate challenge. With decryption keys, an authorized retriever authenticates references first to narrow retrieval to exact dependencies, while verifying repaired and directly fetched ciphertexts under identical integrity rules.
 
