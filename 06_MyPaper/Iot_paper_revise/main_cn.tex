@@ -576,19 +576,6 @@ U(T)\subseteq\mathcal A_{\rm eff}
 % WSL figure data: results/route_a_secure/dual_hai_20261008_v3/{reduced (C1),full (C2,C3)}; deliverables/paper_C1_reduced_C2C3_full_20261009/results/summary.json.
 本文从共享编码（RQ1）、公开聚合审计（RQ2）与认证记录恢复（RQ3）三项核心能力展开评估。具体而言，RQ1 测量共享表示的云端存储节省与构建开销，RQ2 量化公开依赖规划与聚合审计的通信和本地计算权衡，RQ3 考察保护位置部署与精确依赖选择对擦除条件下记录恢复的影响。表~\ref{tab:scope}~汇总了各部分的工作负载规模与实验单位。
 
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{figures/cn/c1.pdf}
-\caption{ARC-Audit（SDA-GGD）与编码基线的存储和构建成本（RQ1）。}
-\label{fig:key-c1}\end{figure*}
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{figures/cn/c2.pdf}
-\caption{复用上下文时各接口的每请求应用层流量和本地处理时间（RQ2）。应用层流量包括声明、挑战、可能的第一阶段材料及最终响应；文中所报临界带宽采用简单串行传输估算。}
-\label{fig:key-c2}\end{figure*}
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{figures/cn/c3.pdf}
-\caption{擦除条件下的认证恢复表现（RQ3）。图例中的 Exact / Dictionary 为精确恢复与字典页优先保护的组合。}
-\label{fig:key-c3}\end{figure*}
-
 \subsection{实验设置}
 \subsubsection{数据与实现}
 本文在 HAI 21.03 工业控制数据集~\cite{Shin2021HAI}~的 \texttt{train1} 与 \texttt{train2} 数据段上评估 ARC-Audit，两者分别包含 216,001 与 226,801 条记录。每条记录含 84 列，包括时间列、79 个过程字段和 4 个攻击指示字段（其中 3 个过程级指示字段独立编码，1 个综合指示字段由前三者导出）。数据导入时采用精确十进制规范化以保留过程值。每次恢复操作完成后，独立评分器以规范化源记录校验 $\widehat r_i=r_i$，该校验独立于客户端的认证与完整解码检查。
@@ -602,8 +589,7 @@ RQ1 编码评估对 \texttt{train1} 和 \texttt{train2} 各选取一个含 21,60
 \setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.24\columnwidth}>{\raggedright\arraybackslash}p{.40\columnwidth}@{}}\toprule
 评估范围 & 各数据段记录数 & 对照与观测规模\\\midrule
-RQ1（窗口） & 21,600 / 21,600 & 4 种方法，各 2 次构建（16 次观测）\\
-RQ1（全量扩展） & 216,001 / 226,801 & 6 种方法含 GreedyGD 与 EntroGD（84 次日构建）\\
+RQ1（编码） & 216,001 / 226,801 & 6 种方法含 GreedyGD 与 EntroGD（84 次日构建 + 16 次窗口核验）\\
 RQ2（内部） & 216,001 / 226,801 & 3 个目标规模、3 个案例、3 种接口（54 次请求）\\
 RQ2（外部） & 216,001 / 226,801 & FiDD、MPA、Miao、ARC-Indexed（72 次请求+28 次初始化）\\
 RQ3（内部） & 216,001 / 226,801 & 5 个布局、3 个丢失率、50 个案例、8 组对照（12,000 个结果）\\
@@ -629,28 +615,15 @@ RQ3（无故障） & 同 RQ3 & 30 个案例、1 个布局、8 组内部+3 组外
 
 每个故障成功率数据点汇总全部 250 次结果，并报告以五个测试布局为条件的逐点 95\% Wilson 置信区间。恢复耗时中位数仅在成功故障请求上计算；由于不同对照可能在不同的目标子集上成功，解释耗时时应结合成功率一并考量。无故障恢复在单个布局上对每组数据段与对照各测 30 个案例，共完成 480 次完整记录核验。
 
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/cn/c1.pdf}
+\caption{全量七个自然日批次上 ARC-Audit（SDA-GGD）与内部及已发表 GD 基线的安全云端存储与构建总耗时对比（RQ1）。断轴横坐标在展示 RAW 的同时保持去重方案间的线性可读性。}
+\label{fig:key-c1}\end{figure*}
+
 \subsection{RQ1：存储与安全构建}
-跨字段分组相较所有基线进一步压缩了安全云端存储，同时将部分编码计算转移至所有者端。如图~\ref{fig:key-c1}~所示，ARC-Audit（SDA-GGD）在 \texttt{train1} 与 \texttt{train2} 上的安全云端存储分别为 1,903,138 B 与 1,770,118 B，低于 Per-field-GD 的 2,198,812 B 与 1,938,839 B，云端存储分别降低 13.45\% 和 8.70\%。Block-CZ-256 分别占用 2,278,001 B 与 2,227,359 B，RAW 在每个窗口均占用 14.463 MiB。全部 16 次构建均通过规范化解码检查。
+跨字段分组相较内部及已发表 GD 基线均进一步压缩了安全云端存储，同时将适度的编码计算与共享基状态转移至所有者端。在全部七个自然日批次上（442,802 条记录，在 86,400 行完整日上启用 $\min(50{,}000,n)$ 抽样排序；图~\ref{fig:key-c1}~与表~\ref{tab:rq1-ext}），ARC-Audit（SDA-GGD）将安全云端存储降至 \texttt{train1} 的 19.601 MiB 与 \texttt{train2} 的 18.738 MiB，相比 Per-field-GD 减少 10.79\% 与 11.44\%，相比 Block-CZ-256 减少 13.90\% 与 19.43\%，相比 EntroGD~\cite{Zhao2026EntroGD}（30.385 与 29.327 MiB）减少 35.49\% 与 36.11\%，相比 GreedyGD~\cite{Hurst2024GreedyGD}（39.703 与 40.050 MiB）减少 50.63\% 与 53.21\%（RAW 为 144.458 与 151.702 MiB）。更重要的是，由于逐页 BLS12-381 标签生成主导了安全封装耗时，更少的密文页数使 SDA-GGD 的端到端总构建耗时（2,778.9 s 与 2,722.4 s）反而比 EntroGD（5,488.0 s 与 5,226.1 s）快 49.36\% 与 47.91\%，比 GreedyGD（7,185.8 s 与 7,327.0 s）快 61.33\% 与 62.84\%，尽管 SDA-GGD 在编解码阶段耗时更多（533.5/528.2 s 对比 EntroGD 的 13.7/11.5 s 与 GreedyGD 的 90.1/102.7 s）并保留 3,206.7 KiB 与 2,723.4 KiB 的所有者共享基状态。全部 84 次自然日构建均通过完整解密与账本核验。
 
-由于合并候选需在全量输入上重新配置，分组增加了总构建耗时，尽管输出页数减少使后续标签生成有所加快。完整安全构建时间中位数由 Per-field-GD 的 231.521 s 与 206.163 s 增至 SDA-GGD 的 274.356 s 与 235.621 s，在 \texttt{train1} 和 \texttt{train2} 上分别增加 18.50\% 和 14.29\%。具体而言，SDA-GGD 在编解码阶段耗时 73.66 s 与 47.63 s（Per-field-GD 分别为 1.00 s 与 0.83 s），而标签生成耗时从 230.25 s 与 205.05 s 降至 200.42 s 与 187.72 s。由于两个 21,600 条记录的窗口均采用全窗排序，上述耗时刻画了全量确认分组流程的开销，更大规模批次上抽样排序的成本与候选覆盖率仍有待测量。
-
-云端存储节省也伴随着更大的所有者侧私有状态（表~\ref{tab:state}）。在 \texttt{train1} 与 \texttt{train2} 上，SDA-GGD 保留的私有状态总量为 335,884 B 与 215,702 B（含共享基内容 303,595 B 与 184,687 B），而 Per-field-GD 的私有状态总量为 245,064 B 与 209,287 B（含共享基 208,267 B 与 174,552 B）。
-
-\begin{table}[t]\centering\small
-\caption{云端存储与所有者侧状态（RQ1，6 小时窗口）}\label{tab:state}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lrrrr@{}}\toprule
-& \multicolumn{2}{c}{云端（MiB）} & \multicolumn{2}{c}{所有者（KiB）}\\
-方法 & train1 & train2 & train1 & train2\\\midrule
-ARC-Audit（SDA-GGD） & 1.815 & 1.688 & 328.012 & 210.646\\
-Per-field-GD & 2.097 & 1.849 & 239.320 & 204.382\\
-RAW & 14.463 & 14.463 & 0.227 & 0.227\\
-Block-CZ-256 & 2.172 & 2.124 & 0.234 & 0.234\\
-\bottomrule\end{tabular}
-\tabnote{每窗口两次构建的中位数。所有者状态包含共享基目录与私有编码／密钥文件。保护开销另行核算。}
-\end{table}
-
-\emph{全量数据集上与已发表 GD 编码器的对比。}表~\ref{tab:rq1-ext}~将 RQ1 扩展至全部七个自然日批次（442,802 条记录，在 86,400 行完整日上启用 $\min(50{,}000,n)$ 抽样排序），并在相同安全封装流水线下纳入 GreedyGD~\cite{Hurst2024GreedyGD} 与 EntroGD~\cite{Zhao2026EntroGD}。在完整的 \texttt{train1} 与 \texttt{train2} 上，SDA-GGD 将安全云端存储降至 19.601 MiB 与 18.738 MiB，相比 Per-field-GD 减少 10.79\% 与 11.44\%，相比 Block-CZ-256 减少 13.90\% 与 19.43\%，相比 EntroGD（30.385 与 29.327 MiB）减少 35.49\% 与 36.11\%，相比 GreedyGD（39.703 与 40.050 MiB）减少 50.63\% 与 53.21\%。更重要的是，由于逐页 BLS12-381 标签生成主导了安全封装耗时，更少的密文页数使 SDA-GGD 的端到端总构建耗时（2,778.9 s 与 2,722.4 s）反而比 EntroGD（5,488.0 s 与 5,226.1 s）快 49.36\% 与 47.91\%，比 GreedyGD（7,185.8 s 与 7,327.0 s）快 61.33\% 与 62.84\%，尽管 SDA-GGD 在编解码阶段耗时更多（533.5/528.2 s 对比 EntroGD 的 13.7/11.5 s 与 GreedyGD 的 90.1/102.7 s）。全部 84 次自然日构建均通过完整解密与账本核验。
+在启用全窗排序（无抽样）的 6 小时窗口上（每段 21,600 条记录），上述权衡同样成立：SDA-GGD 的安全云端存储为 1.815 MiB 与 1.688 MiB，相较 Per-field-GD（2.097 与 1.849 MiB）降低 13.45\% 与 8.70\%（Block-CZ-256 为 2.172/2.124 MiB，RAW 为 14.463 MiB）；完整构建耗时较 Per-field-GD 增加 18.50\% 与 14.29\%（274.36/235.62 s 对比 231.52/206.16 s），所有者侧私有状态为 328.01 KiB 与 210.65 KiB（Per-field-GD 为 239.32 与 204.38 KiB）；全部 16 次窗口构建均通过规范化解码核验。
 
 \begin{table}[t]\centering\scriptsize
 \caption{全量七日批次的安全云端存储与构建耗时对比（RQ1）}\label{tab:rq1-ext}
@@ -672,6 +645,11 @@ t2 & \textbf{SDA-GGD} & \textbf{18.738} & 2,723.4 & 528.2 & 2,193.0 & \textbf{2,
 \end{tabular}
 \tabnote{t1/t2 分别指 \texttt{train1}（3 日，216,001 行）与 \texttt{train2}（4 日，226,801 行）；表中为各日 2 次构建中位数之和，均采用统一 \texttt{py-ecc} BLS12-381 封装。}
 \end{table}
+
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/cn/c2.pdf}
+\caption{复用上下文时各接口的每请求应用层流量和本地处理时间（RQ2）。应用层流量包括声明、挑战、可能的第一阶段材料及最终响应；文中所报临界带宽采用简单串行传输估算。}
+\label{fig:key-c2}\end{figure*}
 
 \subsection{RQ2：公开审计的通信与计算}
 \emph{聚合证明与密文下载。}在相同公开闭包上，证明聚合以本地密码学验证为代价将应用层流量降低了两个数量级以上（图~\ref{fig:key-c2}）。在 $r=256$ 时，Public-Aggregate 在 \texttt{train1} 与 \texttt{train2} 上分别传输 35,405 B 与 38,524 B，本地处理耗时为 32.532 s 与 30.908 s；相比之下，Public-Download 传输 17,041,940 B 与 15,754,868 B，本地摘要核验仅需 0.0400 s 与 0.0354 s。以节省的比特数除以额外本地处理时间，可估得简单串行传输的临界带宽为 4.19 Mbit/s 与 4.07 Mbit/s（未计入初始化、网络往返及传输与计算重叠）。
@@ -705,114 +683,70 @@ SDA-GGD & 805 & 6.437 & 125 & 1.489\\\bottomrule
 \tabnote{不带缓存的逐记录遍历按实际读取次数计数。表示布局对照中，SDA-GGD 的读量见并集行，Per-field-GD 在 train1 上读取 3,616,768 B，在 train2 上读取 585,227 B。}
 \end{table}
 
-\emph{与已发表公开审计方案的对比。}表~\ref{tab:rq2-ext}~在全部 18 组全量目标集合上将 ARC-Audit 与 FiDD~\cite{Huang2026FiDD}、MPA~\cite{Xu2026MPA} 及 Miao~\cite{Miao2025} 的静态组件适配器进行了对比。在固定相同所有者预置精确依赖集合时（\texttt{ARC-Indexed} 对比 FiDD、MPA 与 Miao），\texttt{ARC-Indexed} 的通信量与 FiDD 基本持平（$r=256$ 时 \texttt{train1} 为 31.84 对 31.70 KiB，\texttt{train2} 为 34.73 对 34.56 KiB），且在全部六组 $(segment,r)$ 配置下均取得最低中位耗时（$r=256$ 时为 37.26 s 与 35.43 s，低于 FiDD 的 37.86/36.69 s 与 MPA 的 38.90/36.85 s）。相比之下，MPA 逐页的 Merkle 路径与 KZG 打开证明使 $r=256$ 通信量膨胀 39$\times$--46$\times$（1,591.1 与 1,463.5 KiB），Miao 按关键词批量证明使通信量膨胀 61$\times$--69$\times$（2,387.3 与 2,307.5 KiB）且延迟高出 23$\times$（873.8 与 840.0 s）。更重要的是，\texttt{ARC-Public} 省去了三类外部方案均须维护的 1,035.6 MiB 所有者精确依赖目录（以及 Miao 额外膨胀至 1,846.8 MiB 的盲化密文与倒排索引，和 FiDD／Miao 分别达 4,556.7 s／5,307.1 s 的初始化开销，MPA 初始化为 56.7 s），在 $r=256$ 时仅增加约 9\% 通信量（34.58 与 37.62 KiB）。$r=256$ 时单核 \texttt{ARC-Public}（32.53/30.91 s）与 6 核并行 \texttt{ARC-Indexed}（37.26/35.43 s）之间约 14\% 的差异源于多核睿频折减。此外，为剥离纯 Python \texttt{py-ecc} 解释器开销，针对完全相同的 BLS12-381 证明与验证方程开展的原生 Rust \texttt{blst}（v0.3.17）微基准测试将 $r=256$ 总耗时由 34.77/32.71 s 降至 100.81 ms（\texttt{train1}）与 100.79 ms（\texttt{train2}），提速 324.5$\times$--344.9$\times$。
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/cn/c2_ext_audit.pdf}
+\caption{全量数据集上统一 \texttt{py-ecc} BLS12-381 后端下与已发表公开审计方案的通信量与请求延迟对比（RQ2）。误差棒表示每组 $(segment,r)$ 三个匹配目标集合的观测最小--最大范围；外部方案与 \texttt{ARC-Indexed} 依赖未计入在线通信的 1,035.6 MiB 所有者目录，而 \texttt{ARC-Public} 无需任何目录。}
+\label{fig:ext-c2}\end{figure*}
+
+\emph{与已发表公开审计方案的对比。}图~\ref{fig:ext-c2}~与表~\ref{tab:rq2-ext}~在全部 18 组全量目标集合上将 ARC-Audit 与 FiDD~\cite{Huang2026FiDD}、MPA~\cite{Xu2026MPA} 及 Miao~\cite{Miao2025} 的静态组件适配器进行了对比。在固定相同所有者预置精确依赖集合时（\texttt{ARC-Indexed} 对比 FiDD、MPA 与 Miao），\texttt{ARC-Indexed} 的通信量与 FiDD 基本持平（$r=256$ 时 \texttt{train1} 为 31.84 对 31.70 KiB，\texttt{train2} 为 34.73 对 34.56 KiB），且在全部六组 $(segment,r)$ 配置下均取得最低中位耗时（$r=256$ 时为 37.26 s 与 35.43 s，低于 FiDD 的 37.86/36.69 s 与 MPA 的 38.90/36.85 s）。相比之下，MPA 逐页的 Merkle 路径与 KZG 打开证明使 $r=256$ 通信量膨胀 39$\times$--46$\times$（1,591.1 与 1,463.5 KiB），Miao 按关键词批量证明使通信量膨胀 61$\times$--69$\times$（2,387.3 与 2,307.5 KiB）且延迟高出 23$\times$（873.8 与 840.0 s）。更重要的是，\texttt{ARC-Public} 省去了三类外部方案均须维护的 1,035.6 MiB 所有者精确依赖目录（以及 Miao 额外膨胀至 1,846.8 MiB 的盲化密文与倒排索引，和 FiDD／Miao 分别达 4,556.7 s／5,307.1 s 的初始化开销，MPA 初始化为 56.7 s），在 $r=256$ 时仅增加约 9\% 通信量（34.58 与 37.62 KiB）。$r=256$ 时单核 \texttt{ARC-Public}（32.53/30.91 s）与 6 核并行 \texttt{ARC-Indexed}（37.26/35.43 s）之间约 14\% 的差异源于多核睿频折减。此外，为剥离纯 Python \texttt{py-ecc} 解释器开销，针对完全相同的 BLS12-381 证明与验证方程开展的原生 Rust \texttt{blst}（v0.3.17）微基准测试将 $r=256$ 总耗时由 34.77/32.71 s 降至 100.81 ms（\texttt{train1}）与 100.79 ms（\texttt{train2}），提速 324.5$\times$--344.9$\times$。
 
 \begin{table}[t]\centering\scriptsize
 \caption{全量数据集上与已发表公开审计方案的对比（RQ2，\texttt{py-ecc} BLS12-381）}\label{tab:rq2-ext}
-\setlength{\tabcolsep}{2.8pt}
-\begin{tabular}{@{}llrrrr@{}}\toprule
-数据段 & 方法 & $r$ & 页数 & 通信(KiB) & 耗时(s)\\\midrule
-train1 & \textbf{ARC-Public（无目录）} & 1 & 340 & 6.09 & 3.106\\
- & ARC-Indexed & 1 & 79 & 4.88 & 1.320\\
- & FiDD~\cite{Huang2026FiDD} & 1 & 79 & 4.84 & 1.349\\
- & MPA~\cite{Xu2026MPA} & 1 & 79 & 32.31 & 1.350\\
- & Miao~\cite{Miao2025} & 1 & 79 & 9.38 & 4.104\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public（无目录）} & 16 & 1,398 & 20.03 & 12.015\\
- & ARC-Indexed & 16 & 887 & 17.29 & 9.425\\
- & FiDD~\cite{Huang2026FiDD} & 16 & 887 & 17.16 & 9.945\\
- & MPA~\cite{Xu2026MPA} & 16 & 887 & 349.69 & 10.270\\
- & Miao~\cite{Miao2025} & 16 & 887 & 149.50 & 65.707\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public（无目录）} & 256 & 4,143 & 34.58 & 32.532\\
- & ARC-Indexed & 256 & 4,006 & 31.84 & 37.259\\
- & FiDD~\cite{Huang2026FiDD} & 256 & 4,006 & 31.70 & 37.864\\
- & MPA~\cite{Xu2026MPA} & 256 & 4,006 & 1,591.12 & 38.902\\
- & Miao~\cite{Miao2025} & 256 & 4,006 & 2,387.32 & 873.774\\\midrule
-train2 & \textbf{ARC-Public（无目录）} & 1 & 345 & 6.11 & 3.169\\
- & ARC-Indexed & 1 & 78 & 4.87 & 1.293\\
- & FiDD~\cite{Huang2026FiDD} & 1 & 78 & 4.83 & 1.470\\
- & MPA~\cite{Xu2026MPA} & 1 & 78 & 31.90 & 1.396\\
- & Miao~\cite{Miao2025} & 1 & 78 & 9.31 & 3.547\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public（无目录）} & 16 & 1,220 & 19.28 & 10.902\\
- & ARC-Indexed & 16 & 832 & 17.04 & 9.017\\
- & FiDD~\cite{Huang2026FiDD} & 16 & 832 & 16.90 & 10.054\\
- & MPA~\cite{Xu2026MPA} & 16 & 832 & 324.45 & 9.884\\
- & Miao~\cite{Miao2025} & 16 & 832 & 145.08 & 62.715\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public（无目录）} & 256 & 3,830 & 37.62 & 30.908\\
- & ARC-Indexed & 256 & 3,720 & 34.73 & 35.433\\
- & FiDD~\cite{Huang2026FiDD} & 256 & 3,720 & 34.56 & 36.694\\
- & MPA~\cite{Xu2026MPA} & 256 & 3,720 & 1,463.52 & 36.852\\
- & Miao~\cite{Miao2025} & 256 & 3,720 & 2,307.50 & 840.014\\\bottomrule
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{@{}lcccc@{}}\toprule
+方法 & $r$ & 页数(t1/t2) & 通信KiB(t1/t2) & 耗时s(t1/t2)\\\midrule
+\textbf{ARC-Public（无目录）} & 1 & 340/345 & 6.09/6.11 & 3.11/3.17\\
+ARC-Indexed & 1 & 79/78 & 4.88/4.87 & 1.32/1.29\\
+FiDD~\cite{Huang2026FiDD} & 1 & 79/78 & 4.84/4.83 & 1.35/1.47\\
+MPA~\cite{Xu2026MPA} & 1 & 79/78 & 32.31/31.90 & 1.35/1.40\\
+Miao~\cite{Miao2025} & 1 & 79/78 & 9.38/9.31 & 4.10/3.55\\\midrule
+\textbf{ARC-Public（无目录）} & 256 & 4,143/3,830 & 34.58/37.62 & \textbf{32.53/30.91}\\
+ARC-Indexed & 256 & 4,006/3,720 & 31.84/34.73 & 37.26/35.43\\
+FiDD~\cite{Huang2026FiDD} & 256 & 4,006/3,720 & 31.70/34.56 & 37.86/36.69\\
+MPA~\cite{Xu2026MPA} & 256 & 4,006/3,720 & 1,591.1/1,463.5 & 38.90/36.85\\
+Miao~\cite{Miao2025} & 256 & 4,006/3,720 & 2,387.3/2,307.5 & 873.8/840.0\\\bottomrule
 \end{tabular}
-\tabnote{每组 $(segment,r)$ 3 次全量匹配请求的中位数。外部方案与 ARC-Indexed 共享由 1,035.6 MiB 所有者目录提供的相同精确页集合（未计入在线通信）。采用原生 Rust \texttt{blst} 时，ARC-Audit 在 $r=256$ 的总耗时降至 100.81 ms（\texttt{train1}）与 100.79 ms（\texttt{train2}）。}
+\tabnote{每组 $(segment,r)$ 3 次全量匹配请求的中位数（t1/t2 指 \texttt{train1}/\texttt{train2}；中间规模 $r{=}16$ 趋势见图~\ref{fig:ext-c2}）。外部方案与 ARC-Indexed 共享 1,035.6 MiB 所有者目录（未计入在线通信）。原生 Rust \texttt{blst} 将 ARC-Audit $r{=}256$ 总耗时降至 100.81/100.79 ms。}
 \end{table}
+
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/cn/c3.pdf}
+\caption{擦除条件下的认证恢复表现（RQ3）。图例中的 Exact / Dictionary 为精确恢复与字典页优先保护的组合。}
+\label{fig:key-c3}\end{figure*}
 
 \subsection{RQ3：认证恢复与保护分配}
 \emph{保护位置。}在相同存储预算下，优先保护字典页始终优于均匀冗余分配（图~\ref{fig:key-c3}）。固定 Exact 恢复策略并在 1\% 名义丢失率下，Dictionary 在两个数据段均于 250 次中恢复 185 条记录（74.0\%），而 Uniform 在 \texttt{train1} 上恢复 153 条（61.2\%）、在 \texttt{train2} 上恢复 164 条（65.6\%），对应 12.8 与 8.4 个百分点的优势；无冗余的 NoEC 仅恢复 114 条（45.6\%）与 117 条（46.8\%）。在 0.1\% 丢失率下，Dictionary 的恢复率达到 95.2\% 与 97.6\%，高于 Uniform 的 94.0\% 与 95.6\%。
 
-\emph{基于频率的分配。}在 5\% 名义丢失率下，按参考工作负载依赖频次排序（FrequencyD）相比按对象类型排序（Dictionary）具有一定额外优势。在 5\% 丢失率与 Exact 恢复下，FrequencyD 在 \texttt{train1} 上恢复 250 次中的 43 条记录（17.2\%）、在 \texttt{train2} 上恢复 65 条（26.0\%），而 Dictionary 分别为 14.8\% 与 21.6\%。跨越五个测试布局的配对差异在 \texttt{train1} 上为 $-2$ 至 $+8$ 个百分点、在 \texttt{train2} 上为 $0$ 至 $+12$ 个百分点（表~\ref{tab:paired-layouts}）；在编码、条带数与预算固定时，调整排序会同时改变受保护页集合与条带成员划分。在 1\% 丢失率下，FrequencyD 分别恢复 191 条与 185 条（Dictionary 两段均为 185 条）；在 0.1\% 丢失率下，两者在 \texttt{train1} 上持平，Dictionary 在 \texttt{train2} 上略高。
+\emph{基于频率的分配。}在 5\% 名义丢失率下，按参考工作负载依赖频次排序（FrequencyD）相比按对象类型排序（Dictionary）具有一定额外优势。在 5\% 丢失率与 Exact 恢复下，FrequencyD 在 \texttt{train1} 上恢复 250 次中的 43 条记录（17.2\%）、在 \texttt{train2} 上恢复 65 条（26.0\%），而 Dictionary 分别为 14.8\% 与 21.6\%。跨越五个测试布局的配对差异在 \texttt{train1} 上为 $-2$ 至 $+8$ 个百分点、在 \texttt{train2} 上为 $0$ 至 $+12$ 个百分点；在编码、条带数与预算固定时，调整排序会同时改变受保护页集合与条带成员划分。在 1\% 丢失率下，FrequencyD 分别恢复 191 条与 185 条（Dictionary 两段均为 185 条）；在 0.1\% 丢失率下，两者在 \texttt{train1} 上持平，Dictionary 在 \texttt{train2} 上略高。
 
 \emph{依赖策略。}在 5\% 名义擦除率且固定 Dictionary 保护时，将取页收窄至精确依赖使部分在未使用字典页丢失情况下原本失败的请求得以完成。Exact 恢复了 Conservative 成功的所有记录，并在 \texttt{train1} 上额外恢复 10 条、在 \texttt{train2} 上额外恢复 9 条，将完整记录恢复数从 Conservative 的 250 次中 27 条（10.8\%）与 45 条（18.0\%）提升至 Exact 的 37 条（14.8\%）与 54 条（21.6\%）。上述 4.0 与 3.6 个百分点的提升在 5\% 擦除率与 10\% 冗余上限下仍对应 85.2\% 与 78.4\% 的失败率。在所有新增成功案例中，实际依赖页均已取得或修复，仅未被引用的字典页不可用。在 0.1\% 与 1\% 名义擦除率下，两种策略成功恢复的是同一批请求。
 
-\begin{table}[t]
-\centering\small
-\caption{5\% 擦除率下的配对恢复结果（RQ3）}
-\label{tab:paired-layouts}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}llrrrrr@{}}
-\toprule
-数据段 & 对照 & 41001 & 41002 & 41003 & 41004 & 41005 \\
-\midrule
-train1 & F/D & 0/1 & 2/2 & 5/1 & 3/1 & 4/3 \\
-       & D/U & 9/0 & 3/1 & 3/3 & 2/0 & 8/1 \\
-       & E/C & 3/0 & 1/0 & 1/0 & 2/0 & 3/0 \\
-\midrule
-train2 & F/D & 2/1 & 4/0 & 7/1 & 2/2 & 2/2 \\
-       & D/U & 4/0 & 7/0 & 4/2 & 8/2 & 7/1 \\
-       & E/C & 1/0 & 2/0 & 2/0 & 2/0 & 2/0 \\
-\bottomrule
-\end{tabular}
-\tabnote{列为布局种子。每格表示 50 个配对案例中仅由前一配置／后一配置成功恢复的数量。F、D、U 分别表示 Exact 下的 FrequencyD、Dictionary 和 Uniform。E/C 在固定 Dictionary 保护布局下比较 Exact 与 Conservative。}
-\end{table}
-
 \emph{恢复时间。}Exact 恢复由于获取并解密更少的认证字节，还带来了更低的延迟。在无故障 Dictionary 实验中，两种策略恢复相同目标，Exact 在 \texttt{train1} 与 \texttt{train2} 上的中位耗时分别为 3.693 ms 与 3.507 ms，而 Conservative 分别为 8.991 ms 与 7.205 ms。在 5\% 名义丢失率且固定 Dictionary 保护时，Exact 成功请求的中位耗时为 4.298 ms 与 4.074 ms（Conservative 为 11.933 ms 与 7.079 ms，均含取页与必要的 RS 修复），失败请求则分别在 0.414 ms 与 0.461 ms 内中止（Conservative 为 5.810 ms 与 3.892 ms）。由于故障条件下两种策略成功的请求集合不同，成功请求中位数各自刻画其自身成功子集上的完成时间。
 
-\emph{与已发表恢复方案的对比。}表~\ref{tab:rq3-ext}~在每点 250 个匹配案例上比较了 ARC-Audit（$\beta=0.10$ 对应 $1.10\times$，以及 $\beta=0.30$ 实现 100\% 页覆盖对应 $1.26\times$ 实际存储）与 TREAT~\cite{Taurone2024TREAT}（$1.29\times$）、RepEC-Core~\cite{Zuo2022RepECPlus}（$1.59$--$1.60\times$）和 Li2024~\cite{Li2024TNSE}（$2.18\times$）的原生冗余适配器。全部 180 次外部无故障恢复与 4,680 次故障测试均通过逐字段规范记录一致核验。在近似等存储比下（$1.26\times$ 对 $1.29\times$），ARC-Audit（$\beta=0.30$）全面优于 TREAT：$\alpha=0.01$ 时恢复率达 100.0\% 与 99.6\%（TREAT 为 94.8\% 与 93.2\%）；$\alpha=0.05$ 时优势扩大至 +47.6 与 +56.8 个百分点（72.4\%/76.4\% 对 24.8\%/19.6\%），且中位修复延迟低 3.5$\times$--4.3$\times$（7.1--8.2 ms 与 4.7--5.5 ms 对 24.2--25.8 ms 与 19.8--20.4 ms），同时避免了 TREAT 每次 1.2--1.4 MiB 的 RLNC 分片下载。进一步地，ARC-Audit（$1.26\times$）在 $\alpha=0.05$ 时还比存储高出 21\% 的 RepEC-Core（$1.59$--$1.60\times$）高出 +13.2 与 +12.4 个百分点（72.4\%/76.4\% 对 59.2\%/64.0\%），修复速度快 7$\times$--10$\times$（RepEC-Core 为 46.4--58.6 ms）。Li2024 在 $\alpha=0.05$ 下取得最高存活率（88.4\% 与 89.2\%），但代价是 $2.18\times$ 的存储倍率、约 2$\times$ 的下载量（582--632 KiB）及 36.5--48.0 ms 的修复延迟。
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/cn/c3_ext_recovery.pdf}
+\caption{全量数据集上每点 $N{=}250$ 个匹配故障案例下与已发表共享存储恢复方案的选择性恢复对比（RQ3）。左列 (a)、(c) 展示含逐点 95\% Wilson 置信区间的认证恢复成功率；右列 (b)、(d) 展示实际存储开销倍数与 $\alpha{=}5\%$ 高失页率下恢复率的帕累托前沿及中位修复延迟。}
+\label{fig:ext-c3}\end{figure*}
+
+\emph{与已发表恢复方案的对比。}图~\ref{fig:ext-c3}~与表~\ref{tab:rq3-ext}~在每点 250 个匹配案例上比较了 ARC-Audit（$\beta=0.10$ 对应 $1.10\times$，以及 $\beta=0.30$ 实现 100\% 页覆盖对应 $1.26\times$ 实际存储）与 TREAT~\cite{Taurone2024TREAT}（$1.29\times$）、RepEC-Core~\cite{Zuo2022RepECPlus}（$1.59$--$1.60\times$）和 Li2024~\cite{Li2024TNSE}（$2.18\times$）的原生冗余适配器。全部 180 次外部无故障恢复与 4,680 次故障测试均通过逐字段规范记录一致核验。在近似等存储比下（$1.26\times$ 对 $1.29\times$），ARC-Audit（$\beta=0.30$）全面优于 TREAT：$\alpha=0.01$ 时恢复率达 100.0\% 与 99.6\%（TREAT 为 94.8\% 与 93.2\%）；$\alpha=0.05$ 时优势扩大至 +47.6 与 +56.8 个百分点（72.4\%/76.4\% 对 24.8\%/19.6\%），且中位修复延迟低 3.5$\times$--4.3$\times$（7.1--8.2 ms 与 4.7--5.5 ms 对 24.2--25.8 ms 与 19.8--20.4 ms），同时避免了 TREAT 每次 1.2--1.4 MiB 的 RLNC 分片下载。进一步地，ARC-Audit（$1.26\times$）在 $\alpha=0.05$ 时还比存储高出 21\% 的 RepEC-Core（$1.59$--$1.60\times$）高出 +13.2 与 +12.4 个百分点（72.4\%/76.4\% 对 59.2\%/64.0\%），修复速度快 7$\times$--10$\times$（RepEC-Core 为 46.4--58.6 ms）。Li2024 在 $\alpha=0.05$ 下取得最高存活率（88.4\% 与 89.2\%），但代价是 $2.18\times$ 的存储倍率、约 2$\times$ 的下载量（582--632 KiB）及 36.5--48.0 ms 的修复延迟。
 
 \begin{table}[t]\centering\scriptsize
 \caption{全量数据集上与已发表恢复方案的选择性恢复对比（RQ3，每点 $N{=}250$）}\label{tab:rq3-ext}
-\setlength{\tabcolsep}{1.6pt}
-\begin{tabular}{@{}llccccc@{}}\toprule
-段 & 方法（存储比） & $\alpha$ & 成功(\%) & 95\% CI & 修复(ms) & 下载(KiB)\\\midrule
-t1 & ARC $\beta{=}0.10$ ($1.10\times$) & 0.001 & 95.2 & [91.8,97.2] & 4.59 & 316.0\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.001 & 100.0 & [98.5,100.0] & 25.77 & 1,376.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.59\times$) & 0.001 & 100.0 & [98.5,100.0] & 58.96 & 316.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.001 & 100.0 & [98.5,100.0] & 48.05 & 632.3\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.010 & 74.0 & [68.2,79.0] & 4.65 & 320.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.010 & \textbf{100.0} & [98.5,100.0] & \textbf{7.12} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.010 & 94.8 & [91.3,96.9] & 24.64 & 1,360.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.010 & 98.0 & [95.4,99.1] & 57.30 & 320.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.010 & 99.6 & [97.8,99.9] & 46.54 & 627.0\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.050 & 14.8 & [10.9,19.7] & 4.96 & 356.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.050 & \textbf{72.4} & [66.5,77.6] & \textbf{8.19} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.050 & 24.8 & [19.9,30.5] & 24.23 & 1,324.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.59\times$) & 0.050 & 59.2 & [53.0,65.1] & 58.64 & 336.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.050 & 88.4 & [83.8,91.8] & 47.59 & 601.6\\\midrule
-t2 & ARC $\beta{=}0.10$ ($1.10\times$) & 0.001 & 97.6 & [94.9,98.9] & 4.17 & 308.0\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.001 & 100.0 & [98.5,100.0] & 20.41 & 1,280.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.001 & 100.0 & [98.5,100.0] & 48.90 & 308.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.001 & 100.0 & [98.5,100.0] & 38.08 & 615.0\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.010 & 74.0 & [68.2,79.0] & 4.31 & 312.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.010 & \textbf{99.6} & [97.8,99.9] & \textbf{4.71} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.010 & 93.2 & [89.4,95.7] & 20.13 & 1,280.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.010 & 98.8 & [96.5,99.6] & 48.68 & 308.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.010 & 100.0 & [98.5,100.0] & 37.23 & 607.0\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.050 & 21.6 & [16.9,27.1] & 4.68 & 338.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.050 & \textbf{76.4} & [70.8,81.2] & \textbf{5.53} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.050 & 19.6 & [15.2,25.0] & 19.83 & 1,216.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.050 & 64.0 & [57.9,69.7] & 46.37 & 320.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.050 & 89.2 & [84.7,92.5] & 36.50 & 581.6\\\bottomrule
+\setlength{\tabcolsep}{2.0pt}
+\begin{tabular}{@{}lcccc@{}}\toprule
+方法（存储比） & $\alpha$ & 成功\%(t1/t2) & 修复ms(t1/t2) & 下载KiB(t1/t2)\\\midrule
+ARC $\beta{=}0.10$ ($1.10\times$) & 0.01 & 74.0/74.0 & 4.65/4.31 & 320/312\\
+\textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.01 & \textbf{100.0/99.6} & \textbf{7.12/4.71} & --\\
+TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.01 & 94.8/93.2 & 24.64/20.13 & 1,360/1,280\\
+RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.01 & 98.0/98.8 & 57.30/48.68 & 320/308\\
+Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.01 & 99.6/100.0 & 46.54/37.23 & 627/607\\\midrule
+ARC $\beta{=}0.10$ ($1.10\times$) & 0.05 & 14.8/21.6 & 4.96/4.68 & 356/338\\
+\textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.05 & \textbf{72.4/76.4} & \textbf{8.19/5.53} & --\\
+TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.05 & 24.8/19.6 & 24.23/19.83 & 1,324/1,216\\
+RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.05 & 59.2/64.0 & 58.64/46.37 & 336/320\\
+Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.05 & 88.4/89.2 & 47.59/36.50 & 602/582\\\bottomrule
 \end{tabular}
-\tabnote{t1/t2 指 \texttt{train1}/\texttt{train2}；ARC、RepEC 分别简指 ARC-Audit 与 RepEC-Core；95\% CI 为逐点 Wilson 置信区间。各方案原生存储倍率单列报告（ARC $\beta{=}0.30$ 以 $1.26\times$ 实现 100\% 页覆盖，该预算扫描未另记下载字节）。修复延迟为成功故障恢复的中位数。}
+\tabnote{t1/t2 指 \texttt{train1}/\texttt{train2}；ARC、RepEC 简指 ARC-Audit 与 RepEC-Core。$\alpha{=}0.001$ 时三类外部方案均达 100.0\%，ARC $\beta{=}0.10$ 达 95.2\%/97.6\%。逐点 95\% Wilson 区间见图~\ref{fig:ext-c3}；ARC $\beta{=}0.30$ 以 $1.26\times$ 实现 100\% 页覆盖（未另记下载字节）。}
 \end{table}
 
 综上，保护分配决定哪些对象获得冗余，依赖选择决定请求必须取得哪些对象。在固定保护布局与验证规则下，缩减所需页集合因此能够让更多请求在所测 HAI 工作负载与擦除设置下完成恢复。

@@ -650,19 +650,6 @@ When every exact dependency is available but a page in $U(T)\setminus D(T)$ is u
 \section{Experimental Evaluation}\label{sec:eval}
 We evaluate ARC-Audit across its three core capabilities: shared encoding (RQ1), public aggregate auditing (RQ2), and authenticated record recovery (RQ3). Specifically, RQ1 measures the cloud storage savings and construction overhead of the shared representation, RQ2 quantifies the communication and local computation trade-offs of public dependency planning and aggregate auditing, and RQ3 examines how protection placement and exact dependency selection affect record recovery under erasures. Table~\ref{tab:scope} summarizes the workload sizes and experimental units across all evaluations.
 
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{figures/c1_arc_audit.pdf}
-\caption{Storage and construction costs of ARC-Audit (SDA-GGD) and the encoding baselines (RQ1).}
-\label{fig:key-c1}\end{figure*}
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{figures/c2_arc_audit.pdf}
-\caption{Application traffic per request and local processing time with reused contexts (RQ2). Application traffic includes declarations, challenges, any first-stage material, and the final response. The break-even link rates reported in the text use a simple serial-transfer estimate.}
-\label{fig:key-c2}\end{figure*}
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{figures/c3_arc_audit.pdf}
-\caption{Authenticated recovery under erasures (RQ3). ARC-Audit (Exact / Dictionary) combines exact recovery with dictionary-first protection.}
-\label{fig:key-c3}\end{figure*}
-
 \subsection{Experimental Setup}
 \subsubsection{Data and Implementation}
 We evaluate ARC-Audit on the \texttt{train1} and \texttt{train2} segments of the HAI 21.03 industrial control dataset~\cite{Shin2021HAI}, which contain 216,001 and 226,801 records, respectively. Each record comprises 84 columns: a timestamp, 79 process fields, and four attack indicators (three process-specific indicators encoded independently and one derived combined indicator). Exact decimal canonicalization during ingestion preserves process values. After each recovery operation, an independent scorer checks $\widehat r_i=r_i$ against the canonical source, separate from the client's authentication and complete-decoding checks.
@@ -676,8 +663,7 @@ The prototype is implemented in Python 3.10.12 using NumPy 2.2.6, cryptography 5
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.25\columnwidth}>{\raggedright\arraybackslash}p{.42\columnwidth}@{}}\toprule
 Scope & Records per segment & Comparisons and observations\\\midrule
-RQ1 (Window) & 21,600 / 21,600 & 4 methods, 2 builds each (16 observations)\\
-RQ1 (Full ext.) & 216,001 / 226,801 & 6 methods incl.\ GreedyGD \& EntroGD (84 daily builds)\\
+RQ1 (Encoding) & 216,001 / 226,801 & 6 methods incl.\ GreedyGD \& EntroGD (84 daily + 16 window builds)\\
 RQ2 (Internal) & 216,001 / 226,801 & 3 target sizes, 3 cases, 3 interfaces (54 requests)\\
 RQ2 (External) & 216,001 / 226,801 & FiDD, MPA, Miao, ARC-Indexed (72 requests + 28 setups)\\
 RQ3 (Internal) & 216,001 / 226,801 & 5 layouts, 3 loss rates, 50 cases, 8 controls (12,000 outcomes)\\
@@ -705,31 +691,15 @@ Each fault-success point aggregates all 250 outcomes with a pointwise 95\% Wilso
 
 
 
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/c1_arc_audit.pdf}
+\caption{Full-dataset sealed cloud storage and total construction time of ARC-Audit (SDA-GGD) against internal and published GD baselines across all seven daily batches (RQ1). Broken horizontal axes preserve linear readability across deduplicated schemes and RAW.}
+\label{fig:key-c1}\end{figure*}
+
 \subsection{RQ1: Storage and Secure Construction}
-Cross-field grouping shrinks secure cloud storage relative to all baselines, though it shifts part of the encoding work to the owner. As shown in Fig.~\ref{fig:key-c1}, ARC-Audit (SDA-GGD) stores 1,903,138 B on \texttt{train1} and 1,770,118 B on \texttt{train2}, compared with 2,198,812 B and 1,938,839 B for Per-field-GD, corresponding to cloud storage reductions of 13.45\% and 8.70\%. Block-CZ-256 stores 2,278,001 B and 2,227,359 B, whereas RAW occupies 14.463 MiB per window. All 16 constructions pass canonical decoding checks.
+Cross-field grouping shrinks sealed cloud storage relative to both internal and published GD baselines while shifting moderate encoding work and base state to the owner. Across all seven daily batches (442,802 records, exercising sampled merge ranking at $\min(50{,}000,n)$ rows; Fig.~\ref{fig:key-c1} and Table~\ref{tab:rq1-ext}), ARC-Audit (SDA-GGD) reduces sealed cloud storage to 19.601 MiB on \texttt{train1} and 18.738 MiB on \texttt{train2}, saving 10.79\% and 11.44\% over Per-field-GD, 13.90\% and 19.43\% over Block-CZ-256, 35.49\% and 36.11\% over EntroGD~\cite{Zhao2026EntroGD} (30.385 and 29.327 MiB), and 50.63\% and 53.21\% over GreedyGD~\cite{Hurst2024GreedyGD} (39.703 and 40.050 MiB), compared with 144.458 and 151.702 MiB for RAW. Crucially, because BLS12-381 per-page tag generation dominates secure sealing cost, reducing the ciphertext page count makes SDA-GGD's total end-to-end construction time (2,778.9 s and 2,722.4 s) 49.36\% and 47.91\% faster than EntroGD (5,488.0 s and 5,226.1 s) and 61.33\% and 62.84\% faster than GreedyGD (7,185.8 s and 7,327.0 s), despite SDA-GGD spending more time in the codec stage (533.5 s and 528.2 s vs.\ 13.7/11.5 s for EntroGD and 90.1/102.7 s for GreedyGD) and retaining 3,206.7 KiB and 2,723.4 KiB of owner-side base state. All 84 daily constructions pass complete decryption and ledger checks.
 
-Grouping increases total construction time because candidate merges are reconfigured against the full input, even though fewer output pages reduce subsequent tag generation. Median complete secure construction time rises from 231.521 s and 206.163 s under Per-field-GD to 274.356 s and 235.621 s under SDA-GGD, an increase of 18.50\% on \texttt{train1} and 14.29\% on \texttt{train2}. Specifically, SDA-GGD spends 73.66 s and 47.63 s in the codec stage versus 1.00 s and 0.83 s for Per-field-GD, while tag-generation time drops from 230.25 s and 205.05 s to 200.42 s and 187.72 s. Because both 21,600-record windows use full-window ranking, these timings characterize the full-confirmation grouping pipeline and leave the cost and candidate coverage of sampled ranking at larger scales open.
-
-Cloud storage savings are also accompanied by larger owner-side private state (Table~\ref{tab:state}). On \texttt{train1} and \texttt{train2}, SDA-GGD retains 335,884 B and 215,702 B of private state in total (including 303,595 B and 184,687 B of base content), compared with 245,064 B and 209,287 B for Per-field-GD (including 208,267 B and 174,552 B of bases).
-
-
-
-\begin{table}[t]\centering\small
-\caption{STORAGE AND OWNER-SIDE STATE (RQ1, 6H WINDOW)}\label{tab:state}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lrrrr@{}}\toprule
-& \multicolumn{2}{c}{Cloud (MiB)} & \multicolumn{2}{c}{Owner (KiB)}\\
-Method & train1 & train2 & train1 & train2\\\midrule
-ARC-Audit (SDA-GGD) & 1.815 & 1.688 & 328.012 & 210.646\\
-Per-field-GD & 2.097 & 1.849 & 239.320 & 204.382\\
-RAW & 14.463 & 14.463 & 0.227 & 0.227\\
-Block-CZ-256 & 2.172 & 2.124 & 0.234 & 0.234\\
-\bottomrule\end{tabular}
-\tabnote{Medians of two builds per window. Owner state includes the base catalog and private encoding/key files. Protection is accounted separately.}
-\end{table}
-
-\emph{Full-dataset comparison with published GD encoders.}
-Table~\ref{tab:rq1-ext} extends the RQ1 comparison to all seven daily batches (442,802 records, exercising sampled merge ranking at $\min(50{,}000,n)$ rows) and includes GreedyGD~\cite{Hurst2024GreedyGD} and EntroGD~\cite{Zhao2026EntroGD} under the identical secure sealing pipeline. Across the full \texttt{train1} and \texttt{train2} segments, SDA-GGD reduces sealed cloud storage to 19.601 MiB and 18.738 MiB, saving 10.79\% and 11.44\% over Per-field-GD, 13.90\% and 19.43\% over Block-CZ-256, 35.49\% and 36.11\% over EntroGD (30.385 and 29.327 MiB), and 50.63\% and 53.21\% over GreedyGD (39.703 and 40.050 MiB). Crucially, because BLS12-381 per-page tag generation dominates secure sealing cost, reducing the ciphertext page count makes SDA-GGD's total end-to-end construction time (2,778.9 s and 2,722.4 s) 49.36\% and 47.91\% faster than EntroGD (5,488.0 s and 5,226.1 s) and 61.33\% and 62.84\% faster than GreedyGD (7,185.8 s and 7,327.0 s), despite SDA-GGD spending more time in the codec stage (533.5 s and 528.2 s vs.\ 13.7/11.5 s for EntroGD and 90.1/102.7 s for GreedyGD). All 84 daily constructions pass complete decryption and ledger checks.
+On the six-hour windows (21,600 records each, exercising full-window ranking without sampling), the same trade-off holds: SDA-GGD stores 1.815 MiB and 1.688 MiB in the cloud (saving 13.45\% and 8.70\% over Per-field-GD's 2.097 and 1.849 MiB, vs.\ 2.172/2.124 MiB for Block-CZ-256 and 14.463 MiB for RAW), while total build time rises by 18.50\% and 14.29\% over Per-field-GD (274.36/235.62 s vs.\ 231.52/206.16 s) and owner-side private state reaches 328.01 KiB and 210.65 KiB (vs.\ 239.32 and 204.38 KiB for Per-field-GD); all 16 window constructions pass canonical decoding checks.
 
 \begin{table}[t]\centering\scriptsize
 \caption{FULL-DATASET SEALED STORAGE AND CONSTRUCTION COST (RQ1, 7 DAILY BATCHES)}\label{tab:rq1-ext}
@@ -751,6 +721,11 @@ t2 & \textbf{SDA-GGD} & \textbf{18.738} & 2,723.4 & 528.2 & 2,193.0 & \textbf{2,
 \end{tabular}
 \tabnote{t1/t2 denote \texttt{train1} (3 days, 216,001 rows) and \texttt{train2} (4 days, 226,801 rows). Values sum per-day medians (2 builds/day) under identical \texttt{py-ecc} BLS12-381 sealing.}
 \end{table}
+
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/c2_arc_audit.pdf}
+\caption{Application traffic per request and local processing time with reused contexts (RQ2). Application traffic includes declarations, challenges, any first-stage material, and the final response. The break-even link rates reported in the text use a simple serial-transfer estimate.}
+\label{fig:key-c2}\end{figure*}
 
 \subsection{RQ2: Public Audit Communication and Computation}
 \emph{Aggregate proofs and ciphertext downloads.}
@@ -788,120 +763,76 @@ SDA-GGD & 805 & 6.437 & 125 & 1.489\\\bottomrule
 \tabnote{Per-record traversal without caching counts repeated reads. For the representation comparison, SDA-GGD reads the bytes shown in the Union row, and Per-field-GD reads 3,616,768 B on train1 and 585,227 B on train2.}
 \end{table}
 
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/c2_ext_audit.pdf}
+\caption{Full-dataset audit wire traffic and request latency against published auditing schemes under the unified \texttt{py-ecc} BLS12-381 backend (RQ2). Error bars show observed min--max ranges across three matched target cohorts per $(segment,r)$. External schemes and \texttt{ARC-Indexed} rely on a 1,035.6 MiB owner-provisioned directory excluded from online traffic, whereas \texttt{ARC-Public} requires no directory.}
+\label{fig:ext-c2}\end{figure*}
+
 \emph{Comparison with published auditing schemes.}
-Table~\ref{tab:rq2-ext} compares ARC-Audit against static component adapters of FiDD~\cite{Huang2026FiDD}, MPA~\cite{Xu2026MPA}, and Miao~\cite{Miao2025} across all 18 full-dataset cohorts. When holding the exact owner-provisioned dependency set fixed (\texttt{ARC-Indexed} vs.\ FiDD, MPA, and Miao), \texttt{ARC-Indexed} matches FiDD's compact wire traffic (31.84 vs.\ 31.70 KiB on \texttt{train1} and 34.73 vs.\ 34.56 KiB on \texttt{train2} at $r=256$) while achieving the lowest median latency across all six $(segment,r)$ settings (37.26 s and 35.43 s at $r=256$, compared with 37.86 s and 36.69 s for FiDD and 38.90 s and 36.85 s for MPA). By contrast, MPA's per-page Merkle and KZG opening paths inflate wire traffic by 39$\times$--46$\times$ (1,591.1 KiB and 1,463.5 KiB at $r=256$), and Miao's per-keyword batched proofs inflate traffic by 61$\times$--69$\times$ (2,387.3 KiB and 2,307.5 KiB) with 23$\times$ higher latency (873.8 s and 840.0 s). Crucially, \texttt{ARC-Public} avoids the 1,035.6 MiB owner-provisioned dependency directory required by all three external schemes (plus Miao's 1,846.8 MiB blinded-file and inverted-index state, and 4,556.7 s / 5,307.1 s setup times for FiDD / Miao vs.\ 56.7 s for MPA), incurring only $\sim 9\%$ extra wire traffic (34.58 KiB and 37.62 KiB at $r=256$). The $\sim 14\%$ difference at $r=256$ between single-core \texttt{ARC-Public} (32.53/30.91 s) and six-core \texttt{ARC-Indexed} (37.26/35.43 s) reflects multi-core turbo frequency scaling. Finally, to separate protocol overhead from the pure-Python \texttt{py-ecc} interpreter, a native Rust \texttt{blst} (v0.3.17) microbenchmark of the exact same BLS12-381 proving and verification equations reduces total $r=256$ computation from 34.77 s / 32.71 s to 100.81 ms on \texttt{train1} and 100.79 ms on \texttt{train2} (a 324.5$\times$--344.9$\times$ speedup).
+Fig.~\ref{fig:ext-c2} and Table~\ref{tab:rq2-ext} compare ARC-Audit against static component adapters of FiDD~\cite{Huang2026FiDD}, MPA~\cite{Xu2026MPA}, and Miao~\cite{Miao2025} across all 18 full-dataset cohorts. When holding the exact owner-provisioned dependency set fixed (\texttt{ARC-Indexed} vs.\ FiDD, MPA, and Miao), \texttt{ARC-Indexed} matches FiDD's compact wire traffic (31.84 vs.\ 31.70 KiB on \texttt{train1} and 34.73 vs.\ 34.56 KiB on \texttt{train2} at $r=256$) while achieving the lowest median latency across all six $(segment,r)$ settings (37.26 s and 35.43 s at $r=256$, compared with 37.86 s and 36.69 s for FiDD and 38.90 s and 36.85 s for MPA). By contrast, MPA's per-page Merkle and KZG opening paths inflate wire traffic by 39$\times$--46$\times$ (1,591.1 KiB and 1,463.5 KiB at $r=256$), and Miao's per-keyword batched proofs inflate traffic by 61$\times$--69$\times$ (2,387.3 KiB and 2,307.5 KiB) with 23$\times$ higher latency (873.8 s and 840.0 s). Crucially, \texttt{ARC-Public} avoids the 1,035.6 MiB owner-provisioned dependency directory required by all three external schemes (plus Miao's 1,846.8 MiB blinded-file and inverted-index state, and 4,556.7 s / 5,307.1 s setup times for FiDD / Miao vs.\ 56.7 s for MPA), incurring only $\sim 9\%$ extra wire traffic (34.58 KiB and 37.62 KiB at $r=256$). The $\sim 14\%$ difference at $r=256$ between single-core \texttt{ARC-Public} (32.53/30.91 s) and six-core \texttt{ARC-Indexed} (37.26/35.43 s) reflects multi-core turbo frequency scaling. Finally, to separate protocol overhead from the pure-Python \texttt{py-ecc} interpreter, a native Rust \texttt{blst} (v0.3.17) microbenchmark of the exact same BLS12-381 proving and verification equations reduces total $r=256$ computation from 34.77 s / 32.71 s to 100.81 ms on \texttt{train1} and 100.79 ms on \texttt{train2} (a 324.5$\times$--344.9$\times$ speedup).
 
 \begin{table}[t]\centering\scriptsize
 \caption{FULL-DATASET AUDIT COMPARISON AGAINST PUBLISHED SCHEMES (RQ2, \texttt{py-ecc} BLS12-381)}\label{tab:rq2-ext}
-\setlength{\tabcolsep}{3.0pt}
-\begin{tabular}{@{}llrrrr@{}}\toprule
-Seg. & Method & $r$ & Pages & Wire (KiB) & Latency (s)\\\midrule
-train1 & \textbf{ARC-Public (no dir.)} & 1 & 340 & 6.09 & 3.106\\
- & ARC-Indexed & 1 & 79 & 4.88 & 1.320\\
- & FiDD~\cite{Huang2026FiDD} & 1 & 79 & 4.84 & 1.349\\
- & MPA~\cite{Xu2026MPA} & 1 & 79 & 32.31 & 1.350\\
- & Miao~\cite{Miao2025} & 1 & 79 & 9.38 & 4.104\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public (no dir.)} & 16 & 1,398 & 20.03 & 12.015\\
- & ARC-Indexed & 16 & 887 & 17.29 & 9.425\\
- & FiDD~\cite{Huang2026FiDD} & 16 & 887 & 17.16 & 9.945\\
- & MPA~\cite{Xu2026MPA} & 16 & 887 & 349.69 & 10.270\\
- & Miao~\cite{Miao2025} & 16 & 887 & 149.50 & 65.707\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public (no dir.)} & 256 & 4,143 & 34.58 & 32.532\\
- & ARC-Indexed & 256 & 4,006 & 31.84 & 37.259\\
- & FiDD~\cite{Huang2026FiDD} & 256 & 4,006 & 31.70 & 37.864\\
- & MPA~\cite{Xu2026MPA} & 256 & 4,006 & 1,591.12 & 38.902\\
- & Miao~\cite{Miao2025} & 256 & 4,006 & 2,387.32 & 873.774\\\midrule
-train2 & \textbf{ARC-Public (no dir.)} & 1 & 345 & 6.11 & 3.169\\
- & ARC-Indexed & 1 & 78 & 4.87 & 1.293\\
- & FiDD~\cite{Huang2026FiDD} & 1 & 78 & 4.83 & 1.470\\
- & MPA~\cite{Xu2026MPA} & 1 & 78 & 31.90 & 1.396\\
- & Miao~\cite{Miao2025} & 1 & 78 & 9.31 & 3.547\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public (no dir.)} & 16 & 1,220 & 19.28 & 10.902\\
- & ARC-Indexed & 16 & 832 & 17.04 & 9.017\\
- & FiDD~\cite{Huang2026FiDD} & 16 & 832 & 16.90 & 10.054\\
- & MPA~\cite{Xu2026MPA} & 16 & 832 & 324.45 & 9.884\\
- & Miao~\cite{Miao2025} & 16 & 832 & 145.08 & 62.715\\\cmidrule(lr){2-6}
- & \textbf{ARC-Public (no dir.)} & 256 & 3,830 & 37.62 & 30.908\\
- & ARC-Indexed & 256 & 3,720 & 34.73 & 35.433\\
- & FiDD~\cite{Huang2026FiDD} & 256 & 3,720 & 34.56 & 36.694\\
- & MPA~\cite{Xu2026MPA} & 256 & 3,720 & 1,463.52 & 36.852\\
- & Miao~\cite{Miao2025} & 256 & 3,720 & 2,307.50 & 840.014\\\bottomrule
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{@{}lcccc@{}}\toprule
+Method & $r$ & Pages (t1/t2) & Wire KiB (t1/t2) & Latency s (t1/t2)\\\midrule
+\textbf{ARC-Public (no dir.)} & 1 & 340/345 & 6.09/6.11 & 3.11/3.17\\
+ARC-Indexed & 1 & 79/78 & 4.88/4.87 & 1.32/1.29\\
+FiDD~\cite{Huang2026FiDD} & 1 & 79/78 & 4.84/4.83 & 1.35/1.47\\
+MPA~\cite{Xu2026MPA} & 1 & 79/78 & 32.31/31.90 & 1.35/1.40\\
+Miao~\cite{Miao2025} & 1 & 79/78 & 9.38/9.31 & 4.10/3.55\\\midrule
+\textbf{ARC-Public (no dir.)} & 256 & 4,143/3,830 & 34.58/37.62 & \textbf{32.53/30.91}\\
+ARC-Indexed & 256 & 4,006/3,720 & 31.84/34.73 & 37.26/35.43\\
+FiDD~\cite{Huang2026FiDD} & 256 & 4,006/3,720 & 31.70/34.56 & 37.86/36.69\\
+MPA~\cite{Xu2026MPA} & 256 & 4,006/3,720 & 1,591.1/1,463.5 & 38.90/36.85\\
+Miao~\cite{Miao2025} & 256 & 4,006/3,720 & 2,387.3/2,307.5 & 873.8/840.0\\\bottomrule
 \end{tabular}
-\tabnote{Medians over 3 matched full-dataset cohorts per $(segment,r)$. External schemes and ARC-Indexed share identical exact page sets via a 1,035.6 MiB owner directory excluded from online wire bytes. With native Rust \texttt{blst}, ARC-Audit $r=256$ total time drops to 100.81 ms (\texttt{train1}) and 100.79 ms (\texttt{train2}).}
+\tabnote{Medians over 3 matched full-dataset cohorts per $(segment,r)$ (t1/t2: \texttt{train1}/\texttt{train2}; intermediate $r{=}16$ curves are plotted in Fig.~\ref{fig:ext-c2}). External schemes and ARC-Indexed share a 1,035.6 MiB owner directory excluded from online traffic. Native Rust \texttt{blst} lowers ARC-Audit $r{=}256$ total time to 100.81/100.79 ms.}
 \end{table}
+
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/c3_arc_audit.pdf}
+\caption{Authenticated recovery under erasures (RQ3). ARC-Audit (Exact / Dictionary) combines exact recovery with dictionary-first protection.}
+\label{fig:key-c3}\end{figure*}
 
 \subsection{RQ3: Authenticated Recovery and Protection Allocation}
 \emph{Protection placement.}
 Prioritizing dictionary pages consistently outperforms uniform redundancy under the same storage cap (Fig.~\ref{fig:key-c3}). With Exact recovery held fixed at 1\% nominal loss, Dictionary recovers 185 of 250 records (74.0\%) on both segments, whereas Uniform recovers 153 of 250 (61.2\%) on \texttt{train1} and 164 of 250 (65.6\%) on \texttt{train2}, representing gains of 12.8 and 8.4 percentage points, and NoEC recovers 114 of 250 (45.6\%) and 117 of 250 (46.8\%). At 0.1\% loss, Dictionary reaches 95.2\% and 97.6\%, compared with 94.0\% and 95.6\% for Uniform.
 
 \emph{Frequency-based allocation.}
-Ranking pages by reference-workload dependency frequency (FrequencyD) provides a modest further advantage over object-type ranking (Dictionary) at 5\% nominal loss. Under Exact recovery at 5\% loss, FrequencyD recovers 43 of 250 records (17.2\%) on \texttt{train1} and 65 of 250 (26.0\%) on \texttt{train2}, compared with 14.8\% and 21.6\% for Dictionary. Across the five tested layouts, paired differences range from $-2$ to $+8$ percentage points on \texttt{train1} and from $0$ to $+12$ percentage points on \texttt{train2} (Table~\ref{tab:paired-layouts}). With code, stripe count, and budget fixed, changing the ranking alters both which pages are protected and which pages share a stripe. At 1\% loss, FrequencyD recovers 191 of 250 and 185 of 250 records versus 185 of 250 on both segments for Dictionary, while at 0.1\% loss the two policies tie on \texttt{train1} and Dictionary is slightly ahead on \texttt{train2}.
+Ranking pages by reference-workload dependency frequency (FrequencyD) provides a modest further advantage over object-type ranking (Dictionary) at 5\% nominal loss. Under Exact recovery at 5\% loss, FrequencyD recovers 43 of 250 records (17.2\%) on \texttt{train1} and 65 of 250 (26.0\%) on \texttt{train2}, compared with 14.8\% and 21.6\% for Dictionary. Across the five tested layouts, paired differences range from $-2$ to $+8$ percentage points on \texttt{train1} and from $0$ to $+12$ percentage points on \texttt{train2}. With code, stripe count, and budget fixed, changing the ranking alters both which pages are protected and which pages share a stripe. At 1\% loss, FrequencyD recovers 191 of 250 and 185 of 250 records versus 185 of 250 on both segments for Dictionary, while at 0.1\% loss the two policies tie on \texttt{train1} and Dictionary is slightly ahead on \texttt{train2}.
 
 \emph{Dependency policy.}
 Under fixed Dictionary protection at 5\% nominal erasure, narrowing retrieval to exact dependencies enables recovery on requests where unused dictionary pages are lost. Exact recovers every record recovered by Conservative plus ten additional records on \texttt{train1} and nine on \texttt{train2}, raising complete-record recovery from 27 of 250 (10.8\%) to 37 of 250 (14.8\%) on \texttt{train1} and from 45 of 250 (18.0\%) to 54 of 250 (21.6\%) on \texttt{train2}. These improvements of 4.0 and 3.6 percentage points leave failure rates of 85.2\% and 78.4\% for Exact under the 10\% redundancy cap at 5\% erasure. In every additional successful case, all actual dependencies were retrievable or repairable while unreferenced dictionary pages were unavailable. At 0.1\% and 1\% nominal erasure, both policies succeed on the same requests.
 
-\begin{table}[t]
-\centering\small
-\caption{PAIRED RECOVERY OUTCOMES AT 5\% LOSS (RQ3)}
-\label{tab:paired-layouts}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}llrrrrr@{}}
-\toprule
-Segment & Pair & 41001 & 41002 & 41003 & 41004 & 41005 \\
-\midrule
-train1 & F/D & 0/1 & 2/2 & 5/1 & 3/1 & 4/3 \\
-       & D/U & 9/0 & 3/1 & 3/3 & 2/0 & 8/1 \\
-       & E/C & 3/0 & 1/0 & 1/0 & 2/0 & 3/0 \\
-\midrule
-train2 & F/D & 2/1 & 4/0 & 7/1 & 2/2 & 2/2 \\
-       & D/U & 4/0 & 7/0 & 4/2 & 8/2 & 7/1 \\
-       & E/C & 1/0 & 2/0 & 2/0 & 2/0 & 2/0 \\
-\bottomrule
-\end{tabular}
-\tabnote{Columns are layout seeds. Each cell gives the cases recovered only by the first/second configuration out of 50 matched cases. F, D, and U are FrequencyD, Dictionary, and Uniform with Exact. E/C compares Exact and Conservative with Dictionary fixed.}
-\end{table}
+\begin{figure*}[t]\centering
+\includegraphics[width=0.90\textwidth]{figures/c3_ext_recovery.pdf}
+\caption{Full-dataset selective recovery comparison against published shared-storage schemes across $N{=}250$ matched fault cases per point (RQ3). Left panels (a), (c) show authenticated recovery success with pointwise 95\% Wilson confidence intervals; right panels (b), (d) show the actual storage overhead versus $\alpha{=}5\%$ recovery frontier with median repair latencies.}
+\label{fig:ext-c3}\end{figure*}
 
 \emph{Recovery time.}
 Exact recovery also reduces latency because it fetches and decrypts fewer authenticated bytes. In clean Dictionary runs, where both policies recover the same targets, Exact completes in 3.693 ms on \texttt{train1} and 3.507 ms on \texttt{train2}, compared with 8.991 ms and 7.205 ms for Conservative. At 5\% nominal loss under Dictionary protection, successful requests take a median of 4.298 ms and 4.074 ms with Exact versus 11.933 ms and 7.079 ms with Conservative (including retrieval and any required RS repair), while failed requests terminate in medians of 0.414 ms and 0.461 ms for Exact versus 5.810 ms and 3.892 ms for Conservative. Because the two policies succeed on different request sets under faults, successful-request medians reflect completion times within each policy's own successful subset.
 
 \emph{Comparison with published recovery schemes.}
-Table~\ref{tab:rq3-ext} compares ARC-Audit ($\beta=0.10$ at $1.10\times$ and $\beta=0.30$ at $1.26\times$ actual storage for 100\% page coverage) against native-redundancy adapters of TREAT~\cite{Taurone2024TREAT} ($1.29\times$), RepEC-Core~\cite{Zuo2022RepECPlus} ($1.59$--$1.60\times$), and Li2024~\cite{Li2024TNSE} ($2.18\times$) across all 250 matched cases per point. All 180 clean external recoveries and all 4,680 fault outcomes pass canonical record-equality verification. At nearly equal storage ($1.26\times$ vs.\ $1.29\times$), ARC-Audit ($\beta=0.30$) consistently outperforms TREAT: at $\alpha=0.01$, recovery reaches 100.0\% and 99.6\% versus 94.8\% and 93.2\% for TREAT; at $\alpha=0.05$, the gap widens to +47.6 and +56.8 percentage points (72.4\% and 76.4\% vs.\ 24.8\% and 19.6%), while median repair time is 3.5$\times$--4.3$\times$ lower (7.1--8.2 ms and 4.7--5.5 ms vs.\ 24.2--25.8 ms and 19.8--20.4 ms) and avoids TREAT's 1.2--1.4 MiB RLNC fragment downloads. Moreover, ARC-Audit at $1.26\times$ also outperforms RepEC-Core ($1.59$--$1.60\times$) at $\alpha=0.05$ by +13.2 and +12.4 percentage points (72.4\%/76.4\% vs.\ 59.2\%/64.0%) with 21\% lower total storage and 7$\times$--10$\times$ faster repair (46.4--58.6 ms for RepEC-Core). Li2024 achieves the highest survival at $\alpha=0.05$ (88.4\% and 89.2%), but pays a $2.18\times$ storage ratio, roughly 2$\times$ download volume (582--632 KiB), and 36.5--48.0 ms repair latency.
+Fig.~\ref{fig:ext-c3} and Table~\ref{tab:rq3-ext} compare ARC-Audit ($\beta=0.10$ at $1.10\times$ and $\beta=0.30$ at $1.26\times$ actual storage for 100\% page coverage) against native-redundancy adapters of TREAT~\cite{Taurone2024TREAT} ($1.29\times$), RepEC-Core~\cite{Zuo2022RepECPlus} ($1.59$--$1.60\times$), and Li2024~\cite{Li2024TNSE} ($2.18\times$) across all 250 matched cases per point. All 180 clean external recoveries and all 4,680 fault outcomes pass canonical record-equality verification. At nearly equal storage ($1.26\times$ vs.\ $1.29\times$), ARC-Audit ($\beta=0.30$) consistently outperforms TREAT: at $\alpha=0.01$, recovery reaches 100.0\% and 99.6\% versus 94.8\% and 93.2\% for TREAT; at $\alpha=0.05$, the gap widens to +47.6 and +56.8 percentage points (72.4\% and 76.4\% vs.\ 24.8\% and 19.6%), while median repair time is 3.5$\times$--4.3$\times$ lower (7.1--8.2 ms and 4.7--5.5 ms vs.\ 24.2--25.8 ms and 19.8--20.4 ms) and avoids TREAT's 1.2--1.4 MiB RLNC fragment downloads. Moreover, ARC-Audit at $1.26\times$ also outperforms RepEC-Core ($1.59$--$1.60\times$) at $\alpha=0.05$ by +13.2 and +12.4 percentage points (72.4\%/76.4\% vs.\ 59.2\%/64.0%) with 21\% lower total storage and 7$\times$--10$\times$ faster repair (46.4--58.6 ms for RepEC-Core). Li2024 achieves the highest survival at $\alpha=0.05$ (88.4\% and 89.2%), but pays a $2.18\times$ storage ratio, roughly 2$\times$ download volume (582--632 KiB), and 36.5--48.0 ms repair latency.
 
 \begin{table}[t]\centering\scriptsize
 \caption{FULL-DATASET SELECTIVE RECOVERY AGAINST PUBLISHED SCHEMES (RQ3, $N{=}250$ CASES/POINT)}\label{tab:rq3-ext}
-\setlength{\tabcolsep}{1.8pt}
-\begin{tabular}{@{}llccccc@{}}\toprule
-Seg & Method (Ratio) & $\alpha$ & Succ.(\%) & 95\% CI & Rep.(ms) & DL(KiB)\\\midrule
-t1 & ARC $\beta{=}0.10$ ($1.10\times$) & 0.001 & 95.2 & [91.8,97.2] & 4.59 & 316.0\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.001 & 100.0 & [98.5,100.0] & 25.77 & 1,376.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.59\times$) & 0.001 & 100.0 & [98.5,100.0] & 58.96 & 316.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.001 & 100.0 & [98.5,100.0] & 48.05 & 632.3\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.010 & 74.0 & [68.2,79.0] & 4.65 & 320.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.010 & \textbf{100.0} & [98.5,100.0] & \textbf{7.12} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.010 & 94.8 & [91.3,96.9] & 24.64 & 1,360.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.010 & 98.0 & [95.4,99.1] & 57.30 & 320.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.010 & 99.6 & [97.8,99.9] & 46.54 & 627.0\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.050 & 14.8 & [10.9,19.7] & 4.96 & 356.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.050 & \textbf{72.4} & [66.5,77.6] & \textbf{8.19} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.050 & 24.8 & [19.9,30.5] & 24.23 & 1,324.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.59\times$) & 0.050 & 59.2 & [53.0,65.1] & 58.64 & 336.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.050 & 88.4 & [83.8,91.8] & 47.59 & 601.6\\\midrule
-t2 & ARC $\beta{=}0.10$ ($1.10\times$) & 0.001 & 97.6 & [94.9,98.9] & 4.17 & 308.0\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.001 & 100.0 & [98.5,100.0] & 20.41 & 1,280.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.001 & 100.0 & [98.5,100.0] & 48.90 & 308.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.001 & 100.0 & [98.5,100.0] & 38.08 & 615.0\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.010 & 74.0 & [68.2,79.0] & 4.31 & 312.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.010 & \textbf{99.6} & [97.8,99.9] & \textbf{4.71} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.010 & 93.2 & [89.4,95.7] & 20.13 & 1,280.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.010 & 98.8 & [96.5,99.6] & 48.68 & 308.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.010 & 100.0 & [98.5,100.0] & 37.23 & 607.0\\\cmidrule(lr){2-7}
- & ARC $\beta{=}0.10$ ($1.10\times$) & 0.050 & 21.6 & [16.9,27.1] & 4.68 & 338.0\\
- & \textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.050 & \textbf{76.4} & [70.8,81.2] & \textbf{5.53} & --\\
- & TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.050 & 19.6 & [15.2,25.0] & 19.83 & 1,216.0\\
- & RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.050 & 64.0 & [57.9,69.7] & 46.37 & 320.0\\
- & Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.050 & 89.2 & [84.7,92.5] & 36.50 & 581.6\\\bottomrule
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{@{}lcccc@{}}\toprule
+Method (Ratio) & $\alpha$ & Succ.\ \% (t1/t2) & Rep.\ ms (t1/t2) & DL KiB (t1/t2)\\\midrule
+ARC $\beta{=}0.10$ ($1.10\times$) & 0.01 & 74.0/74.0 & 4.65/4.31 & 320/312\\
+\textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.01 & \textbf{100.0/99.6} & \textbf{7.12/4.71} & --\\
+TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.01 & 94.8/93.2 & 24.64/20.13 & 1,360/1,280\\
+RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.01 & 98.0/98.8 & 57.30/48.68 & 320/308\\
+Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.01 & 99.6/100.0 & 46.54/37.23 & 627/607\\\midrule
+ARC $\beta{=}0.10$ ($1.10\times$) & 0.05 & 14.8/21.6 & 4.96/4.68 & 356/338\\
+\textbf{ARC $\beta{=}0.30$ ($1.26\times$)} & 0.05 & \textbf{72.4/76.4} & \textbf{8.19/5.53} & --\\
+TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.05 & 24.8/19.6 & 24.23/19.83 & 1,324/1,216\\
+RepEC~\cite{Zuo2022RepECPlus} ($1.60\times$) & 0.05 & 59.2/64.0 & 58.64/46.37 & 336/320\\
+Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.05 & 88.4/89.2 & 47.59/36.50 & 602/582\\\bottomrule
 \end{tabular}
-\tabnote{t1/t2 denote \texttt{train1}/\texttt{train2}; ARC and RepEC denote ARC-Audit and RepEC-Core; 95\% CI is the pointwise Wilson interval. Native redundancy ratios are reported explicitly (ARC $\beta{=}0.30$ achieves 100\% page coverage at $1.26\times$; DL not recorded in that sweep). Repair latencies are medians over successful recoveries.}
+\tabnote{t1/t2: \texttt{train1}/\texttt{train2}; ARC/RepEC: ARC-Audit/RepEC-Core. At $\alpha{=}0.001$, all three external schemes reach 100.0\% and ARC $\beta{=}0.10$ reaches 95.2\%/97.6\%. Pointwise 95\% Wilson CIs are plotted in Fig.~\ref{fig:ext-c3}; ARC $\beta{=}0.30$ achieves 100\% page coverage at $1.26\times$ (DL not logged in that sweep).}
 \end{table}
 
 Taken together, protection allocation determines which objects receive redundancy and dependency selection determines which objects a request requires. Reducing the required page set under fixed protection and verification rules therefore enables more requests to complete within the tested HAI workloads and erasure settings.
