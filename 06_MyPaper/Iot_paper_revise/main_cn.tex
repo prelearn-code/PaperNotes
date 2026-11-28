@@ -564,7 +564,7 @@ SDA-GGD & 805 & 6.437 & 125 & 1.489\\\bottomrule
 \caption{全量数据集上统一 \texttt{py-ecc} BLS12-381 后端下与已发表公开审计方案的通信量与请求延迟对比（RQ2）。误差棒表示每组 $(segment,r)$ 三个匹配目标集合的观测最小--最大范围；外部方案与 \texttt{ARC-Indexed} 依赖未计入在线通信的 1,035.6 MiB 所有者目录，而 \texttt{ARC-Public} 无需任何目录。}
 \label{fig:ext-c2}\end{figure*}
 
-\emph{与已发表公开审计方案的对比。}图~\ref{fig:ext-c2}~与表~\ref{tab:rq2-ext}~在全部 18 组目标上对比了 ARC-Audit 与 FiDD~\cite{Huang2026FiDD}、MPA~\cite{Xu2026MPA}、Miao~\cite{Miao2025}。在相同精确依赖页集合上，\texttt{ARC-Indexed} 通信量与 FiDD 持平（$r{=}256$ 时 31.84/34.73 对 31.70/34.56 KiB）并在四类基于精确目录的方案中于全部六组配置下耗时最低；MPA 逐页 Merkle 与 KZG 打开证明使 $r{=}256$ 通信量膨胀 39$\times$--46$\times$，Miao 按关键词批量证明使通信量膨胀 61$\times$--69$\times$、延迟高出 23$\times$。更重要的是，\texttt{ARC-Public} 仅增加约 9\% 通信量，便省去了三类外部方案均须维护的 1,035.6 MiB 所有者目录（以及 Miao 的 1,846.8 MiB 持久化状态，其中倒排索引占 1,765.8 MiB，和 FiDD／Miao 达 4,556.7/5,307.1 s 的初始化开销，MPA 为 56.7 s）；其在 $r{=}256$ 相对多核并行池中单核绑定的 \texttt{ARC-Indexed} 约 14\% 的耗时优势源于单核睿频差异。进一步在原生 Rust \texttt{blst} 中执行相同 BLS12-381 证明与验证方程，可将 $r{=}256$ 证明与验证计算耗时由同口径 \texttt{py-ecc} 微基准的 34.77/32.71 s 降至 100.81/100.79 ms（提速 324.5$\times$--344.9$\times$）。
+\emph{与已发表公开审计方案的对比。}图~\ref{fig:ext-c2}~与表~\ref{tab:rq2-ext}~在全部 18 组目标上对比了 ARC-Audit 与 FiDD~\cite{Huang2026FiDD}、MPA~\cite{Xu2026MPA}、Miao~\cite{Miao2025}。在相同精确依赖页集合上，\texttt{ARC-Indexed} 通信量与 FiDD 持平（$r{=}256$ 时 31.84/34.73 对 31.70/34.56 KiB）并在四类基于精确目录的方案中于全部六组配置下耗时最低；MPA 逐页 Merkle 与 KZG 打开证明使 $r{=}256$ 通信量膨胀 39$\times$--46$\times$，Miao 按关键词批量证明使通信量膨胀 61$\times$--69$\times$、延迟高出 23$\times$。更重要的是，\texttt{ARC-Public} 仅增加约 9\% 通信量，便省去了三类外部方案均须维护的 1,035.6 MiB 所有者目录（以及 Miao 的 1,846.8 MiB 持久化状态，其中倒排索引占 1,765.8 MiB，和 FiDD／Miao 达 4,556.7/5,307.1 s 的初始化开销，MPA 为 56.7 s）。进一步在原生 Rust \texttt{blst} 中执行相同 BLS12-381 证明与验证方程，可将 $r{=}256$ 证明与验证计算耗时由同口径 \texttt{py-ecc} 微基准的 34.77/32.71 s 降至 100.81/100.79 ms（提速 324.5$\times$--344.9$\times$）。
 
 \begin{table}[t]\centering\scriptsize
 \caption{全量数据集上与已发表公开审计方案的对比（RQ2，\texttt{py-ecc} BLS12-381）}\label{tab:rq2-ext}
@@ -582,7 +582,7 @@ FiDD~\cite{Huang2026FiDD} & 256 & 4,006/3,720 & 31.70/34.56 & 37.86/36.69\\
 MPA~\cite{Xu2026MPA} & 256 & 4,006/3,720 & 1,591.1/1,463.5 & 38.90/36.85\\
 Miao~\cite{Miao2025} & 256 & 4,006/3,720 & 2,387.3/2,307.5 & 873.8/840.0\\\bottomrule
 \end{tabular}
-\tabnote{每组 $(segment,r)$ 3 次全量匹配请求的中位数（t1/t2 指 \texttt{train1}/\texttt{train2}；中间规模 $r{=}16$ 趋势见图~\ref{fig:ext-c2}）。外部方案与 ARC-Indexed 共享 1,035.6 MiB 所有者目录（未计入在线通信）。原生 Rust \texttt{blst} 将 ARC-Audit $r{=}256$ 总耗时降至 100.81/100.79 ms。}
+\tabnote{每组 $(segment,r)$ 3 次全量匹配请求的中位数（t1/t2 指 \texttt{train1}/\texttt{train2}；中间规模 $r{=}16$ 趋势见图~\ref{fig:ext-c2}）。外部方案与 ARC-Indexed 共享 1,035.6 MiB 所有者目录（未计入在线通信）；其中 ARC-Public 为独立单进程运行，而目录基线在多核并发环境中按核同时执行（导致 $r{=}256$ 下存在约 14\% 的运行时差异）。原生 Rust \texttt{blst} 将 ARC-Audit $r{=}256$ 总耗时降至 100.81/100.79 ms。}
 \end{table}
 
 \begin{figure*}[t]\centering
@@ -616,7 +616,7 @@ TREAT~\cite{Taurone2024TREAT} ($1.29\times$) & 0.05 & 24.8/19.6 & 24.23/19.83 & 
 RepEC~\cite{Zuo2022RepECPlus} ($1.59$--$1.60\times$) & 0.05 & 59.2/64.0 & 58.64/46.37 & 336/320\\
 Li2024~\cite{Li2024TNSE} ($2.18\times$) & 0.05 & 88.4/89.2 & 47.59/36.50 & 602/582\\\bottomrule
 \end{tabular}
-\tabnote{t1/t2 指 \texttt{train1}/\texttt{train2}；ARC、RepEC 简指 ARC-Audit 与 RepEC-Core。$\alpha{=}0.001$ 时三类外部方案均达 100.0\%，ARC $\beta{=}0.10$ 达 95.2\%/97.6\%。ARC $\beta{=}0.10$ 与三类外部方案的修复耗时含读取器／辅助保护初始化（故 ARC $\beta{=}0.10$ 较图~\ref{fig:key-c3} 高 0.6--0.75 ms）；ARC $\beta{=}0.30$（100\% RS(10,8) 覆盖对应 $1.26\times$，未另记下载字节）取自未绑核预算扫描且不含初始化（同次扫描下 $\beta{=}0.10$ 在 \texttt{train1}/\texttt{train2} 亦为 7.19/7.63 与 4.73/5.07 ms）。}
+\tabnote{t1/t2 指 \texttt{train1}/\texttt{train2}；ARC、RepEC 简指 ARC-Audit 与 RepEC-Core。$\alpha{=}0.001$ 时三类外部方案均达 100.0\%，ARC $\beta{=}0.10$ 达 95.2\%/97.6\%。ARC $\beta{=}0.10$ 与三类外部方案的修复耗时均含读取器与辅助保护初始化开销（故 ARC $\beta{=}0.10$ 较图~\ref{fig:key-c3} 高 0.6--0.75 ms）；ARC $\beta{=}0.30$（100\% RS(10,8) 覆盖对应 $1.26\times$ 存储比，下载量从略）测自不固定 CPU 核心且不含初始化开销的预算灵敏度实验（同一口径下 $\beta{=}0.10$ 在 \texttt{train1}/\texttt{train2} 的修复耗时为 7.19/7.63 与 4.73/5.07 ms）。}
 \end{table}
 
 综上，保护分配决定哪些对象获得冗余，依赖选择决定请求必须取得哪些对象。在固定保护布局与验证规则下，缩减所需页集合因此能够让更多请求在所测 HAI 工作负载与擦除设置下完成恢复。

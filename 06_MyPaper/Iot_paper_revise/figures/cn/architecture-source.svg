@@ -1,53 +1,209 @@
-<svg xmlns="http://www.w3.org/2000/svg" xml:lang="zh-CN" width="1000" height="441" viewBox="0 0 1000 441">
-<title>ARC-Audit</title>
-<g font-family="Times New Roman, SimSun, serif" fill="#182b3a">
-<g id="data-owner">
-<rect x="18" y="18" width="256" height="106" rx="8" fill="#f4f7fa" stroke="#405468" stroke-width="1.6"/>
-<text x="146" y="60" font-size="29" fill="#182b3a" font-weight="bold" text-anchor="middle">数据所有者</text>
-<text x="146" y="96" font-size="24" fill="#182b3a" font-weight="normal" text-anchor="middle">SDA-GGD → AEAD</text>
-</g>
-<polyline points="274,71 326,71" fill="none" stroke="#405468" stroke-width="2"/>
-<polygon points="326,71 317,66 317,76" fill="#405468"/>
-<g id="csp">
-<rect x="330" y="18" width="652" height="106" rx="8" fill="#f4f7fa" stroke="#405468" stroke-width="1.6"/>
-<text x="656" y="57" font-size="29" fill="#182b3a" font-weight="bold" text-anchor="middle">云服务提供商</text>
-<rect x="372" y="69" width="256" height="38" rx="4" fill="#ffffff" stroke="#405468" stroke-width="1.6"/>
-<text x="500" y="95" font-size="24" fill="#182b3a" font-weight="normal" text-anchor="middle">签名清单</text>
-<text x="813" y="95" font-size="24" fill="#182b3a" font-weight="normal" text-anchor="middle">密文页与审计标签</text>
-</g>
-<polyline points="500,107 500,140" fill="none" stroke="#405468" stroke-width="2"/>
-<rect x="363" y="140" width="274" height="39" rx="5" fill="#ffffff" stroke="#405468" stroke-width="1.6"/>
-<text x="500" y="167" font-size="23" fill="#182b3a" font-weight="normal" text-anchor="middle">认证布局 ℒ</text>
-<polyline points="500,179 500,195" fill="none" stroke="#405468" stroke-width="2"/>
-<polyline points="251,215 251,195 749,195 749,215" fill="none" stroke="#405468" stroke-width="2"/>
-<polygon points="251,215 246,206 256,206" fill="#405468"/>
-<polygon points="749,215 744,206 754,206" fill="#405468"/>
-<g id="audit">
-<rect x="18" y="217" width="466" height="206" rx="8" fill="#eef5fa" stroke="#205881" stroke-width="1.6"/>
-<text x="251" y="251" font-size="29" fill="#205881" font-weight="bold" text-anchor="middle">公开审计</text>
-<text x="251" y="283" font-size="23" fill="#182b3a" font-weight="normal" text-anchor="middle">依据公开布局规划</text>
-<rect x="128" y="297" width="36" height="25" rx="3" fill="#76add3" stroke="#205881" stroke-width="1.6"/>
-<rect x="170" y="297" width="36" height="25" rx="3" fill="#76add3" stroke="#205881" stroke-width="1.6"/>
-<rect x="212" y="297" width="36" height="25" rx="3" fill="#76add3" stroke="#205881" stroke-width="1.6"/>
-<rect x="254" y="297" width="36" height="25" rx="3" fill="#76add3" stroke="#205881" stroke-width="1.6"/>
-<rect x="296" y="297" width="36" height="25" rx="3" fill="#76add3" stroke="#205881" stroke-width="1.6"/>
-<rect x="338" y="297" width="36" height="25" rx="3" fill="#76add3" stroke="#205881" stroke-width="1.6"/>
-<text x="251" y="350" font-size="21" fill="#182b3a" font-weight="normal" text-anchor="middle">覆盖相关组的完整字典</text>
-<text x="251" y="384" font-size="23" fill="#205881" font-weight="bold" text-anchor="middle">U(T) → 新鲜挑战 → 验证云端证明</text>
-</g>
-<g id="recover">
-<rect x="516" y="217" width="466" height="206" rx="8" fill="#edf6f2" stroke="#156557" stroke-width="1.6"/>
-<text x="749" y="251" font-size="29" fill="#156557" font-weight="bold" text-anchor="middle">授权恢复</text>
-<text x="749" y="283" font-size="23" fill="#182b3a" font-weight="normal" text-anchor="middle">认证解密引用页，读取 BaseID</text>
-<rect x="626" y="297" width="36" height="25" rx="3" fill="#ffffff" stroke="#aab7bd" stroke-width="1.6"/>
-<rect x="668" y="297" width="36" height="25" rx="3" fill="#75af9e" stroke="#156557" stroke-width="1.6"/>
-<rect x="710" y="297" width="36" height="25" rx="3" fill="#ffffff" stroke="#aab7bd" stroke-width="1.6"/>
-<rect x="752" y="297" width="36" height="25" rx="3" fill="#ffffff" stroke="#aab7bd" stroke-width="1.6"/>
-<rect x="794" y="297" width="36" height="25" rx="3" fill="#75af9e" stroke="#156557" stroke-width="1.6"/>
-<rect x="836" y="297" width="36" height="25" rx="3" fill="#ffffff" stroke="#aab7bd" stroke-width="1.6"/>
-<text x="749" y="350" font-size="21" fill="#182b3a" font-weight="normal" text-anchor="middle">仅选取实际引用的字典页</text>
-<text x="749" y="384" font-size="23" fill="#156557" font-weight="bold" text-anchor="middle">D(T) → 取页并解码记录</text>
-<text x="749" y="410" font-size="19" fill="#182b3a" font-weight="normal" text-anchor="middle">可选的预算约束 RS 修复</text>
-</g>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="646" viewBox="0 0 1200 646">
+<defs>
+  <marker id="arr-slate" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.2" markerHeight="6.2" orient="auto-start-reverse">
+    <path d="M 0 1.2 L 9 5 L 0 8.8 z" fill="#3D5266"/>
+  </marker>
+  <marker id="arr-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.2" markerHeight="6.2" orient="auto-start-reverse">
+    <path d="M 0 1.2 L 9 5 L 0 8.8 z" fill="#1B5886"/>
+  </marker>
+  <marker id="arr-teal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.2" markerHeight="6.2" orient="auto-start-reverse">
+    <path d="M 0 1.2 L 9 5 L 0 8.8 z" fill="#146B5A"/>
+  </marker>
+  <marker id="arr-amber" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.2" markerHeight="6.2" orient="auto-start-reverse">
+    <path d="M 0 1.2 L 9 5 L 0 8.8 z" fill="#B45309"/>
+  </marker>
+</defs>
+<rect x="0" y="0" width="1200" height="646" fill="#FFFFFF"/>
+<g font-family="Times New Roman, SimSun, serif" fill="#1B2A38">
+<line x1="78" y1="20" x2="104" y2="20" stroke="#3D5266" stroke-width="2"/>
+<text x="110" y="24.5" font-size="13.5" fill="#1B2A38" font-weight="bold">①–② 外包上传与信任锚分发</text>
+<line x1="356" y1="20" x2="382" y2="20" stroke="#1B5886" stroke-width="2"/>
+<text x="388" y="24.5" font-size="13.5" fill="#1B2A38" font-weight="bold">③–④ 无密钥公开审计</text>
+<line x1="630" y1="20" x2="656" y2="20" stroke="#146B5A" stroke-width="2"/>
+<text x="662" y="24.5" font-size="13.5" fill="#1B2A38" font-weight="bold">⑤–⑥ 授权精确恢复</text>
+<line x1="922" y1="20" x2="948" y2="20" stroke="#B45309" stroke-width="2" stroke-dasharray="5,3"/>
+<text x="954" y="24.5" font-size="13.5" fill="#1B2A38" font-weight="bold">⑥' 可选 RS(10,8) 擦除修复</text>
+<rect x="16" y="38" width="540" height="226" rx="6" fill="#F4F7FA" stroke="#3D5266" stroke-width="1.6"/>
+<path d="M 16 44 Q 16 38 22 38 L 550 38 Q 556 38 556 44 L 556 66 L 16 66 Z" fill="#E3ECF3" stroke="#3D5266" stroke-width="1.1"/>
+<text x="28" y="57" font-size="16" font-weight="bold" fill="#1B2A38">数据所有者 (Data Owner)</text>
+<rect x="424" y="43" width="122" height="19" rx="9" fill="#FFFFFF" stroke="#3D5266" stroke-width="0.9"/>
+<text x="485" y="56.5" font-size="11.5" text-anchor="middle" fill="#3D5266" font-weight="bold">可信域 · 批次 <tspan font-style="italic">b</tspan></text>
+<rect x="26" y="74" width="238" height="116" rx="4" fill="#FFFFFF" stroke="#3D5266" stroke-width="1.1"/>
+<text x="145" y="91" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">SDA-GGD 编码 (算法 1)</text>
+<text x="145" y="106" font-size="11.2" text-anchor="middle" fill="#4B5D6E">代价确认分组 → 逻辑容器 <tspan font-style="italic">F</tspan></text>
+<rect x="34" y="117" width="25" height="30" fill="#E2E8F0" stroke="#3D5266" stroke-width="1.0"/>
+<text x="46.5" y="136" font-size="11.0" font-weight="bold" text-anchor="middle" fill="#1B2A38">S</text>
+<rect x="59" y="117" width="75" height="30" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.0"/>
+<text x="96.5" y="136" font-size="11.0" font-weight="bold" text-anchor="middle" fill="#1B2A38">Dict<tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">g</tspan></tspan></text>
+<rect x="134" y="117" width="40" height="30" fill="#D2EBE3" stroke="#146B5A" stroke-width="1.0"/>
+<text x="154.0" y="136" font-size="11.0" font-weight="bold" text-anchor="middle" fill="#1B2A38">Ref</text>
+<rect x="174" y="117" width="54" height="30" fill="#F1F5F9" stroke="#3D5266" stroke-width="1.0"/>
+<text x="201.0" y="136" font-size="10.6" font-weight="bold" text-anchor="middle" fill="#1B2A38">Dev/RAW</text>
+<rect x="228" y="117" width="28" height="30" fill="#E2E8F0" stroke="#3D5266" stroke-width="1.0"/>
+<text x="242.0" y="136" font-size="11.0" font-weight="bold" text-anchor="middle" fill="#1B2A38">Lbl</text>
+<text x="145" y="172" font-size="11.3" text-anchor="middle" fill="#1B2A38">输出：逻辑容器 <tspan font-style="italic">F</tspan> + 公开布局 ℒ</text>
+<text x="287" y="124" font-size="11.0" font-weight="bold" text-anchor="middle" fill="#3D5266"><tspan font-style="italic">F</tspan>, ℒ</text>
+<line x1="264" y1="132" x2="310" y2="132" stroke="#3D5266" stroke-width="1.5" marker-end="url(#arr-slate)"/>
+<rect x="312" y="74" width="234" height="116" rx="4" fill="#FFFFFF" stroke="#3D5266" stroke-width="1.1"/>
+<text x="429" y="91" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">页级封装 (算法 2)</text>
+<text x="429" y="106" font-size="11.0" text-anchor="middle" fill="#4B5D6E">分页切片 <tspan font-style="italic">F</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan> (≤ 4,068 B) → 逐页密封</text>
+<rect x="318" y="114" width="222" height="20" rx="3" fill="#F4F7FA" stroke="#3D5266" stroke-width="0.95"/>
+<text x="429" y="128" font-size="10.4" text-anchor="middle" fill="#1B2A38">AES-256-GCM (<tspan font-style="italic">k</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">b</tspan></tspan>, <tspan font-style="italic">N</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>, <tspan font-style="italic">F</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>, <tspan font-style="italic">A</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>) → {<tspan font-style="italic">C</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>}</text>
+<rect x="318" y="138" width="222" height="20" rx="3" fill="#F0F6FB" stroke="#1B5886" stroke-width="0.95"/>
+<text x="429" y="152" font-size="10.2" text-anchor="middle" fill="#1B2A38">BLS12-381 标签 (<tspan font-style="italic">x</tspan>, pp, <tspan font-style="italic">d</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>, <tspan font-style="italic">C</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>) → {<tspan font-style="italic">τ</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>}</text>
+<rect x="318" y="162" width="222" height="20" rx="3" fill="#F8FAFC" stroke="#3D5266" stroke-width="0.95"/>
+<text x="429" y="176" font-size="10.1" text-anchor="middle" fill="#1B2A38">Ed25519(sk<tspan baseline-shift="sub" font-size="73%">sig</tspan>) → <tspan font-style="italic">M</tspan> (<tspan font-style="italic">b</tspan>, ℒ, {<tspan font-style="italic">d</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>}, pp, <tspan font-style="italic">H</tspan>(<tspan font-style="italic">B</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">τ</tspan></tspan>))</text>
+<rect x="26" y="198" width="244" height="56" rx="4" fill="#FFFFFF" stroke="#3D5266" stroke-width="1.0"/>
+<text x="148" y="218" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">所有者私有状态</text>
+<text x="148" y="239" font-size="11.8" text-anchor="middle" fill="#4B5D6E">批次密钥 <tspan font-style="italic">k</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">b</tspan></tspan>、审计私钥 <tspan font-style="italic">x</tspan>、sk<tspan baseline-shift="sub" font-size="73%">sig</tspan></text>
+<rect x="282" y="198" width="264" height="56" rx="4" fill="#FEF8EE" stroke="#B45309" stroke-width="1.1" stroke-dasharray="4,2.5"/>
+<text x="414" y="218" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#B45309">可选预算约束 RS(10,8)</text>
+<text x="414" y="239" font-size="11.8" text-anchor="middle" fill="#1B2A38">预算 <tspan font-style="italic">β</tspan> · 校验分片 + 侧车清单 <tspan font-style="italic">M</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">R</tspan></tspan></text>
+<line x1="556" y1="148" x2="640" y2="148" stroke="#3D5266" stroke-width="2.0" marker-end="url(#arr-slate)"/>
+<text x="598" y="139" font-size="13" font-weight="bold" text-anchor="middle" fill="#3D5266">① 上传</text>
+<text x="598" y="165" font-size="11.6" text-anchor="middle" fill="#1B2A38">{<tspan font-style="italic">C</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>}, {<tspan font-style="italic">τ</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>}, <tspan font-style="italic">M</tspan></text>
+<text x="598" y="181" font-size="11" text-anchor="middle" fill="#B45309">(+ 保护侧车)</text>
+<rect x="644" y="38" width="540" height="226" rx="6" fill="#FAF9F6" stroke="#7C6F64" stroke-width="1.6" stroke-dasharray="6,3"/>
+<path d="M 644 44 Q 644 38 650 38 L 1178 38 Q 1184 38 1184 44 L 1184 66 L 644 66 Z" fill="#ECE8E1" stroke="#7C6F64" stroke-width="1.1"/>
+<text x="656" y="57" font-size="16" font-weight="bold" fill="#1B2A38">云服务提供商 (CSP)</text>
+<rect x="1008" y="43" width="166" height="19" rx="9" fill="#FFFFFF" stroke="#7C6F64" stroke-width="0.9"/>
+<text x="1091" y="56.5" font-size="11.3" text-anchor="middle" fill="#7C6F64" font-weight="bold">不可信存储与证明者</text>
+<rect x="656" y="74" width="252" height="70" rx="4" fill="#FFFFFF" stroke="#3D5266" stroke-width="1.1"/>
+<text x="782" y="92" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">签名清单 <tspan font-style="italic">M</tspan></text>
+<text x="782" y="111" font-size="11.2" text-anchor="middle" fill="#4B5D6E">批次 <tspan font-style="italic">b</tspan>、公开布局 ℒ、pp、<tspan font-style="italic">H</tspan>(<tspan font-style="italic">B</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">τ</tspan></tspan>)</text>
+<text x="782" y="129" font-size="11.5" text-anchor="middle" fill="#1B2A38"><tspan font-style="italic">d</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan> = (<tspan font-style="italic">A</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>, |<tspan font-style="italic">C</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>|, SHA256(<tspan font-style="italic">C</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>))</text>
+<rect x="920" y="74" width="252" height="70" rx="4" fill="#F0F6FB" stroke="#1B5886" stroke-width="1.1"/>
+<text x="1046" y="92" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#1B5886">审计标签 {<tspan font-style="italic">τ</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>} (48 B/页)</text>
+<text x="1046" y="111" font-size="11.5" text-anchor="middle" fill="#4B5D6E">面向 <tspan font-style="italic">U</tspan>(<tspan font-style="italic">T</tspan>) 的线性聚合证明：</text>
+<text x="1046" y="129" font-size="11.0" font-weight="bold" text-anchor="middle" fill="#1B2A38"><tspan font-style="italic">σ</tspan> = Σ <tspan font-style="italic">ν</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan> <tspan font-style="italic">τ</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan> ,  <tspan font-style="italic">μ</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">j</tspan></tspan> = Σ <tspan font-style="italic">ν</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan> <tspan font-style="italic">m</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p,j</tspan></tspan> mod <tspan font-style="italic">q</tspan></text>
+<rect x="656" y="154" width="252" height="100" rx="4" fill="#FFFFFF" stroke="#3D5266" stroke-width="1.1"/>
+<text x="782" y="173" font-size="13" font-weight="bold" text-anchor="middle" fill="#1B2A38">密文页集合 {<tspan font-style="italic">C</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>} (≤ 4,096 B/页)</text>
+<rect x="664.0" y="186" width="26" height="32" rx="2.5" fill="#F4F7FA" stroke="#3D5266" stroke-width="1.0"/>
+<text x="677.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">S</text>
+<rect x="694.0" y="186" width="26" height="32" rx="2.5" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.0"/>
+<text x="707.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">D<tspan baseline-shift="sub" font-size="73%">1</tspan></text>
+<rect x="724.0" y="186" width="26" height="32" rx="2.5" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.0"/>
+<text x="737.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">D<tspan baseline-shift="sub" font-size="73%">2</tspan></text>
+<rect x="754.0" y="186" width="26" height="32" rx="2.5" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.0"/>
+<text x="767.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">D<tspan baseline-shift="sub" font-size="73%">3</tspan></text>
+<rect x="784.0" y="186" width="26" height="32" rx="2.5" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.0" stroke-dasharray="2.5,1.5"/>
+<text x="797.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">D<tspan baseline-shift="sub" font-size="73%">4</tspan></text>
+<text x="805.0" y="195" font-size="10" font-weight="bold" fill="#DC2626">×</text>
+<rect x="814.0" y="186" width="26" height="32" rx="2.5" fill="#F4F7FA" stroke="#3D5266" stroke-width="1.0"/>
+<text x="827.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Ref</text>
+<rect x="844.0" y="186" width="26" height="32" rx="2.5" fill="#F4F7FA" stroke="#3D5266" stroke-width="1.0"/>
+<text x="857.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Dev</text>
+<rect x="874.0" y="186" width="26" height="32" rx="2.5" fill="#F4F7FA" stroke="#3D5266" stroke-width="1.0"/>
+<text x="887.0" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Lbl</text>
+<text x="782" y="239" font-size="11.0" text-anchor="middle" fill="#4B5D6E">审计/修复时虚拟补零（× 表示缺页）</text>
+<rect x="920" y="154" width="252" height="100" rx="4" fill="#FEF8EE" stroke="#B45309" stroke-width="1.1" stroke-dasharray="4,2.5"/>
+<text x="1046" y="173" font-size="13" font-weight="bold" text-anchor="middle" fill="#B45309">可选 RS(10,8) 保护侧车</text>
+<rect x="934" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="942" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">1</text>
+<rect x="954" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="962" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">2</text>
+<rect x="974" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="982" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">3</text>
+<rect x="994" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="1002" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">4</text>
+<rect x="1014" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="1022" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">5</text>
+<rect x="1034" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="1042" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">6</text>
+<rect x="1054" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="1062" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">7</text>
+<rect x="1074" y="189" width="16" height="26" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.9"/>
+<text x="1082" y="206" font-size="9.5" text-anchor="middle" fill="#4B5D6E">8</text>
+<rect x="1100" y="189" width="24" height="26" rx="2" fill="#F5CBA7" stroke="#B45309" stroke-width="1.0"/>
+<text x="1112" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">P<tspan baseline-shift="sub" font-size="73%">1</tspan></text>
+<rect x="1128" y="189" width="24" height="26" rx="2" fill="#F5CBA7" stroke="#B45309" stroke-width="1.0"/>
+<text x="1140" y="206" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">P<tspan baseline-shift="sub" font-size="73%">2</tspan></text>
+<text x="1046" y="239" font-size="11.2" text-anchor="middle" fill="#1B2A38">8 数据 + 2 校验 / 条带 · 签名 <tspan font-style="italic">M</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">R</tspan></tspan></text>
+<line x1="84" y1="264" x2="84" y2="372" stroke="#3D5266" stroke-width="1.6" stroke-dasharray="4,2.5" marker-end="url(#arr-slate)"/>
+<text x="94" y="314" font-size="11.6" font-weight="bold" text-anchor="start" fill="#3D5266">②a 分发信任锚：</text>
+<text x="94" y="331" font-size="11.6" font-weight="bold" text-anchor="start" fill="#3D5266">pk<tspan baseline-shift="sub" font-size="73%">sig</tspan>, <tspan font-style="italic">H</tspan>(<tspan font-style="italic">M</tspan>)</text>
+<polyline points="240,264 240,288 646,288 646,372" fill="none" stroke="#3D5266" stroke-width="1.6" stroke-dasharray="4,2.5" marker-end="url(#arr-slate)"/>
+<text x="443" y="279" font-size="11.8" font-weight="bold" text-anchor="middle" fill="#3D5266">②b 分发信任锚与密钥：pk<tspan baseline-shift="sub" font-size="73%">sig</tspan>, <tspan font-style="italic">H</tspan>(<tspan font-style="italic">M</tspan>), <tspan font-style="italic">k</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">b</tspan></tspan>, <tspan font-style="italic">H</tspan>(<tspan font-style="italic">M</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">R</tspan></tspan>)</text>
+<polyline points="340,376 340,322 712,322 712,268" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+<polyline points="340,376 340,322 712,322 712,268" fill="none" stroke="#1B5886" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+<text x="492" y="312" font-size="12" font-weight="bold" text-anchor="middle" fill="#1B5886">③ 新鲜挑战 (nonce, <tspan font-style="italic">U</tspan>(<tspan font-style="italic">T</tspan>), <tspan font-style="italic">ν</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>)</text>
+<polyline points="748,264 748,356 376,356 376,372" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+<polyline points="748,264 748,356 376,356 376,372" fill="none" stroke="#1B5886" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+<text x="506" y="346" font-size="12" font-weight="bold" text-anchor="middle" fill="#1B5886">④ 聚合证明 <tspan font-style="italic">π</tspan> = (<tspan font-style="italic">σ</tspan>, μ) (4,310 B/批)</text>
+<line x1="835" y1="372" x2="835" y2="268" stroke="#146B5A" stroke-width="1.8" marker-start="url(#arr-teal)" marker-end="url(#arr-teal)"/>
+<rect x="772" y="310" width="126" height="20" rx="3" fill="#FFFFFF"/>
+<text x="835" y="324" font-size="12" font-weight="bold" text-anchor="middle" fill="#146B5A">⑤ 阶段1：取 <tspan font-style="italic">D</tspan><tspan baseline-shift="sub" font-size="73%">0</tspan>(<tspan font-style="italic">T</tspan>)</text>
+<line x1="975" y1="372" x2="975" y2="268" stroke="#146B5A" stroke-width="1.8" marker-start="url(#arr-teal)" marker-end="url(#arr-teal)"/>
+<rect x="900" y="310" width="150" height="20" rx="3" fill="#FFFFFF"/>
+<text x="975" y="324" font-size="12" font-weight="bold" text-anchor="middle" fill="#146B5A">⑥ 阶段2：取 <tspan font-style="italic">D</tspan>(<tspan font-style="italic">T</tspan>)\<tspan font-style="italic">D</tspan><tspan baseline-shift="sub" font-size="73%">0</tspan>(<tspan font-style="italic">T</tspan>)</text>
+<line x1="1114" y1="372" x2="1114" y2="268" stroke="#B45309" stroke-width="1.8" stroke-dasharray="4.5,2.5" marker-start="url(#arr-amber)" marker-end="url(#arr-amber)"/>
+<rect x="1064" y="310" width="100" height="20" rx="3" fill="#FFFFFF"/>
+<text x="1114" y="324" font-size="12" font-weight="bold" text-anchor="middle" fill="#B45309">⑥' RS 修复</text>
+<rect x="16" y="376" width="568" height="254" rx="6" fill="#F0F6FB" stroke="#1B5886" stroke-width="1.6"/>
+<path d="M 16 382 Q 16 376 22 376 L 578 376 Q 584 376 584 382 L 584 404 L 16 404 Z" fill="#DCEBF7" stroke="#1B5886" stroke-width="1.1"/>
+<text x="28" y="395" font-size="16" font-weight="bold" fill="#1B5886">公开验证者 (Public Verifier)</text>
+<rect x="454" y="381" width="120" height="19" rx="9" fill="#FFFFFF" stroke="#1B5886" stroke-width="0.9"/>
+<text x="514" y="394.5" font-size="11.5" text-anchor="middle" fill="#1B5886" font-weight="bold">无密钥 · 算法 3</text>
+<rect x="28" y="412" width="544" height="28" rx="4" fill="#FFFFFF" stroke="#1B5886" stroke-width="0.95"/>
+<text x="300" y="430.5" font-size="11.5" text-anchor="middle" fill="#1B2A38">1. 从 CSP 下载 <tspan font-style="italic">M</tspan> 并锚点验签 → 提取 ℒ → 经 Φ<tspan baseline-shift="sub" font-size="73%">ℒ</tspan> 规划公开闭包 <tspan font-style="italic">U</tspan>(<tspan font-style="italic">T</tspan>) = ⋃<tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">i</tspan>∈<tspan font-style="italic">T</tspan></tspan> <tspan font-style="italic">K</tspan>(<tspan font-style="italic">i</tspan>)</text>
+<rect x="28" y="448" width="544" height="100" rx="4" fill="#FFFFFF" stroke="#1B5886" stroke-width="1.05"/>
+<text x="300" y="466" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B5886">公开恢复闭包 <tspan font-style="italic">U</tspan>(<tspan font-style="italic">T</tspan>)（覆盖相关组的完整字典页）</text>
+<rect x="88" y="476" width="46" height="32" rx="3" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.2"/>
+<text x="111.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">S</text>
+<rect x="142" y="476" width="46" height="32" rx="3" fill="#4E8EC7" stroke="#1B5886" stroke-width="1.2"/>
+<text x="165.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#FFFFFF">D<tspan baseline-shift="sub" font-size="73%">1</tspan></text>
+<rect x="196" y="476" width="46" height="32" rx="3" fill="#4E8EC7" stroke="#1B5886" stroke-width="1.2"/>
+<text x="219.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#FFFFFF">D<tspan baseline-shift="sub" font-size="73%">2</tspan></text>
+<rect x="250" y="476" width="46" height="32" rx="3" fill="#4E8EC7" stroke="#1B5886" stroke-width="1.2"/>
+<text x="273.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#FFFFFF">D<tspan baseline-shift="sub" font-size="73%">3</tspan></text>
+<rect x="304" y="476" width="46" height="32" rx="3" fill="#4E8EC7" stroke="#1B5886" stroke-width="1.2"/>
+<text x="327.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#FFFFFF">D<tspan baseline-shift="sub" font-size="73%">4</tspan></text>
+<rect x="358" y="476" width="46" height="32" rx="3" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.2"/>
+<text x="381.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Ref</text>
+<rect x="412" y="476" width="46" height="32" rx="3" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.2"/>
+<text x="435.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Dev</text>
+<rect x="466" y="476" width="46" height="32" rx="3" fill="#D6E8F6" stroke="#1B5886" stroke-width="1.2"/>
+<text x="489.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Lbl</text>
+<path d="M 142 512 L 142 519 L 350 519 L 350 512" fill="none" stroke="#1B5886" stroke-width="1.2"/>
+<line x1="246.0" y1="519" x2="246.0" y2="524" stroke="#1B5886" stroke-width="1.2"/>
+<text x="246.0" y="538" font-size="11.8" font-weight="bold" text-anchor="middle" fill="#1B5886">完整字典覆盖（BaseID 处于加密态）</text>
+<rect x="28" y="556" width="544" height="64" rx="4" fill="#FFFFFF" stroke="#1B5886" stroke-width="0.95"/>
+<text x="300" y="577" font-size="11.7" text-anchor="middle" fill="#1B2A38">2. 采样新鲜 nonce → 派生 <tspan font-style="italic">ν</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan> ∈ 𝔽<tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">q</tspan></tspan><tspan baseline-shift="super" font-size="73%">*</tspan> → 发 ③ 挑战 → 收 ④ 证明 <tspan font-style="italic">π</tspan> = (<tspan font-style="italic">σ</tspan>, μ)</text>
+<line x1="42" y1="588" x2="558" y2="588" stroke="#E2E8F0" stroke-width="1"/>
+<text x="300" y="608" font-size="12.0" font-weight="bold" text-anchor="middle" fill="#1B5886">3. 双线性配对校验：<tspan font-style="italic">e</tspan>(<tspan font-style="italic">σ</tspan>, <tspan font-style="italic">g</tspan><tspan baseline-shift="sub" font-size="73%">2</tspan>) ≟ <tspan font-style="italic">e</tspan>(Σ<tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan>∈<tspan font-style="italic">U</tspan></tspan> <tspan font-style="italic">ν</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan> <tspan font-style="italic">H</tspan>(<tspan font-style="italic">W</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">p</tspan></tspan>) + Σ<tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">j</tspan></tspan> <tspan font-style="italic">μ</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">j</tspan></tspan> <tspan font-style="italic">u</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">j</tspan></tspan>, <tspan font-style="italic">Y</tspan>) → 接受 / 拒绝</text>
+<rect x="616" y="376" width="568" height="254" rx="6" fill="#EEF7F4" stroke="#146B5A" stroke-width="1.6"/>
+<path d="M 616 382 Q 616 376 622 376 L 1178 376 Q 1184 376 1184 382 L 1184 404 L 616 404 Z" fill="#D6ECE5" stroke="#146B5A" stroke-width="1.1"/>
+<text x="628" y="395" font-size="16" font-weight="bold" fill="#146B5A">授权恢复者 (Authorized Retriever)</text>
+<rect x="1044" y="381" width="130" height="19" rx="9" fill="#FFFFFF" stroke="#146B5A" stroke-width="0.9"/>
+<text x="1109" y="394.5" font-size="11.5" text-anchor="middle" fill="#146B5A" font-weight="bold">持有 <tspan font-style="italic">k</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">b</tspan></tspan> · 算法 4</text>
+<rect x="628" y="412" width="544" height="28" rx="4" fill="#FFFFFF" stroke="#146B5A" stroke-width="0.95"/>
+<text x="900" y="430.5" font-size="11.2" text-anchor="middle" fill="#1B2A38">1. 阶段1：从 CSP 下载 <tspan font-style="italic">M</tspan> 并验签 → ⑤ 拉取 <tspan font-style="italic">D</tspan><tspan baseline-shift="sub" font-size="73%">0</tspan>(<tspan font-style="italic">T</tspan>) = <tspan font-style="italic">S</tspan> ∪ ⋃<tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">i</tspan>∈<tspan font-style="italic">T,g</tspan></tspan> <tspan font-style="italic">R</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">g</tspan></tspan>(<tspan font-style="italic">i</tspan>) → AEAD 解密 (<tspan font-style="italic">k</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">b</tspan></tspan>) → BaseID</text>
+<rect x="628" y="448" width="544" height="100" rx="4" fill="#FFFFFF" stroke="#146B5A" stroke-width="1.05"/>
+<text x="900" y="466" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#146B5A">精确依赖集合 <tspan font-style="italic">D</tspan>(<tspan font-style="italic">T</tspan>) ⊆ <tspan font-style="italic">U</tspan>(<tspan font-style="italic">T</tspan>)（验证 BaseID 后动态解析）</text>
+<rect x="688" y="476" width="46" height="32" rx="3" fill="#D2EBE3" stroke="#146B5A" stroke-width="1.2"/>
+<text x="711.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">S</text>
+<rect x="742" y="476" width="46" height="32" rx="3" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3,2"/>
+<text x="765.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#94A3B8">D<tspan baseline-shift="sub" font-size="73%">1</tspan></text>
+<rect x="796" y="476" width="46" height="32" rx="3" fill="#469D89" stroke="#146B5A" stroke-width="1.2"/>
+<text x="819.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#FFFFFF">D<tspan baseline-shift="sub" font-size="73%">2</tspan></text>
+<rect x="850" y="476" width="46" height="32" rx="3" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3,2"/>
+<text x="873.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#94A3B8">D<tspan baseline-shift="sub" font-size="73%">3</tspan></text>
+<rect x="904" y="476" width="46" height="32" rx="3" fill="#469D89" stroke="#146B5A" stroke-width="1.2"/>
+<text x="927.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#FFFFFF">D<tspan baseline-shift="sub" font-size="73%">4</tspan></text>
+<rect x="958" y="476" width="46" height="32" rx="3" fill="#D2EBE3" stroke="#146B5A" stroke-width="1.2"/>
+<text x="981.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Ref</text>
+<rect x="1012" y="476" width="46" height="32" rx="3" fill="#D2EBE3" stroke="#146B5A" stroke-width="1.2"/>
+<text x="1035.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Dev</text>
+<rect x="1066" y="476" width="46" height="32" rx="3" fill="#D2EBE3" stroke="#146B5A" stroke-width="1.2"/>
+<text x="1089.0" y="496.5" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#1B2A38">Lbl</text>
+<path d="M 742 512 L 742 519 L 950 519 L 950 512" fill="none" stroke="#146B5A" stroke-width="1.2"/>
+<line x1="846.0" y1="519" x2="846.0" y2="524" stroke="#146B5A" stroke-width="1.2"/>
+<text x="846.0" y="538" font-size="11.8" font-weight="bold" text-anchor="middle" fill="#146B5A">仅拉取被 BaseID 命中的字典页</text>
+<rect x="628" y="556" width="268" height="64" rx="4" fill="#FFFFFF" stroke="#146B5A" stroke-width="1.0"/>
+<text x="762" y="578" font-size="12.2" font-weight="bold" text-anchor="middle" fill="#146B5A">2. 阶段2：⑥ 仅拉取 <tspan font-style="italic">D</tspan>(<tspan font-style="italic">T</tspan>)\<tspan font-style="italic">D</tspan><tspan baseline-shift="sub" font-size="73%">0</tspan>(<tspan font-style="italic">T</tspan>)</text>
+<text x="762" y="603" font-size="11.2" text-anchor="middle" fill="#1B2A38">VerifiedOpen (SHA-256 + AEAD) → 解码 {<tspan font-style="italic">r̂</tspan><tspan baseline-shift="sub" font-size="73%"><tspan font-style="italic">i</tspan></tspan>} 或 ⊥</text>
+<line x1="896" y1="588" x2="909" y2="588" stroke="#B45309" stroke-width="1.5" stroke-dasharray="2.5,1.5" marker-end="url(#arr-amber)"/>
+<rect x="912" y="556" width="260" height="64" rx="4" fill="#FEF8EE" stroke="#B45309" stroke-width="1.1" stroke-dasharray="4,2.5"/>
+<text x="1042" y="577" font-size="12.0" font-weight="bold" text-anchor="middle" fill="#B45309">目标页缺失 / 损坏？</text>
+<text x="1042" y="602" font-size="10.8" text-anchor="middle" fill="#1B2A38">⑥' 任取 8 分片 RS(10,8) 重建 → 重验 <tspan font-style="italic">H</tspan> 与 AEAD</text>
+</g></svg>
